@@ -4,7 +4,7 @@
 
 		function __construct(){
 			parent::__construct();
-			$this->load->database();
+			/*$this->load->database();*/
 		}
 
 		function insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto){
