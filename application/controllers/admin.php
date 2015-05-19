@@ -2,21 +2,44 @@
 	class Admin extends CI_Controller{
 		function __construct(){
 			parent:: __construct();
+			$this->load->helper(array('form','url'));
+			$this->load->library('form_validation');
 		}
 
 		function registrar(){
 			$this->load->model('admin_model','',true);
 
-			$data_usuario["correo"] ="reneblackr@gmail.com";
-			$data_usuario["clave"] = "123";
-			$data_usuario["activo"] = true;
+			$this->form_validation->set_rules('nombre','Nombre','required');
+			$this->form_validation->set_rules('apellido','Apellido','required');
+			$this->form_validation->set_rules('sexo','Sexo','required');
+			$this->form_validation->set_rules('anio','Anio','required');
+			$this->form_validation->set_rules('mes','Mes','required');
+			$this->form_validation->set_rules('dia','Dia','required');
+			$this->form_validation->set_rules('correo','Correo','required');
+			$this->form_validation->set_rules('pass','Contraseña','required');
+			$this->form_validation->set_rules('passConf','Confirmar Contraseña','required');
 
-			$data_persona["nombre"] = "Rene";
-			$data_persona["apellido"] = "Cruz";
-			$data_persona["sexo"] = "M";
-			$data_persona["fecha_nacimiento"] = "1992-03-02";
+			if($this->form_validation->run()==false){
+				$datos['title'] = 'Registrar Administrador';
 
-			$this->admin_model->insertarAdmin($data_usuario,$data_persona);
+				$this->load->view('cabecera',$datos);
+				$this->load->view('registro_admin');
+				$this->load->view('footer');
+			}
+			else{
+				$data_usuario["correo"] = $this->input->post('correo');
+				$data_usuario["clave"] = $this->input->post('pass');
+				$data_usuario["activo"] = true;
+
+				$data_persona["nombre"] = $this->input->post('nombre');
+				$data_persona["apellido"] = $this->input->post('apellido');
+				$data_persona["sexo"] = $this->input->post('sexo');
+				$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
+				$data_persona["fecha_nacimiento"] = $fecha;
+
+				$this->admin_model->insertarAdmin($data_usuario,$data_persona);
+			}
+
 		}
 		function update(){
 			$this->load->model('admin_model','',true);
@@ -32,6 +55,14 @@
 			$data_persona["persona_id"] = "11";
 
 			$this->admin_model->updateAdmin($data_usuario,$data_persona);
+		}
+		function borrar(){
+			$this->load->model('admin_model','',true);
+
+			$data_usuario["usuario_id"] = "9";
+			$data_usuario["activo"] = false;
+
+			$this->admin_model->borrarAdmin($data_usuario);
 		}
 	}
 ?>
