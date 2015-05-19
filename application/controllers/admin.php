@@ -1,5 +1,17 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	class Admin extends CI_Controller{
+
+		/*
+			Te hace falta mejorar las validaciones:
+
+			1-Asignarle el numeor maximo y minimo de caracteres a los campos con respecto a los campos de la base de datos.
+			2-Validar las funciones para que no puedan acceder a ellas mediante la url o que solo pueda acceder a ellas el administrador.
+			3-Valida los cambios tambien cuando se haga un update.	
+
+			ah y elimine las vistas footer y header porque un no se como van a ir la interfaz estoy probando asi que esas no van ya
+			eliminalas .|.. y no te me pongas al brinco oiste o te jak30.
+		*/
+
 		function __construct(){
 			parent:: __construct();
 			$this->load->helper(array('form','url'));
@@ -22,9 +34,9 @@
 			if($this->form_validation->run()==false){
 				$datos['title'] = 'Registrar Administrador';
 
-				$this->load->view('cabecera',$datos);
+		
 				$this->load->view('registro_admin');
-				$this->load->view('footer');
+				//$this->load->view('footer');
 			}
 			else{
 				$data_usuario["correo"] = $this->input->post('correo');
@@ -56,6 +68,7 @@
 
 			$this->admin_model->updateAdmin($data_usuario,$data_persona);
 		}
+
 		function borrar(){
 			$this->load->model('admin_model','',true);
 
