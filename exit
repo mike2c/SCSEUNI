@@ -1,0 +1,213 @@
+[1mdiff --git a/application/controllers/egresado.php b/application/controllers/egresado.php[m
+[1mindex 1117271..2921221 100644[m
+[1m--- a/application/controllers/egresado.php[m
+[1m+++ b/application/controllers/egresado.php[m
+[36m@@ -13,57 +13,65 @@[m
+ 			echo "hola";[m
+ 		}[m
+ [m
+[32m+[m		[32m//FUNCION PARA REGISTRAR UN NUEVO EGRESADO[m
+ 		function registro(){[m
+ 			$this->load->library("form_validation");[m
+ [m
+[32m+[m			[32m$config = array([m
+[32m+[m				[32marray('field'=>"nombre",'label'=>"Nombre",'rules'=>'required',[m
+[32m+[m					[32m'errors'=>array('required'=>'El campo nombre no puede quedar vacio'))[m
+[32m+[m			[32m);[m
+[32m+[m
+[32m+[m			[32m$this->form_validation->set_rules($config);[m
+[32m+[m[41m			[m
+ 			if($this->form_validation->run()==FALSE){[m
+[31m-				[m
+[31m-				[m
+[32m+[m				[32m$this->load->view("registro_egresado");[m
+ 			}else{[m
+[32m+[m[41m			[m
+[32m+[m[41m				[m
+ [m
+[32m+[m
+[32m+[m
+[32m+[m				[32mif($this->input->post("titulado") == true){[m
+[32m+[m					[32mecho "Marcado";[m
+[32m+[m				[32m}[m
+ 			}[m
+ 			[m
+ 		}[m
+ [m
+[31m-		function registrar(){[m
+[32m+[m		[32mfunction editar_informacion(){[m
+ 		[m
+[31m-			$this->load->library("form_validation");[m
+ 			$this->load->model("egresado_model");[m
+[31m-[m
+[31m-			if($this->form_validation->run()==false){[m
+[31m-[m
+[31m-[m
+[31m-			}[m
+ 		[m
+ 			$modelo = new Egresado_model();[m
+ [m
+[32m+[m			[32m$data_persona["persona_id"] = 9;[m
+ 			$data_persona["nombre"] = "miguel angel";[m
+ 			$data_persona["apellido"] = "castillo cornejo";[m
+ 			$data_persona["sexo"] = "M";[m
+ 			$data_persona["fecha_nacimiento"] = "1992-03-09";[m
+ [m
+[32m+[m			[32m$data_contacto["contacto_id"]=9;[m
+ 			$data_contacto["telefono"] = "27322264";[m
+[31m-			$data_contacto["celular"] = "89021739";[m
+[32m+[m			[32m$data_contacto["celular"] = "84944968";[m
+ 			$data_contacto["direccion"] = "Antiguos molinos 2000 75 vrs al Oeste";[m
+ 			$data_contacto["municipio_id"] = "1";[m
+ [m
+[32m+[m			[32m$data_egresado["egresado_id"]=9;[m
+ 			$data_egresado["carnet"] = "2009-30761";[m
+ 			$data_egresado["cedula"] = "161-090392-0001Q";[m
+ 			$data_egresado["titulado"] = FALSE;[m
+[31m-			$data_egresado["trabaja"] = FALSE;[m
+[32m+[m			[32m$data_egresado["trabaja"] = TRUE;[m
+ 			$data_egresado["carrera_id"] = 1;[m
+ [m
+[31m-			$data_usuario["correo"] = "mikedosce1992@gmail.com";[m
+[32m+[m			[32m$data_usuario["usuario_id"]=9;[m
+[32m+[m			[32m$data_usuario["correo"] = "mikedosce1992@yahoo.com";[m
+ 			$data_usuario["clave"] = "123";[m
+ 			$data_usuario["activo"] = true;[m
+[31m-			$modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);[m
+[31m-			#$this->load->view("mensaje_registrado",array("mensaje"=>"Registrado correctamente"));[m
+[31m-		}[m
+[31m-[m
+[31m-		function editar_informacion(){[m
+[31m-[m
+[32m+[m			[32m$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);[m
+[32m+[m[41m			[m
+ 		}[m
+ [m
+[31m-[m
+[32m+[m[41m	[m
+ 	}[m
+ ?>	[m
+\ No newline at end of file[m
+[1mdiff --git a/application/models/egresado_model.php b/application/models/egresado_model.php[m
+[1mindex ae6e7f9..780eaf2 100644[m
+[1m--- a/application/models/egresado_model.php[m
+[1m+++ b/application/models/egresado_model.php[m
+[36m@@ -22,12 +22,27 @@[m
+ 		[m
+ 		}[m
+ [m
+[31m-		function actualizarEgresado($data){[m
+[32m+[m		[32mfunction actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto){[m
+[32m+[m[41m			[m
+[32m+[m			[32m$this->db->where('persona_id',$data_persona["persona_id"]);[m
+[32m+[m			[32m$this->db->update('persona',$data_persona);[m
+ [m
+[31m-		}[m
+[32m+[m			[32m$this->db->where('contacto_id',$data_contacto["contacto_id"]);[m
+[32m+[m			[32m$this->db->update("contacto",$data_contacto);[m
+[32m+[m
+[32m+[m			[32m$this->db->where("usuario_id",$data_usuario["usuario_id"]);[m
+[32m+[m			[32m$this->db->update("usuario",$data_usuario);[m
+ [m
+[31m-		function eliminarEgresado($data){[m
+[32m+[m			[32m$this->db->where("egresado_id",$data_egresado["egresado_id"]);[m
+[32m+[m			[32m$this->db->update("egresado",$data_egresado);[m
+[32m+[m
+[32m+[m		[32m}[m
+ [m
+[32m+[m		[32mfunction eliminarEgresado($persona_id,$egresado_id,$contacto_id,$usuario_id){[m
+[32m+[m			[32m$this->db->query("delete from usuario where usuario_id=$usuario_id");[m
+[32m+[m			[32m$this->db->query("delete from contacto where contacto_id=$contacto_id");[m
+[32m+[m			[32m$this->db->query("delete from egresado where egresado_id=$egresado_id");[m
+[32m+[m			[32m$this->db->query("delete from persona where persona_id=$persona_id");[m
+ 		}[m
+ 	}[m
+ [m
+[1mdiff --git a/application/views/registro_egresado.php b/application/views/registro_egresado.php[m
+[1mindex 2b4b0de..da36f88 100644[m
+[1m--- a/application/views/registro_egresado.php[m
+[1m+++ b/application/views/registro_egresado.php[m
+[36m@@ -1,9 +1,22 @@[m
+[32m+[m[32m<?php[m
+[32m+[m[32mecho validation_errors();[m
+[32m+[m[32m?>[m
+ <form method="post" action="<?=base_url().'/index.php/egresado/registro'?>">[m
+ [m
+ <label>Numero de Carnet</label><br>[m
+ <input type="text" name="carnet"><br>[m
+ [m
+[32m+[m[32m<label>Carrera</label><br>[m
+[32m+[m[32m<SELECT name="carrera">[m
+[32m+[m	[32m<option value="1">Ingenieria Civil</option>[m
+[32m+[m	[32m<option value="2">Ingenieria en Sistemas</option>[m
+[32m+[m	[32m<option value="1">Ingenieria Industrial</option>[m
+[32m+[m	[32m<option value="2">Ingenieria Agroindustrial</option>[m[41m [m
+ [m
+[32m+[m[32m</SELECT><br>[m
+[32m+[m
+[32m+[m[32m<h4>Datos personales</h4>[m
+[32m+[m[32m<hr>[m
+ <label>Cedula</label><br>[m
+ <input type="text" name="cedula"><br>[m
+ [m
+[36m@@ -14,11 +27,20 @@[m
+ <input type="text" name="apellido"><br>[m
+ [m
+ <label>Sexo</label><br>[m
+[31m-<select>[m
+[32m+[m[32m<select name="sexo">[m
+ 	<option value="M">Masculino</option>[m
+ 	<option value="F">Femenino</option>[m
+ </select><br>[m
+ [m
+[32m+[m[32m<label>Fecha de nacimiento</label><br>[m
+[32m+[m[32m<input type="date" name="fecha_nacimiento"><br>[m
+[32m+[m
+[32m+[m[32m<h4>Datos de contacto</h4>[m
+[32m+[m[32m<hr>[m
+[32m+[m
+[32m+[m[32m<label>Correo</label><br>[m
+[32m+[m[32m<input type="text" name="correo"><br>[m
+[32m+[m
+ <label>Telefono</label><br>[m
+ <input type="text" name="telefono"><br>[m
+ [m
+[36m@@ -26,18 +48,28 @@[m
+ <input type="text" name="celular"><br>[m
+ [m
+ <label>Direccion</label><br>[m
+[31m-<input type="text" name="direccion"><br>[m
+[32m+[m[32m<input type="text" name="direccion"><br><br>[m
+ [m
+[31m-<label>Departamento</label>[m
+[31m-<SELECT>[m
+[31m-	[m
+[31m-</SELECT>[m
+[32m+[m[32m<label>Departamento</label><br>[m
+[32m+[m[32m<SELECT name="departamento">[m
+[32m+[m	[32m<option value="1">Nueva Segovia</option>[m
+[32m+[m	[32m<option value="2">Estelí</option>[m
+ [m
+[31m-<label>Municipio</label><br>[m
+[31m-<SELECT>[m
+[31m-	[m
+[31m-</SELECT>[m
+[32m+[m[32m</SELECT><br>[m
+ [m
+[32m+[m[32m<label name="municipio">Municipio</label><br>[m
+[32m+[m[32m<SELECT>[m
+[32m+[m	[32m<option value="1">Ocotal</option>[m
+[32m+[m	[32m<option value="2">Mozonte</option>[m
+[32m+[m	[32m<option value="1">Dipilto</option>[m
+[32m+[m	[32m<option value="2">San Fernando</option>[m
+[32m+[m[41m			[m
+[32m+[m[32m</SELECT><br>[m
+[32m+[m[32m<label>Titulado</label>[m
+[32m+[m[32m<input type="checkbox" name="titulado"><br>[m
+[32m+[m[32m<label>Trabaja</label>[m
+[32m+[m[32m<input type="checkbox" name="trabaja">[m
+ [m
+ [m
+[32m+[m[32m<input type="submit" value="Registrar">[m
+ </form>[m
+\ No newline at end of file[m

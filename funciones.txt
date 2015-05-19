@@ -1,0 +1,21 @@
+Egresado{
+	
+Registrar
+Eliminar
+Actualizar
+Autenticar
+
+}
+
+Curriculum{
+	Registrar
+	Actualizar
+
+}
+
+Mensajes{
+	Insertar
+	Consultar
+	Eliminar
+	
+}

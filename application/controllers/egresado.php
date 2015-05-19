@@ -13,57 +13,68 @@
 			echo "hola";
 		}
 
-		function registro(){
+		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
+		function registrar_egresado(){
 			$this->load->library("form_validation");
 
-			if($this->form_validation->run()==FALSE){
-				
-				
-			}else{
+			#DEFINIENDO LAS REGLAS PARA EL FORMULARIO
+			$config = array(
+				array('field'=>"nombre",'label'=>"Nombre",'rules'=>'required',
+					'errors'=>array('required'=>'El campo nombre no puede quedar vacio'))
+			);
 
+			$this->form_validation->set_rules($config);
+			
+			if($this->form_validation->run()==FALSE){
+				$this->load->view("top");
+				$this->load->view("registrar_egresado");
+				$this->load->view("bottom");
+			}else{
+				
+				
+				if($this->input->post("titulado") == true){
+					echo "Marcado";
+				}
 			}
 			
 		}
 
-		function registrar(){
+		function editar_informacion(){
 		
-			$this->load->library("form_validation");
 			$this->load->model("egresado_model");
-
-			if($this->form_validation->run()==false){
-
-
-			}
 		
 			$modelo = new Egresado_model();
 
+			$data_persona["persona_id"] = 9;
 			$data_persona["nombre"] = "miguel angel";
 			$data_persona["apellido"] = "castillo cornejo";
 			$data_persona["sexo"] = "M";
 			$data_persona["fecha_nacimiento"] = "1992-03-09";
 
+			$data_contacto["contacto_id"]=9;
 			$data_contacto["telefono"] = "27322264";
-			$data_contacto["celular"] = "89021739";
+			$data_contacto["celular"] = "84944968";
 			$data_contacto["direccion"] = "Antiguos molinos 2000 75 vrs al Oeste";
 			$data_contacto["municipio_id"] = "1";
 
+			$data_egresado["egresado_id"]=9;
 			$data_egresado["carnet"] = "2009-30761";
 			$data_egresado["cedula"] = "161-090392-0001Q";
 			$data_egresado["titulado"] = FALSE;
-			$data_egresado["trabaja"] = FALSE;
+			$data_egresado["trabaja"] = TRUE;
 			$data_egresado["carrera_id"] = 1;
 
-			$data_usuario["correo"] = "mikedosce1992@gmail.com";
+			$data_usuario["usuario_id"]=9;
+			$data_usuario["correo"] = "mikedosce1992@yahoo.com";
 			$data_usuario["clave"] = "123";
 			$data_usuario["activo"] = true;
-			$modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-			#$this->load->view("mensaje_registrado",array("mensaje"=>"Registrado correctamente"));
+
+			$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+			
 		}
 
-		function editar_informacion(){
-
+		function lista(){
+			
 		}
-
-
 	}
 ?>	
