@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
-#aqui va el nombre de la carpeta de su proyecto
+
 RewriteBase /tesis/
 
 RewriteCond %{REQUEST_URI} ^system.*

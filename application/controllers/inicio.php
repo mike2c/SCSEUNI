@@ -6,12 +6,10 @@
 			parent::__construct();
 			$this->load->library("form_validation");
 			$this->load->helper("url");
-			$this->load->view("prueba");
 		}
 
 		function index(){
-			$this->load->view("inicio");
-			$this->load->view("bottom");
+			$this->load->view("top");
 		}
 
 		function contacto(){

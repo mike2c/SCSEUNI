@@ -3,7 +3,7 @@
 	<!-- fin del jumbotron -->
 	</div>		
 	
-<div class="container">
+<div class="container contenido-central">
 	
 <div class="row">
 	<div class="col-md-4 col-lg-4">
