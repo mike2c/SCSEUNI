@@ -16,15 +16,9 @@
 			$this->db->delete("mensaje");
 		}
 
-		function mensajesRecibidos(){
+		function mensajesSinLeer(){
 			
 		}
-
-		function mensajesEnviados(){
-
-		}
-
-
 	}
 
  ?>
