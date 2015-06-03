@@ -17,20 +17,24 @@
 				$datos['title'] = 'Inicio de Sesion';
 
 				$this->load->view('iniciar_sesion',$datos);
-			}else{
+			}
+			else{
 				$data_usuario['correo'] = $this->input->post('correo');
 				$data_usuario['clave'] = $this->input->post('pass');
 
-				$data_usuario['usuario_id'] = $this->login_model->testUser($data_usuario);
+				$user_id = $this->login_model->testUser($data_usuario);
+				
+				if($user_id['usuario_id'] == false){
+					$datos['title'] = 'Inicio de Sesion';
 
-				/*print_r($data_usuario['usuario_id']);*/
-
-				if( $data_usuario['usuario_id'] == false){
-					
-				}else{
-					$this->session->set_userdata($data_usuario['usuario_id']);
+					$this->load->view('iniciar_sesion',$datos);
+				}
+				else{
+					$this->session->set_userdata($user_id['persona_id']);
 					$this->load->view('testView');
 				}
+			
 			}
-		}
+
+		} 
 	}

@@ -5,9 +5,9 @@
 <br>
 <label>Contraseña</label>
 <?php echo form_error('pass'); ?>
-<input type ="text" name="pass" value="<?php echo set_value('pass') ?>" size="50" />
-
+<input type ="password" name="pass" value="<?php echo set_value('pass') ?>" size="50" />
+ 
 <br>
 <label>Confirmar Contraseña</label>
 <?php echo form_error('passConf'); ?>
-<input type ="text" name="passConf" value="<?php echo set_value('passConf') ?>" size="50" />
+<input type ="password" name="passConf" value="<?php echo set_value('passConf') ?>" size="50" />
