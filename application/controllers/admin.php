@@ -7,10 +7,6 @@
 			$this->load->library('form_validation');
 			$this->load->library('session');
 
-			$user_name = $this->session->userdata('tipo_usuario');
-			$user_id = $this->session->userdata('usuario_id');
-			$p_id = $this->session->userdata('persona_id');
-
 			$this->form_validation->set_rules('nombre','Nombre','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('apellido','Apellido','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('sexo','Sexo','trim|required|max_length[1]');
@@ -25,7 +21,8 @@
 
 		function registrar(){
 			if(isset($this->session)){
-				if ($user_name == 'admin'){
+				$this->getIds();
+				if ($user_info['tipo_usuario'] == 'admin'){
 				
 					$this->load->model('admin_model','',true);
 				
@@ -57,8 +54,8 @@
 		}
 		function update(){
 			if (isset ($this->session)){
-				$sesion = $this->session->userdata('tipo_usuario');
-				if ($sesion=='admin'){
+				$info = $this->getIds();
+				if ($info['tipo_usuario']=='admin'){
 					$this->load->model('admin_model','',true);
 		
 					$user_data = $this->admin_model->getInfo();
@@ -69,17 +66,17 @@
 
 					}else{							
 						$data_usuario["correo"] = $this->input->post('correo');
-						$data_usuario["clave"] = $this->input->post('clave');
-						$data_usuario["usuario_id"] = $user_id;
+						$data_usuario["clave"] = $this->input->post('pass');
+						$data_usuario["usuario_id"] = $info['usuario_id'];
 			
 						$data_persona["nombre"] = $this->input->post('nombre');
 						$data_persona["apellido"] = $this->input->post('apellido');
 						$data_persona["sexo"] = $this->input->post('sexo');
 						$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
 						$data_persona["fecha_nacimiento"] = $fecha;
-						$data_persona["persona_id"] = $p_id;
+						$data_persona["persona_id"] = $info['persona_id'];
 			
-						#$this->admin_model->updateAdmin($data_usuario,$data_persona);
+						$this->admin_model->updateAdmin($data_usuario,$data_persona);
 					}
 				}
 			}
@@ -92,6 +89,13 @@
 			$data_usuario["activo"] = false;
 
 			$this->admin_model->borrarAdmin($data_usuario);
+		}
+
+		function getIds(){
+				$user_info['tipo_usuario'] = $this->session->userdata('tipo_usuario');
+				$user_info['usuario_id'] = $this->session->userdata('usuario_id');
+				$user_info['persona_id'] = $this->session->userdata('persona_id');
+				return $user_info;
 		}
 	}
 ?>
