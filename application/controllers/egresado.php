@@ -10,7 +10,10 @@
 		}
 
 		function index(){
-			echo "meter algo en el index";
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("egresado");
+			$this->load->view("footer");
 		}
 
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO

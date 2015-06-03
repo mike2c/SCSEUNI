@@ -10,7 +10,14 @@
 			$this->form_validation->set_rules('pass','Contraseña','required');
 		}
 
-		function iniciarSesion(){
+		function index(){
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("login");
+			$this->load->view("footer");
+		}
+
+		function IniciarSesion(){
 			$this->load->model('login_model','',true);
 
 			if($this->form_validation->run()== false){
@@ -32,5 +39,15 @@
 					$this->load->view('testView');
 				}
 			}
+		}
+
+		function CerrarSesion(){
+			session_destroy();
+			?>
+				<script type="text/javascript">
+					window.alert("Has cerrado sesion");
+					window.location="<?=base_url()?>";
+				</script>
+			<?
 		}
 	}

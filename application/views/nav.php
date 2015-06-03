@@ -14,26 +14,27 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
           <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mi cuenta <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mi cuenta <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Mi perfil</a></li>
             <li><a href="<?=base_url().'index.php/Correo'?>">Mensajes</a></li>
             <li class="divider"></li>
-            <li><a href="#">Salir</a></li>
+            <li><a href="<?=base_url().'index.php/login/CerrarSesion'?>">Salir</a></li>
            </ul>
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a href="<?=base_url()?>">Inicio</a></li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Información <span class="caret"></span></a>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Información <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Egresado</a></li>
-            <li><a href="#">Empresa</a></li>
+            <li><a href="<?=base_url().'index.php/Informacion/Egresados'?>">Egresado</a></li>
+            <li><a href="<?=base_url().'index.php/Informacion/Empresas'?>">Empresa</a></li>
+            <li><a href="#">Listado de Egresados</a></li>
           </ul>
         </li>
         <li><a href="<?=base_url().'index.php/contacto'?>">Contacto</a></li>
-        <li><a href="#">Inicio de sesión</a></li>
+        <li><a href="<?=base_url().'index.php/login'?>">Iniciar Sesión</a></li>
         <li><a href="#">Registro</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -44,10 +45,13 @@
     <div class="container">
     <div class="row">
       <div class="col-md-2 col-lg-2 col-xs-2">
-      <h1>
-        <img src="<?=base_url().'public/res/logo_transparent.png'?>" alt="" style="width:130px;">
+      <div class="col-lg-11 col-md-11 col-xs-11">
+         <h1>
+        <img src="<?=base_url().'public/res/logo_transparent.png'?>" alt="" class="img-responsive">
       </h1>
         
+      </div>
+     
       </div>
       <div class="col-md-10 col-lg-10 col-xs-10">
         <h2><strong>Universidad Nacional de Ingeniería</strong></h2>
