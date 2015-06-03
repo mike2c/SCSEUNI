@@ -16,7 +16,7 @@
 	<br>
 	<label>Contraseña</label>
 	<?php echo form_error('pass'); ?>
-	<input type ="text" name="pass" value="<?php echo set_value('pass') ?>" size="50" />
+	<input type ="password" name="pass" value="<?php echo set_value('pass') ?>" size="50" />
 
 	<div><input type="submit" value="Iniciar Sesión" /></div>
 
