@@ -21,8 +21,8 @@
 
 		function registrar(){
 			if(isset($this->session)){
-				$this->getIds();
-				if ($user_info['tipo_usuario'] == 'admin'){
+				$info=$this->getIds();
+				if ($info['tipo_usuario'] == 'admin'){
 				
 					$this->load->model('admin_model','',true);
 				
