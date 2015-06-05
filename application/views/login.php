@@ -1,12 +1,15 @@
 <div class="container contenido">
-<h2 class="page-header">Inicia sesión, porfavor.</h2>
+<h2 class="page-header">Inicia sesión porfavor</h2>
 	<div class="col-lg-4 col-md-4 col-xs-4">
-	<form class="form-horizontal" action="<?=base_url().''?>">
+	<form class="form-horizontal" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
 		<div class="form-group">
 			<label>Correo</label>
-			<input type="text" class="form-control" >
+			<input type="text" class="form-control" name="correo">
 		</div>
-
+		<div class="form-group">
+			<label>Contraseña</label>
+			<input type="password" class="form-control" name="clave">
+		</div>
 		<div class="form-group">
 			<input type="submit" class="form-control btn btn-primary" value="Entrar">
 		</div>

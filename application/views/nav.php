@@ -19,7 +19,7 @@
             <li><a href="#">Mi perfil</a></li>
             <li><a href="<?=base_url().'index.php/Correo'?>">Mensajes</a></li>
             <li class="divider"></li>
-            <li><a href="<?=base_url().'index.php/login/CerrarSesion'?>">Salir</a></li>
+            <li><a href="<?=base_url().'index.php/Sesion/CerrarSesion'?>">Salir</a></li>
            </ul>
         </li>
       </ul>
@@ -34,7 +34,7 @@
           </ul>
         </li>
         <li><a href="<?=base_url().'index.php/contacto'?>">Contacto</a></li>
-        <li><a href="<?=base_url().'index.php/login'?>">Iniciar Sesión</a></li>
+        <li><a href="<?=base_url().'index.php/Sesion'?>">Iniciar Sesión</a></li>
         <li><a href="#">Registro</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

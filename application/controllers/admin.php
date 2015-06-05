@@ -20,15 +20,16 @@
 		}
 
 		function registrar(){
+
 			if(isset($this->session)){
+				
 				$info=$this->getIds();
 				if ($info['tipo_usuario'] == 'admin'){
-				
 					$this->load->model('admin_model','',true);
 				
 					if($this->form_validation->run()==false){
 						$datos['title'] = 'Registrar Administrador';
-				
+						echo "entro que onda ";
 						$this->load->view('registro_admin',$datos);
 					
 					}
@@ -45,13 +46,11 @@
 
 						$this->admin_model->insertarAdmin($data_usuario,$data_persona);
 					}
-				}else{
-					/*$sesion = $this->session->userdata('tipo_usuario');
-					echo $sesion;*/
 				}
 			}
 
 		}
+		
 		function update(){
 			if (isset ($this->session)){
 				$info = $this->getIds();
