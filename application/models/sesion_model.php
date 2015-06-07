@@ -24,10 +24,14 @@
 		}
 
 		function esEmpresa($data_usuario){
-			//programa esto 
+			$query = $this->db->query("select usuario.usuario_id, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
+			if($query->num_rows()>0){
+				return $query->row_array();
+			}
+			return null;
 		}
 
-		function esPublicador(){
+		function esPublicador($data_usuario){
 			
 			$query = $this->db->query("select usuario.usuario_id,correo from publicador, usuario where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = publicador.usuario_id;");
 			if($query->num_rows()>0){
