@@ -21,32 +21,25 @@
 
 		function registrar(){
 
-			if(isset($this->session)){
-				
-				$info=$this->getIds();
-				if ($info['tipo_usuario'] == 'admin'){
-					$this->load->model('admin_model','',true);
-				
-					if($this->form_validation->run()==false){
-						$datos['title'] = 'Registrar Administrador';
-						echo "entro que onda ";
-						$this->load->view('registro_admin',$datos);
-					
-					}
-					else{
-						$data_usuario["correo"] = $this->input->post('correo');
-						$data_usuario["clave"] = $this->input->post('pass');
-						$data_usuario["activo"] = true;
+			$this->load->model('admin_model','',true);
+		
+			if($this->form_validation->run()==false){ 
+				$datos['title'] = 'Registrar Administrador';
+				$this->load->view('registro_admin',$datos);
+			
+			}
+			else{
+				$data_usuario["correo"] = $this->input->post('correo');
+				$data_usuario["clave"] = $this->input->post('pass');
+				$data_usuario["activo"] = true;
 
-						$data_persona["nombre"] = $this->input->post('nombre');
-						$data_persona["apellido"] = $this->input->post('apellido');
-						$data_persona["sexo"] = $this->input->post('sexo');
-						$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
-						$data_persona["fecha_nacimiento"] = $fecha;
+				$data_persona["nombre"] = $this->input->post('nombre');
+				$data_persona["apellido"] = $this->input->post('apellido');
+				$data_persona["sexo"] = $this->input->post('sexo');
+				$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
+				$data_persona["fecha_nacimiento"] = $fecha;
 
-						$this->admin_model->insertarAdmin($data_usuario,$data_persona);
-					}
-				}
+				$this->admin_model->insertarAdmin($data_usuario,$data_persona);
 			}
 
 		}
