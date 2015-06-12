@@ -1,62 +1,152 @@
-	<div class="container">
-	<h2>Formulario registro de egresados</h2>
-	<hr>
-		<div class="row">
-		<div class="col-md-3 col-lg-3">
-			<form action="<?=base_url().'index.php/egresado/registro'?>" method="post">
-			<div class="form-group">
-			
-				<label for="">Cedula</label><input pattern="^([0-9]{3})+[-]([0-9]{6})+[-]([0-9]{4})+[a-zA-Z]" placeholder="000-000000-0000L" name="cedula" type="text" class="form-control"></div>
-				<div class="form-group"><label for="">Carrera*</label>
-					<select name="carrera" id="" class="form-control">
-						<option value="1">Ingenieria Civil</option>
-						<option value="2">Ingenieria en Sistemas</option>
-						<option value="3">Ingenieria Industrial</option>
-						<option value="4">Ingenieria Industrial</option>
-					</select>		
-				</div>
-
-				<div class="form-group"><label for="">Carnet*</label><input placeholder="0000-00000" pattern="([0-9]{4})+[-]([0-9]{5})" required name="carnet" type="text" class="form-control"></div>
-				<div class="form-group"><label for="">Nombre*</label><input required name="nombre" type="text" class="form-control"></div>
-				<div class="form-group"><label for="">Apellido*</label><input required name="apellido" type="text" class="form-control"></div>
-				<div class="form-group"><label for="">Sexo*</label>
-					<select name="sexo" id="" class="form-control">
-						<option value="M">Masculino</option>
-						<option value="F">Femenino</option>
-					</select>
-				</div>
-				<div class="form-group"><label for="">Fecha de nacimiento</label><input required type="date" name="fecha_nacimiento" class="form-control"></div>
-
-				<div class="form-group"><label for="">Celular</label><input pattern="([0-9]{4})+[-]([0-9]{4})" placeholder="0000-0000" name="celular" type="text" class="form-control"></div>				
-				<div class="form-group"><label for="">Telefono</label><input placeholder="0000-0000" name="telefono" type="text" class="form-control"></div>
-				<div class="form-group"><label for="">Correo</label><input placeholder="ejemplo@gmail.com" pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" name="correo" type="email" class="form-control"></div>
-				
-				
-				<div class="form-group"><label for="">Departamento</label><select name="departamento" id="departamento" class="form-control"></select></div>
-				<div class="form-group"><label for="">Municipio</label><select name="municipio" id="municipio" class="form-control"></select></div>
-				<div class="form-group"><label>Dirección</label><textarea name="direccion" id="" cols="30"class="form-control"></textarea></div>
-				<div class="form-group">
-					<input class="btn btn-primary" type="submit" value="Registrar">
-					<input class="btn btn-primary" type="reset" value="Limpiar Campos">
-				</div>
-			</form>
-		</div>
-
-
-	<div class="col-md-3 col-lg-3">
-			<p class="alert alert-info">
-			<legend>Informacion</legend>
-				Los campos marcados con un * son obligatorios
-			</p>
-			<p class="alert alert-danger">
-			<legend>Advertencias</legend>
-				<?php echo validation_errors(); ?>
-			</p>
-		
+<h3 class="page-header">Registrar egresado</h3>
+<div class="col-md-8 col-lg-8">
+	<form action="<?=base_url().'index.php/Egresado/Registro'?>" id="formRegistroEgresado" method="POST" class="form-horizontal">
+	<div class="form-group">
+		<div class="col-sm-9 col-sm-push-3">
+			  <p class="help-block">Los campos marcados con un <i class="glyphicon glyphicon-asterisk"></i> son obligatorios.</p>
 		</div>
 	</div>
-
-		<!--
-		
-		-->
+	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label pull-left">Correo:</label>
+	    <div class="col-sm-9">
+	      <input type="email" name="correo" class="form-control"  placeholder="ejemplo@gmail.com" autocomplete="off">
+	    </div>
+  	</div>
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Cárnet:</label>
+    <div class="col-sm-9">
+    	<div class="input-group">
+    		<input type="text" required class="form-control" name="carnet" autocomplete="off" id="inputPassword3" placeholder="0000-00000" autocomplete="off">
+	 		<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+    	</div>
+      </div>
+  </div>
+	<!-- SELECT para las carreras -->
+	 <div class="form-group">
+    <label class="col-sm-3 control-label">Carrera*</label>
+	    <div class="col-sm-9">
+	     <div class="input-group">
+        	<select required name="carrera" id="carrera" class="form-control">
+	     		<?php
+	     			foreach($carreras->result() as $row){
+	     				echo "<option name='carrera' value='$row->carrera_id'>$row->nombre_carrera</option>";
+	     			}
+	     		?>
+	     	</select>
+			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	     </div>
+	  
+	    </div>
+  	</div>
+	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Cedula:</label>
+	    <div class="col-sm-9">
+	     	<input type="text" class="form-control" name="cedula" id="inputEmail3" placeholder="000-000000-0000L">
+	    </div>
+  	</div>
+  	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Nombre:</label>
+	    <div class="col-sm-9">
+	     <div class="input-group">
+     		<input type="text" class="form-control" id="nombre" name="nombre" id="inputEmail3" placeholder="Nombre">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	     </div>
+	    
+	    </div>
+  	</div>
+  	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Apellido:</label>
+	    <div class="col-sm-9">
+    	 <div class="input-group">
+ 			<input type="text" class="form-control" id="inputEmail3" name="apellido" placeholder="Apellido">
+			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	     </div>
+       </div>
+  	</div>
+  	<div class="form-group">
+	    <label class="control-label col-xs-3">Genero:</label>
+        <div class="col-xs-2">
+            <label class="radio-inline">
+                <input required type="radio" name="genero" value="M"> Maculino
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="radio-inline">
+                <input required type="radio" name="genero" value="F"> Femenino
+            </label>
+        </div>
+  	</div>
+  	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Fecha de nacimiento</label>
+	    <div class="col-sm-9">
+	    	<input type="date" class="form-control" name="fecha_nacimiento">
+	    </div>
+  	</div>
+  	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Telefono</label>
+	    <div class="col-sm-9">
+	    	<input type="text" class="form-control" id="inputEmail3" name="telefono" placeholder="0000-0000">
+	    </div>
+  	</div>
+  	<div class="form-group">
+	    <label for="inputEmail3" class="col-sm-3 control-label">Celular</label>
+	    <div class="col-sm-9">
+	    	<input type="text" class="form-control" id="inputEmail3" name="celular" placeholder="0000-0000">
+	    </div>
+  	</div>
+  	<div class="form-group">
+	  	<label for="" class="control-label col-sm-3">Departamento</label>
+	  		<div class="col-sm-9">
+	  		 <div class="input-group">
+		     	<select name="departamento" required id="departamento" class="form-control">
+	  				<?php
+		     			foreach($departamentos->result() as $row){
+		     				echo "<option name='carrera' value='$row->departamento_id'>$row->departamento</option>";
+		     			}
+		     		?>
+			  	</select>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+		     </div>
+	  	</div>
+ 	</div>
+ 	<div class="form-group">
+		<label for="" class="control-label col-sm-3">Municipio</label>
+  		<div class="col-sm-9" id="areaDepartamento">
+	  		<div class="input-group">
+	     		<select required name="municipio" id="municipio" class="form-control"></select>
+				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	     	</div>
+  			
+  		</div>
+ 	</div>
+ 	<div class="form-group">
+ 		<label for="" class="control-label col-sm-3">Dirección domiciliar</label>
+ 		<div class="col-sm-9">
+ 			<textarea name="direccion" class="form-control" id="direccion"  rows="3"></textarea>
+ 		</div>
+ 	</div>
+ 	<div class="form-group">
+ 		<div class="col-sm-9 col-sm-push-3">
+ 			<input type="submit" class="btn btn-primary" value="Registrar">	
+ 			<input type="reset" class="btn btn-primary" value="Limpiar">	
+ 		</div>
+ 		
+ 	</div>
+</form>
 </div>
+<script type="text/javascript">
+	$(document).ready(function (){
+		$("#departamento").change(function(){
+			listarMunicipios($(this).val());
+		});
+
+		function listarMunicipios(id){
+			if(id > 0){
+				$("#areaDepartamento").load("<?=base_url().'index.php/Ajax/cargarMunicipios/';?>" + id);	
+			}
+		}
+
+		listarMunicipios(document.getElementById("departamento").value);
+	});
+	
+</script>

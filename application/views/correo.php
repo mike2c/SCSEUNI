@@ -1,5 +1,4 @@
-
-<div class="container contenido">
+	<div class="container contenido">
 	<!-- CABECERA DE LA PAGINA-->
 	
 	<div class="row borde-inferior">
@@ -149,6 +148,9 @@
     </div>
   </div>
 </div>
+
+
+
 <style type="text/css">
 	th{
 		font-family: Arial;

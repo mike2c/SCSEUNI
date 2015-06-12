@@ -14,7 +14,7 @@
 			
 			$this->db->insert("usuario",$data_usuario);
 			$data_egresado["usuario_id"] = $this->db->insert_id();
-
+			
 			$this->db->insert("persona",$data_persona);
 			$data_egresado["persona_id"] = $this->db->insert_id();
 
@@ -43,6 +43,10 @@
 			$this->db->query("delete from contacto where contacto_id=$contacto_id");
 			$this->db->query("delete from egresado where egresado_id=$egresado_id");
 			$this->db->query("delete from persona where persona_id=$persona_id");
+		}
+
+		function listarEgresados(){
+			return $this->db->query("select * from listar_egresados;");
 		}
 	}
 

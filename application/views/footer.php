@@ -1,6 +1,3 @@
-		<!-- jQuery -->
-		
-		<!-- Bootstrap JavaScript -->
-		
-	</body>
+
+</body>
 </html>

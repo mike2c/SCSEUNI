@@ -1,4 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+	
+	if(!isset($_SESSION["administrador"])){
+		#DESCOMENTAR ESTA LINEA CUANDO EL SISTEMA ESTE TERMINADO.
+		//exit ("Error 404. pagina no encontrada");
+	}
+
 	class Admin extends CI_Controller{
 
 		function __construct(){
@@ -17,6 +23,10 @@
 			$this->form_validation->set_rules('correo','Correo','trim|required|max_length[45]|valid_email');
 			$this->form_validation->set_rules('pass','Contraseña','trim|required|matches[passConf]|min_length[6]|max_length[100]');
 			$this->form_validation->set_rules('passConf','Confirmar Contraseña','trim|min_length[6]|required|max_length[100]');
+		}
+
+		function index(){
+			
 		}
 
 		function registrar(){

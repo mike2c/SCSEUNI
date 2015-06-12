@@ -18,6 +18,7 @@
 			}
 			
 		}
+		
 		function updateAdmin($data_usuario, $data_persona){
 			$this->db->where('usuario_id',$data_usuario['usuario_id']);
 			$this->db->update('usuario',$data_usuario);
