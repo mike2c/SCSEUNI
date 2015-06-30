@@ -5,13 +5,15 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->library("form_validation");
-			$this->load->helper("url");
+			$this->load->library("session");
+			$this->load->helper(array("url","sesion"));
+
 		}
 
 		function index(){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("inicio");
+			//$this->load->view("inicio");
 			$this->load->view("footer");
 		}
 

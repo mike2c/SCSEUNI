@@ -8,7 +8,10 @@
 
 		//ESTAS FUNCIONES NO TIENEN NADA QUE VER CON LA FUNCIONALIDAD DEL SISTEMA O ACCIONES DE LOS ADMINS.	
 		function Egresados(){
-			echo "<h1>Agregar informacion para los egresados</h1>";
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("informacion_egresado");
+			$this->load->view("footer");
 			/*Aqui meter la informacion que va a ser mostrada a egresados en la pagina*/
 		}
 

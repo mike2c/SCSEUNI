@@ -40,7 +40,7 @@
 			    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
 		<ul>
-	       	<li><a id="agregarEgresado" class="" href="#"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
+	       	<li><a id="agregarEgresado"  href="#"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
        		<li><a id="registroEgresado" href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
 	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
 	       
@@ -52,7 +52,7 @@
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-         	Publicadores <span class="badge pull-right">100</span>
+         	Empresas <span class="badge pull-right">100</span>
         </a>
        
       </h4>

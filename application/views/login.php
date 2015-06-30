@@ -24,17 +24,14 @@
 		<div class="row">
 			<div class="col-md-10 col-lg-10">
 			<h1 class="">¿Aun no posees una cuenta?</h1>
-				<p>El proceso de registro varia dependiendo de el tipo de usuario.Si eres un <label for="">Egresado</label>deberas seguir
-				 los siguientes pasos mostrados en este <a href="#">enlace</a> o si eres una empresa puedes crearla directamente completando el siguiente formulario de registro <a href="#">aqui</a>.</p>
+				<p>El proceso de registro varia dependiendo de el tipo de usuario.Si eres un <label for=""> Egresado</label> deberas seguir
+				 los siguientes pasos mostrados en este <a href="<?=base_url('Egresado/Autenticar')?>">enlace</a> o si eres una empresa puedes crearla directamente completando el siguiente formulario de registro <a href="#">aqui</a>.</p>
 			</div>
 		</div>	
 	</div>
 </div>	
 
 <!-- ESTILO -->
-<style type="text/css">
-
-</style>
 <script type="text/javascript">
 	activarMenu(document.getElementById("menu_sesion"));
 </script>

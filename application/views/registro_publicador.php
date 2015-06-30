@@ -58,11 +58,11 @@
     	 <div class="input-group">
  			<select class="form-control" name="area" id="area">
  				<?
- 					if(isset($areas)){
- 						foreach($areas->result() as $row){
- 							echo "<option value='$row->area_id'>$row->area</option>";
- 						}
- 					}
+					if(isset($areas)){
+						foreach($areas->result() as $row){
+							echo "<option value='$row->area_id'>$row->area</option>";
+						}
+					}
  				?>
  			</select>
 			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
@@ -79,6 +79,13 @@
  			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 	     </div>
        </div>
+  	</div>
+  	<div class="form-group">
+  	<div class="col-md-4 col-lg-4 col-md-push-3">
+  		<input type="submit" class="btn btn-primary" value="Registrar">
+  		<input type="reset" class="btn btn-default" value="Limpiar">
+  	</div>
+  		
   	</div>
 	</form>
 </div>

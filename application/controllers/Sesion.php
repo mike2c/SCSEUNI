@@ -8,10 +8,9 @@
 		
 		function __construct(){
 			parent:: __construct() 	;
-			$this->load->helper(array('form','url'));
+			$this->load->helper(array('form','url',"sesion"));
 			$this->load->library('form_validation');
 			$this->load->library('session');
-
 			$this->form_validation->set_rules('correo','Correo','required');
 			$this->form_validation->set_rules('clave','Contraseña','required');
 		}

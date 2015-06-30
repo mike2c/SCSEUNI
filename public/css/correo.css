@@ -1,0 +1,42 @@
+.left-menu{
+	list-style: none;
+	padding-left: 0px;
+}
+
+.left-menu li a{
+	display: block;
+	height: 40px;
+	line-height:40px;
+	padding-left: 30px;
+	text-decoration: none;
+	
+}
+
+.left-menu li a:hover{
+	background-color: lightgray;
+	color: white;
+}
+
+.left-menu .activo{
+	background-color: #337ab7;
+	color: white;
+}
+
+.left-menu .activo .badge{
+	color: gray;
+
+	background-color: white;
+}
+.h-separator{
+	border-bottom: 1px solid lightgray;
+}
+
+.left-line{
+	border-left: 1px solid lightgray;
+}
+
+.ll-line{
+	border-left: 1px solid lightgray;
+	//border-top: 1px solid lightgray;
+	border-right: 1px solid lightgray;
+}

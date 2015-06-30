@@ -7,7 +7,21 @@
 		}
 
 		function Index(){
-			$this->load->view("registro_publicador");
+
+		}
+
+		function Registro(){
+
+		}
+
+		function Actualizar(){
+
+		}
+
+		function Eliminar($id_publicador){
+
 		}
 	}
+
+	
 ?>

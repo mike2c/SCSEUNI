@@ -8,7 +8,7 @@
 		}
 
 		function esAdministrador($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,correo from admin, usuario where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona.persona_id;");
 				if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -16,7 +16,7 @@
 		}																																																													
 
 		function esEgresado($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,correo from egresado,usuario where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = egresado.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from egresado,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = egresado.usuario_id and persona.persona_id = egresado.persona_id;");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -24,7 +24,7 @@
 		}
 
 		function esEmpresa($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id,nombre_empresa as nombre correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -33,7 +33,7 @@
 
 		function esPublicador($data_usuario){
 			
-			$query = $this->db->query("select usuario.usuario_id,correo from publicador, usuario where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = publicador.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from publicador,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = publicador.usuario_id and persona.persona_id = publicador.persona_id;");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}

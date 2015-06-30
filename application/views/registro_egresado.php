@@ -16,7 +16,7 @@
     <label class="col-sm-3 control-label">Cárnet:</label>
     <div class="col-sm-9">
     	<div class="input-group">
-    		<input type="text" required class="form-control" name="carnet" autocomplete="off" id="inputPassword3" placeholder="0000-00000" autocomplete="off">
+    		<input type="text" required pattern="^([0-9]{4})+[-]([0-9]{5})" class="form-control" name="carnet" autocomplete="off" id="inputPassword3" placeholder="0000-00000" autocomplete="off">
 	 		<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
     	</div>
       </div>
@@ -135,18 +135,31 @@
 </form>
 </div>
 <script type="text/javascript">
-	$(document).ready(function (){
+
+	$(document).ready(function(){
+
 		$("#departamento").change(function(){
 			listarMunicipios($(this).val());
 		});
 
+		$("#formRegistroEgresado").submit(function(e){
+			e.preventDefault();
+			$.post("<?=base_url().'Egresado/Registro'?>",
+			$(this).serialize(),
+			function(){
+				alert("Egresado registrado");
+			});
+		});
+		
 		function listarMunicipios(id){
 			if(id > 0){
-				$("#areaDepartamento").load("<?=base_url().'index.php/Ajax/cargarMunicipios/';?>" + id);	
+				
+				$("#areaDepartamento").load("<?=base_url().'index.php/Ajax/CargarMunicipios/';?>" + id);	
 			}
 		}
 
 		listarMunicipios(document.getElementById("departamento").value);
+
 	});
 	
 </script>

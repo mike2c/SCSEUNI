@@ -4,25 +4,15 @@
 	
 	class Egresado extends CI_Controller{
 
+		
 		function __construct(){
 			parent::__construct();
 			$this->load->helper("url");
 			$this->load->helper("form_helper");
-	
-		}
-
-		function index(){
-			$this->load->model("egresado_model","egresados");
-			$data["egresado"] = $this->egresados->listarEgresados();
-			$this->load->view("listar_egresados",$data);
-		}
-
-		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
-		function registro(){
 			$this->load->library("form_validation");
 
-			#DEFINIENDO LAS REGLAS PARA EL FORMULARIO
-			$config = array(
+			#DEFINIENDO LAS REGLAS
+				$config = array(
 				array('field'=>"nombre",'label'=>"Nombre",'rules'=>'required|max_lenght[45]',
 					'errors'=>array('required'=>'El campo nombre no puede quedar vacio')),
 				array('field'=>"apellido",'label'=>"Apellido",'rules'=>'required|max_lenght[45]',
@@ -37,9 +27,29 @@
 				array('field'=>"direccion",'label'=>"Dirección",'rules'=>'max_lenght[100]')
 
 			);
-
 			$this->form_validation->set_rules($config);
-			
+		}
+
+		function Autenticar(){
+			$this->load->view("cabecera");
+			$this->load->view("nav2");
+			$this->load->view("autenticar_egresado");
+			$this->load->view("footer");
+		}
+		
+		function index(){
+			$this->load->model("egresado_model","egresados");
+			$this->load->view("busqueda_egresado");
+			$data["egresado"] = $this->egresados->listarEgresados();
+			$this->load->view("lista_egresados",$data);
+		}
+
+		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
+		function registro(){
+		
+
+			#Asignando las reglas hechas.
+					
 			if($this->form_validation->run()==FALSE){
 				$this->load->model("listas_model","lista");
 				$data["departamentos"] = $this->lista->listarDepartamentos();
@@ -112,6 +122,15 @@
 
 			$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 			
+		}
+
+		function Busqueda(){
+			$campo = $this->input->post("filtro");
+			$valor = $this->input->post("busqueda");
+
+			$this->load->model("egresado_model","egresados");
+			$data["egresado"] = $this->egresados->buscarEgresado($campo,$valor);
+			$this->load->view("lista_egresados",$data);
 		}
 	}
 ?>

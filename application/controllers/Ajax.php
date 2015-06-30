@@ -20,6 +20,7 @@
 				echo "<option value='$row->departamento_id'>$row->departamento</option>";
 			}
 			echo "</select>";
+			echo "<script type='text/javascript'>alert('MEnsaje');</script>";
 		}
 
 		function CargarMunicipios($municipio_id){
