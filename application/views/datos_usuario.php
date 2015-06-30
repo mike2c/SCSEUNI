@@ -1,13 +1,13 @@
-<label>Correo electronico</label>
+<label>Correo electronico*</label>
 <?php echo form_error('correo'); ?>
-<input type ="text" name="correo" value="<?php echo set_value('correo') ?>" size="50" />
+<input type ="text" name="correo" value="<?php echo set_value('correo'); ?>" size="50" />
 
 <br>
-<label>Contraseña</label>
+<label>Contraseña*</label>
 <?php echo form_error('pass'); ?>
-<input type ="password" name="pass" value="<?php echo set_value('pass') ?>" size="50" />
+<input type ="password" name="pass" size="50" />
  
 <br>
-<label>Confirmar Contraseña</label>
+<label>Confirmar Contraseña*</label>
 <?php echo form_error('passConf'); ?>
-<input type ="password" name="passConf" value="<?php echo set_value('passConf') ?>" size="50" />
+<input type ="password" name="passConf" size="50" />

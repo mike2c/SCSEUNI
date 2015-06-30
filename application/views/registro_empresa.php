@@ -1,12 +1,15 @@
-<?php $this->load->view('cabecera');?>
+<?php echo validation_errors(); ?>
 <div class="container">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
 	<div class="col-md-5 col-lg-5 col-md-push-7 borde">
 		<h2 class="page-header">
 			Registro de empresa
 		</h2>
 
-		<form action="<?=base_url().'index.php/Egresado/Registro'?>" method="post" id="formRegistroEmpresa" name="formRegistroEmpresa ">
+		<form action="<?=base_url().'index.php/Empresa/Registro'?>" method="post" id="formRegistroEmpresa" name="formRegistroEmpresa ">
 			<div class="form-group">
 				<div class="col-sm-push-3">
 					  <p class="help-block">Los campos marcados con un <i class="glyphicon glyphicon-asterisk"></i> son obligatorios.</p>

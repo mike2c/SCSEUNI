@@ -29,7 +29,7 @@
 			foreach($query->result() as $row){
 				echo "<option value='$row->municipio_id'>$row->municipio</option>";
 			}
-			echo "</select>";
+			echo "</select>"; 
 		}
 	}
 ?>
