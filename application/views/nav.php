@@ -19,7 +19,7 @@
             <li><a href="#">Mi perfil</a></li>
             <li><a href="<?=base_url().'index.php/Correo'?>">Mensajes</a></li>
             <li class="divider"></li>
-            <li><a href="<?=base_url().'index.php/Sesion/CerrarSesion'?>">Salir</a></li>
+            <li><a href="<?=base_url().'index.php/Sesion/CerrarSesion'?>">Cerrar sesión</a></li>
            </ul>
         </li>
       </ul>
@@ -45,9 +45,12 @@
     <div class="container">
     <div class="row">
       <div class="col-md-2 col-lg-2 col-xs-2">
-      <div class="col-lg-11 col-md-11 col-xs-11">
+      
+      
+      <div class="col-lg-12 col-md-11 col-xs-12">
+       <img src="<?=base_url().'public/res/logo_transparent.png'?>" alt="" class="img-responsive">
          <h1>
-        <img src="<?=base_url().'public/res/logo_transparent.png'?>" alt="" class="img-responsive">
+       
       </h1>
         
       </div>
@@ -63,7 +66,7 @@
     </div>
 </header>
 
-<style type="text/css">
+<!--<style type="text/css">
   img{
     border: 3px solid white;
     background-color: white;
@@ -79,4 +82,4 @@
    h1,h2,h3,h4,h5{
     margin:5px 0px;
    }
-</style>
+</style> -->

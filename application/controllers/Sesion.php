@@ -43,20 +43,19 @@
 				if($usuario = $this->sesion_model->esEgresado($data_usuario)){
 					$this->session->set_userdata("egresado",$usuario);
 										
-				}elseif($usuario = $this->sesion_model->esEmpresa($data_usuario)){
+				} if($usuario = $this->sesion_model->esEmpresa($data_usuario)){
 					$this->session->set_userdata("empresa",$usuario);
+					redirect("Empresa/actualizar");
 					
-				}elseif($usuario = $this->sesion_model->esPublicador($data_usuario)){
+				} if($usuario = $this->sesion_model->esPublicador($data_usuario)){
 					$this->session->set_userdata("publicador",$usuario);
 					
-				}elseif($usuario = $this->sesion_model->esAdministrador($data_usuario)){
+				} if($usuario = $this->sesion_model->esAdministrador($data_usuario)){
 					$this->session->set_userdata("administrador",$usuario);
-				}else{
-					#NO SE HA ENCONTRADO EL USUARIO, MOSTRAR MENSAJE PROGRAMA ESTO A MI ME DA PEREZA NO SE COMO LE VAS A HACER :V
 				}
 				?>
 					<script type="text/javascript">
-					window.location="<?=base_url() ?>";
+					//window.location="<?=base_url() ?>";
 					</script>
 				<?
 			}

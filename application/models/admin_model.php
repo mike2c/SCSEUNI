@@ -13,11 +13,10 @@
 					$data_admin['persona_id']=$this->db->insert_id();
 
 					$this->db->insert("admin",$data_admin);
-				}
-				
+				}				
 			}
-			
 		}
+		
 		function updateAdmin($data_usuario, $data_persona){
 			$this->db->where('usuario_id',$data_usuario['usuario_id']);
 			$this->db->update('usuario',$data_usuario);
@@ -33,12 +32,11 @@
 
 		function getInfo(){
 			$user_id = $this->session->userdata('usuario_id');
-			$persona_id = $this->session->userdata('persona_id');
+			$persona_id = $this->session->userdata('persona_id'); 
 
 			$data_usuario['data_usuario'] = $this->db->query("select correo, clave, imagen_perfil from usuario where usuario.usuario_id = '$user_id'");
 			$data_usuario['data_persona'] = $this->db->query("select nombre, apellido, sexo, fecha_nacimiento from persona where persona.persona_id = '$persona_id'");
 
-			#print_r($data_usuario['data_usuario']->row()->correo);
 			return $data_usuario;
 		}
 	}

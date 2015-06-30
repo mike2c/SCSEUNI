@@ -11,6 +11,7 @@
 			$query = $this->db->query("select usuario.usuario_id,correo from admin, usuario where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id;");
 				if($query->num_rows()>0){
 				return $query->row_array();
+				#FALTA POR REVISAR - OBTENER ID DE PERSONA PARA LA FUNCION UPDATE DE ADMINISTRADOR
 			}
 			return null;
 		}																																																													
@@ -22,7 +23,7 @@
 			}
 			return null;
 		}
-
+ 
 		function esEmpresa($data_usuario){
 			$query = $this->db->query("select usuario.usuario_id, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
 			if($query->num_rows()>0){

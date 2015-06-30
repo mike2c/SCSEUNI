@@ -1,4 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+	
+	if(!isset($_SESSION["administrador"])){
+		#DESCOMENTAR ESTA LINEA CUANDO EL SISTEMA ESTE TERMINADO.
+		//exit ("Error 404. pagina no encontrada");
+	}
+
 	class Admin extends CI_Controller{
 
 		function __construct(){
@@ -17,6 +23,10 @@
 			$this->form_validation->set_rules('correo','Correo','trim|required|max_length[45]|valid_email');
 			$this->form_validation->set_rules('pass','Contraseña','trim|required|matches[passConf]|min_length[6]|max_length[100]');
 			$this->form_validation->set_rules('passConf','Confirmar Contraseña','trim|min_length[6]|required|max_length[100]');
+		}
+
+		function index(){
+			
 		}
 
 		function registrar(){
@@ -45,32 +55,26 @@
 		}
 		
 		function update(){
-			if (isset ($this->session)){
-				$info = $this->getIds();
-				if ($info['tipo_usuario']=='admin'){
-					$this->load->model('admin_model','',true);
-		
-					$user_data = $this->admin_model->getInfo();
+			$this->load->model('admin_model','',true);
 
-					if($this->form_validation->run()== FALSE){
-						$user_data["title"] = "Actualizar Informacion";
-						$this->load->view('update_admin',$user_data);
+			$user_data = $this->admin_model->getInfo();
 
-					}else{							
-						$data_usuario["correo"] = $this->input->post('correo');
-						$data_usuario["clave"] = $this->input->post('pass');
-						$data_usuario["usuario_id"] = $info['usuario_id'];
-			
-						$data_persona["nombre"] = $this->input->post('nombre');
-						$data_persona["apellido"] = $this->input->post('apellido');
-						$data_persona["sexo"] = $this->input->post('sexo');
-						$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
-						$data_persona["fecha_nacimiento"] = $fecha;
-						$data_persona["persona_id"] = $info['persona_id'];
-			
-						$this->admin_model->updateAdmin($data_usuario,$data_persona);
-					}
-				}
+			if($this->form_validation->run()== FALSE){
+				$user_data["title"] = "Actualizar Informacion";
+				$this->load->view('update_admin',$user_data);
+			}else{							
+				$data_usuario["correo"] = $this->input->post('correo');
+				$data_usuario["clave"] = $this->input->post('pass');
+				$data_usuario["usuario_id"] = $info['usuario_id'];
+	
+				$data_persona["nombre"] = $this->input->post('nombre');
+				$data_persona["apellido"] = $this->input->post('apellido');
+				$data_persona["sexo"] = $this->input->post('sexo');
+				$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
+				$data_persona["fecha_nacimiento"] = $fecha;
+				$data_persona["persona_id"] = $info['persona_id'];
+	
+				$this->admin_model->updateAdmin($data_usuario,$data_persona);
 			}
 		}
 
@@ -83,11 +87,19 @@
 			$this->admin_model->borrarAdmin($data_usuario);
 		}
 
-		function getIds(){
-				$user_info['tipo_usuario'] = $this->session->userdata('tipo_usuario');
-				$user_info['usuario_id'] = $this->session->userdata('usuario_id');
-				$user_info['persona_id'] = $this->session->userdata('persona_id');
-				return $user_info;
+		function autenticarEmpresa(){
+			$this->load->model('empresa_model','',TRUE);
+			$info = $this->empresa_model->getInfo();
+
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("ver_empresas_autenticadas",$info);
+			$this->load->view("footer");
+	
+			$empresa_id = $this->input->post('empresas[]');
+			$verificar['autenticada'] = TRUE;
+
+			$this->empresa_model->autenticar($verificar,$empresa_id);
 		}
 	}
 ?>

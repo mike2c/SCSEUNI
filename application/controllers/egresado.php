@@ -1,4 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+	//DEFINIENDO LA CONSTANTE  IS_AJAX
+	define("IS_AJAX",isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == 'xmlhttprequest');
 	
 	class Egresado extends CI_Controller{
 
@@ -10,10 +12,9 @@
 		}
 
 		function index(){
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("egresado");
-			$this->load->view("footer");
+			$this->load->model("egresado_model","egresados");
+			$data["egresado"] = $this->egresados->listarEgresados();
+			$this->load->view("listar_egresados",$data);
 		}
 
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
@@ -28,7 +29,7 @@
 					'errors'=>array('required'=>'El campo apellido no puede quedar vacio')),
 				array('field'=>"carnet",'label'=>"Carnet",'rules'=>'required|max_lenght[10]',
 					'errors'=>array('required'=>'El campo carnet no puede quedar vacio')),
-				array('field'=>"sexo",'label'=>"Sexo",'rules'=>'required',
+				array('field'=>"genero",'label'=>"Genero",'rules'=>'required',
 					'errors'=>array('required'=>'El campo sexo no puede quedar vacio')),
 				array('field'=>"celular",'label'=>"Celular",'rules'=>'max_lenght[10]'),
 				array('field'=>"telefono",'label'=>"Celular",'rules'=>'max_lenght[10]'),
@@ -40,17 +41,19 @@
 			$this->form_validation->set_rules($config);
 			
 			if($this->form_validation->run()==FALSE){
-				$this->load->view("cabecera");
-				$this->load->view("registro_egresado");
-				$this->load->view("footer");
+				$this->load->model("listas_model","lista");
+				$data["departamentos"] = $this->lista->listarDepartamentos();
+				$data["carreras"] = $this->lista->listarCarreras();
 				
-			}else{
+				$this->load->view("registro_egresado",$data);
+			
+				}else{
 				$this->load->model("egresado_model");
 				$egresado = new Egresado_model();
 
 				$data_persona["nombre"] = $this->input->post("nombre");
 				$data_persona["apellido"] = $this->input->post("apellido");
-				$data_persona["sexo"] = $this->input->post("sexo");
+				$data_persona["sexo"] = $this->input->post("genero");
 				$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento");;
 
 				$data_contacto["telefono"] = $this->input->post("telefono");
@@ -110,9 +113,5 @@
 			$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 			
 		}
-
-		function lista(){
-			
-		}
 	}
-?>	
+?>

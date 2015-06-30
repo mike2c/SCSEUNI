@@ -17,7 +17,7 @@
 	<label>Sexo</label>
 	<select name="sexo">
 		<?php 
-			if($data_persona->row()->sexo == 'M'){
+			if($data_persona->row()->sexo == 'M'){ 
 				$male = TRUE; 
 				$female='';
 			}
