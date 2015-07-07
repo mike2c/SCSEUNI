@@ -1,7 +1,9 @@
 <div class="row">
 	<nav class="nav">
-	<div class="col-md-6 col-lg-6">
+	<div class="container">
+		<div class="col-md-6 col-lg-6">
 	    <?
+	    
 	    	if(sesionIniciada()){
 	    		?>
 					<div class="dropdown">
@@ -12,8 +14,15 @@
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						    <li><a href="#">Mi Perfil</a></li>
+						    <li><a href="<?=base_url('Perfil')?>">Mi Perfil</a></li>
 						    <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+						    <?
+						    	if(isset($_SESSION["administrador"])){
+						    		?>
+									<li><a href="<?=base_url('CPanel')?>">Administrar</a></li>
+						    		<?
+						    	}
+						    ?>
 						    <li><a href="<?=base_url('Sesion/CerrarSesion')?>">Salir</a></li>
 						</ul>
 					</div>
@@ -26,8 +35,9 @@
 		<ul class="menu">
 			<?php
 				if(!sesionIniciada()){
-					?>	
-					<li><a  href="<?=base_url('index.php/Sesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a>
+					?>
+					</li><li class="separador"></li>
+					<li><a  href="<?=base_url('index.php/Sesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a>	
 						
 					</li>
 					<?
@@ -43,15 +53,19 @@
 				</ul>
 			</li><li class="separador"></li>
 			<li class="activo"><a  href="<?=base_url();?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li><li class="separador"></li>
+		
 		</ul>
 		
 	</div>
+	</div>
+	
 	</nav>
 </div>
 <header class="header">
-	<div class="row">
+<div class="container">
+		<div class="row">
 		<div class="col-md-2 col-lg-2">
-			<img style="height:50%;width:70%;margin-top:14px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt="">
+			<img style="height:50%;width:70%;margin-top:15px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt="">
 		</div>
 		<div class="col-md-8 col-lg-8 auto-size">
 			<center>
@@ -62,8 +76,10 @@
 				<h5>Estelí, Nicaragua</h5>
 			</center>
 		</div>
-			<div class="col-md-2 col-lg-2">
-			<img class="img img-redonda" src="<?=base_url('public/res/ruacs');?>" alt="">
+			<div class="col-md-2 col-lg-2" style="margin-top:5px;">
+			<img class="img img-redonda" style="margin-left:auto;" src="<?=base_url('public/res/ruacs');?>" alt="">
 		</div>
 	</div>
+</div>
+
 </header>

@@ -1,6 +1,12 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-		
+	
+	/*
+		if(is_session_started() === FALSE){
+				@session_start();
+		}
+	*/
+	
 	//Si al menos una sesion existe la funcion regresara true.
 	function sesionIniciada(){
 		return isset($_SESSION["egresado"]) || isset($_SESSION["empresa"]) || isset($_SESSION["administrador"]) || isset($_SESSION["publicador"]);
@@ -31,4 +37,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		return $val["usuario_id"];
 	}
 
+	function getCorreo(){
+		$val = getSesion();
+		return $val["correo"];
+	}
+	
+	function is_session_started(){
+
+	    if ( php_sapi_name() !== 'cli' ) {
+	        if ( version_compare(phpversion(), '5.4.0', '>=') ) {
+	            return session_status() === PHP_SESSION_ACTIVE ? TRUE : FALSE;
+	        } else {
+	            return session_id() === '' ? FALSE : TRUE;
+	        }
+	    }
+	    return FALSE;
+	}
 ?>

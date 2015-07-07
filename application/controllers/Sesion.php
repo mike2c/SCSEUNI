@@ -44,8 +44,7 @@
 										
 				} if($usuario = $this->sesion_model->esEmpresa($data_usuario)){
 					$this->session->set_userdata("empresa",$usuario);
-					redirect("Empresa/actualizar");
-					
+									
 				} if($usuario = $this->sesion_model->esPublicador($data_usuario)){
 					$this->session->set_userdata("publicador",$usuario);
 					
@@ -54,7 +53,7 @@
 				}
 				?>
 					<script type="text/javascript">
-					//window.location="<?=base_url() ?>";
+						window.location="<?=base_url() ?>";
 					</script>
 				<?
 			}

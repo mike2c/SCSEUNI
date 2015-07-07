@@ -4,11 +4,18 @@
 
 		function __construct(){
 			parent::__construct();
+			$this->load->library("session");
+			$this->load->helper("sesion");
 		}
 
 		function index(){
-			
+
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("perfil");
+			$this->load->view("footer");
 		}
+
 
 		
 	}

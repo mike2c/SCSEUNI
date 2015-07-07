@@ -8,7 +8,7 @@
 		}
 
 		function esAdministrador($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona.persona_id;");
+			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
 				if($query->num_rows()>0){
 				return $query->row_array();
 				#FALTA POR REVISAR - OBTENER ID DE PERSONA PARA LA FUNCION UPDATE DE ADMINISTRADOR
@@ -25,7 +25,7 @@
 		}
  
 		function esEmpresa($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,nombre_empresa as nombre correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id, nombre_empresa as nombre, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}

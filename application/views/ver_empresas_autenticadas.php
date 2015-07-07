@@ -29,7 +29,7 @@ $(document).ready(function(){
 		if($key->autenticada == FALSE){
 		?>
 		<tr>
-			<td> <input type="checkbox" name='empresas[]' form="empresasLista" value=" <?php echo $key->empresa_id ?>" /></td>
+			<td> <input type="checkbox" name='empresas[]' form="empresasLista" value="<?php echo $key->empresa_id ?>" /></td>
 			<td> <?php echo $key->nombre_empresa; ?></td>
 			<td> Sin Autentificar </td>
 		</tr>

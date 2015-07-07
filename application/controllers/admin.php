@@ -88,7 +88,7 @@
 		}
 
 		function autenticarEmpresa(){
-			$this->load->model('empresa_model','',TRUE);
+			$this->load->model('empresa_model',null,TRUE);
 			$info = $this->empresa_model->getInfo();
 
 			$this->load->view("cabecera");

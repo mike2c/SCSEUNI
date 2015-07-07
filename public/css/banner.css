@@ -1,0 +1,16 @@
+.slider{
++
+	display: block;
+	width: 900px;
+	height: 268px;
+	background-color: white;
+	overflow: hidden;
+	//margin: 0 auto;
+	border: 2px solid lightgray;
+}
+
+.slider img{
+	height: inherit;
+	width: inherit;
+	display: none;
+}

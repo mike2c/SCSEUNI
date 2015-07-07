@@ -8,6 +8,9 @@
 			$this->load->helper("sesion");
 			$this->load->library("session");
 			
+			if(!sesionIniciada()){
+				exit("<center>error 404 page not found</center>");
+			}
 		}
 
 		function index(){

@@ -13,7 +13,7 @@
 		function index(){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			//$this->load->view("inicio");
+			$this->load->view("inicio");
 			$this->load->view("footer");
 		}
 
