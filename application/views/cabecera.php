@@ -9,9 +9,7 @@
 		<script src="<?=base_url().'public/js/jquery.js'?>"></script><!-- jQuery -->
 		<script type="text/javascript" src="<?=base_url().'public/js/bootstrap.min.js'?>"></script>
 		<link href="<?=base_url().'public/css/bootstrap.css'?>" rel="stylesheet"><!-- Bootstrap CSS -->
-<<<<<<< HEAD
 		<link rel="stylesheet" href="<?=base_url('public/css/default.css')?>">
-=======
 			<style type="text/css">
 			body{
 				background-color: #eaeaea;	
@@ -57,6 +55,5 @@
 			#contenido_pestanas div  {   border: 1px solid #333; margin-left: 40px; width: 485px; background: #fff; padding: 20px; box-shadow: 3px 3px 2px #ccc;
                                     			-webkit-box-shadow: 3px 3px 2px #ccc; -moz-box-shadow: 3px 3px 2px #ccc;}
 		</style>
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
 	</head>
 <body>

@@ -1,22 +1,8 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
-<<<<<<< HEAD
+
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>
-=======
-RewriteBase /tesis/
-
-RewriteCond %{REQUEST_URI} ^system.*
-RewriteRule ^(.*)$ /index.php?/$1 [L]
-
-RewriteCond %{REQUEST_URI} ^application.*
-RewriteRule ^(.*)$ /index.php?/$1 [L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?/$1 [L]
-</IfModule>
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab

@@ -36,9 +36,9 @@
 			<li><a href="<?=base_url('Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li><li class="separador"></li>
 			<li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Informacion</a>
 				<ul class="submenu">
-					<li><a href="">Mision y Vision</a></li>
-					<li><a href="">Egresados</a></li>
-					<li><a href="">Empresa</a></li>
+					<li><a href="<?=base_url('index.php/informacion/misionVision')?>">Mision y Vision</a></li>
+					<li><a href="<?=base_url('index.php/informacion/Egresados')?>">Egresados</a></li> 
+					<li><a href="<?=base_url('index.php/informacion/Empresas')?>">Empresa</a></li>
 											
 				</ul>
 			</li><li class="separador"></li>

@@ -19,7 +19,12 @@
 			echo "<h1>Agregar informacion para las empresas</h1>";
 			/*Aqui meter la informacion que va a ser mostrada a las Empresas en la pagina*/
 		}
-
+		function misionVision(){
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("mision_vision");
+			$this->load->view("footer");
+		}
 		
 	}
 ?>

@@ -8,17 +8,17 @@
 	class Empresa extends CI_Controller{
 
 		function __construct(){
-<<<<<<< HEAD
+
 			parent::__construct();
 			$this->load->helper("url");
-=======
+
 
 			parent:: __construct();
 
 			$this->load->helper(array('form','url'));
 			$this->load->library('form_validation');
 			$this->load->library('session');
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
+
 		}
 
 		function actualizar(){
@@ -92,8 +92,6 @@
 					$msg = $this->empresa_model->editarContactoEmpresa($data_contacto);
 						if($msg){
 		
-<<<<<<< HEAD
-=======
 						}
 					}
 				}
@@ -140,7 +138,6 @@
 
 		}
 
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
 		function subirImg(){
 			$config['upload_path'] = './uploads/';
 			$config['allowed_types'] = 'gif|jpeg|png|jpg';
@@ -158,9 +155,5 @@
 				return $data['upload_data']['file_name'];
 			}
 		}
-<<<<<<< HEAD
-
-=======
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
 	}
 ?>
