@@ -1,13 +1,19 @@
-<label>Correo electronico*</label>
-<?php echo form_error('correo'); ?>
-<input type ="text" name="correo" value="<?php echo set_value('correo'); ?>" size="50" />
+<table>
+	<tr>
+		<td><label>Correo electronico*</label></td>
+		<td><input type ="text" name="correo" value="<?php echo set_value('correo'); ?>" size="50" /></td>
+		<td><?php echo form_error('correo'); ?></td>
+	</tr>
 
-<br>
-<label>Contraseña*</label>
-<?php echo form_error('pass'); ?>
-<input type ="password" name="pass" size="50" />
- 
-<br>
-<label>Confirmar Contraseña*</label>
-<?php echo form_error('passConf'); ?>
-<input type ="password" name="passConf" size="50" />
+	<tr>
+		<td><label>Contraseña*</label></td>
+		<td><input type ="password" name="pass" size="50" /></td>
+		<td><?php echo form_error('pass'); ?></td>
+	</tr>
+
+	<tr>
+		<td><label>Confirmar Contraseña*</label></td>
+		<td><input type ="password" name="passConf" size="50" /></td>
+		<td><?php echo form_error('passConf'); ?></td>
+	</tr>
+</table>

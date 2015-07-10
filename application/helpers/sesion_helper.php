@@ -12,11 +12,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	function getSesion(){
 		if(isset($_SESSION["egresado"])){
 			return $_SESSION["egresado"];
-		}elseif($_SESSION["empresa"]){
-			 return $_SESSION["empresa"];
-		}elseif($_SESSION["administrador"]){
+		}elseif(isset($_SESSION["empresa"])){
+			 return $_SESSION["empresa"]; 
+		}elseif(isset($_SESSION["administrador"])){
 			 return $_SESSION["administrador"];
-		}elseif( $_SESSION["publicador"]){
+		}elseif(isset($_SESSION["publicador"])){
 			 return $_SESSION["publicador"];
 		}
 
