@@ -46,7 +46,7 @@
 					<?
 				}
 			?><li class="separador"></li>
-			<li><a href="<?=base_url('Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li><li class="separador"></li>
+			<li><a href="<?=base_url('index.php/Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li><li class="separador"></li>
 			<li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Informacion</a>
 				<ul class="submenu">
 					<li><a href="<?=base_url('index.php/informacion/misionVision')?>">Mision y Vision</a></li>

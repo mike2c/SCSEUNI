@@ -1,9 +1,5 @@
 <?php echo validation_errors(); ?>
 <div class="container">
-<<<<<<< HEAD
-
-=======
->>>>>>> 39c39827e1131be4dd10d49ad8668669d0c2f5ab
 	<div class="col-md-5 col-lg-5 col-md-push-7 borde">
 		<h2 class="page-header">
 			Registro de empresa

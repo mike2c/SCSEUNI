@@ -31,11 +31,10 @@
 		}
 
 		function getInfo(){
-			$user_id = $this->session->userdata('usuario_id');
-			$persona_id = $this->session->userdata('persona_id'); 
+			$user_id = $this->session->userdata('administrador');
 
-			$data_usuario['data_usuario'] = $this->db->query("select correo, clave, imagen_perfil from usuario where usuario.usuario_id = '$user_id'");
-			$data_usuario['data_persona'] = $this->db->query("select nombre, apellido, sexo, fecha_nacimiento from persona where persona.persona_id = '$persona_id'");
+			$data_usuario['data_usuario'] = $this->db->query("select correo, clave, imagen_perfil from usuario where usuario.usuario_id = '$user_id[usuario_id]'");
+			$data_usuario['data_persona'] = $this->db->query("select nombre, apellido, sexo, fecha_nacimiento from persona where persona.persona_id = '$user_id[persona_id]'");
 
 			return $data_usuario;
 		}

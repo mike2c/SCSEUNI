@@ -9,7 +9,7 @@
 
 		function __construct(){
 			parent:: __construct();
-			$this->load->helper(array('form','url'));
+			$this->load->helper(array('form','url','sesion'));
 			$this->load->library('form_validation');
 			$this->load->library('session');
 
@@ -34,8 +34,10 @@
 			$this->load->model('admin_model','',true);
 		
 			if($this->form_validation->run()==false){ 
-				$datos['title'] = 'Registrar Administrador';
-				$this->load->view('registro_admin',$datos);
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view('registro_admin');
+				$this->load->view("footer");
 			
 			}
 			else{
@@ -49,7 +51,7 @@
 				$fecha = $this->input->post('anio') . '-' . $this->input->post('mes') . '-' . $this->input->post('dia');
 				$data_persona["fecha_nacimiento"] = $fecha;
 
-				$this->admin_model->insertarAdmin($data_usuario,$data_persona);
+				$this->admin_model->insertarAdmin($data_usuario,$data_persona); 
 			}
 
 		}
@@ -61,7 +63,10 @@
 
 			if($this->form_validation->run()== FALSE){
 				$user_data["title"] = "Actualizar Informacion";
+				$this->load->view("cabecera");
+				$this->load->view("nav");
 				$this->load->view('update_admin',$user_data);
+				$this->load->view("footer");
 			}else{							
 				$data_usuario["correo"] = $this->input->post('correo');
 				$data_usuario["clave"] = $this->input->post('pass');

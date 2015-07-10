@@ -55,6 +55,7 @@
 					
 				} if($usuario = $this->sesion_model->esAdministrador($data_usuario)){
 					$this->session->set_userdata("administrador",$usuario);
+					redirect("admin/update");
 				}
 				?>
 					<script type="text/javascript">
