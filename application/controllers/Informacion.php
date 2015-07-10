@@ -4,6 +4,8 @@
 
 		function __construct(){
 			parent::__construct();
+			$this->load->library("session");
+			$this->load->helper("sesion");
 		}
 
 		//ESTAS FUNCIONES NO TIENEN NADA QUE VER CON LA FUNCIONALIDAD DEL SISTEMA O ACCIONES DE LOS ADMINS.	
@@ -19,7 +21,12 @@
 			echo "<h1>Agregar informacion para las empresas</h1>";
 			/*Aqui meter la informacion que va a ser mostrada a las Empresas en la pagina*/
 		}
-
+		function misionVision(){
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("mision_vision");
+			$this->load->view("footer");
+		}
 		
 	}
 ?>

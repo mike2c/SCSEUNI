@@ -1,12 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-	
-	/*
-		if(is_session_started() === FALSE){
-				@session_start();
-		}
-	*/
-	
+
 	//Si al menos una sesion existe la funcion regresara true.
 	function sesionIniciada(){
 		return isset($_SESSION["egresado"]) || isset($_SESSION["empresa"]) || isset($_SESSION["administrador"]) || isset($_SESSION["publicador"]);
@@ -27,12 +21,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		return null;
 	}
 
+	function esEgresado(){
+		if(isset($_SESSION["egresado"])){
+			return true;
+		}
+		return false;
+	}
+
+	function esEmpresa(){
+		if(isset($_SESSION["empresa"])){
+			return true;
+		}
+		return false;
+	}
+
+	function esPublicador(){
+		if(isset($_SESSION["publicador"])){
+			return true;
+		}
+		return false;
+	}
+
+	function esAdministrador(){
+		if(isset($_SESSION["adminsitrador"])){
+			return true;
+		}
+		return false;
+	}
+	
 	function getNombre(){
 		$val = getSesion();
 		return $val["nombre"];
 	}
+	
+	function getNombreCompleto(){
+		$val = getSesion();
+		return $val["nombre"]. " ". $val["apellido"];
+	}
 
-	function getUsuarioID(){
+	function getUsuarioId(){
 		$val = getSesion();
 		return $val["usuario_id"];
 	}

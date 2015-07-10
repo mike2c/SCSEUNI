@@ -9,7 +9,8 @@
 			parent::__construct();
 			$this->load->helper("url");
 			$this->load->helper("form_helper");
-			$this->load->library("form_validation");
+			$this->load->library(array("form_validation","session"));
+			$this->load->helper("sesion");
 
 			#DEFINIENDO LAS REGLAS
 				$config = array(
@@ -32,7 +33,7 @@
 
 		function Autenticar(){
 			$this->load->view("cabecera");
-			$this->load->view("nav2");
+			$this->load->view("nav");
 			$this->load->view("autenticar_egresado");
 			$this->load->view("footer");
 		}
@@ -41,13 +42,16 @@
 			$this->load->model("egresado_model","egresados");
 			$this->load->view("busqueda_egresado");
 			$data["egresado"] = $this->egresados->listarEgresados();
-			$this->load->view("lista_egresados",$data);
+			$this->load->view("listar_egresados",$data);
+		}
+
+		function Prueba(){
+			print_r($_POST);
 		}
 
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
 		function registro(){
-		
-
+			$this->load->helper("pass_gen");
 			#Asignando las reglas hechas.
 					
 			if($this->form_validation->run()==FALSE){
@@ -77,7 +81,8 @@
 				$data_egresado["trabaja"] = FALSE;
 				$data_egresado["carrera_id"] = $this->input->post("carrera");;
 
-				$data_usuario["correo"] = $this->input->post("correo");;
+				$data_usuario["correo"] = $this->input->post("correo");
+				$data_usuario["clave"] = md5(generarClave(15));
 				$data_usuario["activo"] = FALSE;
 
 				$egresado->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
@@ -89,8 +94,17 @@
 			}
 			
 		}
-	
-		function edicion(){
+		
+		function ActualizarPerfil(){
+			$this->Actualizar();
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("menu_perfil");
+			$this->load->view("footer");
+
+		}
+
+		function Actualizar(){
 		
 			$this->load->model("egresado_model");
 		
@@ -99,7 +113,7 @@
 			$data_persona["persona_id"] = $this->input->post("persona_id");
 			$data_persona["nombre"] = $this->input->post("nombre");
 			$data_persona["apellido"] = $this->input->post("apellido");
-			$data_persona["sexo"] = $this->input->post("sexo");
+			$data_persona["sexo"] = $this->input->post("genero");
 			$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento ");
 
 			$data_contacto["contacto_id"]= $this->input->post("contacto_id");
@@ -109,7 +123,6 @@
 			$data_contacto["municipio_id"] = $this->input->post("municipio");
 
 			$data_egresado["egresado_id"]= $this->input->post("egresado_id");
-			$data_egresado["carnet"] = $this->input->post("carnet");
 			$data_egresado["cedula"] = $this->input->post("cedula");
 			$data_egresado["titulado"] = $this->input->post("titulado");
 			$data_egresado["trabaja"] = $this->input->post("trabaja");
@@ -117,7 +130,7 @@
 
 			$data_usuario["usuario_id"]= $this->input->post("usuario_id");
 			$data_usuario["correo"] = $this->input->post("correo");
-			$data_usuario["clave"] = $this->input->post("clave");
+			#$data_usuario["clave"] = $this->input->post("clave");
 			#$data_usuario["activo"] = $this->input->post("activo");
 
 			$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);

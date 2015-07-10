@@ -13,23 +13,47 @@
 
 		}
 
-		function CargarDepartamentos(){
+		function CargarDepartamentos($selected = ""){
 			$query = $this->registro->listarDepartamentos();
-			echo "<select name='departamento' id='departamento'>";
+			echo "<select id='departamento' name='departamento'>";
 			foreach($query->result() as $row){
-				echo "<option value='$row->departamento_id'>$row->departamento</option>";
+				if($row->departamento_id == $selected){
+					echo "<option selected value='$row->departamento_id'>$row->departamento</option>";
+				}else{
+					echo "<option value='$row->departamento_id'>$row->departamento</option>";
+				}
+				
 			}
 			echo "</select>";
-			echo "<script type='text/javascript'>alert('MEnsaje');</script>";
+			
 		}
 
-		function CargarMunicipios($municipio_id){
+		function CargarMunicipios($municipio_id,$selected = ""){
 			$query = $this->registro->listarMunicipios($municipio_id);
-			echo "<select class='form-control' name='municipio' id='municipio'>";
+			echo "<select name='municipio' id='municipio'>";
 			foreach($query->result() as $row){
-				echo "<option value='$row->municipio_id'>$row->municipio</option>";
+				if($row->municipio_id == $selected){
+					echo "<option selected value='$row->municipio_id'>$row->municipio</option>";
+				}else{
+					echo "<option value='$row->municipio_id'>$row->municipio</option>";
+				}
+			
 			}
 			echo "</select>"; 
+		}
+
+		function CargarCarreras($selected = ""){
+			$query = $this->registro->listarCarreras();
+			echo "<select name='carrera' id='carrera'>";
+				foreach ($query->result() as $row) {
+					if($selected == $row->carrera_id){
+						echo "<option selected value='$row->carrera_id'>$row->nombre_carrera</option>";
+					}else{
+						echo "<option value='$row->carrera_id'>$row->nombre_carrera</option>";
+					}
+					
+				}
+			echo "</select>";
 		}
 	}
 ?>

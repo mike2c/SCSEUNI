@@ -40,44 +40,7 @@
 
 		function buscarEgresado($campo,$valor){
 			
-			return $this->db->query("SELECT 
-		        `egresado`.`cedula` AS `Cedula`,
-		        `egresado`.`carnet` AS `Carnet`,
-		        `persona`.`nombre` AS `Nombre`,
-		        `persona`.`apellido` AS `Apellido`,
-		        IF((`persona`.`sexo` = 'M'),
-		            'Masculino',
-		            'Femenino') AS `Sexo`,
-		        `contacto`.`celular` AS `Celular`,
-		        `contacto`.`telefono` AS `Telefono`,
-		        `usuario`.`correo` AS `Correo`,
-		        `contacto`.`direccion` AS `Dirección`,
-		        IF((`usuario`.`activo` = 1),
-		            'Activa',
-		            'Inactiva') AS `Estado`,
-		        IF((`egresado`.`titulado` = 1),
-		            'Titulado',
-		            'No titulado') AS `Titulado`,
-		        IF((`egresado`.`trabaja` = 1),
-		            'Trabaja',
-		            'No trabaja') AS `Trabajando`,
-		        `carrera`.`nombre_carrera` AS `Carrera`,
-		        `egresado`.`persona_id` AS `persona_id`,
-		        `egresado`.`usuario_id` AS `usuario_id`,
-		        `egresado`.`contacto_id` AS `contacto_id`,
-		        `egresado`.`egresado_id` AS `egresado_id`
-		    FROM
-		        ((((`persona`
-		        JOIN `egresado`)
-		        JOIN `usuario`)
-		        JOIN `contacto`)
-		        JOIN `carrera`)
-		    WHERE
-		        ((`persona`.`persona_id` = `egresado`.`persona_id`)
-		            AND (`egresado`.`contacto_id` = `contacto`.`contacto_id`)
-		            AND (`egresado`.`usuario_id` = `usuario`.`usuario_id`)
-		            AND (`egresado`.`carrera_id` = `carrera`.`carrera_id`)
-		            AND ($campo like '%$valor%'));");
+			return $this->db->query("select * from registro_egresados where $campo like '%" .$valor . "%'");
 		}
 	
 		function eliminarEgresado($persona_id,$egresado_id,$contacto_id,$usuario_id){

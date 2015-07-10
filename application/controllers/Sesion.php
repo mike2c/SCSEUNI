@@ -26,6 +26,11 @@
 			$this->load->view("footer");
 		}
 
+		function RegistrarUltimaSesion(){
+			$this->load->model("sesion_model","modelo");
+			$this->modelo->actualizarSesion(getUsuarioId());
+		}
+
 		function IniciarSesion(){
 			//cargando el modelo del login
 			$this->load->model('sesion_model','',true);

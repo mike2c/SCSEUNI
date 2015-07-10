@@ -8,9 +8,12 @@
 	    		?>
 					<div class="dropdown">
 						<button class="btn btn-default btn-sm navbar-btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						<?
-							echo getNombre();
-						?>
+							<strong>
+							<?
+								echo getNombre(). " ";
+							?>	
+							</strong>
+					
 						<span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -46,9 +49,9 @@
 			<li><a href="<?=base_url('Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li><li class="separador"></li>
 			<li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Informacion</a>
 				<ul class="submenu">
-					<li><a href="">Mision y Vision</a></li>
-					<li><a href="">Egresados</a></li>
-					<li><a href="">Empresa</a></li>
+					<li><a href="<?=base_url('index.php/informacion/misionVision')?>">Mision y Vision</a></li>
+					<li><a href="<?=base_url('index.php/informacion/Egresados')?>">Egresados</a></li> 
+					<li><a href="<?=base_url('index.php/informacion/Empresas')?>">Empresa</a></li>
 											
 				</ul>
 			</li><li class="separador"></li>

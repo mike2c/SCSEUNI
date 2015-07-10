@@ -17,7 +17,7 @@
 		}																																																													
 
 		function esEgresado($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from egresado,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = egresado.usuario_id and persona.persona_id = egresado.persona_id;");
+			$query = $this->db->query("select usuario.usuario_id,correo,nombre,apellido from egresado,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = egresado.usuario_id and persona.persona_id = egresado.persona_id;");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -26,6 +26,8 @@
  
 		function esEmpresa($data_usuario){
 			$query = $this->db->query("select usuario.usuario_id, nombre_empresa as nombre, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
+			$query = $this->db->query("select usuario.usuario_id,nombre_empresa as nombre, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
+
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -44,5 +46,11 @@
 		function getSesion_id($user_id){
 			$this->session->set_userdata($user_id['usuario_id']);
 			$this->session->set_userdata('tipo_usuario',$user_id['tipo_usuario']);
+		}
+
+		function actualizarSesion($usuario){
+		
+			$this->db->query("call actualizar_sesion('$usuario');");
+		
 		}
 	}
