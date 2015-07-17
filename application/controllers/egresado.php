@@ -46,9 +46,23 @@
 		}
 
 		function Prueba(){
-			print_r($_POST);
+					
+			$this->load->helper("pass_gen");
+			$this->load->library("Encrypter");
+			
+			$clave = generarClave(30	);
+			echo $clave. "<br>";
+			$clave = Encrypter::encrypt($clave);
+			echo "<br>". strlen($clave). "<br>";
+			echo $clave . "<br>";
+			$clave = Encrypter::decrypt($clave);
+			echo $clave;
+			
 		}
 
+		function info(){
+			phpinfo();
+		}
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
 		function registro(){
 			$this->load->helper("pass_gen");
@@ -63,6 +77,7 @@
 			
 				}else{
 				$this->load->model("egresado_model");
+				
 				$egresado = new Egresado_model();
 
 				$data_persona["nombre"] = $this->input->post("nombre");
@@ -82,7 +97,7 @@
 				$data_egresado["carrera_id"] = $this->input->post("carrera");;
 
 				$data_usuario["correo"] = $this->input->post("correo");
-				$data_usuario["clave"] = md5(generarClave(15));
+				#$data_usuario["clave"] =  //Agregar esta linea de codigo
 				$data_usuario["activo"] = FALSE;
 
 				$egresado->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
@@ -97,11 +112,7 @@
 		
 		function ActualizarPerfil(){
 			$this->Actualizar();
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("menu_perfil");
-			$this->load->view("footer");
-
+			redirect("Perfil");
 		}
 
 		function Actualizar(){
@@ -123,6 +134,12 @@
 			$data_contacto["municipio_id"] = $this->input->post("municipio");
 
 			$data_egresado["egresado_id"]= $this->input->post("egresado_id");
+			
+			//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet
+			if(esAdministrador()){
+				$data_egresado = $this->input->post("carnet");
+			}
+
 			$data_egresado["cedula"] = $this->input->post("cedula");
 			$data_egresado["titulado"] = $this->input->post("titulado");
 			$data_egresado["trabaja"] = $this->input->post("trabaja");

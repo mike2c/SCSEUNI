@@ -30,10 +30,10 @@
 		</th>
 		<th>
 			<?
-				if(isset($sent)){
-					echo "Destinatario";
-				}else{
+				if(isset($inbox)){
 					echo "Remitente";
+				}else{
+					echo "Destinatario";
 				}
 			?>
 		</th>
@@ -55,13 +55,13 @@
 				foreach ($lista->result() as $row) {
 					
 					echo "<tr>";
-					echo "<td><input type='checkbox' name='marcador'></td>";
+					echo "<td><input type='checkbox' name='marcador' id='marcador' value='$row->mensaje_id'></td>";
 					if(isset($inbox)){
 						echo "<td>$row->de</td>";
 					}else{
 						echo "<td>$row->para</td>";
 					}
-					echo "<td><a href='". base_url('index.php/Correo/LeerMensaje/$row->mensaje_id') ."'>$row->asunto</a></td>";
+					echo "<td><a href='". base_url('Correo/LeerMensaje/'.$row->mensaje_id). "''>$row->asunto</a></td>";
 					echo "<td>$row->fecha_envio</td>";
 					if(isset($inbox)){
 						echo "<td>$row->estado</td>";

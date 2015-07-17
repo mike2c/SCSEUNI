@@ -1,27 +1,46 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
-		if(!isset($_SESSION["empresa"])){
-		#DESCOMENTAR ESTA LINEA CUANDO EL SISTEMA ESTE TERMINADO.
-		//exit ("Error 404. pagina no encontrada");
-	}
-
+	define('IS_AJAX', isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+	
 	class Empresa extends CI_Controller{
 
 		function __construct(){
 
 			parent::__construct();
-			$this->load->helper("url");
-
-
-			parent:: __construct();
-
-			$this->load->helper(array('form','url'));
 			$this->load->library('form_validation');
 			$this->load->library('session');
+			$this->load->helper(array('form','url'));	
+			
 
 		}
 
-		function actualizar(){
+		function Actualizar(){
+			$this->load->model("empresa_model","modelo");
+			$this->load->model("listas_model","lista");
+
+			$data["empresa"]["empresa_id"] = $this->input->post("empresa_id");
+			$data["empresa"]["mision"] = $this->input->post("mision");
+			$data["empresa"]["vision"] = $this->input->post("vision");
+			$data["empresa"]["ocupacion"] = $this->input->post("ocupacion");
+			$data["empresa"]["nombre_empresa"] = $this->input->post("nombre_empresa");
+			$data["empresa"]["ruc"] = $this->input->post("ruc");
+			$data["empresa"]["sociedad_id"] = $this->input->post("sociedad");
+			$data["empresa"]["sitio_web"] = $this->input->post("sitio_web");
+
+			$data["contacto"]["contacto_id"] = $this->input->post("contacto_id");
+			$data["contacto"]["telefono"] = $this->input->post("telefono");
+			$data["contacto"]["celular"] = $this->input->post("celular");
+			$data["contacto"]["direccion"] = $this->input->post("direccion");
+			$data["contacto"]["municipio_id"] = $this->input->post("municipio");
+
+			$data["usuario"]["usuario_id"] = $this->input->post("usuario_id");
+			$data["usuario"]["correo"] = $this->input->post("correo");
+			
+
+			$this->modelo->actualizarEmpresa($data["empresa"],$data["contacto"],$data["usuario"]);
+			
+		}
+
+		function _actualizar(){
 			$this->load->model('empresa_model','',TRUE);
 			$info["sociedad"] = $this->empresa_model->getInfo();
 			$info["empresa"] = $this->empresa_model->fillCampos();
@@ -97,7 +116,11 @@
 				}
 			}
 
-		function registro(){
+		function ActualizarPerfil(){
+
+		}
+
+		function Registro(){
 			$this->form_validation->set_rules('nombre_empresa','Nombre de la Empresa','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('telefono','Telefono','trim|required|max_length[10]|min_length[8]');
 			

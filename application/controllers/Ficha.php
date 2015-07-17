@@ -36,8 +36,11 @@
 				$data_publicacion["descripcion"] = $this->input->post("publicador_id");
 				$data_publicacion["fecha_publicacion"] = $this->input->post("publicador_id");
 				$data_publicacion["fecha_alta"] = $this->input->post("publicador_id");
+				
+				
 				//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
 				$img = escaparImagen("imagen");
+				
 				$data_publicacion["imagen"]= $img["imagen"];
 				$data_publicacion["tipo"]= $img["tipo"];
 

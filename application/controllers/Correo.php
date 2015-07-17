@@ -5,9 +5,9 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model("mensaje_model","mensajes");
-			$this->load->helper("sesion");
 			$this->load->library("session");
-			
+			$this->load->helper("sesion");
+						
 			if(!sesionIniciada()){
 				exit("<center>error 404 page not found</center>");
 			}
@@ -17,6 +17,13 @@
 			$data["inbox"] = $this->mensajes->mensajesRecibidos(getUsuarioID());
 			$data["sent"] = $this->mensajes->mensajesEnviados(getUsuarioID());
 			$data["drafts"] = $this->mensajes->borrador(getUsuarioID());
+
+			$this->load->model("perfil_model");
+
+			$data["lista_egresados"] = $this->perfil_model->getUsuarioEgresados();
+			$data["lista_empresas"] = $this->perfil_model->getUsuarioEmpresas();
+			$data["lsita_publicadores"] = $this->perfil_model->getUsuarioPublicadores();
+
 			$this->load->view("cabecera");
 			$this->load->view("nav");
 			$this->load->view("correo",$data);
@@ -42,43 +49,53 @@
 			$this->load->view("listar_mensajes",$data);
 		}
 
-		function EliminarMensaje($id){
-			echo "$id mensaje eliminado";
+		function EliminarMensajes(){
+			
+			$mensajes = $this->input->post("mensajes");
+			print_r($mensajes);
+			if($mensajes){
+				for($i = 0; $i < count($mensajes); $i++){
+					$this->mensajes->eliminarMensaje($mensajes[$i]);
+				}
+			}
 		}
 
 		function LeerMensaje($mensaje_id){
-
+			$fecha = getDate();
+			echo $fecha["year"]. "-" . $fecha["mon"]. "-". $fecha["mday"] . "<br>";
+			print_r(getdate());
 		}
 
 		function EnviarMensaje(){
-			$data["remitente"] = $this->input->post("remitente");
-			$data["destinatario"] = $this->input->post("destinatario");
+
+			$borrador = $this->input->post("borrador");
+			$curr_adjuntado = $this->input->post("curr_adjuntado");
+
+			$data["borrador"] = ($borrador == "true")? 1 : 0;
+			$data["curr_adjuntado"] = ($curr_adjuntado == "true")? 1 : 0;
+
+			$data["remitente"] = getUsuarioId();
+			$data["destinatario"] = $this->input->post("usuario");
+			if(empty($data["destinatario"])){
+				$data["destinatario"] = null;
+			}
 			$data["asunto"] = $this->input->post("asunto");
 			$data["mensaje"] = $this->input->post("mensaje");
-			$data["fecha_envio"] = getdate();
-			$data["borrador"] = FALSE;
-			$data["visto"] = FALSE;
-
+			$date = getDate();
+			$data["fecha_envio"] =  $date["year"]. "-" . $date["mon"]. "-". $date["mday"];
+			
+			$data["visto"] = false;
+			$this->mensajes->insertarMensaje($data);
 		}
 
 		function Buscar(){
 			$data = null;
 
-			$datos["tipo"] = $this->input->post("tipo");
-			$datos["campo"] = $this->input->post("filtro");
-			$datos["busqueda"] = $this->input->post("busqueda");
+			$datos["tipo"] = $this->input->get("bandeja");
+			$datos["campo"] = $this->input->get("filtro");
+			$datos["busqueda"] = $this->input->get("busqueda");
 			$datos["usuario_id"] = getUsuarioID();
-			
-			$datos["tipo"] = "inbox";
-			$datos["campo"] = "asunto";
-			$datos["busqueda"] = "men";
-			$datos["usuario_id"] = getUsuarioID();
-			
-			#echo $datos["busqueda"];
-			#echo $datos["tipo"];
-			#echo $datos["campo"];
-			#echo $datos["usuario_id"];
-
+	
 			if($datos["tipo"] == "inbox" ){
 
 				$data["inbox"] = $this->mensajes->buscarMensajes($datos);
@@ -90,7 +107,6 @@
 				$data["drafts"] = $this->mensajes->buscarMensajes($datos);
 			}
 
-			$this->load->view("cabecera");
 			$this->load->view("listar_mensajes",$data);
 		}
 	}

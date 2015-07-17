@@ -1,12 +1,12 @@
 .slider{
-+
+
 	display: block;
 	width: 900px;
-	height: 268px;
+	//height: 268px; //357.333 para 1200px
 	background-color: white;
 	overflow: hidden;
-	//margin: 0 auto;
-	border: 2px solid lightgray;
+	margin: 5px auto;
+	border: 1px solid gray;
 }
 
 .slider img{

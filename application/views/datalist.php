@@ -1,6 +1,6 @@
 <input id="buscar" type="text" list="lista" autocomplete="off">
 
-<datalist data-prueba ="hola" id="lista">
+<datalist name="lista" data-prueba ="hola" id="lista">
 	<option data-id="0" value="Ocotal" label="mikedosce1992gmail.com">
 	<option data-id="1" value="Mozonte" label="cruzhernandezrenemauricio@gmail.com">
 	<option data-id="2" value="Dipilto" label="mikedosce1992gmail.com">
@@ -15,7 +15,9 @@
 	<option data-id="3" value="San Fernando" label="San Fernando">
 	<option data-id="4" value="Jicaro" label="Jicaro">
 </select>
-<button id="boton">Probar</button>
+<button id="boton" onclick="alert(lista.selectedItem);">Probar</button>
+
+
 <script type="text/javascript">
 
 	$(document).ready(function(){

@@ -11,10 +11,22 @@ $(document).ready(function(){
  	var base_url = document.getElementById("base_url").value;
  	var default_form = document.getElementById("defaultForm").value;
 
+ 	console.log(default_form);
  	var mun_actual = document.getElementById("municipio_id").value;
  	var dep_actual = document.getElementById("departamento_id").value;
- 	var carr_actual = document.getElementById("carrera_id").value;
 
+ 	var carr_actual = null;
+ 	
+ 	var soc_actual = null;//Si el usuario es una empresa cargamos la sociedad actual
+ 	if($("#sociedad_id").length){
+ 		soc_actual = $("#sociedad_id").val();
+ 	}
+ 	if($("#sociedad_seleccion").length){
+ 		console.log("esta");
+ 		listarSociedades();
+
+ 	}
+	
  	//PREGUNTAMOS SI EXISTE EL ELEMENTO departamento _selección
 	if($("#departamento_seleccion").length){
  		listarDepartamentos();//cargamos los departamentos via ajax
@@ -36,8 +48,9 @@ $(document).ready(function(){
 	}
  	
  	if($("#carrera_seleccion").length){
+ 		carr_actual = document.getElementById("carrera_id").value;
  		listarCarreras();
- 		console.log("asdasd");
+ 		//console.log("asdasd");
  	}
 	
  	if(base_url == ""){
@@ -87,6 +100,21 @@ $(document).ready(function(){
 		$.ajax(settings);
 		$("#carrera").addClass("form-control");
 		$("#carrera").attr("form",default_form);
+	}
+
+	function listarSociedades(){
+		var dir = base_url+"Ajax/CargarSociedades/"+soc_actual;
+		var settings = {url: dir,
+		type: "post",
+		dataType: "html",
+		success: function(data){
+			$("#sociedad_seleccion").html(data);
+		},
+		async: false}; 
+
+		$.ajax(settings);
+		$("#sociedad").addClass("form-control");
+		$("#sociedad").attr("form",default_form);
 	}
 
 });

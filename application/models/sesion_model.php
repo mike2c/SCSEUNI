@@ -8,11 +8,11 @@
 		}
 
 		function esAdministrador($data_usuario){
-<<<<<<< HEAD
+
 			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
-=======
+
 			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre,admin.persona_id from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
->>>>>>> a1f5804fe6f99bacbd7206da32521ba50e6f9fb2
+
 				if($query->num_rows()>0){
 				return $query->row_array();
 			}

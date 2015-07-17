@@ -20,5 +20,9 @@
 		function listarCarreras(){
 			return $this->db->get("carrera");
 		}
+
+		function listarSociedades(){
+			return $this->db->get("sociedad");
+		}
 	}
 ?>

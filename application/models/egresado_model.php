@@ -51,7 +51,7 @@
 		}
 
 		function listarEgresados(){
-			return $this->db->query("select * from listar_egresados;");
+			return $this->db->query("select * from registro_egresados;");
 		}
 	}
 

@@ -55,5 +55,21 @@
 				}
 			echo "</select>";
 		}
-	}
+
+		function CargarSociedades($selected = ""){
+
+			$query = $this->registro->listarSociedades();
+			echo "<select name='sociedad' id='sociedad'>";
+			foreach ($query->result() as $row) {
+				if($selected == $row->sociedad_id){
+					echo "<option selected value='$row->sociedad_id'>$row->sociedad</option>";
+				}else{
+					echo "<option value='$row->sociedad_id'>$row->sociedad</option>";
+				}
+				
+			}
+			echo "</select>";
+
+		}
+	}	
 ?>
