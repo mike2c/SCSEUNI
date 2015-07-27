@@ -31,7 +31,7 @@
 			#actualizar tabla de contacto
 			$where = "contacto.contacto_id=". $data_contacto["contacto_id"];
 			$query = $this->db->update_string("contacto",$data_contacto,$where);
-			echo $query;
+			
 			$this->db->query($query);
 
 			#actualizar tabla de empresa

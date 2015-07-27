@@ -7,7 +7,7 @@
 	display: block;
 	height: 40px;
 	line-height:40px;
-	padding-left: 30px;
+	padding-left: 15px;
 	text-decoration: none;
 	
 }
@@ -39,4 +39,43 @@
 	border-left: 1px solid lightgray;
 	//border-top: 1px solid lightgray;
 	border-right: 1px solid lightgray;
+}
+
+.message-header h1{
+	display: block;
+	font-size: 25px;
+	font-weight: lighter;
+	padding-bottom:10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid lightgray;
+}
+
+.message-header span{
+	display: block;
+	//font-family: "Consolas";
+	text-align: right;
+	margin: 2px 0px;
+	font-size: 16px;
+	text-align: right;
+	color: #919189;
+}
+
+.message-body .body{
+	padding: 5px 8px;
+	
+	font-size: 18px;
+	font-family: "Calibri";
+}
+
+.message-footer{
+	border-top: 1px solid lightgray;
+}
+
+.message-footer a{
+	display: block;
+	text-align: right;
+}
+
+*{
+	//border:1px solid black;
 }

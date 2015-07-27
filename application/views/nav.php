@@ -21,7 +21,7 @@
 </header>
 
 <nav class="h-line">
-	<div class="container">
+	<div class="container" style="padding:0px 0px;">
 	<div class="col-md-9 col-lg-9" style="padding:0px 0px;">
 		<ul class="menu">
 			<li class="activo v-line"><a  href="<?=base_url();?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>

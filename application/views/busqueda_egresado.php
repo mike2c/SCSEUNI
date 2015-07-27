@@ -22,7 +22,7 @@
 		</div>
 	</form>
 </div>
-<label for="" id="asd"></label>
+
 <!--CONTENEDOR DEL REGISTRO DE EGRESADOS-->
 <script type="text/javascript">
 

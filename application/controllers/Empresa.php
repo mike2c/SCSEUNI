@@ -117,7 +117,8 @@
 			}
 
 		function ActualizarPerfil(){
-
+			$this->Actualizar();
+			redirect("Perfil");
 		}
 
 		function Registro(){

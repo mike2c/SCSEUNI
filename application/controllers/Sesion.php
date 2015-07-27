@@ -16,7 +16,9 @@
 		}
 
 		function Index(){
+		
 			$this->login();
+		
 		}
 
 		function Login(){
@@ -34,6 +36,7 @@
 		function IniciarSesion(){
 			//cargando el modelo del login
 			$this->load->model('sesion_model','',true);
+			$this->load->library("Encrypter");
 
 			if($this->form_validation->run()== false){
 
@@ -42,26 +45,27 @@
 			}else{
 			
 				$data_usuario['correo'] = $this->input->post('correo');
-				$data_usuario['clave'] = $this->input->post('clave');
+				$data_usuario['clave'] = Encrypter::encrypt( $this->input->post('clave'));
 				
 				if($usuario = $this->sesion_model->esEgresado($data_usuario)){
 					$this->session->set_userdata("egresado",$usuario);
-										
-				} if($usuario = $this->sesion_model->esEmpresa($data_usuario)){
+								
+				}elseif($usuario = $this->sesion_model->esEmpresa($data_usuario)){
 					$this->session->set_userdata("empresa",$usuario);
-									
-				} if($usuario = $this->sesion_model->esPublicador($data_usuario)){
+								
+				}elseif($usuario = $this->sesion_model->esPublicador($data_usuario)){
 					$this->session->set_userdata("publicador",$usuario);
 					
-				} if($usuario = $this->sesion_model->esAdministrador($data_usuario)){
+				}elseif($usuario = $this->sesion_model->esAdministrador($data_usuario)){
 					$this->session->set_userdata("administrador",$usuario);
-					redirect("admin/update");
+					
+				}else{
+					echo "El correo o la contraseña que has ingresado son incorrectos";
+					exit();
 				}
-				?>
-					<script type="text/javascript">
-						window.location="<?=base_url() ?>";
-					</script>
-				<?
+
+				$this->RegistrarUltimaSesion();
+				redirect("perfil");
 			}
 		}
 

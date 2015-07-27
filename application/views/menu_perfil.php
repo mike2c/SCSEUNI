@@ -1,4 +1,6 @@
+<input type="hidden" value="<?=base_url()?>" id="base_url">
 <div class="container">
+
 	<div class="row">
 		<div class="col-md-2 col-g-2 margen-top">
 			<div class="row">
@@ -14,7 +16,7 @@
 			<div class="h-line"></div>
 
 			<a id="editar_perfil" href="#" class="menu-item">Editar perfil</a>
-			<a id="ver_mensajes" href="#" class="menu-item">Mensajes</a>
+			<a id="ver_mensajes" href="<?=base_url('Correo')?>" class="menu-item">Mensajes</a>
 			<?php
 				if(esEgresado()){
 					?>
@@ -28,8 +30,8 @@
 				}elseif(esEmpresa()){
 					?>
 						<div class="h-line"></div>
-						<a id="crear_ficha" href="#" class="menu-item">Crear ficha</a>
-						<a id="ver_fichas" href="#" class="menu-item">Ver fichas</a>
+						<a id="crear_ficha" href="javascript:nuevaFicha();" class="menu-item">Crear ficha</a>
+						<a id="ver_fichas" href="javascript:listarFichas();" class="menu-item">Ver fichas</a>
 					<?
 				}elseif(esPublicador()){
 					?>
@@ -49,7 +51,7 @@
 			</div>
 		</div>
 		<div class="col-md-10 col-lg-10 margen-top" style="height:100%;">
-			<div id="contenido" style="height:inherit;">
+			<div id="contenido">
 				
 			</div>
 		</div>
@@ -118,6 +120,16 @@
 	.tab-pane{
 		padding-top:10px;
 	}
+
+
+	#contenido{
+		
+		border-left: 1px solid lightgray;
+		border-right: 1px solid lightgray;
+		overflow-y:auto;
+		height:490px;
+		overflow-x:hidden;
+	}
 </style>
 
 <script type="text/javascript">
@@ -129,15 +141,22 @@
 	
 	function cambiarClave(form){
 		
-		$.ajax({url:form.action,
-			data: $(form).serialize(),
-			type: "post",
-			datatype: "html",
-			success:function(data){
-				$("#cambiarClaveRespuesta").html(data);
-			},
-			aync: false
-		});
+		if(form.clave_actual.value !="" && form.clave_nueva.value != "" && form.clave_repetida.value != ""){
+			if(confirm("¿Esta seguro que desea cambiar su contraseña?")){
+			   	$.ajax({url:form.action,
+				data: $(form).serialize(),
+				type: "post",
+				datatype: "html",
+				success:function(data){
+					$("#cambiarClaveRespuesta").html(data);
+				},
+				aync: false
+				});
+    		}
+
+		}else{
+			alert("Hay campos incompletos");
+		}
 	}
 	//Codigo en php
 	<?
@@ -153,8 +172,21 @@
 					$("#contenido").load("<?=base_url('Perfil/PerfilEmpresa')?>");
 				}
 			<?
+		}elseif(esPublicador()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilPublicador')?>");
+				}
+			<?
+		}elseif(esAdministrador()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilAdministrador')?>");
+				}
+			<?
 		}
 	?>
 	
 
 </script>
+<script type="text/javascript" src="<?=base_url('public/js/ficha.js')?>"></script>

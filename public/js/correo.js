@@ -6,7 +6,6 @@ var borr = false;
 var actualizar = null;
 var tipo = "inbox";
 
-
 $(document).ready(function(){
 
 	//INICIALIZAR VARIABLES
@@ -166,6 +165,21 @@ function guardarBorrador(){
 	}
 }
 
+function leerMensaje(mensaje_id){
+	
+	var dat = {mensaje: mensaje_id,
+		bandeja: tipo};
+	
+	$.ajax({url: base_url+"Correo/LeerMensaje",
+		data: dat,
+		type: "get",
+		datatype: "html",
+		success: function(data){
+			$("#area_mensajes").html(data);
+		},
+		async: false});
+}
+
 function cancelar(){
 	if((document.getElementById("mensaje").value != "") || (document.getElementById("asunto").value != "")){
 		if(confirm("¿Esta seguro que desea cancelar el envio de este mensaje?")){
@@ -195,6 +209,7 @@ function buscar(){
 }
 
 function getInbox(){
+
 	actualizar = getInbox;
 	tipo = "inbox";
 	$("#area_mensajes").load(base_url+"Correo/Inbox");
@@ -211,6 +226,11 @@ function getDrafts(){
 	tipo = "drafts";
 	actualizar = getDrafts;
 	$("#area_mensajes").load(base_url+"Correo/Drafts");
+}
+
+function desactivar(val){
+	$("a[name='menu_correo']").remove(".activo");
+	
 }
 
 function limpiarCampos(){

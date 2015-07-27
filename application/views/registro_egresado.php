@@ -1,5 +1,7 @@
-<h3 class="page-header">Registrar egresado</h3>
-<div class="col-md-8 col-lg-8">
+<h3 class="page-header">Registrar nuevo egresado</h3>
+<div class="container">
+	<div class="col-md-6 col-lg-6">
+
 	<form action="<?=base_url().'index.php/Egresado/Registro'?>" id="formRegistroEgresado" method="POST" class="form-horizontal">
 	<div class="form-group">
 		<div class="col-sm-9 col-sm-push-3">
@@ -98,13 +100,10 @@
 	  	<label for="" class="control-label col-sm-3">Departamento</label>
 	  		<div class="col-sm-9">
 	  		 <div class="input-group">
-		     	<select name="departamento" required id="departamento" class="form-control">
-	  				<?php
-		     			foreach($departamentos->result() as $row){
-		     				echo "<option name='carrera' value='$row->departamento_id'>$row->departamento</option>";
-		     			}
-		     		?>
-			  	</select>
+	  		 	<div id="departamento_seleccion">
+	  		 		<select name="departamento" required id="departamento" class="form-control"></select>
+	  		 	</div>
+		     
 				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 		     </div>
 	  	</div>
@@ -113,8 +112,10 @@
 		<label for="" class="control-label col-sm-3">Municipio</label>
   		<div class="col-sm-9" id="areaDepartamento">
 	  		<div class="input-group">
-	     		<select required name="municipio" id="municipio" class="form-control"></select>
-				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	  			<div id="municipio_seleccion">
+	  				<select required name="municipio" id="municipio" class="form-control"></select>
+	  			</div>
+	     		<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 	     	</div>
   			
   		</div>
@@ -134,14 +135,11 @@
  	</div>
 </form>
 </div>
+</div>
+<script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
 
 	$(document).ready(function(){
-
-		$("#departamento").change(function(){
-			listarMunicipios($(this).val());
-		});
-
 		$("#formRegistroEgresado").submit(function(e){
 			e.preventDefault();
 			$.post("<?=base_url().'Egresado/Registro'?>",
@@ -151,15 +149,6 @@
 			});
 		});
 		
-		function listarMunicipios(id){
-			if(id > 0){
-				
-				$("#areaDepartamento").load("<?=base_url().'index.php/Ajax/CargarMunicipios/';?>" + id);	
-			}
-		}
-
-		listarMunicipios(document.getElementById("departamento").value);
-
 	});
 	
 </script>

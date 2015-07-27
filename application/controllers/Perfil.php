@@ -22,6 +22,7 @@
 		}
 
 		function Index(){
+		
 
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -58,15 +59,33 @@
 			}
 		}
 
+		function PerfilPublicador(){
+
+			$resultado = $this->modelo->buscarPublicador("usuario_id",getUsuarioId());
+			
+			if($resultado != null){
+				
+				foreach ($resultado->result() as $row) {
+					$data["perfil"] = $row;
+				}
+				
+				$this->load->view("perfil_Publicador",$data);
+			}
+		}
+
+
 		function CambiarClave(){
 			$this->load->model("perfil_model");
+			$this->load->library("Encrypter");
 
-			$clave_actual = $this->input->post("clave_actual");
+			$clave_actual = Encrypter::encrypt($this->input->post("clave_actual"));
 			$clave_nueva = $this->input->post("clave_nueva");
 			$clave_repetida = $this->input->post("clave_repetida");
 
 			if($clave_actual == $this->perfil_model->getClave(getUsuarioId())){
 				if($clave_nueva == $clave_repetida){
+
+					$clave_nueva = Encrypter::encrypt($clave_nueva);
 					$this->perfil_model->cambiarClave(getUsuarioId(),$clave_nueva);
 					echo "<script type='text/javascript'>
 						alert('La contraseña ha sido cambiada');
@@ -78,7 +97,7 @@
 					echo "Las contraseñas no coinciden";
 				}
 			}else{
-				echo "contraseña incorrecta";
+				echo "La contraseña actual que digitaste es incorrecta";
 			}
 		}
 

@@ -25,7 +25,7 @@
 		}
 
 		function mensajesRecibidos($usuario_id){
-			$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.destinatario ='$usuario_id' and borrador=false;");
+			$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$usuario_id' and borrador=false;");
 			
 			return $result;
 		}
@@ -44,7 +44,7 @@
 			$result;
 
 			if($data["tipo"] = "inbox"){
-				$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and $data[campo] like '%$data[busqueda]%'");
+				$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and $data[campo] like '%$data[busqueda]%'");
 				
 			}else if($data["sent"]){
 
@@ -55,6 +55,19 @@
 			}
 
 			return $result;
+		}
+
+		function mensaje($data){
+			$sql = "";
+			if($data["tipo"] == "inbox"){
+				$sql = "select mensaje_id,usuario.usuario_id,correo,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,mensaje,DATE_FORMAT(fecha_envio,'%d-%m-%Y')as fecha_envio,curr_adjuntado from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and mensaje_id=". $data["mensaje_id"];
+			}elseif($data["tipo"] == "sent"){
+				$sql = "select mensaje_id,correo,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,mensaje,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.remitente ='$data[usuario_id]' and borrador=false and mensaje_id=". $data["mensaje_id"];
+			}elseif($data["tipo"] == "drafts"){
+				$sql = "select mensaje_id,correo,asunto,fecha_envio,mensaje from mensaje left join usuario on usuario.usuario_id = mensaje.destinatario  where mensaje.remitente ='$data[usuario_id]' and borrador=true and mensaje_id=". $data["mensaje_id"];
+			}
+ 			
+			return $this->db->query($sql);
 		}
 	}
 

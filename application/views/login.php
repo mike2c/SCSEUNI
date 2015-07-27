@@ -8,10 +8,10 @@
 		</div>
 		<div class="form-group">
 			<label>Contraseña</label>
-			<input type="password" class="form-control" name="clave">
+			<input autocomplete="off" type="password" class="form-control" name="clave">
 		</div>
 		<div class="form-group">
-			<input type="submit" class="form-control btn btn-primary" value="Entrar">
+			<input autocomplete="off" type="submit" class="form-control btn btn-primary" value="Entrar">
 		</div>
 	</form>
 	<br>

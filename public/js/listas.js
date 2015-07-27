@@ -1,28 +1,38 @@
-/*						****USO****
-	Crear 2 divs con los id's departamento_seleccion y municipio_selección para que aparezcan
-	los select municipio y departamento.
-	Si se va a trabajar con la url_base de codeigniter crear 1 elemento input type=hidden con el
-	valor de la url base el script escanea el codigo y busca este elemento.
-	
 
-*/
 $(document).ready(function(){
  	
- 	var base_url = document.getElementById("base_url").value;
- 	var default_form = document.getElementById("defaultForm").value;
+ 	var base_url = "";
+ 	if(esta("base_url")){
+ 		base_url = document.getElementById("base_url").value;
+ 	}
 
- 	console.log(default_form);
- 	var mun_actual = document.getElementById("municipio_id").value;
- 	var dep_actual = document.getElementById("departamento_id").value;
+ 	var default_form = null;
+ 	if($("#defaultForm").length){
+ 		default_form = document.getElementById("defaultForm").value;
+ 	}
 
- 	var carr_actual = null;
- 	
+ 	var mun_actual = null;
+ 	if(esta("municipio_id")){
+ 		mun_actual = document.getElementById("municipio_id").value;
+ 	}
+
+	var dep_actual = null
+ 	if(esta("departamento_id")){
+ 		dep_actual = document.getElementById("departamento_id").value
+ 	}
+ 
+
+ 	var carr_actual = "";
+ 	if(esta("carrera_id")){
+ 		carr_actual = document.getElementById("carrera_id").value;
+ 	}
  	var soc_actual = null;//Si el usuario es una empresa cargamos la sociedad actual
  	if($("#sociedad_id").length){
  		soc_actual = $("#sociedad_id").val();
  	}
+
  	if($("#sociedad_seleccion").length){
- 		console.log("esta");
+ 		console.log("se ha cargado la sociedad actual");
  		listarSociedades();
 
  	}
@@ -48,7 +58,7 @@ $(document).ready(function(){
 	}
  	
  	if($("#carrera_seleccion").length){
- 		carr_actual = document.getElementById("carrera_id").value;
+ 	
  		listarCarreras();
  		//console.log("asdasd");
  	}
@@ -58,7 +68,7 @@ $(document).ready(function(){
  		console.log("porfavor cree un elemento input type=hidden con el valor de la url base de codeigniter");
  	}
 
-	function listarDepartamentos(){
+ 	function listarDepartamentos(){
 		var dir = base_url+"Ajax/CargarDepartamentos/"+dep_actual;
 		var settings = {url: dir,
 		type: "post",
@@ -119,5 +129,12 @@ $(document).ready(function(){
 
 });
 
+function esta(element_id){
+	if(document.getElementById(element_id) != null){
+		return true;
+	}
+
+	return false;
+}
 /*
 	*/

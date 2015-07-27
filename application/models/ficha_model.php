@@ -13,17 +13,18 @@
 
 			$this->db->insert("publicacion",$data_publicacion);
 			$data_ficha["publicacion_id"] = $this->db->insert_id();
-			$this->db->insert("ficha",$data_ficha);
 
+			$this->db->insert("ficha",$data_ficha);
+			
 		}
 
 		function actualizar($data_publicacion,$data_ficha){
 
-			$this->db->where("pubicacion_id",$data_publicacion["publicacion_id"]);
-			$this->db->insert("publicacion",$data_publicacion);
+			$this->db->where("publicacion_id",$data_publicacion["publicacion_id"]);
+			$this->db->update("publicacion",$data_publicacion);
 
 			$this->db->where("ficha_id",$data_ficha["ficha_id"]);
-			$this->db->insert("ficha",$data_ficha);
+			$this->db->update("ficha",$data_ficha);
 
 		}
 
@@ -32,6 +33,9 @@
 			$this->db->query("call eliminar_ficha($ficha_id);");
 		}
 
-		
+		function listar($where = "",$fields = "*"){
+			
+			return $this->db->query("select $fields from listar_fichas_empresa ". $where);
+		}
 	}
 ?>

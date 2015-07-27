@@ -1,14 +1,22 @@
-	<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 	
 	class Imagen extends CI_Controller{
 
 		function __construct(){
 			parent::__construct();
 			$this->load->model("imagen_model","imagenes");
+			$this->load->helper("imagen");
+			$this->load->database();
 		}
 
-		function Cargar($id){
-			$data["imagen"] = $this->imagenes->mostrar($id);
+		function Cargar($imagen_id){
+			
+			$data = $this->imagenes->mostrar($imagen_id);
+			$this->load->view("imagen",$data);
+		}
+
+		function DeFichaOcupacional($ficha_id){
+			$data = $this->imagenes->DeFichaOcupacional($ficha_id);
 			$this->load->view("imagen",$data);
 		}
 

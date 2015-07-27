@@ -3,7 +3,7 @@
 
 <div>
   <!-- FORMULARIO DE LOS CONTROLES-->
-   <form action="<?=base_url('Empresa/Actualizar')?>" method="post" id="formActualizarPerfil">
+   <form action="<?=base_url('Empresa/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
     <input type="hidden" id="empresa_id" name="empresa_id" value="<?=$perfil->empresa_id?>">
     <input type="hidden" id="contacto_id" name="contacto_id" value="<?=$perfil->contacto_id?>">
     <input type="hidden" id="usuario_id" name="usuario_id" value="<?=$perfil->usuario_id?>">
@@ -15,24 +15,24 @@
   <!-- -->
 
   <!-- Nav tabs -->
-  <ul class="nav nav-tabs" role="tablist">
+  <ul class="nav nav-tabs" role="tablist" style="margin-left:-1px;">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Informacion de empresa</a></li>
     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>
     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
     
-    <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin-right:10px" type="submit" value="Guardar cambios">
+    <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin-right:30px;margin-top:0px;margin-bottom:0px;" type="submit" value="Guardar cambios">
   </ul>
     
    <!-- Tab panes -->
    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active v-line" id="home">
+      <div role="tabpanel" class="tab-pane active " id="home">
         <div class="container">
           <div class="row">
             <div class="col-md-4 col-lg-4">
                <div class="form-group">
                   <label for="">Nombre de la empresa</label>
-                  <input form="formActualizarPerfil" type="text" name="nombre_empresa" class="form-control" value="<?=$perfil->nombre_empresa?>">
+                  <input required form="formActualizarPerfil" type="text" name="nombre_empresa" class="form-control" value="<?=$perfil->nombre_empresa?>">
                 </div>
                 <div class="form-group">
                   <label for="">N° ruc</label>
@@ -49,7 +49,7 @@
            
             </div>
     
-            <div class="col-md-5 col-lg-5">
+            <div class="col required-md-5 col-lg-5">
                 <div class="form-group">
                   <label for="">Misión</label>
                   <textarea form="formActualizarPerfil" class="form-control" name="mision" id="" cols="30" rows="4"><?=$perfil->mision?></textarea>
@@ -69,31 +69,32 @@
            
        </div>
    
-    <div role="tabpanel" class="tab-pane v-line" id="profile">
+    <div role="tabpanel" class="tab-pane " id="profile">
       <div class="container">
            <div class="row">
           <div class="col-md-4 col-lg-4">
           <div class="form-group">
           <label for="">Correo</label>
-          <input form="formActualizarPerfil" type="text" name="correo" value="<?=$perfil->correo?>" class="form-control">
+          <input required form="formActualizarPerfil" type="text" name="correo" value="<?=$perfil->correo?>" class="form-control">
         </div>
         <div class="h-line"></div>
-         <div class="form-group">
-          <button class="btn btn-default btn-danger">Desactivar cuenta</button>
-        </div>
+     
           </div>
-          <div class="col-md-4 col-lg-4">
+            <div class="col-md-5 col-lg-5 ">
             <div class="form-group">
               <label for="">Ultima sesión</label>
-              <h3><?=$perfil->ultima_sesion?></h3>
+              <h5><?=$perfil->ultima_sesion?></h5>
                <label for="">Estado de la cuenta</label>
-              <h3><?=($perfil->activo)? "activa" : "inactiva"; ?></h3>
+              <h5><?=($perfil->activo)? "activa" : "inactiva"; ?></h5>
             </div>
+              <div class="form-group">
+          <button class="btn btn-default btn-danger">Desactivar cuenta</button>
+          </div>
           </div>
         </div>    
       </div>
     </div>
-
+ 
     <div role="tabpanel" class="tab-pane v-line" id="messages">
       <div class="container">
          <div class="row">
@@ -126,7 +127,7 @@
     </div>
 
     <!--CAMBIAR-->
-    <div role="tabpanel" class="tab-pane v-line" id="settings">
+    <div role="tabpanel" class="tab-pane " id="settings">
          <div class="container">
               <div class="row">
           <div class="col-md-4 col-lg-4">
@@ -164,9 +165,7 @@
 <script type="text/javascript">
   $("#formCambiarClave").submit(function(e){
     e.preventDefault();
-    if(confirm("¿Esta seguro que desea cambiar su contraseña?")){
-      cambiarClave(this);
-    }
-    
+    cambiarClave(this);
+     
   });
 </script>

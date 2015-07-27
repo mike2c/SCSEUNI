@@ -38,9 +38,14 @@
 
 		}
 
-		function buscarEgresado($campo,$valor){
+		function buscarEgresado($where){
 			
-			return $this->db->query("select * from registro_egresados where $campo like '%" .$valor . "%'");
+			if(!empty($where)){
+				$this->db->where($where);
+			}
+			
+			return $this->db->get("registro_egresados");
+			
 		}
 	
 		function eliminarEgresado($persona_id,$egresado_id,$contacto_id,$usuario_id){
@@ -51,7 +56,7 @@
 		}
 
 		function listarEgresados(){
-			return $this->db->query("select * from registro_egresados;");
+			return $this->db->get("registro_egresados");
 		}
 	}
 

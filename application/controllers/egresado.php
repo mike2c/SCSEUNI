@@ -19,7 +19,7 @@
 				array('field'=>"apellido",'label'=>"Apellido",'rules'=>'required|max_lenght[45]',
 					'errors'=>array('required'=>'El campo apellido no puede quedar vacio')),
 				array('field'=>"carnet",'label'=>"Carnet",'rules'=>'required|max_lenght[10]',
-					'errors'=>array('required'=>'El campo carnet no puede quedar vacio')),
+					'errors'=>array('required'=>'El campo carnet no puede 	quedar vacio')),
 				array('field'=>"genero",'label'=>"Genero",'rules'=>'required',
 					'errors'=>array('required'=>'El campo sexo no puede quedar vacio')),
 				array('field'=>"celular",'label'=>"Celular",'rules'=>'max_lenght[10]'),
@@ -39,35 +39,35 @@
 		}
 		
 		function index(){
-			$this->load->model("egresado_model","egresados");
-			$this->load->view("busqueda_egresado");
-			$data["egresado"] = $this->egresados->listarEgresados();
-			$this->load->view("listar_egresados",$data);
+	
 		}
 
-		function Prueba(){
-					
-			$this->load->helper("pass_gen");
-			$this->load->library("Encrypter");
+		function Listar(){
+			$this->load->model("egresado_model","egresados");
+
+			if(IS_AJAX){
 			
-			$clave = generarClave(30	);
-			echo $clave. "<br>";
-			$clave = Encrypter::encrypt($clave);
-			echo "<br>". strlen($clave). "<br>";
-			echo $clave . "<br>";
-			$clave = Encrypter::decrypt($clave);
-			echo $clave;
+				$data["egresado"] = $this->egresados->listarEgresados();
+				$this->load->view("egresado/listar_egresados",$data);
+			}else{
+				$this->load_>view("cabecera");
+				$this->load_>view("nav");
+				$this->load_>view("lista_egresados");
+				$this->load_>view("cabecera");
+			}
+			
 			
 		}
 
 		function info(){
 			phpinfo();
 		}
+
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
 		function registro(){
 			$this->load->helper("pass_gen");
-			#Asignando las reglas hechas.
-					
+	
+	
 			if($this->form_validation->run()==FALSE){
 				$this->load->model("listas_model","lista");
 				$data["departamentos"] = $this->lista->listarDepartamentos();
@@ -83,7 +83,7 @@
 				$data_persona["nombre"] = $this->input->post("nombre");
 				$data_persona["apellido"] = $this->input->post("apellido");
 				$data_persona["sexo"] = $this->input->post("genero");
-				$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento");;
+				$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento");
 
 				$data_contacto["telefono"] = $this->input->post("telefono");
 				$data_contacto["celular"] = $this->input->post("celular");
@@ -125,7 +125,7 @@
 			$data_persona["nombre"] = $this->input->post("nombre");
 			$data_persona["apellido"] = $this->input->post("apellido");
 			$data_persona["sexo"] = $this->input->post("genero");
-			$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento ");
+			$data_persona["fecha_nacimiento"] = date("Y-m-d",strtotime($this->input->post("fecha_nacimiento")));
 
 			$data_contacto["contacto_id"]= $this->input->post("contacto_id");
 			$data_contacto["telefono"] = $this->input->post("telefono");
@@ -155,12 +155,17 @@
 		}
 
 		function Busqueda(){
-			$campo = $this->input->post("filtro");
-			$valor = $this->input->post("busqueda");
+			$this->load->model("egresado_model","egresado");
 
-			$this->load->model("egresado_model","egresados");
-			$data["egresado"] = $this->egresados->buscarEgresado($campo,$valor);
-			$this->load->view("lista_egresados",$data);
+			$campo = $this->input->post("filtro");
+			$where["carrera_id"] = $this->input->post("carrera");
+			$where[$campo] = $this->input->post("busqueda");
+			
+			print_r($where);
+			$data["egresado"] = $this->egresado->buscarEgresado($where);
+			if(IS_AJAX){
+				$this->load->view("egresado/listar_egresados",$data);
+			}
 		}
 	}
 ?>

@@ -24,5 +24,14 @@
 		function listarSociedades(){
 			return $this->db->get("sociedad");
 		}
+
+		function listarAreas(){
+			return $this->db->get("area");
+		}
+
+		function listarCargos($area_id){
+			$this->db->where("area_id",$area_id);
+			return $this->db->get("cargo");;
+		}
 	}
 ?>

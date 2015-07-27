@@ -8,7 +8,7 @@
 
 		function index(){
 			$this->load->view("cabecera");
-			$this->load->view("nav2");
+			$this->load->view("nav");
 			$this->load->view("contacto");
 			$this->load->view("footer");
 		}

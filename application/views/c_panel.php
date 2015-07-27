@@ -1,3 +1,4 @@
+<input type="hidden" id="base_url" value="<?=base_url()?>">
 <div class="alto-total" style="background-color:white;">
 	<nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -40,8 +41,8 @@
 			    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
 		<ul>
-	       	<li><a id="agregarEgresado"  href="#"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
-       		<li><a id="registroEgresado" href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
+	       	<li><a class="activo" href="javascript:agregarEgresado()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
+       		<li><a id="" href="javascript:listarEgresados()"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
 	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
 	       
       	</ul>       
@@ -88,127 +89,29 @@
 </div>		
 		</div>
 	
-	<div class="col-md-10 col-lg-10 contenido alto-total" id="panel" style="overflow:auto;">
-	
+	<div class="col-md-10 col-lg-10" style="padding: 0px 0px;">
+	<div class="contenido" id="contenido">
+		
+	</div>
 	</div>
 	</div>
 	
 </div>
+
+<script type="text/javascript" src="<?=base_url('public/js/egresados.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
+
+<style type="text/css">
+	@import url('<?=base_url('public/css/panel.css')?>');
+</style>
+
 <script type="text/javascript">
 	
-	$(document).ready(function (){
-		$("#agregarEgresado").click(function(){
-			desactivar();
-			$("#panel").load("<?=base_url().'index.php/Egresado/Registro'?>");
-			activar($(this));
-		});
+    $(".panel-body ul li a").click(function(){
 
-		$("#registroEgresado").click(function(){
-			desactivar();
-			$("#panel").load("<?=base_url().'index.php/Egresado'?>");
-			activar($(this));
-		});
+      $(".activo").removeClass("activo");
+      $(this).addClass("activo");
 
-			 
-		
-	});
-
-	function registrarPublicador(){
-		$("#panel").load("<?=base_url().'index.php/Publicador'?>");
-	}
-
-	function desactivar(){
-		$("ul li a").remove(".activo");
-	}
-
-	function activar(elemento){
-		$(elemento).add(".activo");
-	}
+    });
 </script>
-<style type="text/css">
-	.alto-completo{
-		height: 100%;
-	}
-	.navbar{
-		border-radius: 0px;
-	}
-	html,body{
-		//background-color: red;
-		background-color:#eaeaea;
-		height: 100%;
-	}
-
-	.panel-body ul{
-		list-style:none;
-		//border: 1px solid black;
-		padding-left: 0px;
-	}
-
-	.panel-body ul li{
-
-		//border-bottom: 1px solid gray;
-		height: 35px;
-		line-height: 35px;
-		//border: 1px solid black;
-		//background-color: lightgray;margin: 2px;
-		padding: 0px 0px;
-		margin:0px 0px;
-		border-top:1px solid white;
-	}
-
-	.panel-body ul li a{
-		padding-left:50px;
-		font-size: 14px;
-		font-family: "Verdana";
-		display: block;
-		height: inherit;
-		width: inherit;
-		//border: 1px solid red;
-		color: gray;
-		text-decoration: none;
-		//text-shadow: -1px -1px 1px lightgray;
-	}
-	
-
-	.panel-body ul li a:link{
-		text-decoration: none;
-	}
-	.panel-body ul li:hover > a{
-		background-color: white;
-		color:#337ab7;
-		font-weight: bold;
-		border-bottom: 2px solid lightgray;
-	}
-
-	h4,h5{
-		color: gray;
-		font-weight: bold; 
-	}
-	.panel-body{
-
-		background-color:#eaeaea;
-		padding: 0px;
-	}
-
-	.panel-group{
-		padding:;
-	}
-	.panel-title{
-		border-radius:0px;
-	}
-	.panel-title a{
-		display: block;
-		height: 20px;
-		line-height: inherit;
-	}
-	.activo{
-		background-color: #337ab7;
-		color:black;
-		font-weight: bold;
-		border-bottom: 2px solid lightgray;
-	}
-
-	td{
-		white-space: nowrap;
-	}
-</style>

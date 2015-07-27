@@ -26,7 +26,7 @@
 
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("correo",$data);
+			$this->load->view("mensaje/correo",$data);
 			$this->load->view("footer");
 
 		}
@@ -34,25 +34,25 @@
 		function Inbox(){
 
 			$data["inbox"] = $this->mensajes->mensajesRecibidos(getUsuarioID());
-			$this->load->view("listar_mensajes",$data);
+			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
 		function Sent(){
 
 			$data["sent"] = $this->mensajes->mensajesEnviados(getUsuarioID());
-			$this->load->view("listar_mensajes",$data);
+			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
 		function Drafts(){
 
 			$data["drafts"] = $this->mensajes->borrador(getUsuarioID());
-			$this->load->view("listar_mensajes",$data);
+			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
 		function EliminarMensajes(){
 			
 			$mensajes = $this->input->post("mensajes");
-			print_r($mensajes);
+			#print_r($mensajes);
 			if($mensajes){
 				for($i = 0; $i < count($mensajes); $i++){
 					$this->mensajes->eliminarMensaje($mensajes[$i]);
@@ -60,10 +60,27 @@
 			}
 		}
 
-		function LeerMensaje($mensaje_id){
-			$fecha = getDate();
-			echo $fecha["year"]. "-" . $fecha["mon"]. "-". $fecha["mday"] . "<br>";
-			print_r(getdate());
+		function LeerMensaje(){
+			#print_r($_GET);
+			$data["tipo"] = $this->input->get("bandeja");
+			$data["usuario_id"] = getUsuarioId();
+			$data["mensaje_id"] = $this->input->get("mensaje");
+
+			$query = $this->mensajes->mensaje($data);
+			
+			if($query != null){
+				
+				foreach ($query->result() as $row) {
+					$data["mensaje"] = $row;
+				}
+
+				if($data["tipo"] == "drafts"){
+					$this->load->view("mensaje/editar_borrador",$data);
+				}else{
+					$this->load->view("mensaje/leer_mensaje",$data);
+				}
+			}
+				
 		}
 
 		function EnviarMensaje(){
@@ -80,7 +97,7 @@
 				$data["destinatario"] = null;
 			}
 			$data["asunto"] = $this->input->post("asunto");
-			$data["mensaje"] = $this->input->post("mensaje");
+			$data["mensaje"] = nl2br($this->input->post("mensaje"));
 			$date = getDate();
 			$data["fecha_envio"] =  $date["year"]. "-" . $date["mon"]. "-". $date["mday"];
 			
@@ -107,7 +124,7 @@
 				$data["drafts"] = $this->mensajes->buscarMensajes($datos);
 			}
 
-			$this->load->view("listar_mensajes",$data);
+			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 	}
 ?>
