@@ -1,5 +1,4 @@
 <?php
-	header("CONTENT-TYPE:".$imagen["tipo"]);
-	echo $imagen["data"];
-
+	header("CONTENT-TYPE: $tipo");
+	echo $data;
 ?>

@@ -21,6 +21,27 @@
 			
 		}
 
+		function actualizarEmpresa($data_empresa,$data_contacto,$data_usuario){
+			
+			#actualiza tabla de usuario
+			$where = "usuario.usuario_id=". $data_usuario["usuario_id"];
+			$query = $this->db->update_string("usuario",$data_usuario,$where);
+			$this->db->query($query);
+
+			#actualizar tabla de contacto
+			$where = "contacto.contacto_id=". $data_contacto["contacto_id"];
+			$query = $this->db->update_string("contacto",$data_contacto,$where);
+			
+			$this->db->query($query);
+
+			#actualizar tabla de empresa
+			$where = "empresa_id=". $data_empresa["empresa_id"];
+			$query = $this->db->update_string("empresa",$data_empresa,$where);
+			#echo $query;
+			$this->db->query($query);
+
+		}
+
 		function editarEmpresa($data_empresa){
 			$this->db->where("empresa_id",$data_empresa["empresa_id"]);
 			$this->db->update("empresa",$data_empresa);
@@ -63,6 +84,11 @@
 				$this->db->where("empresa_id",trim($empresa_id[$i]));
 				$this->db->update("empresa",$verificar);
 			}
+		}
+
+		function buscarEmpresa($campo,$busqueda){
+			
+			return $this->db->query("select * from listar_empresas where $campo like '%". $busqueda ."%';");
 		}
 	}
  ?>

@@ -1,6 +1,6 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+	
 	//Si al menos una sesion existe la funcion regresara true.
 	function sesionIniciada(){
 		return isset($_SESSION["egresado"]) || isset($_SESSION["empresa"]) || isset($_SESSION["administrador"]) || isset($_SESSION["publicador"]);
@@ -69,6 +69,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		return $val["correo"];
 	}
 	
+	function getImagenPerfil(){
+		$val = getSesion();
+		return $val["imagen"];
+	}
+
+	function setImagenPerfil($nombre_imagen){
+		if(esEgresado()){
+			$_SESSION["egresado"]["imagen"] = $nombre_imagen;
+		}elseif(esEmpresa()){
+			$_SESSION["empresa"]["imagen"] = $nombre_imagen;
+		}elseif(esPublicador()){
+			$_SESSION["publicador"]["imagen"] = $nombre_imagen;
+		}elseif(esAdministrador()){
+			$_SESSION["administrador"]["imagen"] = $nombre_imagen;
+		}
+
+	}
+
 	function is_session_started(){
 
 	    if ( php_sapi_name() !== 'cli' ) {

@@ -1,6 +1,13 @@
+<input type="hidden" name="base_url" id="base_url" value="<?=base_url()?>">
 <?php echo validation_errors(); ?>
 <div class="container">
-	<div class="col-md-5 col-lg-5 col-md-push-7 borde">
+	<div class="col-md-offset-1 col-md-6 col-lg-6">
+	<br><br><br>
+	<br>
+	<br>
+		<div id="error_field" class="bg-primary"></div>
+	</div>
+	<div class="col-md-5 col-lg-5">
 		<h2 class="page-header">
 			Registro de empresa
 		</h2>
@@ -30,7 +37,7 @@
 			<div class="form-group">
 				<label for="">Contraseña*</label>
 				<div class="input-group">
-					<input class="form-control" autocomplete="off" type="password" id="clave1" required name="clave">
+					<input class="form-control" autocomplete="off" type="password" id="clave" required name="clave">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 				</div>
 			
@@ -38,7 +45,7 @@
 			<div class="form-group">
 				<label for="">Confirma la contraseña*</label>
 				<div class="input-group">
-					<input class="form-control" autocomplete="off" type="password" id="clave2" required name="conf_clave">
+					<input class="form-control" autocomplete="off" type="password" id="clave_conf" required name="clave_conf">
 					<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 				</div>
 				
@@ -52,13 +59,7 @@
 				<div class="form-group">
 					<label for="">Departamento</label>
 					<div class="input-group">
-							<select name="departamento" class="form-control" id="departamento">
-							<?php
-								foreach($departamentos->result() as $row){
-									echo "<option value='$row->departamento_id'>$row->departamento</option>";
-								}
-							?>
-						</select>
+						<div id="departamento_seleccion"></div>
 						<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 					</div>
 					
@@ -67,7 +68,7 @@
 				<div class="form-group">
 					<label for="">Municipios</label>
 					<div class="input-group">
-					<div id="areaMunicipios"></div>
+					<div id="municipio_seleccion"></div>
 						<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 					</div>
 					
@@ -84,19 +85,25 @@
 	</div>
 
 </div>
+<script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
 <script type="text/javascript">
 	
 	$("#formRegistroEmpresa").submit(function(event){
-		if($("#clave1").val() != $("#clave2").val()){
+		event.preventDefault();
+		if($("#clave").val() != $("#clave_conf").val()){
 			window.alert("Las contraseñas no coinciden");
-			event.preventDefault();
+			
+		}else{
+			registrarEmpresa($("#formRegistroEmpresa").serialize(),$("#error_field"));
 		}
-
+		
 	});
 
 	$(function(){
 		$("#departamento").change(function(){
 			listarMunicipios($(this).val());
+			$("#municipio").addClass("form-control");
 		});
 	});
 
@@ -118,7 +125,8 @@
 	
 	body{
 		background-image:url("<?=base_url().'public/res/rasca_cielos.jpg'?>");
-		background-size: 100% 100%;
+		background-repeat: no-repeat;
+		background-size: 120% 150%;
 		
 	}
 	body label{
@@ -131,5 +139,19 @@
 	}
 	.borde{
 		//border: 1px solid lightgray;
+	}
+	
+	#error_field{
+		visibility: hidden;
+	}
+	.bg-primary p{
+		color: white;
+		font-size: 16px;
+	}
+
+	.bg-primary{
+		border-radius: 5px;
+		border: 2px solid white;
+		padding: 10px 10px;
 	}
 </style>

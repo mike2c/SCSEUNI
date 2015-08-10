@@ -9,10 +9,10 @@
 
 		function __construct(){
 			parent:: __construct();
+			$this->load->library('session');
 			$this->load->helper(array('form','url','sesion'));
 			$this->load->library('form_validation');
-			$this->load->library('session');
-
+			
 			$this->form_validation->set_rules('nombre','Nombre','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('apellido','Apellido','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('sexo','Sexo','trim|required|max_length[1]');

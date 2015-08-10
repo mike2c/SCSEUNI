@@ -16,13 +16,15 @@
 		}
 
 		function Index(){
+		
 			$this->login();
+		
 		}
 
-		function Login(){
+		function Login($data = null){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("login");
+			$this->load->view("login",$data);
 			$this->load->view("footer");
 		}
 
@@ -34,34 +36,39 @@
 		function IniciarSesion(){
 			//cargando el modelo del login
 			$this->load->model('sesion_model','',true);
+			$this->load->library("Encrypter");
 
 			if($this->form_validation->run()== false){
-
-				$this->Login();
+				$data["sesion_errors"] = validation_errors();
+				$this->Login($data);
 			
 			}else{
 			
 				$data_usuario['correo'] = $this->input->post('correo');
-				$data_usuario['clave'] = $this->input->post('clave');
+				$data_usuario['clave'] = Encrypter::encrypt( $this->input->post('clave'));
 				
 				if($usuario = $this->sesion_model->esEgresado($data_usuario)){
 					$this->session->set_userdata("egresado",$usuario);
-										
-				} if($usuario = $this->sesion_model->esEmpresa($data_usuario)){
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");		
+				}elseif($usuario = $this->sesion_model->esEmpresa($data_usuario)){
 					$this->session->set_userdata("empresa",$usuario);
-									
-				} if($usuario = $this->sesion_model->esPublicador($data_usuario)){
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");			
+				}elseif($usuario = $this->sesion_model->esPublicador($data_usuario)){
 					$this->session->set_userdata("publicador",$usuario);
-					
-				} if($usuario = $this->sesion_model->esAdministrador($data_usuario)){
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");
+				}elseif($usuario = $this->sesion_model->esAdministrador($data_usuario)){
 					$this->session->set_userdata("administrador",$usuario);
-					redirect("admin/update");
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");
+				}else{
+					
+					$data["sesion_errors"] = "El usuario o contraseña que digitaste no son correctos";
+					$this->Login($data);
 				}
-				?>
-					<script type="text/javascript">
-						window.location="<?=base_url() ?>";
-					</script>
-				<?
+				
 			}
 		}
 

@@ -9,21 +9,25 @@
 			
 		}
 
-		function insertar($data_publicacion,$data_ficha){
+		function insertar($data_publicacion,$data_ficha,$ficha_carreras){
 
 			$this->db->insert("publicacion",$data_publicacion);
 			$data_ficha["publicacion_id"] = $this->db->insert_id();
-			$this->db->insert("ficha",$data_ficha);
 
+			for($i = 0; $i < count($ficha_carreras); $i++){
+				$this->db->query("insert into publicacion_carrera(publicacion_id,carrera_id) values('$data_ficha[publicacion_id]','$ficha_carreras[$i]');");
+			}
+			$this->db->insert("ficha",$data_ficha);
+			
 		}
 
 		function actualizar($data_publicacion,$data_ficha){
 
-			$this->db->where("pubicacion_id",$data_publicacion["publicacion_id"]);
-			$this->db->insert("publicacion",$data_publicacion);
+			$this->db->where("publicacion_id",$data_publicacion["publicacion_id"]);
+			$this->db->update("publicacion",$data_publicacion);
 
 			$this->db->where("ficha_id",$data_ficha["ficha_id"]);
-			$this->db->insert("ficha",$data_ficha);
+			$this->db->update("ficha",$data_ficha);
 
 		}
 
@@ -32,6 +36,12 @@
 			$this->db->query("call eliminar_ficha($ficha_id);");
 		}
 
-		
+		function listar($where = "",$fields = "*"){
+			if($where != ""){
+				$this->db->where($where);
+			}
+
+			return $this->db->get("listar_fichas_empresa");
+		}
 	}
 ?>

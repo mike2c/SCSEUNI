@@ -19,5 +19,14 @@
 
 			return $data;
 		}
+
+		function deFichaOcupacional($ficha_id){
+			$result =  $this->db->query("select imagen,tipo from publicacion,ficha where ficha.publicacion_id = publicacion.publicacion_id and ficha_id=". $ficha_id)->result_array();
+			
+			$data["data"] = $result[0]["imagen"];
+			$data["tipo"] = $result[0]["tipo"];
+
+			return $data;
+		}
 	}
 ?>

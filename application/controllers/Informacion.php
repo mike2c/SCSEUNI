@@ -23,6 +23,7 @@
 			$this->load->view("informacion_empresa");
 			$this->load->view("footer");
 		}
+
 		function misionVision(){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -30,5 +31,20 @@
 			$this->load->view("footer");
 		}
 		
+		function BolsaDeTrabajo(){
+			$this->load->model("ficha_model");
+			$this->load->model("listas_model");
+
+			$data["carreras"] = $this->listas_model->listarCarreras();
+			if(isset($_GET)){
+				$data["fichas"] = $this->ficha_model->listar($_GET);
+			}else{
+				$data["fichas"] = $this->ficha_model->listar();
+			}		
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("ficha/bolsa_trabajo",$data);
+			$this->load->view("footer");
+		}
 	}
 ?>

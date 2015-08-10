@@ -98,7 +98,6 @@
 					break;
 			}
 				imagecopyresampled($thumb, $origen, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
-
 				imagejpeg($thumb,$ruta, 90);
 			?>
 				<img src="<?php echo $defaultImg; ?>" alt"logo" height="100" widht="100" id="usuarioData" class="img-responsive">

@@ -2,12 +2,13 @@
 <div class="nav">
 	<form action="" class="navbar-form navbar-left" style="">
 		<div class="form group">
-			<select class="" name="carrera" id="carrera">
-				<option value="0">Seleccionar carrera</option>
-			</select>
+			<div class="" id="carrera_seleccion"></div>
+			<!--<select class="" name="carrera" id="carrera">
+				<option value="0">todas</option>
+			</select> -->
 		</div>
 	</form>
-	<form  name="formBusqueda" class="navbar-form navbar-right" method="POST" action="<?=base_url().'Egresado/Busqueda'?>">
+	<form  name="formBusqueda" id="formBusqueda" class="navbar-form navbar-right" method="POST" action="<?=base_url().'Egresado/Busqueda'?>">
 		<div class="form-group">
 			<select class="" name="filtro" id="filtro">
 				<option value="nombre">nombre</option>
@@ -22,23 +23,38 @@
 		</div>
 	</form>
 </div>
-<label for="" id="asd"></label>
-<!--CONTENEDOR DEL REGISTRO DE EGRESADOS-->
+<script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
+	
+	$("#carrera").attr("form","formBusqueda");
 
-	$(document).ready(function(){
-		$("#busqueda").keyup(function(){
-			var datos = $(formBusqueda).serialize();
-			//alert(datos);
-			buscar(datos);
-		});
+    $("#formBusqueda").submit(function(ev){
+      ev.preventDefault();
 
-		function buscar(datos){
-			$.post("<?=base_url().'Egresado/Busqueda'?>",
-				datos,
-				function(data){
-					$("#lista").html(data);
-				});
-		}
-	});
+      var data = {};
+      switch($("#filtro").val()){
+
+      	case "nombre":
+      		data = {nombre:$("#busqueda").val(),carrera_id: $("#carrera").val()};
+      	break;
+      	case "apellido":
+      	 	data = {apellido:$("#busqueda").val(),carrera_id: $("#carrera").val()};
+      	break;
+      	case "correo":
+ 			data = {correo:$("#busqueda").val(),carrera_id: $("#carrera").val()};
+      	break;
+      	case "carnet":
+ 			data = {carnet:$("#busqueda").val(),carrera_id: $("#carrera").val()};
+      	break;
+      }
+    	
+      buscarEgresado(data,$("#lista"));
+   
+   });
+
+    $("#carrera").change(function(){
+      buscarEgresado({carrera_id:$("#carrera").val()},$("#lista"));
+     
+    });
+
 </script>

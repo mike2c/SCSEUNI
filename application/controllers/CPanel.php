@@ -8,7 +8,6 @@
 
 		function index(){
 			$this->load->view("cabecera");
-			#$this->load->view("nav");
 			$this->load->view("c_panel");
 			$this->load->view("footer");
 		}

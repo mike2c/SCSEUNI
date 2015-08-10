@@ -1,4 +1,5 @@
-<h3 class="page-header">Registrar egresado</h3>
+<h3 class="page-header">Registrar nuevo egresado</h3>
+
 <div class="col-md-8 col-lg-8">
 	<form action="<?=base_url().'index.php/Egresado/Registro'?>" id="formRegistroEgresado" method="POST" class="form-horizontal">
 	<div class="form-group">
@@ -7,11 +8,11 @@
 		</div>
 	</div>
 	<div class="form-group">
-	    <label for="inputEmail3" class="col-sm-3 control-label pull-left">Correo:</label>
-	    <div class="col-sm-9">
-	      <input type="email" name="correo" class="form-control"  placeholder="ejemplo@gmail.com" autocomplete="off">
-	    </div>
-  	</div>
+    <label for="inputEmail3" class="col-sm-3 control-label pull-left">Correo:</label>
+    <div class="col-sm-9">
+      <input type="email" name="correo" class="form-control"  placeholder="ejemplo@gmail.com" autocomplete="off">
+    </div>
+	</div>
   <div class="form-group">
     <label class="col-sm-3 control-label">Cárnet:</label>
     <div class="col-sm-9">
@@ -26,13 +27,7 @@
     <label class="col-sm-3 control-label">Carrera*</label>
 	    <div class="col-sm-9">
 	     <div class="input-group">
-        	<select required name="carrera" id="carrera" class="form-control">
-	     		<?php
-	     			foreach($carreras->result() as $row){
-	     				echo "<option name='carrera' value='$row->carrera_id'>$row->nombre_carrera</option>";
-	     			}
-	     		?>
-	     	</select>
+        	<div id="carrera_seleccion"></div>
 			<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 	     </div>
 	  
@@ -79,7 +74,7 @@
   	<div class="form-group">
 	    <label for="inputEmail3" class="col-sm-3 control-label">Fecha de nacimiento</label>
 	    <div class="col-sm-9">
-	    	<input type="date" class="form-control" name="fecha_nacimiento">
+	    	<input type="text" autocomplete="off" placeholder="00/00/0000" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento">
 	    </div>
   	</div>
   	<div class="form-group">
@@ -98,13 +93,10 @@
 	  	<label for="" class="control-label col-sm-3">Departamento</label>
 	  		<div class="col-sm-9">
 	  		 <div class="input-group">
-		     	<select name="departamento" required id="departamento" class="form-control">
-	  				<?php
-		     			foreach($departamentos->result() as $row){
-		     				echo "<option name='carrera' value='$row->departamento_id'>$row->departamento</option>";
-		     			}
-		     		?>
-			  	</select>
+	  		 	<div id="departamento_seleccion">
+	  		 		<select name="departamento" required id="departamento" class="form-control"></select>
+	  		 	</div>
+		     
 				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 		     </div>
 	  	</div>
@@ -113,8 +105,10 @@
 		<label for="" class="control-label col-sm-3">Municipio</label>
   		<div class="col-sm-9" id="areaDepartamento">
 	  		<div class="input-group">
-	     		<select required name="municipio" id="municipio" class="form-control"></select>
-				<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
+	  			<div id="municipio_seleccion">
+	  				<select required name="municipio" id="municipio" class="form-control"></select>
+	  			</div>
+	     		<span class="input-group-addon"><i class="glyphicon glyphicon-asterisk"></i></span>
 	     	</div>
   			
   		</div>
@@ -127,39 +121,60 @@
  	</div>
  	<div class="form-group">
  		<div class="col-sm-9 col-sm-push-3">
- 			<input type="submit" class="btn btn-primary" value="Registrar">	
+ 			<input type="submit" class="btn btn-primary" value="Registrar">
  			<input type="reset" class="btn btn-primary" value="Limpiar">	
  		</div>
  		
  	</div>
 </form>
 </div>
+
+<script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
-
+	
 	$(document).ready(function(){
-
-		$("#departamento").change(function(){
-			listarMunicipios($(this).val());
-		});
-
 		$("#formRegistroEgresado").submit(function(e){
 			e.preventDefault();
-			$.post("<?=base_url().'Egresado/Registro'?>",
-			$(this).serialize(),
-			function(){
-				alert("Egresado registrado");
+
+			$.ajax({
+				url: "<?=base_url('Egresado/Registro')?>",
+				data: $(this).serialize(),
+				datatype: "text",
+				type: "post",
+				success: function(data){
+					console.log(data);
+					if(data == ""){
+						alert("El egresado se ha registrado correctamente");
+						document.getElementById("formRegistroEgresado").reset();
+					}else{
+						data = data.replace("<p>","");
+						data = data.replace("</p>","");
+						alert(data);
+					}
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+					alert("Ha ocurrido un error y no se ha podido ejecutar la petición.");
+					console.log(jqXHR);
+					console.log(textStatus);
+					console.log(errorThrown);
+				},
+				async: false
+
 			});
+
 		});
 		
-		function listarMunicipios(id){
-			if(id > 0){
-				
-				$("#areaDepartamento").load("<?=base_url().'index.php/Ajax/CargarMunicipios/';?>" + id);	
-			}
-		}
-
-		listarMunicipios(document.getElementById("departamento").value);
-
+		 $("#fecha_nacimiento").datepicker();
+		
 	});
 	
+
 </script>
+<style type="text/css">
+	#fecha_nacimiento{
+		position: absolute;
+		z-index: 2;
+		width: 400px;
+
+	}
+</style>

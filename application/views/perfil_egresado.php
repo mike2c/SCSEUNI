@@ -20,32 +20,33 @@
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Informacion personal</a></li>
     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
+    <li role="presentation"><a href="#settings" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
     
-    <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin-right:10px" type="submit" value="Guardar cambios">
+    <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin:0px;" type="submit" value="Guardar cambios">
   </ul>
     
    <!-- Tab panes -->
    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="home">
-        
-           <div class="row">
+      <div role="tabpanel" class="tab-pane active v-line" id="home">
+        <div class="container">
+          <div class="row">
             <div class="col-md-5 col-lg-5">
-                <div class="form-group">
+               <div class="form-group">
                   <label for="">Nombre</label>
-                  <input form="formActualizarPerfil" type="text" name="nombre" class="form-control" value="<?=$perfil->nombre?>">
+                  <input required form="formActualizarPerfil" type="text" name="nombre" class="form-control" value="<?=$perfil->nombre?>">
                 </div>
                 <div class="form-group">
                   <label for="">Apellido</label>
-                  <input form="formActualizarPerfil" type="text" name="apellido" value="<?=$perfil->apellido?>" class="form-control">
+                  <input required form="formActualizarPerfil" type="text" name="apellido" value="<?=$perfil->apellido?>" class="form-control">
                 </div>
                 <div class="form-group">
-                  <label for="">Sexo</label>
+                  <label required for="">Sexo</label>
                   <select form="formActualizarPerfil" name="genero" id="genero" class="form-control">
               
                    <option value="M">Masculino</option>
                    <option value="F">Femenino</option>
                   </select>
+                </div>
                   <?php
                     if($perfil->sexo == "F"){
                       ?>
@@ -55,19 +56,33 @@
                       <?
                     }
                   ?>
-                </div>
-                <div class="form-group">
-                  <label for="">Fecha de nacimiento</label>
-                  <input form="formActualizarPerfil" type="date" name="fecha_nacimiento" class="form-control">
-                </div>
-                <div class="form-group">
-                  <label for="">Carrera</label>
-                  <div id="carrera_seleccion">
-
-                  </div>
-                </div>
            
-            </div>  
+                <div class="form-group">
+             
+              
+
+                  <label for="">Fecha de nacimiento</label>
+                  <?php
+                    $sqldate = $perfil->fecha_nacimiento;
+                    $fecha = date("d/m/Y",strtotime($sqldate));
+                  ?>
+
+
+                  <input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
+                  <script type="text/javascript">
+                   // $("#fecha_nacimiento").datepicker();
+                  </script>
+                </div>
+                <div class="form-group">
+                    <label for="">Carrera</label>
+                    <div id="carrera_seleccion">
+                    </div>
+                    <script type="text/javascript">
+
+                    </script>
+                </div>
+                </div>
+    
             <div class="col-md-5 col-lg-5">
               <div class="form-group">
                   <label for="">Carnet</label>
@@ -80,44 +95,79 @@
                 <div class="form-group">
                   <label for="">¿Te encuentras trabajando actualmente?</label><br>
                   <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="trabaja" checked value="1"> Si <br>
-                  <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="trabaja"  value="0"> No
+                  <?php
+                    if(!$perfil->trabaja){
+                      ?>
+                        <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="trabaja" checked value="0"> No
+                      <?
+                    }else{
+                      ?>
+                      <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="trabaja"  value="0"> No
+                      <?
+                    }
+                  ?>
+
+                  
                   <br>
                    <label for="">¿Ya sacaste tu titulo?</label><br>
-                  <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="titulado" checked value="1"> Si <br>
-                  <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="titulado" value="0"> No
+                  
+                    <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="titulado" checked value="1">Si  <br>
+                  
+                  <div class="checkbox">
+                  <?php
+                    if(!$perfil->titulado){
+                      ?>
+                       <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="titulado" checked value="0"> No
+                      <?
+                    }else{
+                      ?>
+                       <input form="formActualizarPerfil" form="formActualizarPerfil" type="radio" name="titulado" value="0"> No
+                      <?
+                    }
+                  ?>
+                   </div>
+                 
+
+                 
                   <br>
                 </div>
-            </div>          
-          </div>
-      </div>
-   
-    <div role="tabpanel" class="tab-pane" id="profile">
-      
-        <div class="row">
-          <div class="col-md-5 col-lg-5">
-                <div class="form-group">
-          <label for="">Correo</label>
-          <input form="formActualizarPerfil" type="text" name="correo" value="<?=$perfil->correo?>" class="form-control">
-        </div>
-        <div class="h-line"></div>
-         <div class="form-group">
-          <button class="btn btn-default btn-danger">Desactivar cuenta</button>
-        </div>
-          </div>
-          <div class="col-md-5 col-lg-5">
-            <div class="form-group">
-              <label for="">Ultima sesión</label>
-              <h3><?=$perfil->ultima_sesion?></h3>
-               <label for="">Estado de la cuenta</label>
-              <h3><?=($perfil->activo)? "activa" : "inactiva"; ?></h3>
             </div>
           </div>
         </div>
+           
+       </div>
+   
+    <div role="tabpanel" class="tab-pane v-line" id="profile">
+      <div class="container">
+           <div class="row">
+          <div class="col-md-5 col-lg-5">
+          <div class="form-group">
+          <label for="">Correo</label>
+          <input required form="formActualizarPerfil" type="text" name="correo" value="<?=$perfil->correo?>" class="form-control">
+        </div>
+        <div class="h-line"></div>
+   
+          </div>
+         
+              <div class="col-md-5 col-lg-5 v-line">
+            <div class="form-group">
+              <label for="">Ultima sesión</label>
+              <h5><?=$perfil->ultima_sesion?></h5>
+               <label for="">Estado de la cuenta</label>
+              <h5><?=($perfil->activo)? "activa" : "inactiva"; ?></h5>
+            </div>
+              <div class="form-group">
+          <button class="btn btn-default btn-danger">Desactivar cuenta</button>
+          </div>
+          </div>
+       
+        </div>    
+      </div>
     </div>
 
-    <div role="tabpanel" class="tab-pane" id="messages">
-     
-      <div class="row">
+    <div role="tabpanel" class="tab-pane v-line" id="messages">
+      <div class="container">
+         <div class="row">
            <div class="col-md-5 col-lg-5">
           <div class="form-group">
             <label for="">Telefono</label>
@@ -143,30 +193,51 @@
         </div>
       </div>
         </div>
+      </div>
     </div>
-
+    
     <!--CAMBIAR-->
-    <div role="tabpanel" class="tab-pane" id="settings">
-        <div class="row">
+    <div role="tabpanel" class="tab-pane v-line" id="settings">
+         <div class="container">
+              <div class="row">
           <div class="col-md-5 col-lg-5">
-            <div class="form-group">
-              <label for="">Digite su contraseña actual</label>
-              <input type="password" name="clave_actual" class="form-control">
-            </div>
-            <div class="h-line"></div>
-            <div class="form-group">
-              <label for="">Contraseña</label>
-              <input type="password" name="clave" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="">Repite contraseña</label>
-              <input type="password" name="clave_repetida" class="form-control">
-            </div>
+             <form method="post" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
+              <div class="form-group">
+                <label for="">Digite su contraseña actual</label>
+                <input type="password" name="clave_actual" class="form-control">
+              </div>
+              <div class="h-line"></div>
+              <div class="form-group">
+                <label for="">Contraseña</label>
+                <input required type="password" name="clave_nueva" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="">Repite contraseña</label>
+                <input required type="password" name="clave_repetida" class="form-control">
+              </div>
+              <div class="form-group">
+                <input required class="btn btn-danger" type="submit" value="Cambiar contraseña">
+              </div>
+            </form>
+
+          </div>
+           <div class="col-md-4 col-lg-5">
+            <div id="cambiarClaveRespuesta"></div>
           </div>
         </div>
+         </div>
     </div>
     </div>
 </div>
 
 <!-- IMPORTANDO ARHIVOS-->
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript">
+  $("#formCambiarClave").submit(function(e){
+    e.preventDefault();
+    cambiarClave(this);
+
+  });
+
+  $("#carrera").attr("form","formActualizarPerfil");
+</script>

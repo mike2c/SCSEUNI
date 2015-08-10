@@ -1,99 +1,187 @@
-//variables globales
-/*  var parametros = {
-                "valorCaja1" : valorCaja1,
-                "valorCaja2" : valorCaja2
-        };
-        $.ajax({
-                data:  parametros,
-                url:   'ejemplo_ajax_proceso.php',
-                type:  'post',
-                beforeSend: function () {
-                        $("#resultado").html("Procesando, espere por favor...");
-                },
-                success:  function (response) {
-                        $("#resultado").html(response);
-                }
-        });*/
-var elemento;
-var tipo_busqueda = "inbox";
+var selected_user = null;
+var current_list = "lista_egresados";
+var msgToDelete= null;
 var base_url = "";
+var borr = false;
+var actualizar = null;
+var tipo = "inbox";
 
 $(document).ready(function(){
+
+	//INICIALIZAR VARIABLES
 	base_url = document.getElementById("base_url").value;
-	mostrar("#divinbox");
+	//EVENTOS
 	
-	$("#option_inbox").click(function(){
-		mostrar("#divinbox");
-		tipo_busqueda = "inbox";
+	$(".left-menu li a").click(function(){
+		$(".left-menu li a").removeClass("activo");
+		$(this).addClass("activo");
+
 	});
 
-	$("#option_sent").click(function(){
-		mostrar("#divsent");
-		tipo_busqueda = "sent";
+	document.getElementById("btnCancelar").addEventListener("click",function(){
+		cancelar();
 	});
 
-	$("#option_drafts").click(function(){
-		mostrar("#divdrafts");
-		tipo_busqueda = "drafts";
+	document.getElementById("btnActualizar").addEventListener("click",function(){
+		actualizar();
 	});
-
-	
-	$("#formBusqueda").submit(function(e){
-		e.preventDefault();
-		buscar();
-	});
-
-	function buscar(){
-
-		datos = $("#formBusqueda").serialize() + "&tipo=" + tipo_busqueda;
-		console.log(datos);
-
-		$.ajax({type: "POST",
-			url: base_url+"Correo/Buscar",
-			data: datos,
-			datatype: "html",
-			async: true}).success(function(data){
-				$("#divinbox").html(data);
-			});
-		/*$.post(base_url + "Correo/Buscar",
-			data,
-			function(data){
-				if(tipo_busqueda == "inbox"){
-					$("#divinbox").html(data);
-				}else if(tipo_busqueda == "sent"){
-					$("#divsent").html(data);
-				}else if(tipo_busqueda == "drafts"){
-					$("#divdrafts").html(data);
-				}
-				
-			});*/
-	}
-
-	function mostrar(id){
-		$("#divinbox").hide();
-		$("#divsent").hide();
-		$("#divdrafts").hide();
-
-		$(id).show();
-	}
 
 });
 
-/*	$("#option_inbox").click(function(){
+function eliminarMensajes(){
+	var mens = document.getElementsByName("marcador");
+	msgToDelete = new Array();
+
+	for(var i = 0; i< mens.length; i++){
+		if(mens[i].checked == true){
+			msgToDelete.push(mens[i].value);
+		}
+	}
+
+	if(msgToDelete.length > 0){
 		
-		elemento = $("#divinbox");
+		if(confirm("¿Esta seguro que desea eliminar estos mensajes")){
+			$.ajax({url:base_url+"Correo/EliminarMensajes",
+			type: "post",
+			datatype: "html",
+			data: {mensajes:msgToDelete},
+			success: function(data){
+				alert("Mensajes eliminados");
+				actualizar();
+				//console.log(data);
+			},
+			error: function(jqXHR,textStatus,errorThrown){
+				alert("No se ha podido realizar la operacion debido al siguiente error: \n" + errorThrown);
+			},
+			async: false
+			});
+		}
 		
+	}else{
+		alert("No se han seleccionado mensajes para eliminar");
+	}
+	
+}
+
+function enviarMensaje(form){
+
+	$.ajax({
+		url: form.action,
+		data: $("#"+form.id).serialize(),
+		type: "post",
+		datatype: "text",
+		success: function(data){
+			if(data == ""){
+				if(form.borrador.value == 'false'){
+					alert("Mensaje enviado");
+				}else{
+					alert("Mensaje guardado");
+				}
+				actualizar();
+			}else{
+				console.log(data);
+			}
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			alert("Ha ocurrido un error y no se ha podido procesar la solicitud. \n"+errorThrown);
+			console.log(jqXHR);
+		},
+		async: false
 	});
 
-	$("#option_sent").click(function(){
-	
-		elemento = $("#divsent");
-		
-	});
+}
 
-	$("#option_drafts").click(function(){
+function leerMensaje(mensaje_id){
 	
-		elemento = $("#divdrafts");
-		
-	});
-*/
+	var dat = {mensaje: mensaje_id,
+		bandeja: tipo};
+	
+	$.ajax({url: base_url+"Correo/LeerMensaje",
+		data: dat,
+		type: "get",
+		datatype: "html",
+		success: function(data){
+			console.log(data);
+			$("#area_mensajes").html(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR.responseText);
+			console.log(textStatus);
+			console.log(errorThrown);
+
+		},
+		async: false});
+}
+
+function cancelar(){
+	if((document.getElementById("mensaje").value != "") || (document.getElementById("asunto").value != "")){
+		if(confirm("¿Esta seguro que desea cancelar el envio de este mensaje?")){
+			limpiarCampos();
+			$("#exampleModal").modal("hide");
+		}
+	}else{
+		limpiarCampos();
+		$("#exampleModal").modal("hide");
+	}
+}
+
+function buscar(form,bandeja){
+	var dir = "";
+	if(bandeja == "inbox"){
+		dir = base_url+"Correo/BuscarRecibidos";
+	}else if(bandeja == "sent"){
+		dir = base_url+"Correo/BuscarEnviados";
+	}else if(bandeja == "drafts"){
+		dir = base_url+"Correo/BuscarBorrador";
+	}
+	console.log($("#"+form.id).serialize());
+	var set = {url: dir,
+		type: "post",
+		data: $("#"+form.id).serialize(),
+		datatype: "html",
+		success: function(data){
+			$("#area_mensajes").html(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			alert("Ha ocurrido un error y no se ha podido procesar la solicitud. \n"+errorThrown);
+			console.log(jqXHR.responseText);
+		},
+		async: true
+		};
+
+		$.ajax(set);
+}
+
+function getInbox(){
+
+	actualizar = getInbox;
+	tipo = "inbox";
+	$("#area_mensajes").load(base_url+"Correo/Inbox");
+
+}
+
+function getSent(){
+	actualizar = getSent;
+	tipo = "sent";
+	$("#area_mensajes").load(base_url+"Correo/Sent");
+}
+
+function getDrafts(){
+	tipo = "drafts";
+	actualizar = getDrafts;
+	$("#area_mensajes").load(base_url+"Correo/Drafts");
+}
+
+function desactivar(val){
+	$("a[name='menu_correo']").remove(".activo");
+	
+}
+
+function limpiarCampos(){
+	$("#usuario").val("");
+	$("#asunto").val("");
+	$("#mensaje").val("");
+	$("#tipo_usuario").attr("selectedIndex",0);
+}
+
+getInbox();

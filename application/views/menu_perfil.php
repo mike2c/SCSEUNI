@@ -1,35 +1,77 @@
-<div class="container" style="border-left:1px solid lightgray;border-right:1px solid lightgray;">
+<input type="hidden" value="<?=base_url()?>" id="base_url">
+<div class="container">
+
 	<div class="row">
 		<div class="col-md-2 col-g-2 margen-top">
 			<div class="row">
-					<a href="#" class="img-perfil">
-				<img class="img-responsive" src="http://applicacion.com/wp-content/uploads/2012/11/cambio-foto-perfil-redes-sociales.jpg">
+				<a href="#" id="load_image" class="img-perfil">
+				<?php
+
+					if(getImagenPerfil() == ""){
+						?>
+						<img class="img-responsive" src="<?=base_url('uploads/male.jpg')?>">
+						<?
+					}else{
+						?>
+						<img class="img-responsive" src="<?=base_url('uploads').'/'.getImagenPerfil()?>">
+						<?
+					}
+				?>
+			
 				<span class="glyphicon glyphicon-camera"></span>
 				</a>
 			</div>
-
+				
 			<div class="row">
 				<h4 for=""><strong><?=getNombre()?></strong></h4>
 			<h4><small><?=getCorreo()?></small></h4>
 			<div class="h-line"></div>
 
 			<a id="editar_perfil" href="#" class="menu-item">Editar perfil</a>
-			<a id="editar_curriculum" href="#" class="menu-item">Curriculum</a>
-			<a id="ver_mensajes" href="#" class="menu-item">Mensajes</a>
+			<a id="ver_mensajes" href="<?=base_url('Correo')?>" class="menu-item">Mensajes</a>
+			<?php
+				if(esEgresado()){
+					?>
+					<div class="h-line"></div>
+					<a id="editar_curriculum" href="#" class="menu-item">Curriculum</a>
+					<div class="h-line"></div>
+					<a id="ver_bolsa" href="#" class="menu-item">Bolsa de trabajo</a>
+					<a id="ver_cursos" href="#" class="menu-item">Cursos de posgrado</a>
+					<a id="ver_becas" href="#" class="menu-item">Becas</a>
+					<?
+				}elseif(esEmpresa()){
+					?>
+						<div class="h-line"></div>
+						<a id="crear_ficha" href="javascript:nuevaFicha();" class="menu-item">Crear ficha</a>
+						<a id="ver_fichas" href="javascript:listarFichas();" class="menu-item">Ver fichas</a>
+					<?
+				}elseif(esPublicador()){
+					?>
+						<div class="h-line"></div>
+						<a id="crear_ficha" href="#" class="menu-item">Crear ficha</a>
+						<a id="ver_fichas" href="#" class="menu-item">Ver fichas</a>
+					<?
+				}elseif(esAdministrador()){
+					?>
+						<div class="h-line"></div>
+						<a id="crear_ficha" href="#" class="menu-item">Crear ficha</a>
+						<a id="ver_fichas" href="#" class="menu-item">Ver fichas</a>
+					<?
+				}
+			?>
 			<div class="h-line"></div>
-
-			<a id="ver_bolsa" href="#" class="menu-item">Bolsa de trabajo</a>
-			<a id="ver_cursos" href="#" class="menu-item">Cursos de posgrado</a>
-			<a id="ver_becas" href="#" class="menu-item">Becas</a>
 			</div>
 		</div>
-		<div class="col-md-10 col-lg-10 margen-top" style="height:100%;">
-			<div id="contenido" style="height:inherit;">
+		<div class="col-md-10 col-lg-10 margen-top">
+			<div id="contenido" style="overflow-x:auto;">
 				
 			</div>
 		</div>
 	</div>
 </div>
+<form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
+	<input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
+</form>
 
 <style type="text/css">
 	
@@ -38,8 +80,7 @@
 		overflow: hidden;
 		background-color: white;
 		border-radius: 4%;
-		border: 1px solid gray;
-		margin: 5px 0px;
+		margin-right: 20px;
 	}
 	
 	.img-perfil img{
@@ -71,13 +112,9 @@
 		
 	}
 
-	h1,h2,h3,h4,h5{
-		margin: 0px 0px;
-	}
-	
 	.h-line{
 		border-bottom:1px solid lightgray;
-		margin:6px 0;
+	
 	}
 
 	.margen-top{
@@ -97,6 +134,13 @@
 	.tab-pane{
 		padding-top:10px;
 	}
+
+
+	#contenido{
+		overflow-y:auto;
+		height:490px;
+		overflow-x:hidden;
+	}
 </style>
 
 <script type="text/javascript">
@@ -106,8 +150,61 @@
 		cargarPerfil()
 	});
 	
+	function cambiarClave(form){
+		
+		if(form.clave_actual.value !="" && form.clave_nueva.value != "" && form.clave_repetida.value != ""){
+			if(confirm("¿Esta seguro que desea cambiar su contraseña?")){
+			   	$.ajax({url:form.action,
+				data: $(form).serialize(),
+				type: "post",
+				datatype: "html",
+				success:function(data){
+					$("#cambiarClaveRespuesta").html(data);
+				},
+				aync: false
+				});
+    		}
 
-	function cargarPerfil(){
-		$("#contenido").load("<?=base_url('Perfil/PerfilEgresado')?>");
+		}else{
+			alert("Hay campos incompletos");
+		}
 	}
+	//Codigo en php
+	<?
+		if(esEgresado()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilEgresado')?>");
+				}
+			<?
+		}elseif(esEmpresa()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilEmpresa')?>");
+				}
+			<?
+		}elseif(esPublicador()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilPublicador')?>");
+				}
+			<?
+		}elseif(esAdministrador()){
+			?>
+				function cargarPerfil(){
+					$("#contenido").load("<?=base_url('Perfil/PerfilAdministrador')?>");
+				}
+			<?
+		}
+	?>
+	
+	$("#load_image").click(function(){
+		$("#imagen").trigger("click");
+
+	});
+
+	$("#imagen").change(function(){
+		$("#formSubirImg").submit();
+	});
 </script>
+<script type="text/javascript" src="<?=base_url('public/js/ficha.js')?>"></script>
