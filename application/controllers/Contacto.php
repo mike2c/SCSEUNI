@@ -4,6 +4,7 @@
 
 		function __construct(){
 			parent::__construct();
+			$this->load->library("session");
 		}
 
 		function index(){

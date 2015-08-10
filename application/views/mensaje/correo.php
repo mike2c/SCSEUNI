@@ -2,59 +2,58 @@
 	$no_inbox = 0;
 	$no_sent = 0;
 	$no_drafts = 0;
-	
-	if(isset($lista_egresados)){
-		echo "<datalist name='lista_egresados' id='lista_egresados'>";
-		foreach ($lista_egresados->result() as $row) {
-			echo "<option data-id='$row->usuario_id' value='$row->nombre' label='$row->correo'>";
+
+	function createDataList($data,$name="",$id=""){
+		echo "<datalist name='$name' id='$id'>";
+		foreach ($data->result() as $row) {
+			echo "<option data-id='$row->usuario_id' value='$row->correo' label='$row->nombre'>";
 		}
 		echo "</datalist>";
 	}
 
+	if(isset($lista_egresados)){
+		createDataList($lista_egresados,"lista_egresados","lista_egresados");
+	}
+
 	if(isset($lista_empresas)){
-		echo "<datalist name='lista_empresas' id='lista_empresas'>";
-		foreach ($lista_empresas->result() as $row) {
-			echo "<option data-id='$row->usuario_id' value='$row->nombre' label='$row->correo'>";
-		}
-		echo "</datalist>";
+		createDataList($lista_empresas,"lista_empresas","lista_empresas");
 	}
  
 	if(isset($lista_publicadores)){
-		echo "<datalist name='lista_publicadores' id='lista_publicadores'>";
-		foreach ($lista_publicadores->result() as $row) {
-			echo "<option data-id='$row->usuario_id' value='$row->nombre' label='$row->correo'>";
-		}
-		echo "</datalist>";
+		createDataList($lista_publicadores,"lista_publicadores","lista_publicadores");
 	}
+
 ?>
 	<input type="hidden" value="<?=base_url();?>" id="base_url">
-	<div class="row contenido" style="height:100%">
-	<div class="container" style="padding-left:10px;height:100%;">
-			<div class="col-md-3 col-lg-3" style="padding-left:0px;padding-top:0px;height:100%;">
-				<div class="navbar-nav navbar-left" style="margin-left:0px;">
+	<div class="contenido">
+	<div class="container" style="padding-left:10px;">
+			<div class="col-md-2 col-lg-2" style="padding-left:0px;padding-top:0px;">
+				<div class="navbar-nav navbar-left" style="">
 					<button type="button" class="btn btn-primary btn-sm navbar-btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><span class="glyphicon glyphicon-pencil"></span> Redactar mensaje</button>
 				</div>
 			
 			</div>
-			<div class="col-md-9 col-lg-9" style="padding-right:0px;padding-left:5px;height:100%;">
+			<div class="col-md-10 col-lg-10">
 				<div class="navbar-nav navbar-left">
 					<button id="btnActualizar" class="btn  btn-sm btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
-				</div>
-					<div class="navbar-nav navbar-left" style="margin-right:10px;">
 				<button id="btnEliminar" class="btn  btn-sm btn-default navbar-btn btn-default" id="btnEliminar"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
 				</div>
-
 				<!--FORMULARIO DE BUSQUEDA-->
 				<form class="navbar-form navbar-right form-inline" id="formBusqueda" method="post" style="margin-top:10px;">
+					
 					<div class="form-group">
-						<input type="search" id="busqueda" name="busqueda" placeholder="busqueda" class="form-control" >
+						<input type="hidden" id="bandeja" value="inbox">
+						<input type="search" id="busqueda" name="asunto" placeholder="busqueda" class="form-control" >
 					</div>
+
 					<div class="form-group">
-						<select class="form-control" name="filtro" id="filtro">
+						<select class="form-control" id="filtro">
 							<option value="asunto">Asunto</option>
 							<option value="correo">Correo</option>
+							<option value="mensaje">Contenido</option>
 						</select>
 					</div>
+
 					<div class="form-group">
 						<input type="submit" value="Buscar" class="btn btn-default btn-sm">
 					</div>
@@ -63,21 +62,20 @@
 	</div>
 </div>
 
-<div class="container" style="height:100%;">
-	<div class="row" style="height:100%;">
-		<div class="col-md-2 col-lg-2 left-line" style="padding:0px 0px;height:100%;border-right:1px solid lightgray;">
+<div class="container">
+	<div class="row">
+		<div class="col-md-2 col-lg-2 left-line" style="padding:0px 0px;border-right:1px solid lightgray;">
 			<ul class="left-menu">
-				<li><a name="menu_correo" class="activo" href="javascript:getInbox()" >Mensajes recibidos <span class="badge"><?=$no_inbox;?></span></a></li>
-				<li class="h-separator"></li>
-				<li><a name="menu_correo" href="javascript:getSent()">Mensajes enviados <span class="badge"><?=$no_sent;?></span></a></li><li class="h-separator"></li>
-				<li><a name="menu_correo"  href="javascript:getDrafts()">Borrador <span class="badge"><?=$no_drafts;?></span></a></li><li class="h-separator"></li>
+				<li data-bandeja="inbox" onclick="cambiarBandeja(this)"><a name="menu_correo" class="activo" href="javascript:getInbox()" >Mensajes recibidos <span class="badge"><?=$no_inbox;?></span></a></li><li class="h-separator"></li>
+				<li data-bandeja="sent" onclick="cambiarBandeja(this)"><a name="menu_correo" href="javascript:getSent()">Mensajes enviados <span class="badge"><?=$no_sent;?></span></a></li><li class="h-separator"></li>
+				<li data-bandeja="drafts" onclick="cambiarBandeja(this)"><a name="menu_correo"  href="javascript:getDrafts()">Borrador <span class="badge"><?=$no_drafts;?></span></a></li><li class="h-separator"></li>
 				<li><a href="<?=base_url()?>">Salir</a></li>
 				<li class="h-line"></li>
 			</ul>	
 		</div>
-		<div class="col-lg-10 col-md-10" style="height:100%;">
+		<div class="col-lg-10 col-md-10">
 		<!--DIV PARA LOS MENSAJES DE ENTRADA -->
-		<div id="area_mensajes" style="height:100%;">
+		<div id="area_mensajes">
 			
 		</div>
 		</div>
@@ -94,17 +92,19 @@
       </div>
       <div class="modal-body">
         <form method="post" action="<?=base_url('Correo/EnviarMensaje')?>" id="formEnviarMensaje" name="formEnviarMensaje">
-          <div class="form-group">
+         	<input type="hidden" name="borrador" id="borrador" value="false">
+        	<input type="hidden" name="usuario" id="usuario" value="">
+         <div class="form-group">
             <label for="" class="control-label">Seleccione tipo de usuario</label>
             <select style="width:600px;" class="form-control" name="tipo_usuario" id="tipo_usuario">
-            	<option value="1">Egresado</option>
-            	<option value="2">Empresa</option>
-            	<option value="3">Publicador</option>
+            	<option value="0">Egresado</option>
+            	<option value="1">Empresa</option>
+            	<option value="2">Publicador</option>
             </select>
           </div>
           <div class="form-group">
             <label for="" class="control-label">Destinatario:</label>
-            <input style="width:600px;" required type="text" list="lista_egresados" class="form-control" id="usuario" name="usuario">
+            <input style="width:600px;" required type="text" list="lista_egresados" class="form-control" id="destinatario" name="destinatario">
           </div>
            <div class="form-group">
             <label for="" class="control-label">Asunto:</label>
@@ -118,13 +118,13 @@
           	<div class="checkbox">
           		<?php
           		if(esEgresado()){
-          			echo " <label><input type='checkbox' name='adjuntar_curriculum' id='adjuntar_curriculum'>";
+          			echo " <label><input type='checkbox' name='curr_adjuntado' id='curr_adjuntado'>";
           			echo "Adjuntar curriculum</label>";
           		}
           		?>
           	</div>
           </div>
-
+			
           <div class="modal-footer">
 	        <button type="button" class="btn btn-success" id="btnBorrador" style="float:left">Borrador</button>
 	        <button type="button" class="btn btn-default" id="btnCancelar">Cancelar</button>
@@ -139,56 +139,126 @@
 <!--FIN DEL MODAL-->
 <style type="text/css">
 	@import url("<?=base_url('public/css/correo.css')?>");
-	
-	html{
-		height: 100%;
-	}
-
-	nav{
-		padding-left: 0px 0px;
-	}
-	
-	.navbar{
-		padding: 0px 0px;
-	}
-
-	#filtro,#busqueda{
-		height: 30px;
-		line-height: 30px;
-		color: darkgray;
-	}
-	
-	#busqueda{
-		margin: 0px 0px;
-		margin-right: 0px;
-	}
-
-	#filtro{
-		margin-left: 0px;
-		border-radius: 4px;
-		border-color: #ccc;
-		margin-bottom:0px;
-		padding: 0px 5px;
-
-	}
-	
-	.navbar-form{
-		margin: 5px 0px;
-	}
-	
-	.navbar-nav{
-		margin-right: 10px;
-
-	}
-	
-	.navbar-nav{
-		padding: 0px 0px;
-	}
-
+		
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/correo.js')?>"></script>
 <script type="text/javascript">
+	
 	$("#btnEliminar").click(function(){
+
 		eliminarMensajes();
+
+	});
+
+	$("#exampleModal").on("hide.bs.modal",function(e){
+
+		limpiarCampos();
+
+	});
+
+	$("#btnEnviar").click(function(){
+		var form = document.getElementById("formEnviarMensaje");
+		var usuario = document.getElementById("usuario").value;
+		var mensaje = document.getElementById("mensaje").value;
+		
+		if(form.asunto.value == ""){
+			alert("Escribe un asunto para el mensaje");
+		}else if(usuario == ""){
+			alert("Porfavor selecciona un usuario de la lista que se muestra");
+		}else if(mensaje == ""){
+			alert("El mensaje esta vacio");
+		}else{
+			enviarMensaje(form);
+			$("#exampleModal").modal("hide");
+		}
+		
+	});
+
+	$("#btnBorrador").click(function(){
+		if((document.getElementById("mensaje").value != "") && (document.getElementById("asunto").value != "")){
+			if(confirm("¿Desea guardar este mensaje como borrador?")){
+				document.getElementById("borrador").value = true;
+				enviarMensaje(document.getElementById("formEnviarMensaje"));
+				$("#exampleModal").modal("hide");
+
+			}	
+		}else{
+			alert("digite su mensaje y asunto");
+		}
+	});
+	
+	var lista = $("datalist").get(0);
+	$("#tipo_usuario").change(function(){
+		$("#usuario").val("");
+		var indice = $("#tipo_usuario").val();
+		lista = $("datalist").get(indice);
+		$("#destinatario").attr("list",lista.id);
+		$("#destinatario").val("");
+	});
+
+	$("#destinatario").keydown(function(){
+		
+	});
+
+	$("#destinatario").change(function(){
+		
+		user_id = validarUsuario($("#destinatario").val());
+		if(user_id != null){
+			$("#usuario").val(user_id);
+		}else{
+			$("#usuario").val("");
+		}
+		
+	});
+
+	function validarUsuario(valor){
+		if(lista != null){
+
+			options = lista.options;
+			for(var i = 0; i < options.length; i++){
+	        	if(options[i].value == valor){
+	        		
+	        		return options[i].getAttribute('data-id');
+	        		//selected_user = options[i].getAttribute('data-id');
+	            }
+	    	}
+		}
+		return null;
+	}
+
+	$("#filtro").change(function(){
+
+		if(this.selectedIndex == 1){
+			if(bandeja == "sent"){
+				$("#busqueda").attr("name","destinatario");
+			}else{
+				$("#busqueda").attr("name","remitente");
+			}
+		}else{
+			$("#busqueda").attr("name",$("#filtro").val());
+		}
+		
+
+	});
+
+	function limpiarCampos(){
+		document.getElementById("formEnviarMensaje").reset();
+		document.getElementById("borrador").value = false;
+		var lista = $("datalist").get(0);
+		$("#destinatario").attr("list","lista_egresados");
+	}
+
+	function cambiarBandeja(element){
+		
+		bandeja = element.getAttribute("data-bandeja");
+		document.getElementById("busqueda").value = "";
+	}
+
+	var bandeja = "inbox";
+	$("#formBusqueda").submit(function(e){
+		
+		e.preventDefault();
+		buscar(document.getElementById("formBusqueda"),bandeja);
+
 	});
 </script>

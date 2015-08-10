@@ -3,12 +3,13 @@
 
 <div>
   <!-- FORMULARIO DE LOS CONTROLES-->
-   <form action="<?=base_url('Egresado/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
-    <input type="hidden" id="egresado_id" name="egresado_id" value="<?=$perfil->publicador_id?>">
+   <form action="<?=base_url('Publicador/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
+    <input type="hidden" id="egresado_id" name="publicador_id" value="<?=$perfil->publicador_id?>">
     <input type="hidden" id="persona_id" name="persona_id" value="<?=$perfil->persona_id?>">
     <!-- <input type="hidden" id="contacto_id" name="contacto_id" value="<?=$perfil->contacto_id?>">-->
     <input type="hidden" id="usuario_id" name="usuario_id" value="<?=$perfil->usuario_id?>">
-    
+     <input type="hidden" id="cargo_id" name="cargo_id" value="<?=$perfil->cargo_id?>">
+     <input type="hidden" id="area_id" name="area_id" value="<?=$perfil->area_id?>">
     
    </form>
   <!-- -->
@@ -28,7 +29,7 @@
       <div role="tabpanel" class="tab-pane active v-line" id="home">
         <div class="container">
           <div class="row">
-            <div class="col-md-5 col-lg-5">
+            <div class="col-md-4 col-lg-4">
                <div class="form-group">
                   <label for="">Nombre</label>
                   <input required form="formActualizarPerfil" type="text" name="nombre" class="form-control" value="<?=$perfil->nombre?>">
@@ -62,7 +63,7 @@
                     $fecha = date("d/m/Y",strtotime($sqldate));
                   ?>
 
-
+  
                   <input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
                   <script type="text/javascript">
                     $("#fecha_nacimiento").datepicker();
@@ -72,7 +73,14 @@
                 </div>
     
             <div class="col-md-5 col-lg-5">
-              
+              <div class="form-group">
+                <label for="">Area actual</label>
+                <div id="area_seleccion"></div>
+              </div>
+               <div class="form-group">
+                <label for="">Cargo actual</label>
+                <div id="cargo_seleccion"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -129,7 +137,7 @@
             </form>
 
           </div>
-           <div class="col-md-4 col-lg-5">
+           <div class="col-md-4 col-lg-4">
             <div id="cambiarClaveRespuesta"></div>
           </div>
         </div>
@@ -140,10 +148,16 @@
 
 <!-- IMPORTANDO ARHIVOS-->
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
 <script type="text/javascript">
   $("#formCambiarClave").submit(function(e){
     e.preventDefault();
     cambiarClave(this);
     
+  });
+
+  $("#cargo").attr("form","formActualizarPerfil");
+  $("#area").change(function(){
+     $("#cargo").attr("form","formActualizarPerfil");
   });
 </script>

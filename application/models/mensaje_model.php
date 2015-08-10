@@ -1,10 +1,6 @@
 <?php 
 	class Mensaje_model extends CI_model{
 
-		private $strInbox = "select mensaje_id,correo,asunto,fecha_envio,visto,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario=";
-		private $strSent = "";
-		private $strDrafts = "";
-
 		function __construct(){
 			parent::__construct();
 			$this->load->database();
@@ -40,10 +36,23 @@
 			
 		}
 
+		function getMensajes($where = "",$like = ""){
+			
+			if($where != ""){
+				$this->db->where($where);
+			}
+
+			if($like != ""){
+				$this->db->like($like);
+			}
+
+			return $this->db->get("listar_mensajes");
+		}
+
 		function buscarMensajes($data){
 			$result;
 
-			if($data["tipo"] = "inbox"){
+			if($tipo = "inbox"){
 				$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and $data[campo] like '%$data[busqueda]%'");
 				
 			}else if($data["sent"]){
@@ -58,16 +67,16 @@
 		}
 
 		function mensaje($data){
-			$sql = "";
-			if($data["tipo"] == "inbox"){
-				$sql = "select mensaje_id,usuario.usuario_id,correo,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,mensaje,DATE_FORMAT(fecha_envio,'%d-%m-%Y')as fecha_envio,curr_adjuntado from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and mensaje_id=". $data["mensaje_id"];
-			}elseif($data["tipo"] == "sent"){
-				$sql = "select mensaje_id,correo,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,mensaje,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.remitente ='$data[usuario_id]' and borrador=false and mensaje_id=". $data["mensaje_id"];
-			}elseif($data["tipo"] == "drafts"){
-				$sql = "select mensaje_id,correo,asunto,fecha_envio,mensaje from mensaje left join usuario on usuario.usuario_id = mensaje.destinatario  where mensaje.remitente ='$data[usuario_id]' and borrador=true and mensaje_id=". $data["mensaje_id"];
-			}
- 			
-			return $this->db->query($sql);
+			
+			$this->db->where($data);
+			return $this->db->get("listar_mensajes");
+		}
+
+		function cambiarEstado($mensaje_id){
+
+			$update_string = $this->db->update_string("mensaje",array("visto"=>TRUE),array("mensaje_id"=>$mensaje_id));
+			$this->db->query($update_string);
+
 		}
 	}
 

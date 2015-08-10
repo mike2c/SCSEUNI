@@ -21,10 +21,10 @@
 		
 		}
 
-		function Login(){
+		function Login($data = null){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("login");
+			$this->load->view("login",$data);
 			$this->load->view("footer");
 		}
 
@@ -39,8 +39,8 @@
 			$this->load->library("Encrypter");
 
 			if($this->form_validation->run()== false){
-
-				$this->Login();
+				$data["sesion_errors"] = validation_errors();
+				$this->Login($data);
 			
 			}else{
 			
@@ -49,23 +49,26 @@
 				
 				if($usuario = $this->sesion_model->esEgresado($data_usuario)){
 					$this->session->set_userdata("egresado",$usuario);
-								
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");		
 				}elseif($usuario = $this->sesion_model->esEmpresa($data_usuario)){
 					$this->session->set_userdata("empresa",$usuario);
-								
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");			
 				}elseif($usuario = $this->sesion_model->esPublicador($data_usuario)){
 					$this->session->set_userdata("publicador",$usuario);
-					
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");
 				}elseif($usuario = $this->sesion_model->esAdministrador($data_usuario)){
 					$this->session->set_userdata("administrador",$usuario);
-					
+					$this->RegistrarUltimaSesion();
+					redirect("perfil");
 				}else{
-					echo "El correo o la contraseña que has ingresado son incorrectos";
-					exit();
+					
+					$data["sesion_errors"] = "El usuario o contraseña que digitaste no son correctos";
+					$this->Login($data);
 				}
-
-				$this->RegistrarUltimaSesion();
-				redirect("perfil");
+				
 			}
 		}
 

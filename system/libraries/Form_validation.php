@@ -450,7 +450,7 @@ class CI_Form_validation {
 				return FALSE;
 			}
 		}
-
+		
 		// Load the language file containing error messages
 		$this->CI->lang->load('form_validation');
 

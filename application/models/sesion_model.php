@@ -9,18 +9,16 @@
 
 		function esAdministrador($data_usuario){
 
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
+			$query = $this->db->query("select imagen,usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
 
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre,admin.persona_id from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
-
-				if($query->num_rows()>0){
+			if($query->num_rows()>0){
 				return $query->row_array();
 			}
 			return null;
 		}																																																													
 
 		function esEgresado($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id,correo,nombre,apellido from egresado,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = egresado.usuario_id and persona.persona_id = egresado.persona_id;");
+			$query = $this->db->query("select imagen,usuario_id,correo,nombre,apellido from registro_egresados where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
@@ -28,18 +26,17 @@
 		}
  
 		function esEmpresa($data_usuario){
-			$query = $this->db->query("select usuario.usuario_id, nombre_empresa as nombre, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
-			$query = $this->db->query("select usuario.usuario_id,nombre_empresa as nombre, correo from usuario, empresa where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = empresa.usuario_id;");
-
+			$query = $this->db->query("select imagen,usuario_id, nombre_empresa as nombre, correo from  registro_empresas where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
+			
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}
 			return null;
 		}
 
-		function esPublicador($data_usuario){
+		function esPublicador($data){
 			
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from publicador,usuario,persona where usuario.correo = '$data_usuario[correo]' and usuario.clave = '$data_usuario[clave]' and usuario.usuario_id = publicador.usuario_id and persona.persona_id = publicador.persona_id;");
+			$query = $this->db->query("select imagen,nombre,apellido,usuario_id,correo from registro_publicadores where clave='$data[clave]' and correo='$data[correo]'");
 			if($query->num_rows()>0){
 				return $query->row_array();
 			}

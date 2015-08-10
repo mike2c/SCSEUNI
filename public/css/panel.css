@@ -9,7 +9,11 @@
 		background-color:#eaeaea;
 		height: 100%;
 	}
-
+	
+			.navbar{
+				margin-bottom: 0px;
+			}
+			
 	.panel-body ul{
 		list-style:none;
 		//border: 1px solid black;

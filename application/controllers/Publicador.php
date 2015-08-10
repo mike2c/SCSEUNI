@@ -13,6 +13,7 @@
 		}
 
 		function Registro(){
+
 			$this->load->library("form_validation");
 			
 			$rules = array();
@@ -24,16 +25,18 @@
 			if(!IS_AJAX){
 				if($this->form_validation->run() == false){
 					echo validation_errors();
-					$this->load->view("registro_publicador");
+					$this->load->view("cabecera");
+					$this->load->view("nav");
+					$this->load->view("publicador/registro_publicador");
+					$this->load->view("footer");
 				}else{
 					$this->Registrar();
-					#redirect("");
 				}
 			}else{
 				if(!$_POST){
-					$this->load->view("registro_publicador");
+					$this->load->view("publicador/registro_publicador");
 				}else{
-					if($this->form_validation->run() == true){
+					if($this->form_validation->run() == false){
 						echo validation_errors();
 					}else{
 						$this->Registrar();
@@ -52,7 +55,16 @@
 			$data_persona["nombre"] = $this->input->post("nombre");
 			$data_persona["apellido"] = $this->input->post("apellido");
 			$data_persona["sexo"] = $this->input->post("genero");
-			$data_persona["fecha_nacimiento"] = $this->input->post("fecha_nacimiento");;
+			
+			$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
+			$newDate = date("Y-m-d", strtotime($originalDate));
+			$data_persona["fecha_nacimiento"] = $newDate;
+			
+			if($data_persona["sexo"] == "M"){
+				$data_usuario["imagen"]="male.jpeg";
+			}else{
+				$data_usuario["imagen"]="female.jpeg";
+			}
 
 			$data_usuario["correo"] = $this->input->post("correo");
 			$data_usuario["clave"] = Encrypter::encrypt($this->input->post("clave"));
@@ -60,26 +72,70 @@
 
 			$data_publicador["cargo_id"] = $this->input->post("cargo");
 
-			try{
-				$this->publicador->insertar($data_persona,$data_usuario,$data_publicador);
-				echo "Registrado";
-			}catch(Exception $e){
-				echo $e->getMessage();
-			}
+			$this->publicador->insertar($data_persona,$data_usuario,$data_publicador);
+		
 		}
 
 		function Listar(){
 
 			$this->load->model("publicador_model","modelo");
-
-			$data["reg"] = $this->modelo->listar();
+			$data["publicadores"] = $this->modelo->listar();
 			
-			$this->load->view("listar_publicadores",$data);
+			if(IS_AJAX){
+				$this->load->view("publicador/busqueda_publicador",$data);
+				$this->load->view("publicador/listar_publicadores",$data);
+			}else{
+				$this->load->view("cabecera",$data);
+				$this->load->view("nav",$data);
+				$this->load->view("publicador/busqueda_publicador",$data);
+				$this->load->view("publicador/listar_publicadores",$data);
+				$this->load->view("footer",$data);
+			}
+		}
 
+		function Busqueda(){
+
+			if($_POST){
+				$this->load->model("publicador_model","modelo");
+				$data["publicadores"] = $this->modelo->buscarPublicador($_POST);
+
+				if(IS_AJAX){
+					$this->load->view("publicador/listar_publicadores",$data);
+				}else{
+					$this->load->view("publicador/busqueda_publicador");
+					$this->load->view("publicador/listar_publicadores",$data);
+				}
+			}
+		}
+
+		function ActualizarPerfil(){
+
+			$this->Actualizar();
+			redirect("Perfil");
 		}
 
 		function Actualizar(){
 
+			$this->load->library("Encrypter");
+			$this->load->model("Publicador_model","publicador");
+
+			$data_persona["persona_id"] = $this->input->post("persona_id");
+			$data_persona["nombre"] = $this->input->post("nombre");
+			$data_persona["apellido"] = $this->input->post("apellido");
+			$data_persona["sexo"] = $this->input->post("genero");
+			
+			$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
+			$newDate = date("Y-m-d", strtotime($originalDate));
+			$data_persona["fecha_nacimiento"] = $newDate;
+			
+			$data_usuario["usuario_id"] = $this->input->post("usuario_id");
+			$data_usuario["correo"] = $this->input->post("correo");
+
+			$data_publicador["publicador_id"] = $this->input->post("publicador_id");
+			$data_publicador["cargo_id"] = $this->input->post("cargo");
+
+			$this->publicador->actualizar($data_usuario,$data_persona,$data_publicador);
+		
 		}
 
 		function Eliminar($id_publicador){

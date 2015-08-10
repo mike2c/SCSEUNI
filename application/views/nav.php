@@ -71,7 +71,19 @@
 				    <li><a href="<?=base_url('Sesion/CerrarSesion')?>">Salir</a></li>
 				</ul>
 			</div>
-			<img style="display:block;float:right;height:32px;width:33px;padding-top:2px;" src="https://scontent-mia1-1.xx.fbcdn.net/hphotos-xfp1/v/t1.0-9/11692720_1659030407660936_380363818090269010_n.jpg?oh=f274ef4ccd582582674b2efaf2f14c99&oe=5627322A" alt="">
+			<?php
+
+				if(getImagenPerfil() == ""){
+					?>
+					<img style="display:block;float:right;height:32px;width:33px;padding-top:2px;" src="<?=base_url('/uploads/male.jpg')?>" alt="">
+					<?
+				}else{
+					?>
+					<img style="display:block;float:right;height:32px;width:33px;padding-top:2px;" src="<?=base_url('/uploads/'.getImagenPerfil())?>" alt="">
+					<?
+				}
+			?>
+			
     		<?
 	    }
 		?>

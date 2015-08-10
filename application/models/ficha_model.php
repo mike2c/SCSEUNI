@@ -9,11 +9,14 @@
 			
 		}
 
-		function insertar($data_publicacion,$data_ficha){
+		function insertar($data_publicacion,$data_ficha,$ficha_carreras){
 
 			$this->db->insert("publicacion",$data_publicacion);
 			$data_ficha["publicacion_id"] = $this->db->insert_id();
 
+			for($i = 0; $i < count($ficha_carreras); $i++){
+				$this->db->query("insert into publicacion_carrera(publicacion_id,carrera_id) values('$data_ficha[publicacion_id]','$ficha_carreras[$i]');");
+			}
 			$this->db->insert("ficha",$data_ficha);
 			
 		}
@@ -34,8 +37,11 @@
 		}
 
 		function listar($where = "",$fields = "*"){
-			
-			return $this->db->query("select $fields from listar_fichas_empresa ". $where);
+			if($where != ""){
+				$this->db->where($where);
+			}
+
+			return $this->db->get("listar_fichas_empresa");
 		}
 	}
 ?>

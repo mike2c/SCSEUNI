@@ -16,22 +16,31 @@
 		}
 
 		function getUsuarioEmpresas(){
-			return $this->db->query("select correo,usuario.usuario_id,nombre_empresa as nombre from usuario,empresa where usuario.usuario_id=empresa.usuario_id;");
+			return $this->db->query("select correo,usuario_id,nombre_empresa as nombre from registro_empresas;");
 		}
 
 
 		function getUsuarioEgresados(){
-			return $this->db->query("select correo,usuario.usuario_id,concat(nombre,' ',apellido) as nombre from usuario,egresado,persona where usuario.usuario_id=egresado.usuario_id and persona.persona_id=egresado.persona_id;");
+			return $this->db->query("select correo,usuario_id,concat(nombre,' ',apellido) as nombre from registro_egresados;");
 		}
 
 
 		function getUsuarioPublicadores(){
-			return $this->db->query("select correo,usuario.usuario_id,concat(nombre,' ',apellido) as nombre from usuario,publicador,persona where usuario.usuario_id=publicador.usuario_id and persona.persona_id=publicador.persona_id;");
+			return $this->db->query("select imagen,correo,usuario_id,concat(nombre,' ',apellido) as nombre from registro_publicadores;");
 		}
 
-		function getUsuarioPublicador(){
+		function getUsuarioAdministradores(){
 			//return $this->db->query("select correo,usuario_id,concat(nombre,' ',apellido) as nombre from usuario,administrador,persona where usuario.usuario_id=administrador.usuario_id and persona.persona_id=administrador.persona_id;");
 		}
 
+		function actualizarImagen($usuario_id,$nombre_imagen){
+			$this->db->query("update usuario set imagen = '$nombre_imagen' where usuario_id=".$usuario_id);
+		}
+
+		function getImagen($usuario_id){
+			$query = $this->db->query("select imagen from usuario where usuario_id=".$usuario_id)->row();
+			
+			return $query->imagen;
+		}
 	}
 ?>

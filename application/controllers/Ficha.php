@@ -17,6 +17,9 @@
 
 		function Crear(){
 			#Terminar de programar la validacion
+			$this->load->model("listas_model","lista");
+
+			$data["carreras"] = $this->lista->listarCarreras();
 			$conf=array(
 			array("field"=>"descripcion","label"=>"descripcion","rules"=>"required")
 			);
@@ -29,29 +32,31 @@
 					$this->load->view("cabecera");
 					$this->load->view("nav");
 					echo validation_errors();
-					$this->load->view("ficha/crear_ficha");
+					$this->load->view("ficha/crear_ficha",$data);
 					$this->load->view("footer");
 				}else{
 					$this->Insertar();
-					echo "<script type='text/javascript'>
-						
-					</script>";
+					$url = base_url("Perfil");
+					echo "
+						<script stype='text/javascript'>
+							alert('Ficha ocupacional guardada');
+							window.location='$url';
+						</script>
+					";
 				}
 			}else{
 				if(!$_POST){
-					$this->load->view("ficha/crear_ficha");
+					$this->load->view("ficha/crear_ficha",$data);
 				}else{
 					if($this->form_validation->run()==FALSE){
 						echo validation_errors();
 					}else{
 						try{
 							$this->Insertar();
-							echo "Guardado";
 						}catch(Exception $e){
 							echo $e->getMessage();
 						}
-						
-						
+											
 					}
 				}
 			}
@@ -59,7 +64,7 @@
 
 		function Listar(){
 
-			$data["fichas"] = $this->ficha->listar("where usuario_id=". getUsuarioId());
+			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()));
 
 			if(IS_AJAX){
 				$this->load->view("ficha/listar_fichas",$data);
@@ -74,7 +79,7 @@
 		function Editar($ficha_id){
 			$this->load->helper("imagen");
 			
-			$data["ficha"] = $this->ficha->listar("where usuario_id=". getUsuarioId(). " and ficha_id=". $ficha_id)->result();
+			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id))->result();
 			
 			if(IS_AJAX){
 				$this->load->view("ficha/editar_ficha",$data);	
@@ -91,12 +96,16 @@
 				exit("La sesion ha caducado");
 			}
 			#$data_publicacion["publicador_id"] = $this->input->post("publicador_id");
-			$data_publicacion["descripcion"] = $this->input->post("descripcion");
+			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 
 			$fecha_actual = getdate();
 
 			$data_publicacion["fecha_publicacion"] = date("Y-m-d", strtotime($fecha_actual["mday"]. "/". $fecha_actual["mon"]. "/". $fecha_actual["year"]));
-			$data_publicacion["fecha_alta"] = date("Y-m-d",strtotime($this->input->post("fecha_alta")));
+			
+			$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
+			$newDate = date("Y-m-d", strtotime($originalDate));
+			$data_persona["fecha_alta"] = $newDate;
+
 			$data_publicacion["usuario_id"] = getUsuarioId();
 			
 			//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
@@ -117,8 +126,9 @@
 			$data_ficha["competencia"]= nl2br($this->input->post("ubicacion"));
 			$data_ficha["publicada"] = $this->input->post("publicar");
 
+			$data_carrera = $this->input->post("carreras");
 
-			$this->ficha->insertar($data_publicacion,$data_ficha);
+			$this->ficha->insertar($data_publicacion,$data_ficha,$data_carrera);
 		}
 
 		function Actualizar(){
@@ -152,7 +162,16 @@
 			$data_ficha["publicada"] = $this->input->post("publicar");
 
 			$this->ficha->actualizar($data_publicacion,$data_ficha);
+
+			$url = base_url("Perfil");
+			echo "
+				<script stype='text/javascript'>
+					alert('Actualizada');
+					window.location='$url';
+				</script>
+			";
 		}
+
 
 		function Eliminar(){
 

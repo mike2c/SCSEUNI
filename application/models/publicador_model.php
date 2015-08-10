@@ -19,14 +19,29 @@
 		
 		}
 
+		function actualizar($data_usuario,$data_persona,$data_publicador){
+
+			$this->db->where("usuario_id",$data_usuario["usuario_id"]);
+			$this->db->update("usuario",$data_usuario);
+
+			$this->db->where("persona_id",$data_persona["persona_id"]);
+			$this->db->update("persona",$data_persona);
+
+			$this->db->where("publicador_id",$data_publicador["publicador_id"]);
+			$this->db->update("publicador",$data_publicador);
+		}
+
 		function listar(){
 
 			return ($this->db->get("registro_publicadores"));
 			
 		}
 
-		function buscarPublicador($campo,$valor){
-			return $this->db->query("select * from registro_publicadores where $campo like'%$valor%'");
+		function buscarPublicador($where){
+			if(!empty($where)){
+				$this->db->like($where);
+			}
+			return $this->db->get("registro_publicadores");
 		}
 
 

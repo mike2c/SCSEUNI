@@ -7,9 +7,8 @@
 
 ?>
   <div class="message-header">
-      
     <span class="date" ><small>ENVIADO EL: <?=$mensaje->fecha_envio?></small> </span >
-     <span for="">Remitente <small><?=$mensaje->remitente?>></small></span>
+    <span for="">Destinatario <small><?=$mensaje->destinatario?>></small></span>
     <h1 class="subject"><?=$mensaje->asunto?></h1 >
   </div>
   

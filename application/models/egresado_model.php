@@ -36,15 +36,17 @@
 			$this->db->where("egresado_id",$data_egresado["egresado_id"]);
 			$this->db->update("egresado",$data_egresado);
 
+			
 		}
 
 		function buscarEgresado($where){
 			
 			if(!empty($where)){
-				$this->db->where($where);
+				$this->db->like($where);
 			}
 			
-			return $this->db->get("registro_egresados");
+			$query = $this->db->get("registro_egresados");
+			return $query;
 			
 		}
 	

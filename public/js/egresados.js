@@ -31,8 +31,8 @@ function listarEgresados(contenedor){
 }
 
 //regresa info en formato html
-	function buscarEgresado(datos){
-		console.log(datos);
+	function buscarEgresado(datos,content){
+
 		var result = null;
 		$.ajax({
 			url: base_url+"Egresado/Busqueda",
@@ -40,10 +40,10 @@ function listarEgresados(contenedor){
 			data: datos,
 			datatype: "html",
 			success: function(data){
-				result = data;
+				content.html(data);
+				console.log(data);
 			},
-			async: false
+			async: true
 		});
 
-		return result;
 	}

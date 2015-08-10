@@ -1,7 +1,7 @@
 <div class="container" style="">
 
 	<div class="row">
-		<div class="col-md-8 col-lg-8">
+		<div class="col-md-8 col-lg-8" style="">
 			<h3 class="page-header">Nueva ficha ocupacional</h3>
 		</div>
 	
@@ -10,7 +10,15 @@
 	<form action="<?=base_url('Ficha/Crear')?>" name="formCrearFicha" id="formCrearFicha" method="post" enctype="multipart/form-data">
 		<!--Informacion general-->
 		<div class="row">
+
+		<img src="<?=BASE_URL('public/res/thumbnail-default.jpg')?>" alt="no se puede visualizar la imagen" id="precarga">
+			<div class="form-group">
+				<label for="">Imagen <small>opcional</small></label><br>
+				<input type="file" name="imagen" id="imagen" >
+
+			</div>
 			<div class="col-md-8 col-lg-8">
+			
 				<div class="form-group">
 					<label for="">Fecha de alta: </label><br>
 					<input class="form-control" style="width:150px;" type="text" id="fecha" maxlength="10" placeholder="dd/mm/aaaa" name="fecha_alta">
@@ -22,14 +30,10 @@
 				</div>
 				
 				<div class="form-inline">
-					<div class="form-group">
-						<label for="">Imagen <small>opcional</small></label><br>
-						<input type="file" name="imagen" id="imagen" >
-
-					</div>
+					
 						<div class="form-group">
 					
-					<img src="<?=BASE_URL('public/res/thumbnail-default.jpg')?>" alt="no se puede visualizar la imagen" id="precarga">
+					
 				</div>
 				</div>
 			
@@ -105,7 +109,7 @@
 	}
 	
 	form img{
-		width: 300px;
+		width: 200px;
 	}
 
 	#precarga{

@@ -2,6 +2,41 @@ h1,h2,h3,h4,h5{
 	margin: 2px 0px;
 }
 
+html,body{
+	
+}
+			
+			header{
+				background-color: #03447F;
+				color: white;
+				padding: 5px 0px;
+			}
+
+			header img{
+				border: 2px solid white;
+				background-color: white;
+			}
+			
+			footer{
+				font-size: 12px;
+				padding-top: 0px;
+				height: 25px;
+			}
+
+			.contenido{
+
+				background-color: white;
+				border:1px solid lightgray;
+				display: block;
+				overflow: auto;
+				
+			}
+			.separador{
+				display: block;
+				background-color: white;
+				height: 20px;
+			}
+			
 .menu{
 	display: block;
 	overflow: auto;
@@ -60,6 +95,13 @@ nav{
   border-radius: 0px;
 }
 
+.navbar{
+	
+	
+}
+.navbar-text{
+	float:none;
+}
 /*REDIMENSIONANDO IMAGENES DE LA CABECERA*/
 .img{
 	height: 50%;
@@ -104,4 +146,14 @@ nav{
 	height: 35px;
 	line-height: 35px;
 	font-size: 
+}
+
+/*ESTILO PARA FORMULARIOS*/
+	
+.form-title{
+	display: block;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 10px 10px;
+	border-bottom: 1px solid lightgray;
 }

@@ -4,8 +4,20 @@
 	<div class="row">
 		<div class="col-md-2 col-g-2 margen-top">
 			<div class="row">
-				<a href="#" class="img-perfil">
-				<img class="img-responsive" src="http://applicacion.com/wp-content/uploads/2012/11/cambio-foto-perfil-redes-sociales.jpg">
+				<a href="#" id="load_image" class="img-perfil">
+				<?php
+
+					if(getImagenPerfil() == ""){
+						?>
+						<img class="img-responsive" src="<?=base_url('uploads/male.jpg')?>">
+						<?
+					}else{
+						?>
+						<img class="img-responsive" src="<?=base_url('uploads').'/'.getImagenPerfil()?>">
+						<?
+					}
+				?>
+			
 				<span class="glyphicon glyphicon-camera"></span>
 				</a>
 			</div>
@@ -50,13 +62,16 @@
 			<div class="h-line"></div>
 			</div>
 		</div>
-		<div class="col-md-10 col-lg-10 margen-top" style="height:100%;">
-			<div id="contenido">
+		<div class="col-md-10 col-lg-10 margen-top">
+			<div id="contenido" style="overflow-x:auto;">
 				
 			</div>
 		</div>
 	</div>
 </div>
+<form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
+	<input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
+</form>
 
 <style type="text/css">
 	
@@ -65,7 +80,6 @@
 		overflow: hidden;
 		background-color: white;
 		border-radius: 4%;
-		border: 1px solid gray;
 		margin-right: 20px;
 	}
 	
@@ -123,9 +137,6 @@
 
 
 	#contenido{
-		
-		border-left: 1px solid lightgray;
-		border-right: 1px solid lightgray;
 		overflow-y:auto;
 		height:490px;
 		overflow-x:hidden;
@@ -187,6 +198,13 @@
 		}
 	?>
 	
+	$("#load_image").click(function(){
+		$("#imagen").trigger("click");
 
+	});
+
+	$("#imagen").change(function(){
+		$("#formSubirImg").submit();
+	});
 </script>
 <script type="text/javascript" src="<?=base_url('public/js/ficha.js')?>"></script>

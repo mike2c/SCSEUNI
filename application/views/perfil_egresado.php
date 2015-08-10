@@ -20,7 +20,7 @@
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Informacion personal</a></li>
     <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
     <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>
-    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
+    <li role="presentation"><a href="#settings" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
     
     <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin:0px;" type="submit" value="Guardar cambios">
   </ul>
@@ -70,13 +70,16 @@
 
                   <input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
                   <script type="text/javascript">
-                    $("#fecha_nacimiento").datepicker();
+                   // $("#fecha_nacimiento").datepicker();
                   </script>
                 </div>
                 <div class="form-group">
                     <label for="">Carrera</label>
                     <div id="carrera_seleccion">
                     </div>
+                    <script type="text/javascript">
+
+                    </script>
                 </div>
                 </div>
     
@@ -186,13 +189,13 @@
         </div>
         <div class="form-group">
           <label for="">Dirección actual</label>
-          <textarea required form="formActualizarPerfil" class="form-control" name="direccion" id="direccion" cols="30" rows="4"><?=$perfil->direccion?></textarea>
+          <textarea form="formActualizarPerfil" class="form-control" name="direccion" id="direccion" cols="30" rows="4"><?=$perfil->direccion?></textarea>
         </div>
       </div>
         </div>
       </div>
     </div>
-
+    
     <!--CAMBIAR-->
     <div role="tabpanel" class="tab-pane v-line" id="settings">
          <div class="container">
@@ -235,4 +238,6 @@
     cambiarClave(this);
 
   });
+
+  $("#carrera").attr("form","formActualizarPerfil");
 </script>

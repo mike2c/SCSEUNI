@@ -1,6 +1,7 @@
-<table class="table table-bordered">
+<br>
+<table class="table table-default table-hover" style="border-left:1px solid lightgray">
 	<?php
-		echo "<tr><th></th><th>Cargo</th><th>Ultima actualización</th><th>Edicion</th></tr>";
+		echo "<tr><th></th><th>Cargo</th><th>Ultima actualización</th><th></th></tr>";
 		$cont = 1;
 		foreach ($fichas->result() as $row) {
 			echo "<td class='text-center'><strong>$cont</strong></td>";
@@ -13,3 +14,4 @@
 
 	?>
 </table>
+

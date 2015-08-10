@@ -14,15 +14,17 @@
 		}
 
 		function index(){
-			$data["inbox"] = $this->mensajes->mensajesRecibidos(getUsuarioID());
-			$data["sent"] = $this->mensajes->mensajesEnviados(getUsuarioID());
-			$data["drafts"] = $this->mensajes->borrador(getUsuarioID());
+
+			$data["inbox"] = $this->mensajes->getMensajes(array("destinatario_id"=>getUsuarioID()));
+			$data["sent"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID()));
+			$data["drafts"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID(),"borrador"=>true));
 
 			$this->load->model("perfil_model");
 
+
 			$data["lista_egresados"] = $this->perfil_model->getUsuarioEgresados();
 			$data["lista_empresas"] = $this->perfil_model->getUsuarioEmpresas();
-			$data["lsita_publicadores"] = $this->perfil_model->getUsuarioPublicadores();
+			$data["lista_publicadores"] = $this->perfil_model->getUsuarioPublicadores();
 
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -33,19 +35,19 @@
 
 		function Inbox(){
 
-			$data["inbox"] = $this->mensajes->mensajesRecibidos(getUsuarioID());
+			$data["inbox"] = $this->mensajes->getMensajes(array("destinatario_id"=>getUsuarioID(),"borrador"=>false));
 			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
 		function Sent(){
 
-			$data["sent"] = $this->mensajes->mensajesEnviados(getUsuarioID());
+			$data["sent"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID(),"borrador"=>false));
 			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
 		function Drafts(){
 
-			$data["drafts"] = $this->mensajes->borrador(getUsuarioID());
+			$data["drafts"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID(),"borrador"=>TRUE));
 			$this->load->view("mensaje/listar_mensajes",$data);
 		}
 
@@ -61,35 +63,40 @@
 		}
 
 		function LeerMensaje(){
-			#print_r($_GET);
-			$data["tipo"] = $this->input->get("bandeja");
-			$data["usuario_id"] = getUsuarioId();
+			$tipo = $this->input->get("bandeja");
 			$data["mensaje_id"] = $this->input->get("mensaje");
 
-			$query = $this->mensajes->mensaje($data);
+			$query = $this->mensajes->getMensajes($data);
 			
 			if($query != null){
 				
-				foreach ($query->result() as $row) {
-					$data["mensaje"] = $row;
-				}
+				$data["mensaje"] = $query->row();
 
-				if($data["tipo"] == "drafts"){
+				if($tipo == "drafts"){
 					$this->load->view("mensaje/editar_borrador",$data);
-				}else{
-					$this->load->view("mensaje/leer_mensaje",$data);
+				}else if($tipo == "inbox"){
+					$this->mensajes->cambiarEstado($data["mensaje_id"]);
+					$this->load->view("mensaje/leer_mensaje",$data);	
+				}else if($tipo == "sent"){
+					
+					$this->load->view("mensaje/leer_mensaje_enviado",$data);	
 				}
 			}
 				
 		}
 
 		function EnviarMensaje(){
-
+			
 			$borrador = $this->input->post("borrador");
 			$curr_adjuntado = $this->input->post("curr_adjuntado");
 
 			$data["borrador"] = ($borrador == "true")? 1 : 0;
-			$data["curr_adjuntado"] = ($curr_adjuntado == "true")? 1 : 0;
+			
+			if(isset($_POST["curr_adjuntado"])){
+				$data["curr_adjuntado"] = TRUE;
+			}else{
+				$data["curr_adjuntado"] = FALSE;
+			}
 
 			$data["remitente"] = getUsuarioId();
 			$data["destinatario"] = $this->input->post("usuario");
@@ -105,26 +112,60 @@
 			$this->mensajes->insertarMensaje($data);
 		}
 
-		function Buscar(){
-			$data = null;
+		function EnviarBorrador(){
+			$borrador = $this->input->post("borrador");
+			$curr_adjuntado = $this->input->post("curr_adjuntado");
 
-			$datos["tipo"] = $this->input->get("bandeja");
-			$datos["campo"] = $this->input->get("filtro");
-			$datos["busqueda"] = $this->input->get("busqueda");
-			$datos["usuario_id"] = getUsuarioID();
-	
-			if($datos["tipo"] == "inbox" ){
-
-				$data["inbox"] = $this->mensajes->buscarMensajes($datos);
-			}else if($data["sent"] == "sent"){
-
-				$data["sent"] = $this->mensajes->buscarMensajes($datos);
-			}else if($data["drafts"] == "drafts"){
-				
-				$data["drafts"] = $this->mensajes->buscarMensajes($datos);
+			$data["borrador"] = ($borrador == "true")? 1 : 0;
+			
+			if(isset($_POST["curr_adjuntado"])){
+				$data["curr_adjuntado"] = TRUE;
+			}else{
+				$data["curr_adjuntado"] = FALSE;
 			}
+			$data["mensaje_id"] = $this->input->post("mensaje_id");
+			$data["destinatario"] = $this->input->post("usuario");
+			if(empty($data["destinatario"])){
+				$data["destinatario"] = null;
+			}
+			$data["asunto"] = $this->input->post("asunto");
+			$data["mensaje"] = nl2br($this->input->post("mensaje"));
+			$date = getDate();
+			$data["fecha_envio"] =  $date["year"]. "-" . $date["mon"]. "-". $date["mday"];
+			$data["borrador"] = false;
+			$data["visto"] = false;
 
-			$this->load->view("mensaje/listar_mensajes",$data);
+			$this->mensajes->actualizarMensaje($data);
+		}
+
+		function BuscarRecibidos(){
+			$data["inbox"] = $this->mensajes->getMensajes(array("destinatario_id"=>getUsuarioID()),$_POST);
+			if($data["inbox"] != null){
+				$this->load->view("mensaje/listar_mensajes",$data);
+			}else{
+				echo "<br><br><h3 class='text-center'>[No se han encontrado resultados]</h3>";
+			}
+			
+		}
+
+		function BuscarEnviados(){
+			$data["sent"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID()),$_POST);
+			if($data["sent"]->num_rows() > 0){
+				$this->load->view("mensaje/listar_mensajes",$data);
+			}else{
+				echo "<br><br><h3 class='text-center'>[No se han encontrado resultados]</h3>";
+			}
+			
+		}
+		
+		function BuscarBorrador(){
+			$data["drafts"] = $this->mensajes->getMensajes(array("remitente_id"=>getUsuarioID(),"borrador"=>true),$_POST);
+			if($data["drafts"] != null){
+				$this->load->view("mensaje/listar_mensajes",$data);
+			}else{
+				echo "<br><br><h3 class='text-center'>[No se han encontrado resultados]</h3>";
+			}
+			
 		}
 	}
 ?>

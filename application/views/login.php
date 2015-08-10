@@ -1,22 +1,32 @@
 <div class="container contenido">
 <h2 class="page-header">Inicia sesión porfavor</h2>
 	<div class="col-lg-4 col-md-4 col-xs-4">
-	<form class="form-horizontal" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
-		<div class="form-group">
-			<label>Correo</label>
-			<input type="text" class="form-control" name="correo">
-		</div>
-		<div class="form-group">
-			<label>Contraseña</label>
-			<input autocomplete="off" type="password" class="form-control" name="clave">
-		</div>
-		<div class="form-group">
-			<input autocomplete="off" type="submit" class="form-control btn btn-primary" value="Entrar">
-		</div>
-	</form>
-	<br>
+		<form class="form-horizontal" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
+			<div class="form-group">
+				<label>Correo</label>
+				<input type="text" class="form-control" name="correo">
+			</div>
+			<div class="form-group">
+				<label>Contraseña</label>
+				<input autocomplete="off" type="password" class="form-control" name="clave">
+			</div>
+			<div class="form-group">
+				<input autocomplete="off" type="submit" class="form-control btn btn-primary" value="Entrar">
+			</div>
+		</form>
+		<br>
 	</div>
-
+	<div class="col-md-6 col-lg-6 col-md-offset-1">
+	<br><br><br>
+		<h4 class="text-danger">
+			<?
+				if(isset($sesion_errors)){
+					echo $sesion_errors;
+				}
+			?>
+			
+		</h4>
+	</div>
 </div>
 
 <div>

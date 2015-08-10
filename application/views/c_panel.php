@@ -1,5 +1,5 @@
 <input type="hidden" id="base_url" value="<?=base_url()?>">
-<div class="alto-total" style="background-color:white;">
+<div class="" style="background-color:white;">
 	<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -26,8 +26,8 @@
 </nav>
 
 <!--<div class="container contenido" style="display:block;height:100%;"> -->
-	<div class="row alto-total">
-		<div class="col-md-2 col-lg-2 alto-total" style="background-color:#eaeaea;padding:0px 0px;"><!-- COLUMNA PARA EL MENU-->
+
+		<div class="col-md-2 col-lg-2" style="background-color:#eaeaea;padding:0px 0px;"><!-- COLUMNA PARA EL MENU-->
 			
 			<div class="panel-group alto-total" id="accordion" role="tablist" aria-multiselectable="true">
 			  <div class="panel panel-default">
@@ -61,7 +61,7 @@
     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
       <div class="panel-body">
         <ul>
-	      	<li><a id="agregarEgresado" class="" href="#"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
+	      	
        		<li><a id="registroEgresado" href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
 	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
       	</ul>  
@@ -79,8 +79,8 @@
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
 		<ul>
-	       	<li><a id="agregarEgresado" class="" href="javascript:registrarPublicador();"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
-       		<li><a id="registroEgresado" href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
+	       	<li><a id="agregarEgresado" class="" href="javascript:nuevoPublicador();"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
+       		<li><a id="registroEgresado" href="javascript:consultarPublicadores()"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
 	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
   		</ul>  
       </div>
@@ -88,20 +88,17 @@
   </div>
 </div>		
 		</div>
-	
-	<div class="col-md-10 col-lg-10" style="padding: 0px 0px;">
-	<div class="contenido" id="contenido">
-		
-	</div>
-	</div>
-	</div>
-	
-</div>
 
+  
+  <div class="col-md-10 col-lg-10" style="padding: 0px 0px;">
+  <div class="contenido" id="contenido">
+    
+  </div>
+  </div>
+  </div>
 <script type="text/javascript" src="<?=base_url('public/js/egresados.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
-
 <style type="text/css">
 	@import url('<?=base_url('public/css/panel.css')?>');
 </style>
@@ -114,4 +111,14 @@
       $(this).addClass("activo");
 
     });
+
+    function nuevoPublicador(){
+      $("#contenido").load("<?=base_url('Publicador/Registro')?>");
+    }
+
+    function consultarPublicadores(){
+      $("#contenido").load("<?=base_url('Publicador/Listar')?>");
+    }
+
+    
 </script>

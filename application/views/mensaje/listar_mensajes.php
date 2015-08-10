@@ -39,10 +39,11 @@
 		</th>
 		<th>Asunto</th>
 		<th>Fecha de envio</th>
+		<th></th>
 		<?
-			if(isset($sent) || isset($drafts)){
-				echo "<th>Estado</th>";
-			}
+			#if(isset($sent) || isset($drafts)){
+			#	echo "<th>Estado</th>";
+			#}
 		?>
 		
 	</tr>
@@ -57,14 +58,23 @@
 					echo "<tr>";
 					echo "<td><input type='checkbox' name='marcador' id='marcador' value='$row->mensaje_id'></td>";
 					if(isset($inbox)){
-						echo "<td>$row->de</td>";
+						echo "<td>$row->remitente</td>";
 					}else{
-						echo "<td>$row->para</td>";
+						echo "<td>$row->destinatario</td>";
 					}
 					echo "<td><a href='javascript:leerMensaje($row->mensaje_id)'>$row->asunto</a></td>";
 					echo "<td>$row->fecha_envio</td>";
 					if(isset($inbox)){
-						echo "<td>$row->estado</td>";
+						if($row->visto == true){
+							echo "<td>Leido</td>";
+						}else{
+							echo "<td>Sin leer</td>";
+						}
+						
+					}else if(isset($drafts)){
+						echo "<td>Sin enviar</td>";
+					}else if(isset($sent)){
+						echo "<td>Enviado</td>";
 					}
 					echo "</tr>";
 				}

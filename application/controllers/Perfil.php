@@ -19,11 +19,15 @@
 			}else if(esAdministrador()){
 				$this->load->model("admin_model","modelo");
 			}
+
 		}
 
 		function Index(){
 		
+			$this->CargarPerfil();
+		}
 
+		private function CargarPerfil(){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
 			$this->load->view("menu_perfil");
@@ -61,7 +65,7 @@
 
 		function PerfilPublicador(){
 
-			$resultado = $this->modelo->buscarPublicador("usuario_id",getUsuarioId());
+			$resultado = $this->modelo->buscarPublicador(array("usuario_id"=>getUsuarioId()));
 			
 			if($resultado != null){
 				
@@ -101,6 +105,16 @@
 			}
 		}
 
+		function CambiarImagenDePerfil(){
+			$this->load->model("perfil_model");
+			$nombre_imagen = $this->subirImg();
+			
+			$this->perfil_model->actualizarImagen(getUsuarioId(),$nombre_imagen);
+			setImagenPerfil( $nombre_imagen);
+
+		
+		}
+
 		function prueba(){
 			$this->load->model("perfil_model");
 			echo $this->perfil_model->getClave(getUsuarioId());
@@ -110,6 +124,31 @@
 		function accion(){
 			echo $this->input->post("var1");
 			echo $this->input->post("var2");
+		}
+
+		private function subirImg(){
+		
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpeg|png|jpg';
+			$config['max_size'] = 2048;
+			$config['max_width'] = 1000;
+			$config['max_height'] = 1000;
+			$config['overwrite'] = TRUE;
+			$config['file_name'] = "profile_image_".getUsuarioId();
+			
+			$this->load->library('upload',$config);
+
+			if(! $this->upload->do_upload("imagen")){
+				$error = array('error'=>$this->upload->display_errors());
+			}else {
+				
+				if(file_exists("uploads/". getImagenPerfil())){
+					unlink("uploads/". getImagenPerfil());
+				}
+				
+				$data = array('upload_data'=>$this->upload->data());
+				return $data['upload_data']['file_name'];
+			}
 		}
 
 	}
