@@ -13,7 +13,7 @@
 	</tr>
 	<tr>
 		<td><label>Apellido</label></td>
-		<td><input type="text" name="apellido" value = "<?php set_value('apellido'); ?>"></td>
+		<td><input type="text" name="apellido" value = "<?php echo set_value('apellido'); ?>"></td>
 		<td><?php echo form_error('apellido'); ?></td>
 	</tr>
 	<tr>

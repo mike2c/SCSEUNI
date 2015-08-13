@@ -3,7 +3,7 @@ h1,h2,h3,h4,h5{
 }
 
 html,body{
-	
+	padding-bottom: 30px;
 }
 			
 			header{
@@ -40,11 +40,10 @@ html,body{
 .menu{
 	display: block;
 	overflow: auto;
-	padding-left: 0px;
 	list-style: none;
 	//border: 1px solid black;
 	margin-bottom: 0px;
-	padding-left: 0px 0px;
+	padding-left: 0px;
 }
 
 nav{
@@ -53,7 +52,6 @@ nav{
 
 .menu > li{
 	display: inline-block;
-	float: left;
 	border-right: 1px solid lightgray;
 	//border: 1px solid pink;
 	padding: 0px 0px;
