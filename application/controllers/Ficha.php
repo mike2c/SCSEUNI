@@ -123,7 +123,7 @@
 			$data_ficha["funciones"]= nl2br($this->input->post("funciones"));
 			$data_ficha["requisitos"]= nl2br($this->input->post("requisitos"));
 			$data_ficha["experiencia"]= $this->input->post("experiencia");
-			$data_ficha["competencia"]= nl2br($this->input->post("ubicacion"));
+			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
 			$data_ficha["publicada"] = $this->input->post("publicar");
 
 			$data_carrera = $this->input->post("carreras");
@@ -158,7 +158,7 @@
 			$data_ficha["funciones"]= nl2br($this->input->post("funciones"));
 			$data_ficha["requisitos"]= nl2br($this->input->post("requisitos"));
 			$data_ficha["experiencia"]= $this->input->post("experiencia");
-			$data_ficha["competencia"]= nl2br($this->input->post("ubicacion"));
+			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
 			$data_ficha["publicada"] = $this->input->post("publicar");
 
 			$this->ficha->actualizar($data_publicacion,$data_ficha);

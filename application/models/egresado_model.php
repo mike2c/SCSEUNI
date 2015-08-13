@@ -46,6 +46,7 @@
 			}
 			
 			$query = $this->db->get("registro_egresados");
+
 			return $query;
 			
 		}
@@ -59,6 +60,30 @@
 
 		function listarEgresados(){
 			return $this->db->get("registro_egresados");
+		}
+
+		function getReporteEgresadosTrabajando(){
+			$query = $this->db->query("select count(*) as trabajando from registro_egresados where trabaja = true;")->row();
+			$data["trabajando"] = $query->trabajando;
+			
+			$query = $this->db->query("select count(*) as no_trabajando from registro_egresados where trabaja = false;")->row();
+			$data["no_trabajando"] = $query->no_trabajando;
+
+			return $data;	
+		}
+
+		function getReporteEgresadosTitulados(){
+			$query = $this->db->query("select count(*) as titulado from registro_egresados where titulado = true;")->row();
+			$data["titulados"] = $query->titulado;
+			$query = $this->db->query("select count(*) as no_titulado from registro_egresados where titulado = false;")->row();
+			$data["no_titulados"] = $query->no_titulado;
+
+			return $data;
+		}
+
+		function getReporteEgresadosCarrera(){
+			$query = $this->db->query("select carrera,count(egresado_id) as cantidad from registro_egresados group by carrera;");
+			return $query;
 		}
 	}
 

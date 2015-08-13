@@ -25,8 +25,26 @@
 		return null;
 	}
 
-	function subirImagen(){
+	function subirImagen($nombre_imagen,$nombre= "",$alto = 1000,$ancho = 1000){
 		
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpeg|png|jpg';
+		$config['max_size'] = 2048;
+		$config['max_width'] = $ancho;
+		$config['max_height'] = $alto;
+		$config['overwrite'] = TRUE;
+		
+		if($nombre == ""){
+			$config['file_name'] = "profile_image_".getUsuarioId();
+		}
+		
+		$this->load->library('upload',$config);
+
+		if(!$this->upload->do_upload($nombre_imagen)){
+			throw new Exception($this->load->display_errors()); 
+		}
+
+		return $this->upload->data();
 	}
 
 	function redimensionarImagen(){

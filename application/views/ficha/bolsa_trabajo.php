@@ -41,37 +41,39 @@
 		<?php
 
 			foreach ($fichas->result() as $row) {
+#<h3 class='' id='ficha_titulo'>$row->cargo :</h3>
 				echo "<div id='contenedorFicha'>
-					<strong><p id='fecha_alta'>FECHA DE CREACIÓN: $row->fecha_alta</p></strong>
-						<hr>
-					<h3 class='form-title' id='ficha_titulo'>$row->cargo :</h3>
-					<div id='ficha_contenido'>
-<label for=''>Cantidad de puestos: <span id='cantidad'></span></label><br>
-					<label for=''>Jefe inmediato:  <span id='jefe'>$row->jefe</span> </label><br>
-					<label for=''>Personal a cargo: </label><br>
-					<p id='personal'>$row->a_cargo</p>
-					<label for=''>Finalidad: </label><br>
-					<p id='finalidad'>$row->finalidad</p>
-					<label for=''>Funciones: </label><br>
-					<p id='funciones'>$row->funciones</p>
-					<label for=''>Requisitos: </label><br>
-					<p id='requisitos'>$row->requisitos</p>
-					<label for=''>Experiencia: </label><br>
-					<p id='personal'>$row->experiencia</p>
-					<label for=''>Competencia: </label><br>
-					<p id='competencia'>$row->competencia</p>
-					</div>					
 					<p id='descripcion'>$row->descripcion</p>
 					
+					<div id='ficha_contenido'>
+					<h4 for=''>Cantidad de puestos: <span id='cantidad'></span></h4><br>
+					<h4 for=''>Jefe inmediato:  <span id='jefe'>$row->jefe</span> </h4><br>
+					<h4 for=''>Personal a cargo: </h4><br>
+					<p id='personal'>$row->a_cargo</p>
+					<h4 for=''>Finalidad: </h4><br>
+					<p id='finalidad'>$row->finalidad</p>
+					<h4 for=''>Funciones: </h4><br>
+					<p id='funciones'>$row->funciones</p>
+					<h4 for=''>Requisitos: </h4><br>
+					<p id='requisitos'>$row->requisitos</p>
+					<h4 for=''>Experiencia: </h4><br>
+					<p id='personal'>$row->experiencia</p>
+					<h4 for=''>Competencia: </h4><br>
+					<p id='competencia'>$row->competencia</p>
+					</div>					
 					
-					<button class='ver-mas'>Ver mas...</Button>
+					
+					
+					<button class='ver-mas btn-link'>Ver mas...</Button>
 				</div>";
 			}
 
 		?>
 	</div>
 </div>
+	//#3b5998
 <style type="text/css">
+
 	ul{
 		list-style: none;
 		padding-left: 0px;
