@@ -86,9 +86,12 @@
 			}
 		}
 
-		function buscarEmpresa($campo,$busqueda){
-			
-			return $this->db->query("select * from listar_empresas where $campo like '%". $busqueda ."%';");
+		function buscarEmpresa($where = ""){
+			if($where != ""){
+				$this->db->like($where);
+			}
+
+			return $this->db->get("registro_empresas");
 		}
 	}
  ?>

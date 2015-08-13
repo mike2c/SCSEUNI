@@ -36,8 +36,8 @@
 
 		#Cargar perfil de la empresa
 		function PerfilEgresado(){
-			$resultado = $this->modelo->buscarEgresado("usuario_id",getUsuarioId());
-			
+			$resultado = $this->modelo->buscarEgresado(array("usuario_id"=>getUsuarioId()));
+		
 			if($resultado != null){
 				
 				foreach ($resultado->result() as $row) {
@@ -51,7 +51,7 @@
 		
 		function PerfilEmpresa(){
 
-			$resultado = $this->modelo->buscarEmpresa("usuario_id",getUsuarioId());
+			$resultado = $this->modelo->buscarEmpresa(array("usuario_id"=>getUsuarioId()));
 			
 			if($resultado != null){
 				
@@ -126,29 +126,10 @@
 			echo $this->input->post("var2");
 		}
 
-		private function subirImg(){
-		
-			$config['upload_path'] = './uploads/';
-			$config['allowed_types'] = 'gif|jpeg|png|jpg';
-			$config['max_size'] = 2048;
-			$config['max_width'] = 1000;
-			$config['max_height'] = 1000;
-			$config['overwrite'] = TRUE;
-			$config['file_name'] = "profile_image_".getUsuarioId();
-			
-			$this->load->library('upload',$config);
+		function subirImg(){
+			$this->load->helper("imagen");			
 
-			if(! $this->upload->do_upload("imagen")){
-				$error = array('error'=>$this->upload->display_errors());
-			}else {
-				
-				if(file_exists("uploads/". getImagenPerfil())){
-					unlink("uploads/". getImagenPerfil());
-				}
-				
-				$data = array('upload_data'=>$this->upload->data());
-				return $data['upload_data']['file_name'];
-			}
+			subirImagen("asd");
 		}
 
 	}

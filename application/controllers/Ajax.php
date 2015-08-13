@@ -109,5 +109,41 @@
 			}
 			
 		}
+
+		function CargarTitulos($selected = ""){
+			$query = $this->registro->listarTitulos();
+
+			if($query->num_rows() > 0){
+				echo "<select required name='titulo[]' id='titulo'>";
+				foreach($query->result() as $row){
+					if($selected == $row->titulo_id){
+						echo "<option selected value='$row->titulo_id'>$row->titulo</option>";
+					}else{
+						echo "<option value='$row->titulo_id'>$row->titulo</option>";
+					}
+				}
+				echo "</selected>";
+			}else{
+				echo "No se han encontrador registros";
+			}
+		}
+
+		function RegistrarTitulo(){
+			$titulo = $this->input->post("titulo");
+			if($titulo != ""){
+				$this->registro->registrarTitulo($titulo);	
+			}
+		}
+
+		function ReporteEgresadosTrabajando(){
+			$this->load->model("egresado_model");
+			$data = $this->egresado_model->getReporteEgresadosTrabajando();
+
+			echo '' . json_encode($data) . '';
+		}
+
+		function ReporteEgresadosTitulaos(){
+
+		}
 	}	
 ?>

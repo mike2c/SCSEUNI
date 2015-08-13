@@ -33,5 +33,13 @@
 			$this->db->where("area_id",$area_id);
 			return $this->db->get("cargo");;
 		}
+
+		function listarTitulos(){
+			return $this->db->get("titulo");
+		}
+
+		function registrarTitulo($titulo){
+			$this->db->insert("titulo",array("titulo"=>$titulo));
+		}
 	}
 ?>

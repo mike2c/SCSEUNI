@@ -86,6 +86,22 @@
       </div>
     </div>
   </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+          Reportes <span class="badge pull-right">5</span>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+      <div class="panel-body">
+        <ul>
+          <li><a id="agregarEgresado" class="" href="javascript:mostrarReportes();"><span class="glyphicon glyphicon-asterisk"></span> Egresados</a></li>
+        </ul>  
+      </div>
+    </div>
+  </div>
 </div>		
 		</div>
 
@@ -120,5 +136,20 @@
       $("#contenido").load("<?=base_url('Publicador/Listar')?>");
     }
 
+    function mostrarReportes(){
+      $.ajax({
+        url: "<?=base_url('Reporte/ReporteEgresadosTrabajando')?>",
+        datatype: "html",
+        success: function(data){
+          $("#contenido").html(data);
+        },
+        error: function(jqXHR){
+          console.log(jqXHR.responseText);
+          alert("Ha ocurrido un error y no se ha podido ejecutar la solicitud.");
+        },
+        async: true
+      });
+
+    }
     
 </script>
