@@ -48,9 +48,25 @@
 
 				$data_carrera = $this->input->post("carreras[]");
 
+<<<<<<< HEAD
 				$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera);
 				
 			}
 		}
+=======
+			// if(is_array($id_ficha)){
+
+			// 	for($i= 0; i< count($id_ficha);$i++){
+			// 		$this->ficha_model->eliminar($id_ficha[$i]);
+			// 	}
+
+			// }else{
+			// 	$this->ficha_model->eliminar($id_ficha);
+			// }
+			
+			// echo "eliminado";
+		//}
+
+>>>>>>> 8020d8d6e7cde253a03b719fadad46cf9b7562d2
 	}
 ?>

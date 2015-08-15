@@ -111,7 +111,9 @@
     
   </div>
   </div>
+
   </div>
+
 <script type="text/javascript" src="<?=base_url('public/js/egresados.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
@@ -138,7 +140,7 @@
 
     function mostrarReportes(){
       $.ajax({
-        url: "<?=base_url('Reporte/ReporteEgresadosTrabajando')?>",
+        url: "<?=base_url('Reporte/ReporteEgresados')?>",
         datatype: "html",
         success: function(data){
           $("#contenido").html(data);
