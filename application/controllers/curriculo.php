@@ -25,19 +25,19 @@
 				$data_experiencia["fecha_comienzo"] = $this->input->post("fecha_comienzo[]");
 				$data_experiencia["fecha_finalizacion"] = $this->input->post("fecha_finalizacion[]");
 
-				$data_titulo["titulo"] = $this->input->post("");
-				$data_academica["fecha_comienzo"] = $this->input->post("");
-				$data_academica["fecha_finalizacion"] = $this->input->post("");
+				$data_titulo["titulo"] = $this->input->post("titulo[]");
+				$data_academica["fecha_comienzo"] = $this->input->post("fecha_formacion_comienzo[]");
+				$data_academica["fecha_finalizacion"] = $this->input->post("fecha_formacion_final[]");
 
-				$data_complementaria["curso"] = $this->input->post("");
-				$data_complementaria["fecha_comienzo"] = $this->input->post("");
-				$data_complementaria["fecha_finalizacion"] = $this->input->post("");
+				$data_complementaria["curso"] = $this->input->post("curso[]");
+				$data_complementaria["fecha_comienzo"] = $this->input->post("fecha_comp_comienzo[]");
+				$data_complementaria["fecha_finalizacion"] = $this->input->post("fecha_comp_final[]");
 
-				$data_idioma["idioma"] = $this->input->post("");
-				$data_idioma["nivel"] = $this->input->post("");
+				$data_idioma["idioma"] = $this->input->post("idioma[]");
+				$data_idioma["nivel"] = $this->input->post("nivel_idioma[]");
 
-				$data_informatica["software"] = $this->input->post("");
-				$data_informatica["nivel"] = $this->input->post("");
+				$data_informatica["software"] = $this->input->post("software[]");
+				$data_informatica["nivel"] = $this->input->post("nivel_software[]");
 
 				$this->curriculo_model->guardarCurriculo();
 				for($i=0; $i<count($data_experiencia);$i++){
