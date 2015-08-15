@@ -1,6 +1,5 @@
 <input type="hidden" value="<?=base_url()?>" id="base_url">
 <div class="container">
-
 	<div class="row">
 		<div class="col-md-2 col-g-2 margen-top">
 			<div class="row">
@@ -13,7 +12,7 @@
 						<?
 					}else{
 						?>
-						<img class="img-responsive" src="<?=base_url('uploads').'/'.getImagenPerfil()?>">
+						<img class="img-responsive" src="<?=base_url('uploads/'. getImagenPerfil())?>">
 						<?
 					}
 				?>
@@ -64,17 +63,24 @@
 		</div>
 		<div class="col-md-10 col-lg-10 margen-top">
 			<div id="contenido" style="overflow-x:auto;">
-				
+				<?php
+					if(isset($upload_error)){
+						echo "<script>
+							alert('La imagen que estas intentando subir no cumple los requisitos');
+						</script>";
+					}
+				?>
 			</div>
 		</div>
 	</div>
+
 </div>
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
 	<input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
 
 <style type="text/css">
-	
+
 	.img-perfil{
 		display: block;
 		overflow: hidden;

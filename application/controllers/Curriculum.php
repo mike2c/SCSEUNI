@@ -9,8 +9,15 @@
 		function Crear(){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("registro_curriculo");
+			$this->load->view("registro_curriculum");
 			$this->load->view("footer");
 		}
+
+		function Guardar(){
+
+			print_r($_POST);
+		}
+
+
 	}
 ?>

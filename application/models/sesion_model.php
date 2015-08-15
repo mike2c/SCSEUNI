@@ -9,17 +9,10 @@
 
 		function esAdministrador($data_usuario){
 
-<<<<<<< HEAD
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
-
-			$query = $this->db->query("select usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre,admin.persona_id from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
-
-				if($query->num_rows()>0){
-=======
-			$query = $this->db->query("select imagen,usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
+			//$query = $this->db->query("select imagen,usuario.usuario_id,correo,concat(nombre,' ',apellido) as nombre from admin,usuario,persona where usuario.correo='$data_usuario[correo]' and usuario.clave='$data_usuario[clave]' and usuario.usuario_id = admin.usuario_id and persona.persona_id = admin.persona_id;");
 
 			if($query->num_rows()>0){
->>>>>>> 9f37de376e37810cd268eb4fbe3534b07a6687fc
+
 				return $query->row_array();
 			}
 			return null;

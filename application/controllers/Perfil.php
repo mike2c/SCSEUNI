@@ -106,13 +106,20 @@
 		}
 
 		function CambiarImagenDePerfil(){
-			$this->load->model("perfil_model");
-			$nombre_imagen = $this->subirImg();
 			
-			$this->perfil_model->actualizarImagen(getUsuarioId(),$nombre_imagen);
-			setImagenPerfil( $nombre_imagen);
+			$this->load->model("perfil_model");
+			$data = $this->subirImagen();
+			
+			if(isset($data["file_name"])){
+				$this->perfil_model->actualizarImagen(getUsuarioId(),$data["file_name"]);	
+				setImagenPerfil($data["file_name"]);
+			}
 
-		
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("menu_perfil",$data);
+			$this->load->view("footer");
+
 		}
 
 		function prueba(){
@@ -126,10 +133,46 @@
 			echo $this->input->post("var2");
 		}
 
-		function subirImg(){
-			$this->load->helper("imagen");			
+		function subirImagen(){
+			
+			$config['upload_path'] = './uploads/';
+			$config['allowed_types'] = 'gif|jpeg|png|jpg';
+			$config['max_size'] = 1024;
+			$config['max_width'] = 1000;
+			$config['max_height'] = 1000;
+			$config['overwrite'] = TRUE;		
+			$config['file_name'] = 'perfil_'. getUsuarioId();
 
-			subirImagen("asd");
+			$this->load->library("upload",$config);
+
+			$last_name = getImagenPerfil();
+
+			if(!$this->upload->do_upload("imagen")){
+				
+				$data["upload_error"] = $this->upload->display_errors();
+				return $data;
+			
+			}else{
+								
+				$new_name = $this->upload->data();
+				if($last_name != $new_name["file_name"]){
+				
+					if(($last_name == "male.jpg") || ($last_name == "female.jpg")){
+					
+					}else{
+						try{
+							if(file_exists("/uploads/$last_name")){
+								unlink("/uploads/$last_name");
+							}
+						}catch(Exception $e){
+							echo $e->getMessage();
+						}
+						
+					}
+				}
+			}
+
+			return $this->upload->data();
 		}
 
 	}

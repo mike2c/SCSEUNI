@@ -15,6 +15,7 @@
 			$this->Listar();
 		}
 
+		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
 		function Crear(){
 			#Terminar de programar la validacion
 			$this->load->model("listas_model","lista");
