@@ -100,7 +100,7 @@
 
 			$fecha_actual = getdate();
 
-			$data_publicacion["fecha_publicacion"] = date("Y-m-d", strtotime($fecha_actual["mday"]. "/". $fecha_actual["mon"]. "/". $fecha_actual["year"]));
+			$data_publicacion["fecha_publicacion"] = $fecha_actual["mday"]. "-". $fecha_actual["mon"]. "-". $fecha_actual["year"];
 			
 			$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
 			$newDate = date("Y-m-d", strtotime($originalDate));

@@ -1,68 +1,76 @@
+<style type="text/css">
+	form img{
+		border:1px solid lightgray;
+		border-radius: 10px;
+		height: 120px;
+		min-width: 120px;
+		cursor: pointer;
+	}
+	img:active{
+		background-color: lightgray;
+	}
+	img:hover{
+		border: 2px solid gray;
+	}
+	input[type="file"]{
+		display: none;
+	}
+</style>
 
-<br><div class="container">
-
-<div class="row">
-	<div class="col-md-5 col-lg-5">
-	<form method="post" action="<?=base_url().'index.php/Beca/guardar'?>" enctype="multipart/form-data">
-		
-		<div class="form-group well">
-			<label><p>Selecciona la fecha del publicacion</p></label>
-			<input class="form-control" type="date" name="fecha_publicacion" id="fecha1">
-		</div>
-
-		<div class="form-group well">
-			<label><p>Selecciona la fecha en la que la publicación dejara de ser visible</p></label>
-			<input class="form-control" type="date" name="fecha_alta" id="fecha2">
-		</div>
-
+<div style="padding:0px 10px;border-left:1px solid lightgray">
+	<h3 class="form-title">Nueva Publicación de Beca</h3>
+	<form action="<?=base_url('Beca/crearBeca')?>" name="formCrearBeca" id="formCrearBeca" method="post" enctype="multipart/form-data">
 		<div class="form-group">
-			<label>Escribe una breve descripcion del contenido</label>
-			<textarea class="form-control" name="descripcion"></textarea>
+			<label class="">Elige una imagen para la publicación(<small>Opcional</small>)</label><br>
+			<img id="precarga" onclick="buscarImagen()" src="<?=base_url('public/res/add_image.png')?>" alt="La imagen no se puede visualizar">
+			<input type="file" name="imagen" id="imagen" />
 		</div>
-
 		<div class="form-group">
-			<label>Imagen(<small>opcional</small>)</label>
-			<input type="file" name="imagen">
+			<label for="">Breve descripcion para la publicación:</label><br>
+			<textarea required name="descripcion" id="descripcion" cols="30" rows="4" class="form-control"></textarea>
 		</div>
-
-
-
 		<div class="form-group">
-			<label>Inserte una URL opicinal del la publicacion</label>
-			<input type="url" class="form-control" name="url" id="urltexto">
-		</div>		
-
-		<script type="text/javascript">
-
-			function REVISAR() {
-
-    //Declaramos la expresión regular que se usará para validar la url pasada por parámetro
-
-    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-
-    //Retorna true en caso de que la url sea valida o false en caso contrario
-
-	if(!regexp.test(document.getElementById('urltexto').value)){
-	alert("Por Favor Inserte una Url Correcta");
-}
-    return regexp.test(document.getElementById('urltexto').value);
-
- }
-
-
-		</script>
-
-		<div class="form-group">
-		<input type="submit" class="btn btn-primary " value="guardar" onclick="return REVISAR()">	
-		<input type="submit" class="btn btn-primary " value="Limpiar">	
+			<label for="">Seleccione la fecha en la que la publicación dejara de estar visible</label>
+			<input autocomplete="off" class="form-control" style="width:150px;" type="text" id="fecha" maxlength="10" placeholder="dd/mm/aaaa" name="fecha_alta">
 		</div>
-			
+		<div class="form-group" style="">
+				<label for="" class="">URL con información de la beca</label><br>	
+				<input required style="width:360px;" type="text" class="form-control" name="url">
+		</div>
+		<div class="">
+		<label for="">Seleccione las carreras a las que se mostrara esta Beca.</label>
+			<?php
+				if(isset($carreras))
+				{
+					foreach ($carreras->result() as $row) {
+						echo "
+							<div class='form-group'>
+								<div  class='checkbox'>
+									<label for='checkbox_$row->carrera_id'>
+										<input type='checkbox' id='checkbox_$row->carrera_id' name='carreras[]' value='$row->carrera_id'> $row->nombre_carrera
+									</label>
+								</div>
+							</div>
+							
 
-</form>
-	</div>
+						";
+					}
+				}
+			?>
+		</div>
+		<div class="form-group">
+			<button class="btn btn-primary" type="submit">Guardar</button>
+			<button type="reset" class="btn btn-danger">Cancelar</button>
+		</div> 
+	</form>
 </div>
+
+<script type="text/javascript" src="<?=base_url('public/js/precarga.js')?>"></script>
+<script type="text/javascript">
 	
-</div>
-<script type="text/javascript" src = "../../public/js/eventos.js">
-	
+	function buscarImagen(){
+		$("#imagen").trigger("click");
+	}
+
+	$("#fecha").datepicker();
 </script>

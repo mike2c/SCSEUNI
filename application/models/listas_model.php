@@ -31,7 +31,7 @@
 
 		function listarCargos($area_id){
 			$this->db->where("area_id",$area_id);
-			return $this->db->get("cargo");;
+			return $this->db->get("cargo");
 		}
 
 		function listarTitulos(){
