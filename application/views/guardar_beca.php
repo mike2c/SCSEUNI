@@ -72,5 +72,5 @@
 		$("#imagen").trigger("click");
 	}
 
-	$("#fecha").datepicker();
+	$("#fecha").datepicker({dateFormat: 'dd/mm/yy'});
 </script>
