@@ -22,7 +22,7 @@
 <nav style="border-bottom: 1px solid lightgray;">
 	<div class="container" >
 		<ul class="menu">
-			<li style=""><a href="<?=base_url('Bienvenido')?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+			<li style="border-left:1px solid lightgray"><a href="<?=base_url('Bienvenido')?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Informacion</a>
 				<ul class="">
 					<li class="sub-menu"><a href="#">Egresados <span class="glyphicon glyphicon-chevron-down"></span></a>
@@ -52,7 +52,7 @@
 			<li><a href="<?=base_url('Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li>
 			<?php
 				if(!sesionIniciada()){
-					?><li style="border-right:1px solid lightgray;"><a href="<?=base_url('Sesion/IniciarSesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a></li><?
+					?><li style="border-right:1px solid lightgray;"><a href="<?=base_url('Sesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a></li><?
 				}
 			?>
 			
