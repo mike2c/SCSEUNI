@@ -7,17 +7,12 @@
 	li{
 		text-align: justify;
 	}
-	.nav-tabs{
-		background-color: #EFF8FB;
-	}
-	.tab-content{
-		background-color: #EFF8FB;
-		padding-bottom: 10px;
-	}
+	
 	img{
     	border: 1px solid #03447F;
     	width: 460px;
 	}
+
 </style>
 <div class="container">
 	<div class="row">

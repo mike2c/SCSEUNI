@@ -114,6 +114,7 @@
 
   </div>
 
+<script src="<?=base_url('public/js/highcharts/highcharts.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/egresados.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>

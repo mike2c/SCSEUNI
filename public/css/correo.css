@@ -1,31 +1,33 @@
+#barra_menu{
+	overflow: auto;
+	padding: 5px;
+	background-color: white;
+	border-bottom: 1px solid lightgray;
+}
+
+#area_mensajes{
+	overflow: auto;
+	border:1px solid lightgray;
+	max-height: 350px;
+	background-color: white;
+	padding: 10px;
+	margin-top:5px;
+}
+
 .left-menu{
+	overflow: hidden;
+	display: block;
+	margin-top:5px;
 	list-style: none;
 	padding-left: 0px;
+	background-color:white;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border:1px solid lightgray;
 }
 
-.left-menu li a{
-	display: block;
-	height: 40px;
-	line-height:40px;
-	padding-left: 15px;
-	text-decoration: none;
-	
-}
-
-.left-menu li a:hover{
-	background-color: lightgray;
-	color: white;
-}
-
-.left-menu .activo{
-	background-color: #337ab7;
-	color: white;
-}
-
-.left-menu .activo .badge{
-	color: gray;
-
-	background-color: white;
+.left-menu li{
+	border-bottom: 1px dotted lightgray;
 }
 .h-separator{
 	border-bottom: 1px solid lightgray;
@@ -74,8 +76,4 @@
 .message-footer a{
 	display: block;
 	text-align: left;
-}
-
-*{
-	//border:1px solid black;
 }

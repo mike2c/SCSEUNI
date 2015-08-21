@@ -1,3 +1,4 @@
+<input type="hidden" value="<?=base_url();?>" id="base_url">
 <?php
 	$no_inbox = 0;
 	$no_sent = 0;
@@ -24,28 +25,21 @@
 	}
 
 ?>
-	<input type="hidden" value="<?=base_url();?>" id="base_url">
-	<div class="contenido">
-	<div class="container" style="padding-left:10px;">
-			<div class="col-md-2 col-lg-2" style="padding-left:0px;padding-top:0px;">
-				<div class="navbar-nav navbar-left" style="">
-					<button type="button" class="btn btn-primary btn-sm navbar-btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap"><span class="glyphicon glyphicon-pencil"></span> Redactar mensaje</button>
-				</div>
-			
-			</div>
-			<div class="col-md-10 col-lg-10">
-				<div class="navbar-nav navbar-left">
-					<button id="btnActualizar" class="btn  btn-sm btn-default navbar-btn"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
-				<button id="btnEliminar" class="btn  btn-sm btn-default navbar-btn btn-default" id="btnEliminar"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
-				</div>
-				<!--FORMULARIO DE BUSQUEDA-->
-				<form class="navbar-form navbar-right form-inline" id="formBusqueda" method="post" style="margin-top:10px;">
-					
+<div id="barra_menu">
+	<div class="container no-padding">
+		<div class="col-md-2 col-lg-2"><!--REDACTAR MENSAJE-->
+			<button data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-primary" style="width:100%;">Redactar mensaje</button>
+		</div>
+		<div class="col-md-3 col-lg-3">
+			<button id="btnActualizar" onclick="actualizar()" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
+			<button id="btnEliminar" onclick="" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> Eliminar mensaje(s)</button>
+		</div>
+		<div class="col-md-5 col-lg-5 col-md-offset-2 col-lg-offset-2">
+			<div class="input-group">
+				<form class="form-inline" action="" type="post" id="formBusqueda" style="">
 					<div class="form-group">
-						<input type="hidden" id="bandeja" value="inbox">
-						<input type="search" id="busqueda" name="asunto" placeholder="busqueda" class="form-control" >
+						<input placeholder="busqueda" class="form-control" type="search" id="busqueda" name="asunto">
 					</div>
-
 					<div class="form-group">
 						<select class="form-control" id="filtro">
 							<option value="asunto">Asunto</option>
@@ -53,33 +47,37 @@
 							<option value="mensaje">Contenido</option>
 						</select>
 					</div>
-
 					<div class="form-group">
-						<input type="submit" value="Buscar" class="btn btn-default btn-sm">
-					</div>
+						<button class="btn btn-primary btn-sm">Buscar</button>
+					</div>				
 				</form>
+			</div>
 		</div>
 	</div>
 </div>
 
-<div class="container">
-	<div class="row">
-		<div class="col-md-2 col-lg-2 left-line" style="padding:0px 0px;border-right:1px solid lightgray;">
+<div class="container no-padding">
+	<div class="col-md-2 col-lg-2">
+		<ul class="left-menu">
+			<li data-bandeja="inbox"><a href="#" class="activo">Recibidos <span class="badge">0</span></a></li>
+			<li data-bandeja="sent"><a href="#" class="">Enviados <span class="badge">0</span></a></li>
+			<li data-bandeja="drafts"><a href="#" class="">Borrador <span class="badge">0</span></a></li>
+			<li><a href="" class="">Salir</a></li>
+		</ul>
 			<ul class="left-menu">
-				<li data-bandeja="inbox" onclick="cambiarBandeja(this)"><a name="menu_correo" class="activo" href="javascript:getInbox()" >Mensajes recibidos <span class="badge"><?=$no_inbox;?></span></a></li><li class="h-separator"></li>
-				<li data-bandeja="sent" onclick="cambiarBandeja(this)"><a name="menu_correo" href="javascript:getSent()">Mensajes enviados <span class="badge"><?=$no_sent;?></span></a></li><li class="h-separator"></li>
+				<li data-bandeja="inbox" onclick="cambiarBandeja(this)"><a name="menu_correo" class="activo" href="javascript:getInbox()" >Recibidos <span class="badge"><?=$no_inbox;?></span></a></li><li class="h-separator"></li>
+				<li data-bandeja="sent" onclick="cambiarBandeja(this)"><a name="menu_correo" href="javascript:getSent()">Enviados <span class="badge"><?=$no_sent;?></span></a></li><li class="h-separator"></li>
 				<li data-bandeja="drafts" onclick="cambiarBandeja(this)"><a name="menu_correo"  href="javascript:getDrafts()">Borrador <span class="badge"><?=$no_drafts;?></span></a></li><li class="h-separator"></li>
 				<li><a href="<?=base_url()?>">Salir</a></li>
 				<li class="h-line"></li>
 			</ul>	
 		</div>
-		<div class="col-lg-10 col-md-10">
+		<div class="col-lg-10 col-md-10 no-padding">
 		<!--DIV PARA LOS MENSAJES DE ENTRADA -->
-		<div id="area_mensajes">
-			
+			<div id="area_mensajes">
+				
+			</div>
 		</div>
-		</div>
-	</div>
 </div>
 
 <!--MODAL PARA ENVIAR EL MENSAJE-->
@@ -139,7 +137,6 @@
 <!--FIN DEL MODAL-->
 <style type="text/css">
 	@import url("<?=base_url('public/css/correo.css')?>");
-		
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/correo.js')?>"></script>
 <script type="text/javascript">
@@ -241,17 +238,19 @@
 
 	});
 
+	$(".left-menu li").click(function(){
+		$(".left-menu li").removeClass("activo");
+		$(this).addClass("activo");
+		bandeja = $(this).data("bandeja");
+		$("#busqueda").val("");
+	});
+
 	function limpiarCampos(){
 		document.getElementById("formEnviarMensaje").reset();
 		document.getElementById("borrador").value = false;
 		var lista = $("datalist").get(0);
 		$("#destinatario").attr("list","lista_egresados");
-	}
 
-	function cambiarBandeja(element){
-		
-		bandeja = element.getAttribute("data-bandeja");
-		document.getElementById("busqueda").value = "";
 	}
 
 	var bandeja = "inbox";

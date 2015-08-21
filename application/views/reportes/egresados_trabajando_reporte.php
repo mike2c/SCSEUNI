@@ -1,5 +1,5 @@
 <br>
-<div class="container">
+<div class="container" style="max-width: 1100px;">
 	
 <?php
 	if(!isset($data)){
@@ -51,7 +51,7 @@
     });
 });
 </script>
-<script src="<?=base_url('public/js/highcharts/highcharts.js')?>"></script>
+
 <div id="trabajando" style="min-width: 310px; width: 500; height: 420px; max-width: 500px;border:1px solid lightgray;"></div>
 <br>
 <table class="table table-bordered" style="padding-top:10px;">

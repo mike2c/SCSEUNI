@@ -9,76 +9,45 @@ html,body{
 	padding-bottom:30px;
 
 }
-			
-			header{
-				background-color: #03447F;
-				color: white;
-				padding: 5px 0px;
-			}
 
-			header img{
-				border: 2px solid white;
-				background-color: white;
-			}
-			
-			footer{
-				font-size: 12px;
-				padding-top: 0px;
-				height: 25px;
-			}
+body{
+	background-color: rgba(245,245,245,0.4);
 
-			.contenido{
-
-				background-color: white;
-				border:1px solid lightgray;
-				display: block;
-				overflow: auto;
-				
-			}
-			.separador{
-				display: block;
-				background-color: white;
-				height: 20px;
-			}
-			
-.menu{
-	display: block;
-	overflow: auto;
-	list-style: none;
-	//border: 1px solid black;
-	margin-bottom: 0px;
-	padding-left: 0px;
 }
 
-nav{
+header{
+	background-color: #03447F;
+	color: white;
+	padding: 5px 0px;
+}
+
+header img{
+	border: 2px solid white;
 	background-color: white;
 }
 
-.menu > li{
-	display: inline-block;
-	border-right: 1px solid lightgray;
-	//border: 1px solid pink;
-	padding: 0px 0px;
+footer{
+	font-size: 12px;
+	padding-top: 0px;
+	height: 25px;
 }
 
-.menu li > a{
-	text-decoration: none;
-	
+.contenido{
+
+	background-color: white;
+	padding: 15px 15px;
+	border-radius: 6px;
+	margin: 10px 0px;
+	border:1px solid lightgray;
 	display: block;
-	height: 34px;
-	line-height: 34px;
-	padding-left: 10px;
-	padding-right: 15px;
+	overflow: auto;
+	
 }
-
-.menu li:hover{
-	background:rgba(174,174,174,.2);
+.separador{
+	display: block;
+	background-color: white;
+	height: 20px;
 }
-
-.menu li ul{
-	display: none;
-}
-
 
 
 .v-line{
@@ -106,6 +75,7 @@ nav{
 }
 /*REDIMENSIONANDO IMAGENES DE LA CABECERA*/
 .img{
+
 	height: 50%;
 	width: 50%;
 	margin-top:5px;
@@ -123,39 +93,172 @@ nav{
 
 }
 
-.submenu{
-	
-	display: none;
-	position: absolute;
-	z-index: 1;
+/*ESTILO PARA EL MENU*/
+nav{
 	background-color: white;
+}
+nav .container{
+	padding: 0px;
+}
+
+.menu{
+	list-style: none;
 	padding-left: 0px;
-	border-bottom: 1px solid lightgray;
+	margin: 0px 0px;
+	overflow: auto;
+	float: left;
+}
+
+.menu > li{
+
+	display: block;
+	float: left;
+	font-size: 15px;
+	line-height: 30px;
+	margin: 0px 0px;
+	
+	text-align: left;
+	border-right:1px solid lightgray;
+}
+
+.menu li a{
+	font-family: 'Lucida sans';
+	font-weight: ;
+	font-size: 12px;
+	display: block;
+	height: inherit;
+	width: inherit;
+	text-decoration: none;
+	padding-left: 10px;
+	padding-right: 15px;
+
+}
+
+.menu li ul li{
 	border-left: 1px solid lightgray;
 	border-right: 1px solid lightgray;
-	min-width: 160px;
-	}
 
-.submenu > li{
-	list-style: none;
-	display: list-item;
-	//border-bottom: 1px solid lightgray;
 }
-
-.submenu li > a{
+.sub-menu:hover{
+	border-right: none;
+}
+.sub-menu span{
+	float:right;line-height:30px;font-size:12px;
+}
+.menu li ul li a{
 	padding-left: 20px;
-	padding-right: 10px;
-	height: 35px;
-	line-height: 35px;
-	font-size: 
+}
+.menu li a:hover{
+	background-color: #458;
+	color: white;
 }
 
-/*ESTILO PARA FORMULARIOS*/
+.menu li:hover > ul{
+
+	display: block;
+}
+
+.menu li ul{
+	border-bottom: 1px solid lightgray;
+	margin-left: -1px;
+	display: none;
+	list-style: none;
+	background-color: white;
+	z-index: 1;
+	position: absolute;
+	text-align: left;
+	padding-left: 0px;
+	min-width: 150px;
+	box-shadow: 1px 0px 1px 0px gray;
+}
+
+.menu li ul li ul{
+	border-top: 1px solid lightgray;
+
+	margin-top: -30px;
+	right: -150px;
+	position: absolute;
+}
+
+.menu li ul li ul li{
+	border-left: none;
+}
+
+#img_perfil{
+
+	max-width: 40px;
 	
+}
+
+#btn_perfil{
+	margin-top: 0px;
+
+}
+
+#btn_perfil {
+	float: right;
+	display: block;
+	
+}
+
+.no-padding{
+	padding:0px 0px;
+}
+#btn_perfil span{
+
+}
+
+.menu-perfil{
+
+	float: right;
+	display: none;
+	list-style: none;
+	padding: 0px 10px;
+	border-radius: 6px;
+	position: absolute;
+	background-color: white;
+	min-width: 120px;
+	z-index: 1;
+	margin-top: 32px;
+}
+
+.menu-perfil li a{
+	display: block;
+	padding-left:25px;
+	line-height: 30px;
+	border-bottom: 1px dotted gray;
+}
+/*ESTILO PARA FORMULARIOS*/
 .form-title{
 	display: block;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	padding: 10px 10px;
 	border-bottom: 1px solid lightgray;
+}
+
+
+.left-menu li a{
+	display: block;
+	height: 40px;
+	line-height:40px;
+	padding-left: 15px;
+	text-decoration: none;
+	
+}
+
+.left-menu li a:hover{
+	background-color: lightgray;
+	color: white;
+}
+
+.left-menu .activo{
+	background-color: #337ab7;
+	color: white;
+}
+
+.left-menu .activo .badge{
+	color: gray;
+
+	background-color: white;
 }

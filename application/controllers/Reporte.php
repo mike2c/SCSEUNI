@@ -21,6 +21,7 @@
 			if(IS_AJAX){
 				$this->load->view("reportes/egresados_trabajando_reporte",$data);
 				$this->load->view("reportes/egresados_titulados_reporte",$data);
+				$this->load->view("reportes/egresados_carreras_reporte",$data);
 			}else{
 				$this->load->view("cabecera");
 				$this->load->view("nav");

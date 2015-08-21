@@ -7,6 +7,7 @@
 	li{
 		text-align: justify;
 	}
+	/*
 	.nav-tabs{
 		background-color: #EFF8FB;
 	}
@@ -14,6 +15,8 @@
 		background-color: #EFF8FB;
 		padding-bottom: 10px;
 	}
+	*/
+
 	img{
     	border: 1px solid #03447F;
     	width: 460px;
@@ -63,7 +66,7 @@
 
 				    <div role="tabpanel" class="tab-pane active" id="profile">
 				    	<table>
-				    	<tr><td><img src="../../public/res/perfil-usuario.jpg"></td>
+				    	<tr><td><img src="<?=BASE_URL('public/res/perfil-usuario.jpg')?>"></td>
 						<td> <p>	
 						    	Una vez registrados y autenticados las empresas, tendrán un perfil el cual puede ser público o privado según las preferencias del usuario, en el podrán actualizar sus datos personales, sociales, intereses, también tendrán el acceso a su bandeja de mensajes, formulario de gestión de candidaturas y el formulario de gestión de ofertas de trabajo.
 							</p> </td></tr>
@@ -72,7 +75,7 @@
 
 				    <div role="tabpanel" class="tab-pane" id="cv">
 				    	<table>
-				    	<tr><td><img src="../../public/res/curriculum.jpg"></td>
+				    	<tr><td><img src="public/res/curriculum.jpg"></td>
 						<td> <p>	
 						    	Al hacer click en el formulario de gestión de candidaturas desde el perfil de usuario las empresas podrán examinar a los candidatos que han aplicado a la oferta de trabajo publicada por la empresa.
 								<br/><br/>Una vez que la empresa ha seleccionado el mejor candidato tendrá la opción de enviarle un mensaje directo y comunicarse con el candidato seleccionado.

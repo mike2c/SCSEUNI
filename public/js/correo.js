@@ -22,10 +22,6 @@ $(document).ready(function(){
 		cancelar();
 	});
 
-	document.getElementById("btnActualizar").addEventListener("click",function(){
-		actualizar();
-	});
-
 });
 
 function eliminarMensajes(){

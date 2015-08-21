@@ -1,47 +1,66 @@
-<div class="container contenido">
-<h2 class="page-header">Inicia sesión porfavor</h2>
-	<div class="col-lg-4 col-md-4 col-xs-4">
-		<form class="form-horizontal" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
-			<div class="form-group">
-				<label>Correo</label>
-				<input type="text" class="form-control" name="correo">
-			</div>
-			<div class="form-group">
-				<label>Contraseña</label>
-				<input autocomplete="off" type="password" class="form-control" name="clave">
-			</div>
-			<div class="form-group">
-				<input autocomplete="off" type="submit" class="form-control btn btn-primary" value="Entrar">
-			</div>
-		</form>
-		<br>
-	</div>
-	<div class="col-md-6 col-lg-6 col-md-offset-1">
-	<br><br><br>
-		<h4 class="text-danger">
-			<?
-				if(isset($sesion_errors)){
-					echo $sesion_errors;
+<div class="container">
+	<div class="row contenido">
+		
+		<div class="col-md-5 col-lg-5">
+			<h2 class="form-title">
+				Bienvenido
+			</h2>
+			<form class="" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
+				<div class="form-group">
+					<label>Correo</label>
+					<div class="input-group">
+					
+					<input type="text" class="form-control" name="correo"><span class="input-group-addon glyphicon glyphicon-envelope"></span>
+					</div>
+				
+				</div>
+				<div class="form-group">
+					<label>Contraseña</label>
+					<div class="input-group">
+						<input autocomplete="off" type="password" class="form-control" name="clave"><span class="input-group-addon glyphicon glyphicon-lock"></span>
+					</div>
+				</div>
+				<div class="form-group" style="overflow:auto;">
+					<input autocomplete="off" type="submit" class="btn btn-primary pull-right" value="Aceptar">
+				</div>
+				
+			</form>
+			<hr>
+				<a href="#" class="pull-right">He olvidado mi contraseña</a>
+		</div>
+		<div class="col-md-6 col-lg-6" style="">
+		<br><br><br><br><br><br>
+			<?php
+				if(isset($sesion_errors) && !empty($sesion_errors)){
+					?>
+				 	<div class="panel panel-primary">
+						<div class="panel-heading">
+							ERROR
+						</div>
+						<div class="panel-body">
+							<?php
+								echo $sesion_errors;
+							?>
+						</div>
+					</div>
+					<?
 				}
 			?>
-			
-		</h4>
+	
+		</div>
 	</div>
 </div>
 
-<div>
-	<div class="container well contenido">
-		<div class="row">
-			<div class="col-md-10 col-lg-10">
-			<h1 class="">¿Aun no posees una cuenta?</h1>
-				<p>El proceso de registro varia dependiendo de el tipo de usuario.Si eres un <label for=""> Egresado</label> deberas seguir
-				 los siguientes pasos mostrados en este <a href="<?=base_url('Egresado/Autenticar')?>">enlace</a> o si eres una empresa puedes crearla directamente completando el siguiente formulario de registro <a href="#">aqui</a>.</p>
-			</div>
-		</div>	
-	</div>
-</div>	
-
-<!-- ESTILO -->
-<script type="text/javascript">
-	activarMenu(document.getElementById("menu_sesion"));
-</script>
+<style type="text/css">
+	.form-control
+	{
+		height: 35px;
+	}
+	input[type="password"]{
+		font-size:22px;
+	}
+	.input-group span{
+		top:0px;
+		background-color: white;
+	}
+</style>

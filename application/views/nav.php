@@ -2,7 +2,7 @@
 	<div class="container">
 			<div class="row">
 			<div class="col-md-2 col-lg-2">
-				<img style="height:50%;width:70%;margin-top:15px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt="">
+				<a href="<?=base_url('Bienvenido')?>"><img style="height:50%;width:70%;margin-top:15px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
 			</div>
 			<div class="col-md-8 col-lg-8 auto-size">
 				<center>
@@ -18,76 +18,80 @@
 			</div>
 		</div>
 	</div>
-</header>
-
-<nav class="h-line">
-	<div class="container" style="padding:0px 0px;">
-	<div class="col-md-9 col-lg-9" style="padding:0px 0px;">
+</header><!--FIN DEL ENCABEZADO-->
+<nav style="border-bottom: 1px solid lightgray;">
+	<div class="container" >
 		<ul class="menu">
-			<li class="activo v-line"><a  href="<?=base_url();?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
-			<li><a href="#"><span class="glyphicon glyphicon-triangle-bottom"></span> Informacion</a>
-				<ul class="submenu">
-					<li><a href="<?=base_url('index.php/informacion/misionVision')?>">Mision y Vision</a></li>
-					<li><a href="<?=base_url('index.php/informacion/Egresados')?>">Egresados</a></li> 
-					<li><a href="<?=base_url('index.php/informacion/Empresas')?>">Empresa</a></li>
-				</ul>
-			<li><a href="<?=base_url('index.php/Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li>
-			<?php
-				if(!sesionIniciada()){
-					?>
-					<li><a  href="<?=base_url('index.php/Sesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a>	
-						
+			<li style=""><a href="<?=base_url('Bienvenido')?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Informacion</a>
+				<ul class="">
+					<li class="sub-menu"><a href="#">Egresados <span class="glyphicon glyphicon-chevron-down"></span></a>
+						<ul>
+							<li><a href="<?=base_url('Informacion/Egresados')?>">Información</a></li>
+							<li><a href="<?=base_url('Egresado/Autenticar')?>">Autenticación</a></li>
+						</ul>
 					</li>
-					<?
+					<li class="sub-menu"><a href="#">Empresa <span class="glyphicon glyphicon-chevron-down"></span></a>
+						<ul>
+							<li><a href="<?=base_url('Informacion/Empresas')?>">Información</a></li>
+							<li><a href="<?=base_url('Empresa/Registro')?>">Registro</a></li>
+						</ul>
+					</li>
+					<li style="border-top:1px dotted lightgray"><a href="<?=base_url('Informacion/misionVision')?>">Mision y Vision</a></li>
+					<li><a href="<?=base_url('Informacion/Cursos')?>">Cursos</a></li>
+					<li><a href="<?=base_url('Informacion/Becas')?>">Becas</a></li>
+				</ul>
+			</li>
+			<?php
+				if(sesionIniciada()){
+					if(esEgresado()){
+						?><li><a href="<?=base_url('Informacion/BolsaDeTrabajo')?>"><span class="glyphicon glyphicon-briefcase"></span> Bolsa de trabajo</a></li>	<?
+					}
 				}
 			?>
-		</ul>	
-	</div>
-	<div class="col-md-3 col-lg-3" style="padding:0px 0px;float:right;">
-	    <?
-	    if(sesionIniciada()){
-    		?>
-    		
-			<div class="dropdown" style="float:right">
-				<button id="btn_perfil" class="btn btn-default btn-sm btn-perfil navbar-btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					
-					<?
-						echo getNombre(). " ";
-					?>	
-								
-				<span class="caret"></span>
-				</button>
-
-				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				    <li><a href="<?=base_url('Perfil')?>">Mi Perfil</a></li>
-				    <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-				    <?
-				    	if(isset($_SESSION["administrador"])){
-				    		?>
-							<li><a href="<?=base_url('CPanel')?>">Administrar</a></li>
-				    		<?
-				    	}
-				    ?>
-				    <li><a href="<?=base_url('Sesion/CerrarSesion')?>">Salir</a></li>
-				</ul>
-			</div>
+			<li><a href="<?=base_url('Contacto')?>"><span class="glyphicon glyphicon-earphone"></span> Contacto</a></li>
 			<?php
-
-				if(getImagenPerfil() == ""){
-					?>
-					<img style="display:block;float:right;height:32px;width:33px;padding-top:2px;" src="<?=base_url('/uploads/male.jpg')?>" alt="">
-					<?
-				}else{
-					?>
-					<img style="display:block;float:right;height:32px;width:33px;padding-top:2px;" src="<?=base_url('/uploads/'.getImagenPerfil())?>" alt="">
-					<?
+				if(!sesionIniciada()){
+					?><li style="border-right:1px solid lightgray;"><a href="<?=base_url('Sesion/IniciarSesion')?>"><span class="glyphicon glyphicon-user"></span> Iniciar Sesion</a></li><?
 				}
 			?>
 			
-    		<?
-	    }
+		</ul>
+		
+			<?php
+			if(sesionIniciada()){
+			?>
+			<div style="float:right">
+				<a id="btn_perfil" href="#">
+				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=getNombre()?> 
+				<span class="glyphicon glyphicon-chevron-down"></span>
+				<ul class="menu-perfil">
+					<li><a href="">palabra</a></li>
+					<li><a href="">palabra</a></li>
+					<li><a href="">palabra</a></li>
+				</ul>
+				</a>
+			</div>
+			
+			<?
+			}
 		?>
 	</div>
-</div>
 
 </nav>
+<script type="text/javascript">
+	$("#btn_perfil").click(function(){
+		$(".menu-perfil").toggle();
+	});
+
+	$(".sub-menu").hover(function(){
+		$(this).find("span").removeClass("glyphicon glyphicon-chevron-down");
+		$(this).find("span").addClass("glyphicon glyphicon-chevron-right");
+	});
+
+	$(".sub-menu").mouseleave(function(){
+		$(this).find("span").removeClass("glyphicon glyphicon-chevron-right");
+		$(this).find("span").addClass("glyphicon glyphicon-chevron-down");
+	});
+
+</script>

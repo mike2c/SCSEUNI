@@ -115,11 +115,7 @@
 				setImagenPerfil($data["file_name"]);
 			}
 
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("menu_perfil",$data);
-			$this->load->view("footer");
-
+			redirect(base_url("Perfil"));
 		}
 
 		function prueba(){

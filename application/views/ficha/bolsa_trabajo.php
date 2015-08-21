@@ -34,14 +34,7 @@
 			<p id='personal'></p>
 			<label for=''>Competencia: </label><br>
 			<p id='competencia'></p>
-			<a href='#'>Ver mas...</a>
-		</div>-->
-		
-
-		<?php
-
-			foreach ($fichas->result() as $row) {
-#<h3 class='' id='ficha_titulo'>$row->cargo :</h3>
+			<a href='#'>Ver mas...</a>#<h3 class='' id='ficha_titulo'>$row->cargo :</h3>
 				echo "<div id='contenedorFicha'>
 					<p id='descripcion'>$row->descripcion</p>
 					
@@ -66,61 +59,22 @@
 					
 					<button class='ver-mas btn-link'>Ver mas...</Button>
 				</div>";
-			}
+		</div>-->
+		
 
+		<?php
+			foreach ($fichas->result() as $row) {
+			?>
+				<div>
+					<h5>Publicador por: </h5>
+					
+				</div>				
+			<?
+			}
 		?>
 	</div>
 </div>
 	//#3b5998
-<style type="text/css">
-
-	ul{
-		list-style: none;
-		padding-left: 0px;
-	}
-
-	ul li{
-		margin-top: 0px;
-		padding: 6px 0px;
-		border-bottom:1px solid lightgray;
-	}
-
-	ul li label{
-		cursor: pointer;
-	}
-	
-	#contenedorFicha h3{
-		
-	}
-
-	#contenedorFicha{
-		border:1px solid lightgray;
-		padding: 10px 10px;
-		margin-bottom: 20px;
-	}
-	
-	#ficha_contenido{
-		display: none;
-	}
-
-	#contenedorFicha #descripcion{
-		
-		font-size:16px;
-
-		padding:5px 10px;
-		//background-color: whitesmoke;
-		//border-radius: 3px;
-	}
-
-	#contenedorFicha label span{
-		color: gray;
-	}
-
-	#fecha_alta{
-		text-align: right;
-		color: darkgray;
-	}
-</style>
 <script type="text/javascript">
 	$(".ver-mas").click(function(){
 

@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="max-width: 1100px;">
 	<?php
 	if(!isset($data_titulados)){
 		echo "<p>No se ha podido cargar el contenido, debido a que no se ha podido obetener la información necesaria</p>";
@@ -50,7 +50,7 @@
     });
 });
 </script>
-<script src="<?=base_url('public/js/highcharts/highcharts.js')?>"></script>
+
 <div id="titulados" style="min-width: 310px; width: 500; height: 420px; max-width: 500px;border:1px solid lightgray;"></div>
 <br>
 <table class="table table-bordered">
