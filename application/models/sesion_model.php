@@ -1,5 +1,9 @@
 <?php
+<<<<<<< HEAD
   class Sesion_model extends CI_Model{
+=======
+ class Sesion_model extends CI_Model{
+>>>>>>> 75d9b3055036acfce7e304ee305c3f6c7eb03bf6
   
   function __construct(){
    parent:: __construct();
@@ -24,6 +28,10 @@
    }
    return null;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 75d9b3055036acfce7e304ee305c3f6c7eb03bf6
  
   function esEmpresa($data_usuario){
    $query = $this->db->query("select imagen,usuario_id, nombre_empresa as nombre, correo from  registro_empresas where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");

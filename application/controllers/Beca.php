@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-	
+	if(!isset($_SESSION["publicador"])){
+		#DESCOMENTAR ESTA LINEA CUANDO EL SISTEMA ESTE TERMINADO.
+		//exit ("Error 404. pagina no encontrada");
+	}
 	class Beca  extends CI_Controller{
 
 		function __construct(){
@@ -7,7 +10,7 @@
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
 			$this->load->library("form_validation");
-			$this->load->helper(array("sesion","imagen","url","form"));
+			$this->load->helper(array("sesion","imagen","url","form","fecha"));
 		}
 
 		function Index(){
@@ -29,15 +32,12 @@
 				$this->load->view("guardar_beca",$info);
 				$this->load->view("footer");
 			}else{
-				$data_publicacion["usuario_id"] = $this->session->userdata("usuario_id");
+				$data_publicacion["usuario_id"] = getUsuarioId();
 				$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 
 				$fecha_actual = getdate();
 				$data_publicacion["fecha_publicacion"] = $fecha_actual["year"]. "-". $fecha_actual["mon"]. "-".$fecha_actual["mday"] ;
-
-				$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
-				$newDate = date("Y-m-d", strtotime($originalDate));
-				$data_publicacion["fecha_alta"] = $newDate;
+				$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
 
 				$img = escaparImagen("imagen");
 		
@@ -48,25 +48,10 @@
 
 				$data_carrera = $this->input->post("carreras[]");
 
-<<<<<<< HEAD
+
 				$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera);
 				
 			}
 		}
-=======
-			// if(is_array($id_ficha)){
-
-			// 	for($i= 0; i< count($id_ficha);$i++){
-			// 		$this->ficha_model->eliminar($id_ficha[$i]);
-			// 	}
-
-			// }else{
-			// 	$this->ficha_model->eliminar($id_ficha);
-			// }
-			
-			// echo "eliminado";
-		//}
-
->>>>>>> 8020d8d6e7cde253a03b719fadad46cf9b7562d2
 	}
 ?>
