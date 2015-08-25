@@ -97,15 +97,15 @@
     <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
       <div class="panel-body">
         <ul>
-          <li><a id="agregarEgresado" class="" href="javascript:mostrarReportes();"><span class="glyphicon glyphicon-asterisk"></span> Egresados</a></li>
+          <li><a class="" href="javascript:mostrarReportes('trabajando');"><span class="glyphicon glyphicon-asterisk"></span> Trabajando</a></li>
+          <li><a class="" href="javascript:mostrarReportes('titulados');"><span class="glyphicon glyphicon-asterisk"></span> Titulados</a></li>
+          <li><a class="" href="javascript:mostrarReportes('carrera');"><span class="glyphicon glyphicon-asterisk"></span> Por carrera</a></li>
         </ul>  
       </div>
     </div>
   </div>
 </div>		
 		</div>
-
-  
   <div class="col-md-10 col-lg-10" style="padding: 0px 0px;">
   <div class="contenido" id="contenido">
     
@@ -139,9 +139,26 @@
       $("#contenido").load("<?=base_url('Publicador/Listar')?>");
     }
 
-    function mostrarReportes(){
+    function mostrarReportes(reporte){
+      
+      var dir = "<?=base_url('Reporte/')?>";
+     
+      if(reporte != undefined){
+       
+          if(reporte == "titulados"){
+            dir = dir + "/Titulados"
+          }else if(reporte == "trabajando"){
+             dir = dir + "/Trabajando"
+          }else if(reporte == "carrera"){
+             dir = dir + "/EgresadosCarrera"
+          }
+
+      }else{
+        dir = dir + "/ReporteEgresados"
+      }
+
       $.ajax({
-        url: "<?=base_url('Reporte/ReporteEgresados')?>",
+        url: dir,
         datatype: "html",
         success: function(data){
           $("#contenido").html(data);

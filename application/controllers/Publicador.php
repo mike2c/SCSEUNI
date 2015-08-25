@@ -133,9 +133,13 @@
 
 			$data_publicador["publicador_id"] = $this->input->post("publicador_id");
 			$data_publicador["cargo_id"] = $this->input->post("cargo");
+			
+			if($data_publicador["cargo_id"] == ""){
+				return;
+			}
 
 			$this->publicador->actualizar($data_usuario,$data_persona,$data_publicador);
-		
+
 		}
 
 		function Eliminar($id_publicador){

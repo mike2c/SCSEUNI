@@ -48,7 +48,7 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<button class="btn btn-primary btn-sm">Buscar</button>
+						<button type="submit" class="btn btn-primary btn-sm">Buscar</button>
 					</div>				
 				</form>
 			</div>
@@ -59,18 +59,12 @@
 <div class="container no-padding">
 	<div class="col-md-2 col-lg-2">
 		<ul class="left-menu">
-			<li data-bandeja="inbox"><a href="#" class="activo">Recibidos <span class="badge">0</span></a></li>
-			<li data-bandeja="sent"><a href="#" class="">Enviados <span class="badge">0</span></a></li>
-			<li data-bandeja="drafts"><a href="#" class="">Borrador <span class="badge">0</span></a></li>
-			<li><a href="" class="">Salir</a></li>
+			<li data-bandeja="inbox"><a href="javascript:getInbox();" class="activo">Recibidos <span class="badge">0</span></a></li>
+			<li data-bandeja="sent"><a href="javascript:getSent();" class="">Enviados <span class="badge">0</span></a></li>
+			<li data-bandeja="drafts"><a href="javascript:getDrafts();" class="">Borrador <span class="badge">0</span></a></li>
+			<li><a href="<?=base_url('Perfil')?>" class="">Perfil</a></li>
 		</ul>
-			<ul class="left-menu">
-				<li data-bandeja="inbox" onclick="cambiarBandeja(this)"><a name="menu_correo" class="activo" href="javascript:getInbox()" >Recibidos <span class="badge"><?=$no_inbox;?></span></a></li><li class="h-separator"></li>
-				<li data-bandeja="sent" onclick="cambiarBandeja(this)"><a name="menu_correo" href="javascript:getSent()">Enviados <span class="badge"><?=$no_sent;?></span></a></li><li class="h-separator"></li>
-				<li data-bandeja="drafts" onclick="cambiarBandeja(this)"><a name="menu_correo"  href="javascript:getDrafts()">Borrador <span class="badge"><?=$no_drafts;?></span></a></li><li class="h-separator"></li>
-				<li><a href="<?=base_url()?>">Salir</a></li>
-				<li class="h-line"></li>
-			</ul>	
+			
 		</div>
 		<div class="col-lg-10 col-md-10 no-padding">
 		<!--DIV PARA LOS MENSAJES DE ENTRADA -->
@@ -92,18 +86,23 @@
         <form method="post" action="<?=base_url('Correo/EnviarMensaje')?>" id="formEnviarMensaje" name="formEnviarMensaje">
          	<input type="hidden" name="borrador" id="borrador" value="false">
         	<input type="hidden" name="usuario" id="usuario" value="">
-         <div class="form-group">
-            <label for="" class="control-label">Seleccione tipo de usuario</label>
-            <select style="width:600px;" class="form-control" name="tipo_usuario" id="tipo_usuario">
-            	<option value="0">Egresado</option>
-            	<option value="1">Empresa</option>
-            	<option value="2">Publicador</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="" class="control-label">Destinatario:</label>
-            <input style="width:600px;" required type="text" list="lista_egresados" class="form-control" id="destinatario" name="destinatario">
-          </div>
+        	
+        	<div class="form-inline">
+        		<div class="form-group" style="margin-right:10px;">
+		            <label for="" class="control-label">Seleccione tipo de usuario</label><br>
+		            <select style="min-width:250px" class="form-control" name="tipo_usuario" id="tipo_usuario">
+		            	<option value="0">Egresado</option>
+		            	<option value="1">Empresa</option>
+		            	<option value="2">Publicador</option>
+	            	</select>
+	          </div>
+	              <div class="form-group">
+		            <label for="" class="control-label">Destinatario:</label><br>
+		            <input style="min-width:400px" required type="text" list="lista_egresados" class="form-control" id="destinatario" name="destinatario">
+		          </div>
+        	</div>
+         <br>
+      
            <div class="form-group">
             <label for="" class="control-label">Asunto:</label>
             <input style="" required type="text" class="form-control" id="asunto" name="asunto">

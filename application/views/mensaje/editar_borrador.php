@@ -44,6 +44,7 @@
   </div>
 </form>
 <script type="text/javascript">
+
   $("#tipo_usuario1").change(function(){
     
     var indice = $("#tipo_usuario1").val();
@@ -72,8 +73,7 @@
 
  });
 
-
-  $("#destinatario1").change(function(){
+$("#destinatario1").change(function(){
     var u_id = validarUsuario($(this).val());
     if(u_id != null){
       $("#usuario1").val(u_id);

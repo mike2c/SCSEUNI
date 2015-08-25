@@ -8,9 +8,9 @@
 #area_mensajes{
 	overflow: auto;
 	border:1px solid lightgray;
-	max-height: 350px;
+	height: 430px;
 	background-color: white;
-	padding: 10px;
+	padding: 10px 20px;
 	margin-top:5px;
 }
 
@@ -70,10 +70,44 @@
 }
 
 .message-footer{
+	padding: 8px;
+	overflow: auto;
 	border-top: 1px solid lightgray;
 }
 
 .message-footer a{
+	margin-top: 0px;
+	float: left;
 	display: block;
 	text-align: left;
+}
+
+.message-footer button{
+	float: right;
+}
+
+
+.left-menu li a{
+	display: block;
+	height: 40px;
+	line-height:40px;
+	padding-left: 15px;
+	text-decoration: none;
+	
+}
+
+.left-menu li a:hover{
+	background-color: lightgray;
+	color: white;
+}
+
+.left-menu .activo{
+	background-color: #337ab7;
+	color: white;
+}
+
+.left-menu .activo .badge{
+	color: gray;
+
+	background-color: white;
 }

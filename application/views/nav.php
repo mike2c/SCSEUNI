@@ -65,10 +65,10 @@
 				<a id="btn_perfil" href="#">
 				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=getNombre()?> 
 				<span class="glyphicon glyphicon-chevron-down"></span>
-				<ul class="menu-perfil">
-					<li><a href="">palabra</a></li>
-					<li><a href="">palabra</a></li>
-					<li><a href="">palabra</a></li>
+				<ul class="btn-menu-perfil">
+					<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
+					<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+					<li><a href="<?=base_url('Sesion/CerrarSesion')?>">Cerrar sesión</a></li>
 				</ul>
 				</a>
 			</div>
@@ -80,8 +80,9 @@
 
 </nav>
 <script type="text/javascript">
+
 	$("#btn_perfil").click(function(){
-		$(".menu-perfil").toggle();
+		$(".btn-menu-perfil").toggle();
 	});
 
 	$(".sub-menu").hover(function(){

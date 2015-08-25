@@ -9,17 +9,6 @@
 			if(!sesionIniciada()){
 				exit("error 404 page not found");
 			}
-
-			if(esEgresado()){
-				$this->load->model("egresado_model","modelo");
-			}else if(esEmpresa()){
-				$this->load->model("empresa_model","modelo");
-			}else if(esPublicador()){
-				$this->load->model("publicador_model","modelo");
-			}else if(esAdministrador()){
-				$this->load->model("admin_model","modelo");
-			}
-
 		}
 
 		function Index(){
@@ -28,53 +17,54 @@
 		}
 
 		private function CargarPerfil(){
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("menu_perfil");
+			
+			if(esEgresado()){
+				$this->PerfilEgresado();
+			}elseif(esEmpresa()){
+				$this->PerfilEmpresa();
+			}elseif(esPublicador()){
+				$this->PerfilPublicador();
+			}elseif(esAdministrador()){
+				
+			}
+
+			
+		
 			$this->load->view("footer");
 		}
 
 		#Cargar perfil de la empresa
 		function PerfilEgresado(){
+
+			$this->load->model("egresado_model","modelo");
 			$resultado = $this->modelo->buscarEgresado(array("usuario_id"=>getUsuarioId()));
-		
-			if($resultado != null){
-				
-				foreach ($resultado->result() as $row) {
-					$data["perfil"] = $row;
-				}
-				
-				$this->load->view("perfil_egresado",$data);
-			}
+			$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
 			
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("perfil_egresado",$data);
+			$this->load->view("footer");
 		}
 		
 		function PerfilEmpresa(){
-
+			$this->load->model("empresa_model","modelo");
 			$resultado = $this->modelo->buscarEmpresa(array("usuario_id"=>getUsuarioId()));
+			$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
 			
-			if($resultado != null){
-				
-				foreach ($resultado->result() as $row) {
-					$data["perfil"] = $row;
-				}
-				
-				$this->load->view("perfil_empresa",$data);
-			}
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("perfil_empresa",$data);
+			$this->load->view("footer");
 		}
 
 		function PerfilPublicador(){
-
+			$this->load->model("publicador_model","modelo");
 			$resultado = $this->modelo->buscarPublicador(array("usuario_id"=>getUsuarioId()));
-			
-			if($resultado != null){
-				
-				foreach ($resultado->result() as $row) {
-					$data["perfil"] = $row;
-				}
-				
-				$this->load->view("perfil_Publicador",$data);
-			}
+				$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("perfil_publicador",$data);
+			$this->load->view("footer");
 		}
 
 
@@ -113,9 +103,15 @@
 			if(isset($data["file_name"])){
 				$this->perfil_model->actualizarImagen(getUsuarioId(),$data["file_name"]);	
 				setImagenPerfil($data["file_name"]);
+				redirect(base_url("Perfil"));
+			}else{
+				echo "<script type='text/javascript'>
+					alert('La imagen que estas intentado subir no es permitida o su tamaño sobre pasa el limite');
+					window.location = '". base_url('Perfil') ."';
+				</script>";
 			}
 
-			redirect(base_url("Perfil"));
+			
 		}
 
 		function prueba(){

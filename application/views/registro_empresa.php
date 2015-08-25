@@ -122,16 +122,19 @@
 
 </script>
 <style type="text/css">
-	
+	.form-control{
+		border: 1px solid gray;
+	}
 	body{
 		background-image:url("<?=base_url().'public/res/rasca_cielos.jpg'?>");
 		background-repeat: no-repeat;
 		background-size: 120% 150%;
 		
 	}
+	
 	body label{
-		color: white;
-		text-shadow: 0px 0px 1px black;
+		
+		
 	}
 	
 	h2{

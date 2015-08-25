@@ -4,14 +4,12 @@ h1,h2,h3,h4,h5{
 
 html,body{
 
-	padding-bottom: 30px;
-
-	padding-bottom:30px;
+	padding-bottom: 10px;
 
 }
 
 body{
-	background-color: rgba(245,245,245,0.4);
+	background-color: rgba(245,245,245,1.0);
 
 }
 
@@ -27,6 +25,7 @@ header img{
 }
 
 footer{
+
 	font-size: 12px;
 	padding-top: 0px;
 	height: 25px;
@@ -187,6 +186,7 @@ nav .container{
 #img_perfil{
 
 	max-width: 40px;
+	max-height: 30px;
 	
 }
 
@@ -198,7 +198,8 @@ nav .container{
 #btn_perfil {
 	float: right;
 	display: block;
-	
+	text-decoration: none;
+
 }
 
 .no-padding{
@@ -208,9 +209,8 @@ nav .container{
 
 }
 
-.menu-perfil{
-
-	float: right;
+.btn-menu-perfil{
+	margin-right: auto;
 	display: none;
 	list-style: none;
 	padding: 0px 10px;
@@ -218,11 +218,11 @@ nav .container{
 	position: absolute;
 	background-color: white;
 	min-width: 120px;
-	z-index: 1;
+	z-index: 2;
 	margin-top: 32px;
 }
 
-.menu-perfil li a{
+.btn-menu-perfil li a{
 	display: block;
 	padding-left:25px;
 	line-height: 30px;
@@ -236,29 +236,7 @@ nav .container{
 	padding: 10px 10px;
 	border-bottom: 1px solid lightgray;
 }
-
-
-.left-menu li a{
-	display: block;
-	height: 40px;
-	line-height:40px;
-	padding-left: 15px;
-	text-decoration: none;
-	
-}
-
-.left-menu li a:hover{
-	background-color: lightgray;
-	color: white;
-}
-
-.left-menu .activo{
-	background-color: #337ab7;
-	color: white;
-}
-
-.left-menu .activo .badge{
-	color: gray;
-
-	background-color: white;
+/*HELPERS*/
+.border{
+	border: 1px solid lightgray;
 }

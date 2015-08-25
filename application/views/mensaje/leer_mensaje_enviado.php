@@ -24,6 +24,7 @@
           echo "<a target='_new' id='att_file' href='". base_url('Curriculum/'. $mensaje->remitente_id). "'> <span class='glyphicon glyphicon-paperclip'></span> Curriculum adjuntado</a>";
         }
     ?>
+     <button class="btn btn-sm btn-primary" onclick="actualizar();">Cerrar</button>
   </div>
   </div>
   <style type="text/css">

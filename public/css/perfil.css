@@ -1,0 +1,104 @@
+/*css menu*/
+#area_perfil{
+	margin-top: 5px;
+}
+
+.perfil{
+	margin-top: 5px;
+	border: 1px solid lightgray;
+	background-color: white;
+	padding: 8px;
+}
+
+.thumbnail{
+	display: block;
+	position: relative;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.thumbnail:hover > span {
+	display: block;
+}
+
+.thumbnail img{
+	position: relative;
+}
+
+.thumbnail span{
+	color: white;
+	text-shadow: 0px 0px 1px black;
+	display: none;
+	font-size: 35px;
+	top: 30%;
+	left: 40%;
+	position: absolute;
+	z-index: 1;
+}
+.perfil-nombre{
+	//background-color: green;
+	padding: 3px 0px;
+	padding-left: 4px;
+	text-align: left;
+	color: #337ab7;
+}
+
+.perfil-nombre label{
+	margin-bottom: 0px;
+}
+
+.perfil-correo{
+
+	text-align: center;
+	color: gray;
+	font-family: arial;
+	border-bottom: 1px solid lightgray;
+}
+
+.perfil-menu{
+	margin-top: 8px;
+	padding-left: 0px;
+	list-style: none;
+	margin-bottom: 0px;
+}
+
+.perfil-menu li a{
+	text-decoration: none;
+	color: gray;
+	padding-left: 15px;
+	display: block;
+	border-bottom: 1px dotted lightgray;
+	
+	line-height: 30px;
+}
+
+.perfil-menu li a:hover{
+	background-color: #337ab7;
+	color: white;
+}
+
+.tab-pane{
+	padding-top: 10px;
+
+}
+
+.nav-tabs li button{
+	margin-top: 5px;
+	margin-left: 10px;
+}
+.nav-tabs li a{
+	
+}
+.tab-content{	
+	background-color: white;
+	padding-bottom: 10px;
+	border-left: 1px solid lightgray;
+	border-right: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
+	overflow: auto;
+}
+
+.form-control{
+	height: 30px;
+	border-radius: 1px;
+}

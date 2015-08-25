@@ -195,7 +195,7 @@
 		function revelar(){
 			$this->load->library("Encrypter");
 		
-			echo Encrypter::decrypt("'uvGFPyJTCixv9sklHZeMGHyw4QNjH9Us96sWQiq/Xko='");
+			echo Encrypter::decrypt("'fFJRohBIq2R8JCLh3sMO+Urc09+eHKP/kfQrzo0UHFI='");
 
 		}
 	}

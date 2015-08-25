@@ -5,6 +5,7 @@
 
 		function __construct(){
 			parent::__construct();
+		
 		}
 
 		function Index(){
@@ -33,6 +34,49 @@
 				$this->load->view("footer");
 			}
 			
+		}
+
+		function Trabajando(){
+			$this->load->model("egresado_model");
+			$data["data"] = $this->egresado_model->getReporteEgresadosTrabajando();
+
+			if(IS_AJAX){
+				$this->load->view("reportes/egresados_trabajando_reporte",$data);
+			}else{
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("reportes/egresados_trabajando_reporte",$data);
+				$this->load->view("footer");
+			}
+		}
+
+		function Titulados(){
+			$this->load->model("egresado_model");
+			$data["data_titulados"] = $this->egresado_model->getReporteEgresadosTitulados();
+
+			if(IS_AJAX){
+				$this->load->view("reportes/egresados_titulados_reporte",$data);
+			}else{
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("reportes/egresados_titulados_reporte",$data);
+				$this->load->view("footer");
+			}
+		}
+
+		function EgresadosCarrera(){
+			$this->load->model("egresado_model");
+			$data["egresados_carrera"] = $this->egresado_model->getReporteEgresadosCarrera();
+
+			if(IS_AJAX){
+				$this->load->view("reportes/egresados_carreras_reporte",$data);
+			}else{
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("reportes/egresados_carreras_reporte",$data);
+				$this->load->view("footer");
+			}
+
 		}
 	}
 ?>
