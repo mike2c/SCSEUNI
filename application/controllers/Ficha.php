@@ -6,9 +6,13 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->model("ficha_model","ficha");
+			$this->load->model("listas_model","lista");
 			$this->load->library("form_validation");
-			$this->load->helper("sesion");
-			$this->load->helper("imagen");
+			$this->load->helper(array("imagen","fecha","sesion"));
+
+			if(!sesionIniciada()){
+				exit("La sesion ha caducado");
+			}
 		}
 
 		function Index(){
@@ -18,21 +22,28 @@
 		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
 		function Crear(){
 			#Terminar de programar la validacion
-			$this->load->model("listas_model","lista");
-
+			
 			$data["carreras"] = $this->lista->listarCarreras();
-			$conf=array(
-			array("field"=>"descripcion","label"=>"descripcion","rules"=>"required")
-			);
 
-			$this->form_validation->set_rules($conf);
+			$this->form_validation->set_rules("descripcion","Descripcion","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
+			$this->form_validation->set_rules("cargo","Denominacion Cargo","required|max_length[20]|min_length[3]");
+			$this->form_validation->set_rules("ubicacion","Ubicacion del Cargo","required|max_length[20]|min_length[3]");
+			$this->form_validation->set_rules("cantidad","Cantidad de Puestos","required|max_length[20]|min_length[1]");
+			$this->form_validation->set_rules("jefe","Jefe inmediato","required|max_length[30]|min_length[3]");
+			$this->form_validation->set_rules("a_cargo","Personal a Cargo","required|max_length[100]|min_length[3]");
+			$this->form_validation->set_rules("finalidad","Finalidad del Puesto","required|max_length[200]|min_length[5]");
+			$this->form_validation->set_rules("funciones","Funciones y Responsabilidades","required|max_length[300]|min_length[5]");
+			$this->form_validation->set_rules("requisitos","Requisitos del Puesto","required|max_length[200]|min_length[5]");
+			$this->form_validation->set_rules("experiencia","Experiencia Necesario","required|max_length[100]|min_length[5]");
+			$this->form_validation->set_rules("competencia","Competencia","required|max_length[100]|min_length[5]");
+			$this->form_validation->set_rules("carreras[]","Carreras","required");
 
 			if(!IS_AJAX){
 				if($this->form_validation->run()==FALSE){
 
 					$this->load->view("cabecera");
 					$this->load->view("nav");
-					echo validation_errors();
 					$this->load->view("ficha/crear_ficha",$data);
 					$this->load->view("footer");
 				}else{
@@ -64,8 +75,7 @@
 		}
 
 		function Listar(){
-
-			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()));
+			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()),"","listar_fichas_empresa");
 
 			if(IS_AJAX){
 				$this->load->view("ficha/listar_fichas",$data);
@@ -80,33 +90,30 @@
 		function Editar($ficha_id){
 			$this->load->helper("imagen");
 			
-			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id))->result();
-			
+			//$ficha_id=$_GET["ficha_id"];
+			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas_empresa")->result();
+			$data["carrera"] = $this->ficha->listarCarrera($data["ficha"]);
+			$data["carreras"] = $this->lista->listarCarreras();
 			if(IS_AJAX){
 				$this->load->view("ficha/editar_ficha",$data);	
 			}else{
 				$this->load->view("cabecera");
 				$this->load->view("nav");
-				$this->load->view("editar_ficha",$data);
+				$this->load->view("ficha/editar_ficha",$data);
 				$this->load->view("footer");
 			}
 		}
 
 		private function Insertar(){
-			if(!sesionIniciada()){
-				exit("La sesion ha caducado");
-			}
+
 			#$data_publicacion["publicador_id"] = $this->input->post("publicador_id");
 			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 
-			$fecha_actual = getdate();
-
-			$data_publicacion["fecha_publicacion"] = $fecha_actual["mday"]. "-". $fecha_actual["mon"]. "-". $fecha_actual["year"];
 			
-			$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
-			$newDate = date("Y-m-d", strtotime($originalDate));
-			$data_persona["fecha_alta"] = $newDate;
-
+			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
+						
+			$data_publicacion["fecha_alta"] = format_date($this->input->post('fecha_alta'));
+			
 			$data_publicacion["usuario_id"] = getUsuarioId();
 			
 			//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
@@ -125,23 +132,19 @@
 			$data_ficha["requisitos"]= nl2br($this->input->post("requisitos"));
 			$data_ficha["experiencia"]= $this->input->post("experiencia");
 			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
-			$data_ficha["publicada"] = $this->input->post("publicar");
+			$data_ficha["publicada"] = true;
 
-			$data_carrera = $this->input->post("carreras");
-
+			$data_carrera = $this->input->post("carreras[]");
 			$this->ficha->insertar($data_publicacion,$data_ficha,$data_carrera);
 		}
 
 		function Actualizar(){
-			if(!sesionIniciada()){
-				exit("La sesion ha caducado");
-			}
+			
 			$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
 			$data_publicacion["descripcion"] = $this->input->post("descripcion");
 
-			$fecha_actual = getdate();
-			$data_publicacion["fecha_publicacion"] = date("Y-m-d", strtotime($fecha_actual["mday"]. "/". $fecha_actual["mon"]. "/". $fecha_actual["year"]));
-			$data_publicacion["fecha_alta"] = date("Y-m-d",strtotime($this->input->post("fecha_alta")));
+			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
+			$data_publicacion["fecha_alta"] = format_date($this->input->post("fecha_alta"));
 					
 			if($_FILES){
 				$img = escaparImagen("imagen");
@@ -162,7 +165,9 @@
 			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
 			$data_ficha["publicada"] = $this->input->post("publicar");
 
-			$this->ficha->actualizar($data_publicacion,$data_ficha);
+			$data_carrera = $this->input->post("carreras[]");
+
+			$this->ficha->actualizar($data_publicacion,$data_ficha,$data_carrera);
 
 			$url = base_url("Perfil");
 			echo "
