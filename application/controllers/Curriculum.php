@@ -34,8 +34,21 @@
 		}
 
 		function Guardar(){
+			$this->db->model("curriculum_model","modelo");
 
-			print_r($_POST);
+			#formacion academica
+			$titulo = $this->input->post("titulo");
+			$comienzo_formacion = $this->input->post("comienzo_formacion");
+			$finalizacion_formacion = $this->input->post("finalizacion_formacion");
+			
+			$curr_id = $this->modelo->guardarCurriculum(getUsuarioId());
+
+			for($i = 0; $i < count($titulo); $i++){
+				$this->modelo->guardarFormacionAcademica(array());
+			}
+
+
+
 		}
 
 

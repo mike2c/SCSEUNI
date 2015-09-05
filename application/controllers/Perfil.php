@@ -53,6 +53,7 @@
 			
 			$this->load->view("cabecera");
 			$this->load->view("nav");
+			
 			$this->load->view("perfil_empresa",$data);
 			$this->load->view("footer");
 		}

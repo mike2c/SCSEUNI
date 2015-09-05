@@ -9,6 +9,7 @@
 
 		public function guardarCurriculum($usuario_id){
 			$this->db->insert("curriculum",array("usuario_id"=>$usuario_id));
+			return $this->db->insert_id();
 		}
 		
 		public function guardarFormacionAcademica($data){

@@ -9,16 +9,22 @@
 		<script src="<?=base_url().'public/js/jquery.js'?>"></script><!-- jQuery -->
 		<script src="<?=base_url().'public/js/jquery-ui.js'?>"></script>
 		<link rel="stylesheet" href="<?=base_url('public/css/jquery-ui.css')?>">
-		<link rel="stylesheet" href="<?=base_url('public/css/jquery-ui.structure.css')?>">
+		<!--<link rel="stylesheet" href="<?=base_url('public/css/jquery-ui.structure.css')?>">-->
 
 		<script type="text/javascript" src="<?=base_url().'public/js/bootstrap.min.js'?>"></script>
 		<link href="<?=base_url().'public/css/bootstrap.css'?>" rel="stylesheet"><!-- Bootstrap CSS -->
 
 		<link rel="stylesheet" href="<?=base_url('public/css/default.css')?>">
-		
+		<script type="text/javascript">
+			function baseURL(add){
 
-		<style type="text/css">
-		
-		</style>
+				if(add != undefined){
+					return "<?=base_url()?>" + add
+				}
+
+				return "<?=base_url()?>";
+			}
+			
+		</script>
 	</head>
 <body>

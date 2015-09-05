@@ -43,8 +43,7 @@
 		<ul>
 	       	<li><a class="activo" href="javascript:agregarEgresado()"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
        		<li><a id="" href="javascript:listarEgresados()"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
-	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
-	       
+	        
       	</ul>       
       </div>
     </div>
@@ -63,8 +62,7 @@
         <ul>
 	      	
        		<li><a id="registroEgresado" href="#"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
-	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
-      	</ul>  
+	       	</ul>  
       </div>
     </div>
   </div>
@@ -81,7 +79,7 @@
 		<ul>
 	       	<li><a id="agregarEgresado" class="" href="javascript:nuevoPublicador();"><span class="glyphicon glyphicon-asterisk"></span> Nuevo</a></li>
        		<li><a id="registroEgresado" href="javascript:consultarPublicadores()"><span class="glyphicon glyphicon-user"></span> Registro</a></li>
-	       	<li><a id="" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
+	       
   		</ul>  
       </div>
     </div>

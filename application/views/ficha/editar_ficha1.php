@@ -5,9 +5,7 @@
 	?>
 <div style="padding:0px 10px;border-left:1px solid lightgray">
 	<h3 class="form-title">Editar ficha ocupacional</h3>
-	<div class="form-group" id="invalid">
-			<?php echo validation_errors(); ?>
-	</div>
+
 	<form action="<?=base_url('Ficha/Actualizar')?>" name="formEditarFicha" id="formEditarFicha" method="post" enctype="multipart/form-data">
 		<input type="hidden" value="<?=$ficha->ficha_id?>" name="ficha_id">
 		<input type="hidden" value="<?=$ficha->publicacion_id?>" name="publicacion_id">
@@ -76,49 +74,6 @@
 			?>
 			<input value="<?=date_format($fecha,'d/m/Y')?>" autocomplete="off" class="form-control" style="width:150px;" type="text" id="fecha" maxlength="10" placeholder="dd/mm/aaaa" name="fecha_alta">
 		</div>
-
-		<div class="">
-		<label for="">Seleccione las carreras a las que se mostrara esta Beca.(<small>Obligatorio</small>)</label>
-			<?php
-				if(isset($carreras))
-				{
-					foreach ($carreras->result() as $row) {
-						$cont = false;
-						foreach($carrera->result() as $row2){
-							if ($row2->carrera_id==$row->carrera_id) {
-								if ($row2->filtro == true) {
-									echo "
-									<div class='form-group'>
-										<div  class='checkbox'>
-											<label for='checkbox_$row->carrera_id'>
-												<input type='checkbox' id='checkbox_$row->carrera_id' name='carreras[]' value='$row->carrera_id' checked> $row->nombre_carrera
-											</label>
-										</div>
-									</div>
-									";
-									$cont = true;
-								}
-							}
-						}
-						if ($cont == true){
-
-						}else{
-							echo "
-								<div class='form-group'>
-									<div  class='checkbox'>
-										<label for='checkbox_$row->carrera_id'>
-											<input type='checkbox' id='checkbox_$row->carrera_id' name='carreras[]' value='$row->carrera_id'> $row->nombre_carrera
-										</label>
-									</div>
-								</div>
-								";
-								$cont=false;
-							}
-					}
-				}
-			?>
-		</div>
-
 		<div class="form-group">
 			<button class="btn btn-primary" type="submit">Guardar</button>
 			<button type="reset" class="btn btn-danger">Cancelar</button>
@@ -154,7 +109,6 @@
 	input[type="file"]{
 		display: none;
 	}
-	#invalid{color:red;}
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/precarga.js')?>"></script>
 <script type="text/javascript">
@@ -163,9 +117,5 @@
 		$("#imagen").trigger("click");
 	}
 
-	$("#fecha").datepicker({dateFormat: 'dd/mm/yy'});
-
-	$(function () {
-  $('[data-toggle="popover"]').popover()
-	})
+	$("#fecha").datepicker();
 </script>

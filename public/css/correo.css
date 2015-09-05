@@ -21,14 +21,16 @@
 	list-style: none;
 	padding-left: 0px;
 	background-color:white;
-	border-top-left-radius: 6px;
-	border-bottom-left-radius: 6px;
+	
+	
 	border:1px solid lightgray;
 }
+
 
 .left-menu li{
 	border-bottom: 1px dotted lightgray;
 }
+
 .h-separator{
 	border-bottom: 1px solid lightgray;
 }
@@ -43,49 +45,49 @@
 	border-right: 1px solid lightgray;
 }
 
-.message-header h1{
-	display: block;
-	font-size: 25px;
-	font-weight: lighter;
-	padding-bottom:10px;
-	margin-bottom: 10px;
-	border-bottom: 1px solid lightgray;
+.mensaje .titulo{
+	//border-bottom: 1px solid lightgray;
+	text-shadow: 1px 1px 2px lightgray;
+	font-family: calibri;
+	margin-top: 5px;
+	padding-bottom: 0px;
+	color: #337ab7;
+
 }
 
-.message-header span{
-	display: block;
-	//font-family: "Consolas";
-	text-align: right;
-	margin: 2px 0px;
+.mensaje .cuerpo{
+	padding: 0px 5px;
+	padding-top: 20px;
+	font-family: arial,sans-serif;
 	font-size: 16px;
+	min-height: 160px;
+}
+
+.mensaje .cabecera{
+	padding-top: 0px;
+	font-size: 15px;
+	white-space: pre-line;
+	border-bottom: 1px solid lightgray;
+	color: gray;
+	padding-bottom: 5px;
+}
+.mensaje .cabecera p{
+	margin: 0px;
 	text-align: right;
-	color: #919189;
+	padding: 0px;
 }
 
-.message-body .body{
-	padding: 5px 8px;
-	
-	font-size: 18px;
-	font-family: "Calibri";
-}
-
-.message-footer{
-	padding: 8px;
-	overflow: auto;
+.mensaje .pie-pagina{
 	border-top: 1px solid lightgray;
+	padding: 5px;
+	overflow: auto;
 }
-
-.message-footer a{
-	margin-top: 0px;
-	float: left;
-	display: block;
-	text-align: left;
+.mensaje .pie-pagina a{
+	font-size: 16px;
 }
-
-.message-footer button{
+.mensaje .pie-pagina button{
 	float: right;
 }
-
 
 .left-menu li a{
 	display: block;
@@ -94,6 +96,15 @@
 	padding-left: 15px;
 	text-decoration: none;
 	
+}
+.left-menu li a span{
+	float: right;
+	border: 1px solid lightblue;
+	color: white;
+	background-color: #337ab7;
+	font-size: 13px;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 
 .left-menu li a:hover{
@@ -110,4 +121,8 @@
 	color: gray;
 
 	background-color: white;
+}
+
+.modal .form-group .form-control{
+	border-radius: 0px;
 }

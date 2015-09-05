@@ -5,7 +5,7 @@
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
-<div class="container">
+<div class="container no-padding">
 	<div class="col-md-2 col-lg-2 no-padding">
 		<div class="perfil">
 			<a href="#" id="cambiar_imagen" class="thumbnail">
@@ -38,7 +38,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="col-md-10 col-lg-10">
+	<div class="col-md-10 col-lg-10" style="padding-right:0px;">
 		<div id="area_perfil">
 
 			<!-- formulario-->

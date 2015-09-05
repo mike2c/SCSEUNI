@@ -16,17 +16,17 @@
 		}
 
 		function getUsuarioEmpresas(){
-			return $this->db->query("select correo,usuario_id,nombre_empresa as nombre from registro_empresas;");
+			return $this->db->query("select correo,usuario_id,nombre_empresa as nombre from listar_empresas;");
 		}
 
 
 		function getUsuarioEgresados(){
-			return $this->db->query("select correo,usuario_id,concat(nombre,' ',apellido) as nombre from registro_egresados;");
+			return $this->db->query("select correo,usuario_id,concat(nombre,' ',apellido) as nombre from listar_egresados;");
 		}
 
 
 		function getUsuarioPublicadores(){
-			return $this->db->query("select imagen,correo,usuario_id,concat(nombre,' ',apellido) as nombre from registro_publicadores;");
+			return $this->db->query("select imagen,correo,usuario_id,concat(nombre,' ',apellido) as nombre from listar_publicadores;");
 		}
 
 		function getUsuarioAdministradores(){

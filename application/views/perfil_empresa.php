@@ -5,7 +5,7 @@
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
-<div class="container">
+<div class="container no-padding">
   <div class="col-md-2 col-lg-2 no-padding">
     <div class="perfil">
       <a href="#" id="cambiar_imagen" class="thumbnail">
@@ -31,14 +31,13 @@
       </div>
 
       <ul class="perfil-menu">
+        <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
         <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-        <li><a href="">Curriculum</a></li>
-        <li><a href="">Cursos</a></li>
-        <li style=""><a href="">Becas</a></li>
-      </ul>
+        <li><a href="javascript:cargarFichas()">Fichas</a></li>
+        </ul>
     </div>
   </div>
-  <div class="col-md-10 col-lg-10">
+  <div class="col-md-10 col-lg-10" style="padding-right:0px;">
     <div id="area_perfil">
 
       <!-- formulario-->
@@ -218,7 +217,18 @@
 
     $(".tel").mask("0000-0000",{placeholder: "0000-0000"});
     $("#ruc").mask("0000000000-0000",{placeholder: "0000000000-0000"});
+
+  
+
   });
+  
+  function cargarFichas(){
+      $("#area_perfil").load(baseURL('Ficha/Listar'));
+  }
+
+  function editarFicha(id){
+     $("#area_perfil").load(baseURL('Ficha/Editar/') + id);
+  }
 
   function cambiarClave(){
     var form = document.getElementById("formCambiarClave");

@@ -19,7 +19,7 @@
   }                                                             
 
   function esEgresado($data_usuario){
-   $query = $this->db->query("select imagen,usuario_id,correo,nombre,apellido from registro_egresados where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
+   $query = $this->db->query("select imagen,usuario_id,correo,nombre,apellido from listar_egresados where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
    if($query->num_rows()>0){
     return $query->row_array();
    }
@@ -27,7 +27,7 @@
   }
 
   function esEmpresa($data_usuario){
-   $query = $this->db->query("select imagen,usuario_id, nombre_empresa as nombre, correo from  registro_empresas where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
+   $query = $this->db->query("select imagen,usuario_id, nombre_empresa as nombre, correo from  listar_empresas where correo = '$data_usuario[correo]' and clave = '$data_usuario[clave]';");
    
    if($query->num_rows()>0){
     return $query->row_array();
@@ -37,7 +37,7 @@
 
   function esPublicador($data){
    
-   $query = $this->db->query("select imagen,nombre,apellido,usuario_id,correo from registro_publicadores where clave='$data[clave]' and correo='$data[correo]'");
+   $query = $this->db->query("select imagen,nombre,apellido,usuario_id,correo from listar_publicadores where clave='$data[clave]' and correo='$data[correo]'");
    if($query->num_rows()>0){
     return $query->row_array();
    }

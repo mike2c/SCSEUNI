@@ -33,7 +33,7 @@
 
 		function listar(){
 
-			return ($this->db->get("registro_publicadores"));
+			return ($this->db->get("listar_publicadores"));
 			
 		}
 
@@ -41,7 +41,7 @@
 			if(!empty($where)){
 				$this->db->like($where);
 			}
-			return $this->db->get("registro_publicadores");
+			return $this->db->get("listar_publicadores");
 		}
 
 

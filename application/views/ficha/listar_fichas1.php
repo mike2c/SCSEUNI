@@ -1,6 +1,4 @@
-<div style="overflow:auto;padding:10px;">
-	<button class="pull-right btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
-</div>
+<br>
 <table class="table table-default table-hover" style="border-left:1px solid lightgray">
 	<?php
 		echo "<tr><th></th><th>Cargo</th><th>Ultima actualización</th><th></th></tr>";
@@ -16,3 +14,4 @@
 
 	?>
 </table>
+

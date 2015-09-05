@@ -6,11 +6,88 @@
 			$this->load->database();
 		}
 
-		function insertarMensaje($data){
-			$this->db->insert("mensaje",$data);
+		function insertarMensaje($data_mensaje){
+
+			$this->db->insert("mensaje",$data_mensaje);
+			return $this->db->insert_id();
 		}
 
-		function eliminarMensaje($mensaje_id){
+		function insertarDestinoMensaje($data_destino){
+
+			$this->db->insert("destino_mensaje",$data_destino);
+		}
+
+		function registrarEnTablaEliminados($usuario_id,$mensaje_id){
+			
+			$data_eliminados = array(
+				"usuario_id"=>$usuario_id,
+				"mensaje_id"=>$mensaje_id,
+				"eliminado"=>false);
+
+			$this->db->insert("mensaje_eliminado",$data_eliminados);
+		}
+
+		function actualizarTablaEliminados($usuario_id,$mensaje_id,$valor = true){
+
+			$this->db->where("mensaje_id",$mensaje_id);
+			$this->db->where("usuario_id",$usuario_id);
+
+			$this->db->update("mensaje_eliminado",array("eliminado"=>$valor));
+		}
+
+		function insertarBorrador($data_borrador){
+			
+			$this->db->insert("mensaje_borrador",$data_borrador);
+		}
+
+		function listarInbox($where = null,$like = null){
+
+			if($where != null && !empty($where)){
+				$this->db->where($where);
+			}
+			if($like != null && !empty($like)){
+				$this->db->like($like);
+			}
+
+			return $this->db->get("listar_inbox");
+		}
+
+		function listarSent($filtro = null,$like = null){
+
+			if($filtro != null && !empty($filtro)){
+				$this->db->where($filtro);
+			}
+			if($like != null && !empty($like)){
+				$this->db->like($like);
+			}
+
+			return $this->db->get("listar_sent");
+		}
+
+		function listarDrafts($filtro = null,$like = null){
+
+			if($filtro != null && !empty($filtro)){
+				$this->db->where($filtro);
+			}
+			if($like != null && !empty($like)){
+				$this->db->like($like);
+			}
+			
+			return $this->db->get("listar_drafts");
+		}
+
+		function eliminarMensaje($usuario_id,$mensaje_id){
+
+			$this->db->where("usuario_id",$usuario_id);
+			$this->db->where("mensaje_id",$mensaje_id);
+			#UPDATE
+			$this->db->update("mensaje_borrador",array("eliminado"=>true));
+		}
+
+		function destruirBorrador($mensaje_id){
+
+			$this->db->where("mensaje_id",$mensaje_id);
+			$this->db->delete("mensaje_eliminado");
 			$this->db->where("mensaje_id",$mensaje_id);
 			$this->db->delete("mensaje");
 		}
@@ -18,65 +95,6 @@
 		function actualizarMensaje($data){
 			$this->db->where("mensaje_id",$data["mensaje_id"]);
 			$this->db->update("mensaje",$data);
-		}
-
-		function mensajesRecibidos($usuario_id){
-			$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$usuario_id' and borrador=false;");
-			
-			return $result;
-		}
-
-		function mensajesEnviados($usuario_id){
-			$query = $this->db->query("select mensaje_id,correo as para,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.remitente ='$usuario_id' and borrador=false;");
-			return $query;
-		}
-
-		function borrador($usuario_id){
-			return $this->db->query("select mensaje_id,correo as para,asunto,fecha_envio from mensaje left join usuario on usuario.usuario_id = mensaje.destinatario  where mensaje.remitente ='$usuario_id' and borrador=true;");
-			
-		}
-
-		function getMensajes($where = "",$like = ""){
-			
-			if($where != ""){
-				$this->db->where($where);
-			}
-
-			if($like != ""){
-				$this->db->like($like);
-			}
-
-			return $this->db->get("listar_mensajes");
-		}
-
-		function buscarMensajes($data){
-			$result;
-
-			if($tipo = "inbox"){
-				$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.remitente = usuario.usuario_id and mensaje.destinatario ='$data[usuario_id]' and borrador=false and $data[campo] like '%$data[busqueda]%'");
-				
-			}else if($data["sent"]){
-
-				$result = $this->db->query("select mensaje_id,correo as para,asunto,fecha_envio,if(visto,'leido','sin leer') as estado,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.remitente ='$data[usuario_id]' and borrador=false '$data[campo]' = '$data[busqueda]' order by fecha_envio desc;");
-			}else if($data["drafts"]){
-				
-				$result = $this->db->query("select mensaje_id,correo as de,asunto,fecha_envio,fecha_envio from usuario,mensaje where mensaje.destinatario = usuario.usuario_id and mensaje.destinatario ='$usuario_id' and borrador=true and '$data[campo]' = '$data[busqueda]' order by fecha_envio desc;");
-			}
-
-			return $result;
-		}
-
-		function mensaje($data){
-			
-			$this->db->where($data);
-			return $this->db->get("listar_mensajes");
-		}
-
-		function cambiarEstado($mensaje_id){
-
-			$update_string = $this->db->update_string("mensaje",array("visto"=>TRUE),array("mensaje_id"=>$mensaje_id));
-			$this->db->query($update_string);
-
 		}
 	}
 

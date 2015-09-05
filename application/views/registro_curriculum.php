@@ -1,6 +1,6 @@
 <!--BASE URL--><input type="hidden" value="<?=base_url()?>" name="base_url" id="base_url">
 
-<div class="contenido" style="" id="contenido">
+<div class="contenido" style="padding-top: 5px;" id="contenido">
 	<h2 class="form-title">Creación de curriculum</h2><br>
 	<form method="POST" action='<?=base_url('Curriculum/Guardar')?>'>
 
@@ -132,18 +132,6 @@
 						<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[]'> Experto</label>	
 					</div>
 				</div>
-				<div class='form-inline'>
-					<div class='form-group'>
-						<label>Softwares</label><br>
-						<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='idioma[]' >
-					</div>
-					<div class='form-group'>
-					<br>
-						<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_software[1]'> Basico</label>	
-						<label class='radio' for=''><input type='radio' id='' value='usuario' name='nivel_software[1]'> Usuario</label>	
-						<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[1]'> Experto</label>	
-					</div>
-				</div>	
 			</div>
 			<div class="group-footer">
 				<a href='javascript:agregarInformatica()' name='btn_agregar'>Agregar Fila</a>
@@ -320,6 +308,8 @@
 	}
 
 	function agregarDominioIdiomas(){
+		count = $("#dominio_idiomas .group-body .form-inline").size();	
+		
 		$("#dominio_idiomas").find(".group-body").append("<div class='form-inline'> \
 					<div class='form-group'> \
 						<label>Idioma</label><br> \
@@ -327,15 +317,19 @@
 					</div> \
 					<div class='form-group'> \
 					<br> \
-						<label class='radio' for='radio_nivel_1'><input type='radio' id='' value='basico' name='nivel_idioma[]'> Basico</label>	\
-						<label class='radio' for='radio_nivel_2'><input type='radio' id='' value='medio' name='nivel_idioma[]'> Medio</label>	\
-						<label class='radio' for='radio_nivel_3'><input type='radio' id='' value='alto' name='nivel_idioma[]'> Alto</label>	 \
+						<label class='radio' for='radio_nivel_1'><input type='radio' id='' value='basico' name='nivel_idioma[" + count + "]'> Basico</label>	\
+						<label class='radio' for='radio_nivel_2'><input type='radio' id='' value='medio' name='nivel_idioma[" + count + "]'> Medio</label>	\
+						<label class='radio' for='radio_nivel_3'><input type='radio' id='' value='alto' name='nivel_idioma[" + count + "]'> Alto</label>	 \
 					</div> \
 				</div>");
 		formatear();
+
 	}
 
 	function agregarInformatica(){
+
+		contador = $("#informatica .group-body .form-inline").size();
+
 		$("#informatica").find(".group-body").append("<div class='form-inline'> \
 					<div class='form-group'> \
 						<label>Softwares</label><br> \
@@ -343,9 +337,9 @@
 					</div> \
 					<div class='form-group'> \
 					<br> \
-						<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_software[]'> Basico</label>	\
-						<label class='radio' for=''><input type='radio' id='' value='usuario' name='nivel_software[]'> Usuario</label>	\
-						<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[]'> Experto</label>	\
+						<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_software[" + contador + "]'> Basico</label>	\
+						<label class='radio' for=''><input type='radio' id='' value='usuario' name='nivel_software[" + contador + "]'> Usuario</label>	\
+						<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[" + contador + "]'> Experto</label>	\
 					</div> \
 				</div>	");
 	}

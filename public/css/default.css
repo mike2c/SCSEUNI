@@ -1,3 +1,7 @@
+#cabecera{
+	padding: 0px;
+}
+
 h1,h2,h3,h4,h5{
 	margin: 2px 0px;
 }
@@ -20,8 +24,7 @@ header{
 }
 
 header img{
-	border: 2px solid white;
-	background-color: white;
+	
 }
 
 footer{
@@ -36,7 +39,7 @@ footer{
 	background-color: white;
 	padding: 15px 15px;
 	border-radius: 6px;
-	margin: 10px 0px;
+	margin: 20px 0px;
 	border:1px solid lightgray;
 	display: block;
 	overflow: auto;
@@ -80,8 +83,7 @@ footer{
 	margin-top:5px;
 	margin-bottom: 5px;
 	display: block;
-	background-color: white;
-	border:2px solid white;
+	
 }
 .img-redonda{
 	border-radius: 50%;

@@ -48,16 +48,17 @@
   $("#tipo_usuario1").change(function(){
     
     var indice = $("#tipo_usuario1").val();
+
     $("#usuario1").val("");
     lista = $("datalist").get(indice);
     $("#destinatario1").attr("list",lista.id);
     $("#destinatario1").val("");
+
   });
 
   $("#btnEnviarBorrador").click(function(){
   
     var form = document.getElementById("formEnviarBorrador");
- 
     var usuario = document.getElementById("usuario1").value;
     var mensaje = document.getElementById("mensaje1").value;
     

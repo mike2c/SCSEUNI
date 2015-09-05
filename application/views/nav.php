@@ -1,26 +1,26 @@
-<header class="header">
+<header id="cabecera" class="header">
 	<div class="container">
 			<div class="row">
-			<div class="col-md-2 col-lg-2">
-				<a href="<?=base_url('Bienvenido')?>"><img style="height:50%;width:70%;margin-top:15px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
+			<div class="col-md-2 col-lg-2 no-padding">
+				<a href="<?=base_url('Bienvenido')?>"><img style="border: 1px solid white;height:40%;width:60%;margin-top:10px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
 			</div>
 			<div class="col-md-8 col-lg-8 auto-size">
 				<center>
-					<h1 style="">Universidad Nacional de Ingeniería</h1>
+					<h2 style=""><strong>Universidad Nacional de Ingeniería</strong></h2>
+					
 					<h4>Recinto Universitario Augusto Cesar Sandino</h4>
 					<h5>Sistema para el control y seguimiento de egresados</h5>
-					
 					<h5>Estelí, Nicaragua</h5>
 				</center>
 			</div>
-				<div class="col-md-2 col-lg-2" style="margin-top:5px;">
-				<img class="img img-redonda" style="margin-left:auto;" src="<?=base_url('public/res/ruacs');?>" alt="">
+				<div class="col-md-2 col-lg-2 no-padding">
+				<img class="" style="margin-left:auto;margin-top:5px;display:block;width:45%;" src="<?=base_url('public/res/jicara_sandino.png');?>" alt="">
 			</div>
 		</div>
 	</div>
 </header><!--FIN DEL ENCABEZADO-->
 <nav style="border-bottom: 1px solid lightgray;">
-	<div class="container" >
+	<div class="container">
 		<ul class="menu">
 			<li style="border-left:1px solid lightgray"><a href="<?=base_url('Bienvenido')?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
 			<li><a href="#"><span class="glyphicon glyphicon-chevron-down"></span> Informacion</a>

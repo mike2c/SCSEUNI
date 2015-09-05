@@ -4,7 +4,6 @@
 		<div class="col-md-8 col-lg-8" style="">
 			<h3 class="page-header">Nueva ficha ocupacional</h3>
 		</div>
-	
 	</div>
 
 	<form action="<?=base_url('Ficha/Crear')?>" name="formCrearFicha" id="formCrearFicha" method="post" enctype="multipart/form-data">
@@ -137,4 +136,5 @@
 <script type="text/javascript">
 	
 	$("#fecha").datepicker();
+
 </script>

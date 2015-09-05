@@ -91,7 +91,7 @@
 				$this->db->like($where);
 			}
 
-			return $this->db->get("registro_empresas");
+			return $this->db->get("listar_empresas");
 		}
 	}
  ?>

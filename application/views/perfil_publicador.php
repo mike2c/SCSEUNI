@@ -38,7 +38,7 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-10 col-lg-10">
+  <div class="col-md-10 col-lg-10" style="padding-right:0px;">
     <div id="area_perfil">
 
       <!-- formulario-->

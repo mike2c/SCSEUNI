@@ -69,9 +69,11 @@
 
 			if(IS_AJAX){
 				$this->load->view("ficha/listar_fichas",$data);
+				$this->load->view("ficha/crear_ficha");
 			}else{
 				$this->load->view("cabecera");
 				$this->load->view("nav");
+				$this->load->view("ficha/crear_ficha");
 				$this->load->view("ficha/listar_fichas",$data);
 				$this->load->view("footer");
 			}
@@ -87,7 +89,7 @@
 			}else{
 				$this->load->view("cabecera");
 				$this->load->view("nav");
-				$this->load->view("editar_ficha",$data);
+				$this->load->view("ficha/editar_ficha",$data);
 				$this->load->view("footer");
 			}
 		}
@@ -105,8 +107,8 @@
 			
 			$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
 			$newDate = date("Y-m-d", strtotime($originalDate));
-			$data_persona["fecha_alta"] = $newDate;
-
+			
+			$data_publicacion["fecha_alta"] = $newDate;
 			$data_publicacion["usuario_id"] = getUsuarioId();
 			
 			//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
