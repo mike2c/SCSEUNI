@@ -65,7 +65,7 @@
 		function Listar(){
 			$this->load->model("listas_model","lista");
 
-			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()),"","listar_fichas_empresa");
+			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()),"","listar_fichas");
 			$data["carreras"] = $this->lista->listarCarreras();
 
 			if(IS_AJAX){
@@ -75,7 +75,7 @@
 		}
 
 		function Editar($ficha_id){
-			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas_empresa")->result();
+			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas")->result();
 			$data["carrera"] = $this->ficha->listarCarrera($data["ficha"]);
 			$data["carreras"] = $this->lista->listarCarreras();
 
@@ -86,22 +86,19 @@
 
 		private function Insertar(){
 
-			#$data_publicacion["publicador_id"] = $this->input->post("publicador_id");
 			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 			
-			$originalDate = str_replace("/", "-",$this->input->post("fecha_alta") );
-			$newDate = date("Y-m-d", strtotime($originalDate));
-			
-			$data_publicacion["fecha_alta"] = $newDate;
 			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 			$data_publicacion["fecha_alta"] = format_date($this->input->post('fecha_alta'));
 			$data_publicacion["usuario_id"] = getUsuarioId();
 			
 			//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
+
 			$img = escaparImagen("imagen");
-			
-			$data_publicacion["imagen"]= $img["imagen"];
-			$data_publicacion["tipo"]= $img["tipo"];
+			$data_imagen["imagen"]= $img["imagen"];
+			$data_imagen["tipo"]= $img["tipo"];
+
+
 			$data_publicacion["visible"] = true;
 			
 			$data_ficha["cargo"]= $this->input->post("cargo");
@@ -117,47 +114,53 @@
 			
 
 			$data_carrera = $this->input->post("carreras[]");
-			$this->ficha->insertar($data_publicacion,$data_ficha,$data_carrera);
+			$this->ficha->insertar($data_publicacion,$data_ficha,$data_carrera,$data_imagen);
 		}
 
 		function Actualizar(){
-			
-			$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
-			$data_publicacion["descripcion"] = $this->input->post("descripcion");
+			$ficha_id = $this->input->post("ficha_id");
+			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas")->result();
+			$data["carrera"] = $this->ficha->listarCarrera($data["ficha"]);
+			$data["carreras"] = $this->lista->listarCarreras();
 
-			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
-			$data_publicacion["fecha_alta"] = format_date($this->input->post("fecha_alta"));
-					
-			if($_FILES){
+			if(!$data["errores"]==TRUE){
+				$this->load->view("ficha/editar_ficha",$data);
+			}else{
+				$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
+				$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
+
+				$data_publicacion["fecha_publicacion"] = date("Y-m-d");
+				$data_publicacion["fecha_alta"] = format_date($this->input->post("fecha_alta"));
+						
 				$img = escaparImagen("imagen");
-				$data_publicacion["imagen"]= $img["imagen"];
-				$data_publicacion["tipo"]= $img["tipo"];
+				$data_imagen["imagen"]= $img["imagen"];
+				$data_imagen["tipo"]= $img["tipo"];
+						
+				$data_ficha["ficha_id"] = $this->input->post("ficha_id");
+				$data_ficha["cargo"]= $this->input->post("cargo");
+				$data_ficha["ubicacion"]= $this->input->post("ubicacion");
+				$data_ficha["cantidad"]= $this->input->post("cantidad");
+				$data_ficha["jefe"]= $this->input->post("jefe");
+				$data_ficha["a_cargo"]= $this->input->post("a_cargo");
+				$data_ficha["finalidad"]= nl2br($this->input->post("finalidad"));
+				$data_ficha["funciones"]= nl2br($this->input->post("funciones"));
+				$data_ficha["requisitos"]= nl2br($this->input->post("requisitos"));
+				$data_ficha["experiencia"]= $this->input->post("experiencia");
+				$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
+				$data_ficha["publicada"] = $this->input->post("publicar");
+
+				$data_carrera = $this->input->post("carreras[]");
+
+				$this->ficha->actualizar($data_publicacion,$data_ficha,$data_carrera,$data_imagen);
+
+				$url = base_url("Perfil");
+				echo "
+					<script stype='text/javascript'>
+						alert('Actualizada');
+						window.location='$url';
+					</script>
+				";
 			}
-					
-			$data_ficha["ficha_id"] = $this->input->post("ficha_id");
-			$data_ficha["cargo"]= $this->input->post("cargo");
-			$data_ficha["ubicacion"]= $this->input->post("ubicacion");
-			$data_ficha["cantidad"]= $this->input->post("cantidad");
-			$data_ficha["jefe"]= $this->input->post("jefe");
-			$data_ficha["a_cargo"]= $this->input->post("a_cargo");
-			$data_ficha["finalidad"]= nl2br($this->input->post("finalidad"));
-			$data_ficha["funciones"]= nl2br($this->input->post("funciones"));
-			$data_ficha["requisitos"]= nl2br($this->input->post("requisitos"));
-			$data_ficha["experiencia"]= $this->input->post("experiencia");
-			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
-			$data_ficha["publicada"] = $this->input->post("publicar");
-
-			$data_carrera = $this->input->post("carreras[]");
-
-			$this->ficha->actualizar($data_publicacion,$data_ficha,$data_carrera);
-
-			$url = base_url("Perfil");
-			echo "
-				<script stype='text/javascript'>
-					alert('Actualizada');
-					window.location='$url';
-				</script>
-			";
 		}
 
 

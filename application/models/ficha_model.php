@@ -7,7 +7,9 @@
 
 		}
 
-		function insertar($data_publicacion,$data_ficha,$ficha_carreras){
+		function insertar($data_publicacion,$data_ficha,$ficha_carreras,$data_imagen){
+			
+			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
 
 			$data_ficha["publicacion_id"] = $this->insertarPublicacion($data_publicacion);
 
@@ -18,7 +20,13 @@
 			
 		}
 
-		function actualizar($data_publicacion,$data_ficha,$ficha_carreras){
+		function actualizar($data_publicacion,$data_ficha,$ficha_carreras,$data_imagen){
+
+			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
+
+			}else{
+				$this->actualizarImagen($data_imagen);
+			}
 
 			$this->actualizarPublicacion($data_publicacion);
 

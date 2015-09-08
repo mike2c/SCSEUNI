@@ -7,21 +7,33 @@
 
 		}
 
-		function guardarBeca($data_publicacion,$data_beca,$data_carrera){	
+		function guardarBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen){	
+
+			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
+
 			$data_beca["publicacion_id"] = $this->insertarPublicacion($data_publicacion);
+
 			$this->insertarFiltro($data_beca);
 			$this->actualizarFiltro($data_carrera,$data_beca["publicacion_id"]);
+
 			$this->db->insert("beca",$data_beca);
 		}
 
-		function updateBeca($data_publicacion,$data_beca,$data_carrera){
-			$this->db->where("publicacion_id",$data_publicacion["publicacion_id"]);
-			$this->db->update("publicacion",$data_publicacion);
+		function updateBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen){
+			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
+
+			}else{
+				$this->actualizarImagen($data_imagen);
+			}
+
+			$this->actualizarPublicacion($data_publicacion);
+
+			$this->actualizarFiltro($data_carrera,$data_publicacion["publicacion_id"]);
 
 			$this->db->where("beca_id",$data_beca["beca_id"]);
 			$this->db->update("beca",$data_beca);
 
-			$this->actualizarFiltro($data_carrera,$data_publicacion["publicacion_id"]);
+			
 		}
 
 		function deleteBeca($data_publicacion,$data_beca){

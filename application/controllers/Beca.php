@@ -47,8 +47,7 @@
 					$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 					$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
 
-					$img = escaparImagen("imagen");
-			
+					$img = escaparImagen("imagen");			
 					$data_publicacion["imagen"] = $img["imagen"];
 					$data_publicacion["tipo"] = $img["tipo"];
 
@@ -57,7 +56,7 @@
 					$data_carrera = $this->input->post("carreras[]");
 					$cont_carrera = $this->listas_model->listarCarreras();
 
-					$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera,$cont_carrera);
+					$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen);
 					$this->listar();
 				}
 			}
@@ -67,11 +66,11 @@
 			$data["becas"] = $this->beca_model->listar(array("usuario_id"=>getUsuarioId()),"","listar_becas");
 			if (IS_AJAX) {
 				$this->load->view("beca/listar_beca",$data);
+				$this->load->view("beca/guardar_beca",$data);
 			}
 		}
 
-		function editar(){
-			$beca_id=$_GET["beca_id"];
+		function editar($beca_id){
 			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"beca_id"=>$beca_id),"","listar_becas")->result();
 			$data["carrera"] = $this->beca_model->listarCarrera($data["beca"]);
 			$data["carreras"] = $this->listas_model->listarCarreras();
@@ -86,7 +85,7 @@
 			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"beca_id"=>$beca_id),"","listar_becas")->result();
 			$data["carrera"] = $this->beca_model->listarCarrera($data["beca"]);
 			$data["carreras"] = $this->listas_model->listarCarreras();
-			
+
 			$data["errores"] = $this->validarCampos();
 
 			if(!$data["errores"]==TRUE){
@@ -101,23 +100,21 @@
 				$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 				$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
 				
-				if($_FILES){
-					$img = escaparImagen("imagen");
-			
-					$data_publicacion["imagen"] = $img["imagen"];
-					$data_publicacion["tipo"] = $img["tipo"];
-				}
+				$img = escaparImagen("imagen");
+				$data_imagen["imagen"] = $img["imagen"];
+				$data_imagen["tipo"] = $img["tipo"];
+
 				
 				$data_beca["url"] = $this->input->post("url");
 
 				$data_carrera = $this->input->post("carreras[]");
 
-				$this->beca_model->updateBeca($data_publicacion,$data_beca,$data_carrera);
+				$this->beca_model->updateBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen);
 
 				$this->listar();
 		}
 	}
-	function hola(){
+	function eliminar(){
 		$this->beca_model->deleteBeca(null,null);
 	}
 }
