@@ -5,7 +5,9 @@
 			parent::__contruct();
 		}
 
-		function insertar($data_publicacion,$data_curso,$curso_carreras){
+		function insertar($data_publicacion,$data_curso,$curso_carreras,$data_imagen){
+			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
+
 			$data_curso["publicacion_id"]=$this->insertarPublicacion($data_publicacion);
 
 			$this->insertarFiltro($data_curso);
@@ -13,7 +15,15 @@
 
 			$this->db->insert("curso",$data_curso);
 		}
-		function actualizar($data_publicacion,$data_curso,$curso_carreras){
+
+		function actualizar($data_publicacion,$data_curso,$curso_carreras,$data_imagen){
+
+			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
+
+			}else{
+				$this->actualizarImagen($data_imagen);
+			}
+
 			$this->actualizarPublicacion($data_publicacion);
 
 			$this->actualizarFiltro($curso_carreras,$data_publicacion["publicacion_id"]);
@@ -21,6 +31,7 @@
 			$this->db->where("curso_id",$data_curso["curso_id"]);
 			$this->db->update("curso",$data_curso);
 		}
+
 		function eliminar(){
 
 		}

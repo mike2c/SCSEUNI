@@ -32,6 +32,16 @@
 			return $this->db->get("");
 		}
 
+		function insertarImagen($data_imagen){
+			$this->db->insert("imagen_publicacion",$data_imagen);
+			return $this->db->insert_id();
+		}
+
+		function actualizarImagen($data_imagen){
+			$this->db->where("imagen_publicacion_id",$data_imagen["imagen_publicacion_id"]);
+			$this->db->update("imagen_publicacion",$data_imagen);
+		}
+
 		function listarCarrera($data_publicacion){
 			foreach($data_publicacion as $row){
 				return $data = $this->db->query("select publicacion_carrera_id, carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$row->publicacion_id';");
