@@ -30,9 +30,9 @@ Bolsa de trabajo
 
 ERRORES
 	Revisar imagenes de las publicaciones que no cargan
-	Validar imagen de empresa
-	Componer formato de numero ruc
-	Permitir que el usuario agregue mas sociedades
+	Validar imagen de empresas	
+	Componer formato de numero ruc	+
+	Permitir que el usuario agregue mas sociedades	
 	Definir el campo de ocupacion
 	Retirar el attribute required de sitio web en el perfil de empresas
 	Poner el nombre del cargo primero

@@ -2,7 +2,7 @@
 	include "publicacion_model.php";
 	class curso_model extends Publicacion_model{
 		function __contruct(){
-			parent::__contruct();
+			parent::__contruct("listar_cursos");
 		}
 
 		function insertar($data_publicacion,$data_curso,$curso_carreras){

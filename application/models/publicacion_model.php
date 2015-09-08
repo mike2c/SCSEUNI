@@ -3,10 +3,11 @@
 
 		private $view_name = null;
 
-		function __construct(){
+		function __construct($view_name){
 			
 			parent::__construct();
 			
+			$this->view_name=$view_name;
 			$this->load->library('session');
 			$this->load->helper(array("sesion"));
 		}
@@ -29,7 +30,7 @@
 				$this->select($fields);
 			}
 
-			return $this->db->get("");
+			return $this->db->get($this->view_name);
 		}
 
 		function listarCarrera($data_publicacion){

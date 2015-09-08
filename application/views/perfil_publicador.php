@@ -33,8 +33,9 @@
       <ul class="perfil-menu">
         <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
         <li><a href="">Curriculum</a></li>
-        <li><a href="">Cursos</a></li>
-        <li style=""><a href="">Becas</a></li>
+        <li><a href="javascript:cargarFichas();">Fichas ocupacionales</a></li>
+        <li><a href="javascript:cargarCursos();">Cursos</a></li>
+        <li style=""><a href="javascript:cargarBecas();">Becas</a></li>
       </ul>
     </div>
   </div>
@@ -154,7 +155,9 @@
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
+<link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" href="<?=base_url('public/css/perfil.css')?>"></link>
+<script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>

@@ -40,26 +40,26 @@
 				return TRUE;
 			}
 		}
+		
 		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
 		function Crear(){
 			
 			$data["carreras"] = $this->lista->listarCarreras();
 			$data["errores"] = $this->validarCampos();
-
-			if(IS_AJAX){
-				if(!$data["errores"]==TRUE){
-					$this->load->view("ficha/crear_ficha",$data);
-				}else{
-					$this->Insertar();
-					$url = base_url("Perfil");
-					echo "
-						<script stype='text/javascript'>
-							alert('Ficha ocupacional guardada');
-							window.location='$url';
-						</script>
-					";
-				}
+			
+			if(!$data["errores"]==TRUE){
+				$this->load->view("ficha/crear_ficha",$data);
+			}else{
+				$this->Insertar();
+				$url = base_url("Perfil");
+				echo "
+					<script stype='text/javascript'>
+						alert('Ficha ocupacional guardada');
+						window.location='$url';
+					</script>
+				";
 			}
+	
 		}
 
 		function Listar(){
@@ -71,12 +71,6 @@
 			if(IS_AJAX){
 				$this->load->view("ficha/listar_fichas",$data);
 				$this->load->view("ficha/crear_ficha",$data);
-			}else{
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("ficha/crear_ficha");
-				$this->load->view("ficha/listar_fichas",$data);
-				$this->load->view("footer");
 			}
 		}
 

@@ -1,16 +1,16 @@
 <div class="def-bg">
-	<h3 class="form-title">Listado de fichas ocupacionales</h3>
+	<h3 class="form-title">Listado de cursos</h3>
 	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
 		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
 		<button onclick="eliminarFichas()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar fichas</button>
 	</div>
 	<?php
 
-		if($fichas == null){
+		if($cursos == null){
 			exit("<h3>Ha ocurrido un error y no se han podido visualizar las publicaciones creadas</h3>");
 		}
 
-		if($fichas->num_rows() == 0){
+		if($cursos->num_rows() == 0){
 			echo ("<h3><center>No hay publicaciones creadas</h3></center>");
 		}else{
 	?>
@@ -27,12 +27,12 @@
 		<tbody>
 			<?php
 			$cont = 1;
-			foreach ($fichas->result() as $row) {
+			foreach ($cursos->result() as $row) {
 				echo "<tr>";
 				echo "<td class='text-center'><strong>$cont</strong></td>";
 				echo "<td ><input type='checkbox' name='fichas_a_eliminar' value='$row->publicacion_id'></td>";
 				
-				echo "<td style='text-align:left'><a href='javascript:editarFicha($row->ficha_id)'>$row->cargo</a></td>";
+				#echo "<td style='text-align:left'><a href='javascript:editarFicha($row->ficha_id)'>$row->cargo</a></td>";
 				echo "<td>$row->fecha_publicacion</td>";
 				if($row->visible){
 					echo "<td><input onchange='cambiarVisibilidad($row->publicacion_id);' checked type='checkbox' value='$row->publicacion_id'></td>";

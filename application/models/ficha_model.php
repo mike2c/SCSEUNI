@@ -3,7 +3,8 @@
 	class  Ficha_model extends Publicacion_model{
 
 		function __construct(){
-			parent::__construct();
+			parent::__construct("listar_fichas");
+
 		}
 
 		function insertar($data_publicacion,$data_ficha,$ficha_carreras){
@@ -33,12 +34,5 @@
 			$this->db->query("call eliminar_ficha($ficha_id);");
 		}
 
-		function listar($where = "",$fields = "*"){
-			if($where != ""){
-				$this->db->where($where);
-			}
-
-			return $this->db->get("listar_fichas_empresa");
-		}
 	}
 ?>

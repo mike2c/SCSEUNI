@@ -176,6 +176,7 @@
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
+<script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/perfil.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
@@ -221,14 +222,6 @@
 
   });
   
-  function cargarFichas(){
-      $("#area_perfil").load(baseURL('Ficha/Listar'));
-  }
-
-  function editarFicha(id){
-     $("#area_perfil").load(baseURL('Ficha/Editar/') + id);
-  }
-
   function cambiarClave(){
     var form = document.getElementById("formCambiarClave");
 
