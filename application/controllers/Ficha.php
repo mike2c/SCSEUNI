@@ -11,7 +11,7 @@
 			$this->load->helper(array("imagen","fecha","sesion"));
 
 			if(!sesionIniciada()){
-				exit("La sesion ha caducado");
+				exit("ERROR DE ACCESO, no hay una sesion activa");
 			}
 		}
 
@@ -19,12 +19,7 @@
 			$this->Listar();
 		}
 
-		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
-		function Crear(){
-			#Terminar de programar la validacion
-			
-			$data["carreras"] = $this->lista->listarCarreras();
-
+		function validarCampos(){
 			$this->form_validation->set_rules("descripcion","Descripcion","required|max_length[200]|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("cargo","Denominacion Cargo","required|max_length[20]|min_length[3]");
@@ -39,13 +34,21 @@
 			$this->form_validation->set_rules("competencia","Competencia","required|max_length[100]|min_length[5]");
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
 
-			if(!IS_AJAX){
-				if($this->form_validation->run()==FALSE){
+			if($this->form_validation->run()==FALSE){
+				return validation_errors();
+			}else{
+				return TRUE;
+			}
+		}
+		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
+		function Crear(){
+			
+			$data["carreras"] = $this->lista->listarCarreras();
+			$data["errores"] = $this->validarCampos();
 
-					$this->load->view("cabecera");
-					$this->load->view("nav");
+			if(IS_AJAX){
+				if(!$data["errores"]==TRUE){
 					$this->load->view("ficha/crear_ficha",$data);
-					$this->load->view("footer");
 				}else{
 					$this->Insertar();
 					$url = base_url("Perfil");
@@ -55,21 +58,6 @@
 							window.location='$url';
 						</script>
 					";
-				}
-			}else{
-				if(!$_POST){
-					$this->load->view("ficha/crear_ficha",$data);
-				}else{
-					if($this->form_validation->run()==FALSE){
-						echo validation_errors();
-					}else{
-						try{
-							$this->Insertar();
-						}catch(Exception $e){
-							echo $e->getMessage();
-						}
-											
-					}
 				}
 			}
 		}
@@ -93,19 +81,12 @@
 		}
 
 		function Editar($ficha_id){
-			$this->load->helper("imagen");
-			
-			//$ficha_id=$_GET["ficha_id"];
 			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas_empresa")->result();
 			$data["carrera"] = $this->ficha->listarCarrera($data["ficha"]);
 			$data["carreras"] = $this->lista->listarCarreras();
+
 			if(IS_AJAX){
 				$this->load->view("ficha/editar_ficha",$data);	
-			}else{
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("ficha/editar_ficha",$data);
-				$this->load->view("footer");
 			}
 		}
 

@@ -21,39 +21,45 @@
 		function Index(){
 			$this->listar();
 		}
-
-		function crearBeca(){
-			$info["carreras"] = $this->listas_model->listarCarreras();
-
+		function validarCampos(){
 			$this->form_validation->set_rules("url","URL","required|max_length[50]|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("descripcion","Descripción","required|max_length[200]|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
-
 			if($this->form_validation->run()==FALSE){
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("beca/guardar_beca",$info);
-				$this->load->view("footer");
+				return validation_errors();
 			}else{
-				$data_publicacion["usuario_id"] = getUsuarioId();
-				$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
+				return TRUE;
+			}
+		}
 
-				$data_publicacion["fecha_publicacion"] = date("Y-m-d");
-				$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
+		function crearBeca(){
+			$info["carreras"] = $this->listas_model->listarCarreras();
+			$info["errores"]  = $this->validarCampos();
 
-				$img = escaparImagen("imagen");
-		
-				$data_publicacion["imagen"] = $img["imagen"];
-				$data_publicacion["tipo"] = $img["tipo"];
+			if(IS_AJAX){
+				if(!$info["errores"]==TRUE){
+					$this->load->view("beca/guardar_beca",$info);
+				}else{
+					$data_publicacion["usuario_id"] = getUsuarioId();
+					$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 
-				$data_beca["url"] = $this->input->post("url");
+					$data_publicacion["fecha_publicacion"] = date("Y-m-d");
+					$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
 
-				$data_carrera = $this->input->post("carreras[]");
-				$cont_carrera = $this->listas_model->listarCarreras();
+					$img = escaparImagen("imagen");
+			
+					$data_publicacion["imagen"] = $img["imagen"];
+					$data_publicacion["tipo"] = $img["tipo"];
 
-				$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera,$cont_carrera);
-				$this->listar();
+					$data_beca["url"] = $this->input->post("url");
+
+					$data_carrera = $this->input->post("carreras[]");
+					$cont_carrera = $this->listas_model->listarCarreras();
+
+					$this->beca_model->guardarBeca($data_publicacion,$data_beca,$data_carrera,$cont_carrera);
+					$this->listar();
+				}
 			}
 		}
 
@@ -61,11 +67,6 @@
 			$data["becas"] = $this->beca_model->listar(array("usuario_id"=>getUsuarioId()),"","listar_becas");
 			if (IS_AJAX) {
 				$this->load->view("beca/listar_beca",$data);
-			}else{
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("beca/listar_beca",$data);
-				$this->load->view("footer");
 			}
 		}
 
@@ -76,11 +77,6 @@
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			if (IS_AJAX) {
 				$this->load->view("update_beca",$data);
-			}else{
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("beca/update_beca",$data);
-				$this->load->view("footer");
 			}
 		}
 
@@ -90,19 +86,11 @@
 			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"beca_id"=>$beca_id),"","listar_becas")->result();
 			$data["carrera"] = $this->beca_model->listarCarrera($data["beca"]);
 			$data["carreras"] = $this->listas_model->listarCarreras();
+			
+			$data["errores"] = $this->validarCampos();
 
-			$this->form_validation->set_rules("url","URL","required|max_length[50]|min_length[10]");
-			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
-			$this->form_validation->set_rules("descripcion","Descripción","required|max_length[200]|min_length[10]");
-			$this->form_validation->set_rules("carreras[]","Carreras","required");
-
-			if($this->form_validation->run()==FALSE){
-
-				$this->load->view("cabecera");
-				$this->load->view("nav");
+			if(!$data["errores"]==TRUE){
 				$this->load->view("beca/update_beca",$data);
-				$this->load->view("footer");
-
 			}else{
 
 				$data_publicacion["usuario_id"] = getUsuarioId();
