@@ -7,6 +7,28 @@ var lista = $("datalist").get(0);
 
 $(document).ready(function(){
 
+	$("#btnEliminar").click(function(){
+		
+		var checked_messages = $("input:checked");//Seleccinamos todos los input checkbox que esten marcados
+		var data_msg = Array();
+
+		if(checked_messages.length > 0){//Preguntamos si los mensajes marcados son mayor que 0
+
+			$(checked_messages).each(function(indice,elemento){
+				data_msg.push(elemento.value);
+			});
+
+			if(checked_messages[0].name == "mensajes_a_eliminar"){
+				eliminarMensajes(data_msg);	
+			}else{
+			
+				destruirBorradores(data_msg);
+			}
+		}else{
+			alert("No se han seleccionado mensajes a eliminar");
+		}
+	});
+
 	$("#btnEnviar").click(function(){
 		enviarMensaje();
 	});
@@ -89,6 +111,7 @@ function enviarMensaje(){
 		}
 		
 		var json_data = {
+			mensaje_id: mensaje_actual,
 			usuario_id: usuario,
 			asunto: $("#asunto").val(),
 			mensaje: $("#mensaje").val(),
@@ -124,7 +147,8 @@ function guardarComoBorrador(){
 	if($("#asunto").val() != "" && $("#mensaje").val() != ""){
 		var json_data = {
 			asunto: $("#asunto").val(),
-			mensaje: $("#mensaje").val()
+			mensaje: $("#mensaje").val(),
+			curr_adjuntado: $("#curr_adjuntado").prop("checked")
 		};
 
 		$.ajax({
@@ -154,47 +178,37 @@ function guardarComoBorrador(){
 
 }
 
-function eliminarBorradores(){
+function eliminarMensajes(data_msg){
 
-	var data_msg = Array();
-	$("input:checked").each(function(indice,elemento){
-		console.log(elemento.class);
-		data_msg.push(elemento.value);	
-	});
+	$.post(baseURL("Correo/EliminarMensajes"),
+		{mensajes: data_msg},
+		function(data,textStatus,jqXHR){
+			if(data == ""){
+				alert("Mensajes eliminados");
+				actualizar();
+			}else{
+				alert("Ha ocurrido un error y no se ha podido procesar la petición. \n"+ textStatus);
+				console.log(jqXHR.responseText);
+			}
+		}
+	);
 
-	if(data_msg.length > 0){
-
-	}
 }
 
-function eliminarMensajes(){
-
-	var data_msg = Array();
-	$("input:checked").each(function(indice,elemento){
-		data_msg.push(elemento.value);	
-	});
-
-	if(data_msg.length > 0){
-		
-		if(confirm("¿Esta seguro que desea eliminar estos mensajes")){
-		
-			$.post(baseURL("Correo/EliminarMensajes/"),
-				{mensajes: data_msg},
-				function(data,textStatus,jqXHR){
-					if(data ==""){
-						alert("Mensajes eliminados");
-						actualizar();
-					}else{
-						alert("Ha ocurrido un error y no se hap odido ejecutar la peticion");
-						console.log(jqXHR.textStatus);
-					}
-				}
-			);
-		}
-	}else{
-		alert("No se han seleccionado mensajes para eliminar");
-	}
+function destruirBorradores(data_msg){
 	
+	$.post(baseURL("Correo/DestruirBorradores"),
+		{mensajes: data_msg},
+		function(data,textStatus,jqXHR){
+			if(data == ""){
+				alert("Mensajes eliminados");
+				actualizar();
+			}else{
+				alert("Ha ocurrido un error y no se ha podido procesar la petición. \n"+ textStatus);
+				console.log(jqXHR.responseText);
+			}
+		}
+	);
 }
 
 function leerInbox(mensaje){
@@ -294,40 +308,21 @@ function buscarEnSent(){
 }
 
 function buscarEnDrafts(){
+	
+	var json_data = {
+		campo: $("#filtro").val(),
+		busqueda: $("#busqueda").val()
+	};
 
-}
-
-function buscar(form,bandeja){
-	var dir = "";
-	if(bandeja == "inbox"){
-		dir = base_url+"Correo/BuscarRecibidos";
-	}else if(bandeja == "sent"){
-		dir = base_url+"Correo/BuscarEnviados";
-	}else if(bandeja == "drafts"){
-		dir = base_url+"Correo/BuscarBorrador";
-	}
-	console.log($("#"+form.id).serialize());
-	var set = {url: dir,
-		type: "post",
-		data: $("#"+form.id).serialize(),
-		datatype: "html",
-		success: function(data){
-			$("#area_mensajes").html(data);
-		},
-		error: function(jqXHR, textStatus, errorThrown){
-			alert("Ha ocurrido un error y no se ha podido procesar la solicitud. \n"+errorThrown);
-			console.log(jqXHR.responseText);
-		},
-		async: true
-		};
-
-		$.ajax(set);
+	$.post(baseURL("Correo/BuscarDrafts"),json_data,function(data,textStatus,jqXHR){
+		$("#area_mensajes").html(data);
+	});
 }
 
 function cargarBorrador(id_mensaje){
 
 	$.ajax({
-		url: base_url + "Correo/CargarBorrador",
+		url: baseURL("Correo/CargarBorrador"),
 		type: "get",
 		data: {mensaje: id_mensaje},
 		success: function(data){
@@ -336,7 +331,12 @@ function cargarBorrador(id_mensaje){
 
 				$("#asunto").val(json_data.asunto);
 				$("#mensaje").val(json_data.mensaje);
-				mensaje = json_data.mensaje_id;
+			
+				if(json_data.curr_adjuntado == true){
+					//console.log("entra");
+					$("#curr_adjuntado").prop("checked",true);
+				}
+				mensaje_actual = json_data.mensaje_id;
 				$("#redactarMensaje").modal("show");
 			}
 		},

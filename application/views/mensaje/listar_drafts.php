@@ -4,7 +4,7 @@
   }
 
   if($mensajes->num_rows() == 0){
-    exit("<center><h3 class='page-header'>No hay mensajes</h3></center>");
+    exit("<center><h2 class='page-header'>No hay mensajes</h2></center>");
   }
 ?>
 <table class="table table-hover">
@@ -19,7 +19,7 @@
       foreach ($mensajes->result() as $row) {
         echo "<tr class='' data-mensaje='$row->mensaje_id'>
             <td>
-            <label for=''>$cont <input id='$cont' type='checkbox' value='$row->mensaje_id'  name='mensajes_a_eliminar'> </label></td>
+            <label for=''>$cont <input id='$cont' type='checkbox' value='$row->mensaje_id'  name='mensajes_a_destuir'> </label></td>
        
             <td><a href='javascript:cargarBorrador($row->mensaje_id)'>$row->asunto</a></td>
             <td>$row->fecha_creacion</td>

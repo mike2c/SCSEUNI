@@ -28,16 +28,16 @@
 		</div>
 		<div class="col-md-3 col-lg-3">
 			<button id="btnActualizar" onclick="actualizar()" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-refresh"></span> Actualizar</button>
-			<button id="btnEliminar" onclick="eliminarMensajes()" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> Eliminar mensaje(s)</button>
+			<button id="btnEliminar" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> Eliminar mensaje(s)</button>
 		</div>
 		<div class="col-md-5 col-lg-5 col-md-offset-2 col-lg-offset-2">
 			<div class="input-group">
-				<form class="form-inline" action="" type="post" id="formBusqueda" style="">
+				<form class="form-inline" action="" type="post" id="formBusqueda">
 					<div class="form-group">
 						<input placeholder="busqueda" class="form-control" type="search" id="busqueda" name="asunto">
 					</div>
 					<div class="form-group">
-						<select class="form-control" id="filtro">
+						<select class="form-control" id="filtro" style="z-index:0">
 							<option value="asunto">Asunto</option>
 							<option value="correo">Correo</option>
 							<option value="mensaje">Contenido</option>

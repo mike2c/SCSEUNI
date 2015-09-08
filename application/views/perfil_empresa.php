@@ -70,11 +70,11 @@
               </div>
               <div class="form-group">
                   <label for="">Numero ruc</label>
-                  <input required form="formActualizarPerfil" type="text" id="ruc" name="ruc"  class="form-control">
+                  <input form="formActualizarPerfil" type="text" id="ruc" name="ruc"  class="form-control">
               </div>
               <div class="form-group">
                   <label for="">Sitio web</label>
-                  <input required form="formActualizarPerfil" type="text" id="sitio_web" name="sitio_web"  class="form-control">
+                  <input form="formActualizarPerfil" type="text" id="sitio_web" name="sitio_web"  class="form-control">
               </div>
             <div class="form-group">
                   <label for="">Sociedad</label>
@@ -176,7 +176,8 @@
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
-<link rel="stylesheet" href="<?=base_url('public/css/perfil.css')?>"></link>
+<link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
+<link rel="stylesheet" type="text/css" href="<?=base_url('public/css/perfil.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
@@ -216,9 +217,7 @@
     });
 
     $(".tel").mask("0000-0000",{placeholder: "0000-0000"});
-    $("#ruc").mask("0000000000-0000",{placeholder: "0000000000-0000"});
-
-  
+    $("#ruc").mask("AAAAAAAAAA-AAAA",{placeholder: "AAAAAAAAAA-AAAA"});
 
   });
   

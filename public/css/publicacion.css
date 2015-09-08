@@ -1,0 +1,16 @@
+.def-bg{
+	background-color: white;
+	padding: 0px 20px;
+	border: 1px solid lightgray;
+	height: 480px;
+	overflow-y: auto;
+}
+
+input[type="checkbox"]{
+	cursor: pointer;
+}
+
+input[type="file"]{
+	margin-top: 10px;
+	padding: 0px 0px;
+}

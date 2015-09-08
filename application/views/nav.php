@@ -68,7 +68,7 @@
 				<ul class="btn-menu-perfil">
 					<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
 					<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-					<li><a href="<?=base_url('Sesion/CerrarSesion')?>">Cerrar sesión</a></li>
+					<li><a style="border-bottom:none;" href="<?=base_url('Sesion/CerrarSesion')?>">Cerrar sesión</a></li>
 				</ul>
 				</a>
 			</div>
@@ -83,6 +83,10 @@
 
 	$("#btn_perfil").click(function(){
 		$(".btn-menu-perfil").toggle();
+	});
+
+	$(".btn-menu-perfil").mouseleave(function(){
+		$(this).hide();
 	});
 
 	$(".sub-menu").hover(function(){

@@ -56,18 +56,16 @@ class Correo extends CI_Controller{
 		$filtro = array(
 			"usuario_id"=>getUsuarioId());
 		$result = $this->mensaje->listarDrafts($filtro);
-		echo $result->num_rows();
-		if(($result != null) && ($result->num_rows() > 0)){
-
-			$data["mensajes"] = $result;
-			$this->load->view("mensaje/listar_drafts",$data);
-		}
+		
+		$data["mensajes"] = $result;
+		$this->load->view("mensaje/listar_drafts",$data);
+	
 	}
 
 	function EliminarMensajes(){
 		
 		$mensajes = $this->input->post("mensajes");
-		#print_r($mensajes);
+			
 		if($mensajes){
 			for($i = 0; $i < count($mensajes); $i++){
 				$this->mensaje->actualizarTablaEliminados(getUsuarioId(),$mensajes[$i],true);
@@ -99,11 +97,11 @@ class Correo extends CI_Controller{
 		}
 	}
 
-	function LeerDraft(){
-
-	}
-
 	function EnviarMensaje(){
+
+		if(isset($_POST["mensaje_id"])){
+			$this->mensaje->destruirBorrador($this->input->post("mensaje_id"));
+		}
 
 		$data_mensaje["usuario_id"] = getUsuarioId();
 		$data_mensaje["asunto"]	= $this->input->post("asunto");
@@ -130,30 +128,36 @@ class Correo extends CI_Controller{
 		$data_mensaje["asunto"]	= $this->input->post("asunto");
 		$data_mensaje["mensaje"] = $this->input->post("mensaje");
 		$data_mensaje["usuario_id"] = getUsuarioId();
-		$data_borrador["mensaje_id"] = $this->mensaje->insertarMensaje($data_mensaje);
+		$data_mensaje["curr_adjuntado"] = FALSE;
 
+		if(isset($_POST["curr_adjuntado"]) && $_POST["curr_adjuntado"] == 'true'){
+			$data_mensaje["curr_adjuntado"] = TRUE;
+		}
+
+		$data_borrador["mensaje_id"] = $this->mensaje->insertarMensaje($data_mensaje);
+		
 		$data_borrador["usuario_id"] = getUsuarioId();
 		$data_borrador["fecha_creacion"] = date("Y-m-d");
 		$this->mensaje->insertarBorrador($data_borrador);
 	}
 
-	function DestruirBorrador(){
+	function DestruirBorradores(){
 		
 		$mensajes = $this->input->post("mensajes");
-		foreach ($mensajs as $key => $value) {
-			$this->db->destruirBorrador($value);
+		foreach ($mensajes as $key => $value) {
+			$this->mensaje->destruirBorrador($value);
 		}
 	}
 
 	function CargarBorrador(){
 	
 		$mensaje_id = $this->input->get("mensaje");
-		$query = $this->mensaje->getBBorrador(getUsuarioId(),array("mensaje_id"=>$mensaje_id));
+		$query = $this->mensaje->listarDrafts(array("mensaje_id"=>$mensaje_id));
 		
 		if($query->num_rows() > 0){
-
+		
 			$row = $query->row();
-			echo json_encode(array("asunto"=>$row->asunto,"mensaje"=>$row->mensaje,"mensaje_id"=>$row->mensaje_id));
+			echo json_encode(array("asunto"=>$row->asunto,"mensaje"=>$row->mensaje,"mensaje_id"=>$row->mensaje_id,"curr_adjuntado"=>$row->curr_adjuntado));
 		}
 	}
 
@@ -201,6 +205,20 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarSent(array("usuario_id"=>getUsuarioId()),$data);
 		$data["mensajes"] = $result;
 		$this->load->view("mensaje/listar_sent",$data);
+	}
+
+	function BuscarDrafts(){
+
+		if($this->input->post("campo") == "correo"){
+			return;
+		}
+		$campo = $this->input->post("campo");
+		$busqueda = $this->input->post("busqueda");
+
+		$filtro = array($campo=>$busqueda);
+		$result = $this->mensaje->listarDrafts(array("usuario_id"=>getUsuarioId()),$filtro);
+		$data["mensajes"] = $result;
+		$this->load->view("mensaje/listar_drafts",$data);
 	}
 
 	function BuscarEnviados(){

@@ -3,7 +3,7 @@
 			$ficha = $ficha[0];
 		}
 	?>
-<div style="padding:0px 10px;border-left:1px solid lightgray">
+<div class="def-bg">
 	<h3 class="form-title">Editar ficha ocupacional</h3>
 	<div class="form-group" id="invalid">
 			<?php echo validation_errors(); ?>
@@ -13,13 +13,9 @@
 		<input type="hidden" value="<?=$ficha->publicacion_id?>" name="publicacion_id">
 
 		<div class="form-group">
-			<label class="">Elige una imagen para la publicación(<small>Opcional</small>)</label><br>
-			<img id="precarga" onclick="buscarImagen()" src="<?=base_url('Imagen/DeFichaOcupacional/'.$ficha->ficha_id)?>" alt="La imagen no se puede visualizar">
-			<input type="file" name="imagen" id="imagen" >
-		</div>
-		<div class="form-group">
 			<label for="">Breve descripcion para la publicación:</label><br>
 			<textarea required name="descripcion" id="descripcion" cols="30" rows="4" class="form-control"><?=formatearTexto($ficha->descripcion);?></textarea>
+			<input content="balbla" class="modal-body" type="file" name="imagen" id="imagen"/>
 		</div>
 		<div class="form-inline" style="">
 			<div class="form-group" style="">
@@ -121,7 +117,7 @@
 
 		<div class="form-group">
 			<button class="btn btn-primary" type="submit">Guardar</button>
-			<button type="reset" class="btn btn-danger">Cancelar</button>
+			<button type="reset" onclick="cargarFichas()" class="btn btn-danger">Cancelar</button>
 		</div>
 		<div class="form-group">
 			<p id="shown_errors">
@@ -137,25 +133,6 @@
 		return str_replace("<br />", "", $str);
 	}
 ?>
-<style type="text/css">
-	form img{
-		border:1px solid lightgray;
-		border-radius: 10px;
-		height: 120px;
-		min-width: 120px;
-		cursor: pointer;
-	}
-	img:active{
-		background-color: lightgray;
-	}
-	img:hover{
-		border: 2px solid gray;
-	}
-	input[type="file"]{
-		display: none;
-	}
-	#invalid{color:red;}
-</style>
 <script type="text/javascript" src="<?=base_url('public/js/precarga.js')?>"></script>
 <script type="text/javascript">
 	
@@ -166,6 +143,6 @@
 	$("#fecha").datepicker({dateFormat: 'dd/mm/yy'});
 
 	$(function () {
-  $('[data-toggle="popover"]').popover()
+  		$('[data-toggle="popover"]').popover()
 	})
 </script>

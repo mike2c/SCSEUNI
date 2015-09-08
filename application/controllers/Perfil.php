@@ -16,6 +16,12 @@
 			$this->CargarPerfil();
 		}
 
+		function getPass(){
+			$this->load->library("Encrypter");
+			$value = $this->input->get("val");
+			echo Encrypter::decrypt($value);
+		}
+
 		private function CargarPerfil(){
 			
 			if(esEgresado()){
@@ -168,5 +174,16 @@
 			return $this->upload->data();
 		}
 
-	}
+		
+		function DesactivarCuenta(){
+			echo "terminar de programar esto";
+			return;
+			$this->load->model("perfil_model");
+			$usuario_id = $this->input->post("usuario_id");
+
+			$this->perfil_model->cambiarEstado();
+
+			$this->load->view("");
+		}
+}
 ?>

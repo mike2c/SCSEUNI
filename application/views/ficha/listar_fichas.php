@@ -1,18 +1,72 @@
-<div style="overflow:auto;padding:10px;">
-	<button class="pull-right btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
+<div class="def-bg">
+	<h3 class="form-title">Listado de fichas ocupacionales</h3>
+	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
+		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
+		<button onclick="eliminarFichas()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar fichas</button>
+	</div>
+	<table class="table table-triped table-condensed" style="">
+		<thead>
+			<tr>
+				<td class="text-center">#</td>
+				<td></td>
+				<td style='text-align:left'>Cargo</td>
+				<td>Ultima actualización</td>
+				<td data-container="body" data-trigger="hover" title="Visibilidad de la publicación" data-toggle="popover" data-placement="left" data-content="Hace que la publicacion sea visible para los egresados o no">Visible</td>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			$cont = 1;
+			foreach ($fichas->result() as $row) {
+				echo "<tr>";
+				echo "<td class='text-center'><strong>$cont</strong></td>";
+				echo "<td ><input type='checkbox' name='fichas_a_eliminar' value='$row->publicacion_id'></td>";
+				
+				echo "<td style='text-align:left'><a href='javascript:editarFicha($row->ficha_id)'>$row->cargo</a></td>";
+				echo "<td>$row->fecha_publicacion</td>";
+				if($row->visible){
+					echo "<td><input onchange='cambiarVisibilidad($row->publicacion_id);' checked type='checkbox' value='$row->publicacion_id'></td>";
+				}else{
+					echo "<td><input onchange='cambiarVisibilidad($row->publicacion_id);' type='checkbox' value='$row->publicacion_id'></td>";
+				}
+				echo "</tr>";
+				$cont++;
+				}
+			?>
+		</tbody>
+	</table>
 </div>
-<table class="table table-default table-hover" style="border-left:1px solid lightgray">
-	<?php
-		echo "<tr><th></th><th>Cargo</th><th>Ultima actualización</th><th></th></tr>";
-		$cont = 1;
-		foreach ($fichas->result() as $row) {
-			echo "<td class='text-center'><strong>$cont</strong></td>";
-			echo "<td>$row->cargo</td>";
-			echo "<td>$row->fecha_publicacion</td>";
-			echo "<td><a href='javascript:editarFicha($row->ficha_id)'>editar</a></td>";
-			echo "</tr>";
-			$cont++;
-		}
+<style type="text/css">
+	td{
+		text-align: center;
+	}
+</style>
+<script type="text/javascript">
+	
+	function eliminarFichas(){
 
-	?>
-</table>
+		var fichas_checked = $("input:checked");
+		var arr_fichas = Array();
+
+		$(fichas_checked).each(function(indice, elemento){
+
+			arr_fichas.push(elemento.value);
+		});
+
+		if(arr_fichas.length > 0){
+
+			$.post(baseURL("Ficha/EliminarFichas"),
+				{fichas: arr_fichas},
+				function(data,textStatus,jqXHR){
+					if(data == ""){
+						alert("Publicaciones eliminadas");
+					}else{
+						alert("Ha ocurrido un error y no se ha podido ejecutar la solicitud. \n" + textStatus);
+						console.log(jqXHR.responseText);
+					}
+				});
+		}else{
+			alert("No se han seleccionado publicaciones");
+		}
+	}
+</script>
