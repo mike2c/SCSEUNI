@@ -66,7 +66,7 @@
 				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=getNombre()?> 
 				<span class="glyphicon glyphicon-chevron-down"></span>
 				<ul class="btn-menu-perfil">
-					<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
+					<li><a href="<?=base_url('Perfil')?>">Mi perfil</a></li>
 					<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
 					<li><a style="border-bottom:none;" href="<?=base_url('Sesion/CerrarSesion')?>">Cerrar sesión</a></li>
 				</ul>

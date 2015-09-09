@@ -22,12 +22,15 @@
 			return $this->db->insert_id();
 		}
 
-		function listar($where = "",$fields = ""){
+		function listar($where = "",$like = "",$fields = ""){
 			if($where != ""){
 				$this->db->where($where);
 			}
+			if($like != ""){
+				$this->db->like($like);
+			}
 			if($fields != ""){
-				$this->select($fields);
+				$this->db->select($fields);
 			}
 
 			return $this->db->get($this->view_name);

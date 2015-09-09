@@ -206,9 +206,6 @@ nav .container{
 .no-padding{
 	padding:0px 0px;
 }
-#btn_perfil span{
-
-}
 
 .btn-menu-perfil{
 	
@@ -219,7 +216,7 @@ nav .container{
 	border-radius: 4px;
 	border: 1px solid lightgray;
 	background-color: white;
-	min-width: 120px;
+	min-width: 150px;
 	z-index: 1;
 	margin-top: 32px;
 }

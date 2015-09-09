@@ -13,21 +13,12 @@
 			return $this->db->insert_id();	
 		}
 
-		function actualizar($data_publicacion,$data_ficha,$ficha_carreras,$data_imagen){
-
-			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
-
-			}else{
-				$this->actualizarImagen($data_imagen);
-			}
+		function actualizar($data_publicacion,$data_ficha,$ficha_carreras){
 
 			$this->actualizarPublicacion($data_publicacion);
-
 			$this->actualizarFiltro($ficha_carreras,$data_publicacion["publicacion_id"]);
-
 			$this->db->where("ficha_id",$data_ficha["ficha_id"]);
 			$this->db->update("ficha",$data_ficha);
-
 		}
 
 		function eliminar($ficha_id){

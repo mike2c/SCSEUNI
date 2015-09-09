@@ -7,19 +7,12 @@
 
 		}
 
-		function guardarBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen){	
-
-			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
-
-			$data_beca["publicacion_id"] = $this->insertarPublicacion($data_publicacion);
-
-			$this->insertarFiltro($data_beca);
-			$this->actualizarFiltro($data_carrera,$data_beca["publicacion_id"]);
+		function insertarBeca($data_beca){	
 
 			$this->db->insert("beca",$data_beca);
 		}
 
-		function updateBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen){
+		function actualizarBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen){
 			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
 
 			}else{
@@ -36,15 +29,9 @@
 			
 		}
 
-		function deleteBeca($data_publicacion,$data_beca){
+		function eliminarBeca($data_publicacion,$data_beca){
 
 		}
-
-		function listar(){
-
-			return parent::listar();
-		}
-
 
 	}
 ?>
