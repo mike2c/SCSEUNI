@@ -1,6 +1,8 @@
 <?php
-  if($perfil == null){
-    exit("<h3>No se ha podido cargar el perfil</h3>");
+  if(!isset($perfil) || $perfil == null){
+      exit("<h3>No se ha podido cargar el perfil</h3>");
+  }else{
+
   }
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
@@ -31,8 +33,8 @@
       </div>
 
       <ul class="perfil-menu">
+        <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
         <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-        <li><a href="">Curriculum</a></li>
         <li><a href="javascript:cargarFichas();">Fichas ocupacionales</a></li>
         <li><a href="javascript:cargarCursos();">Cursos</a></li>
         <li style=""><a href="javascript:cargarBecas();">Becas</a></li>
@@ -165,6 +167,10 @@
   
   $(document).ready(function(){
     var perfil = <?=json_encode($perfil)?>;
+
+    if(perfil == null || perfil == ""){
+      return;
+    }
 
     $("#nombre").val(perfil.nombre);
     $("#apellido").val(perfil.apellido);

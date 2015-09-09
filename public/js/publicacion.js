@@ -1,9 +1,26 @@
-function cargarFichas(){
-  $("#area_perfil").load(baseURL('Ficha/Listar'));
+$(document).ready(function(){
+
+	
+});
+
+function cargarFichas(){ 
+
+	$.ajax({
+		url: baseURL('Ficha/Listar'),
+		datatype: "html",
+		success: function(data){
+			$("#area_perfil").html(data);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+
+		},
+		async:false
+	});
+  //$("#area_perfil").load();
 }
 
 function editarFicha(id){
- $("#area_perfil").load(baseURL('Ficha/Editar/') + id);
+	$("#area_perfil").load(baseURL('Ficha/Editar/') + id);
 }
 
 function cargarBecas(){
@@ -21,3 +38,4 @@ function cargarCursos(){
 function editarCursos(id){
 	$("#area_perfil").load(baseURL("Curso/Editar/") + id);
 }
+

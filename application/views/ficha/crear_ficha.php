@@ -97,6 +97,7 @@
 					</div>
 				</form>
 			</div>
+			<div class="text-center bg-primary" style="padding:15px;display:none;" id="errorArea"></div>
 			<div class="modal-footer">
 				<button form="formCrearFicha" class="btn btn-primary" type="submit">Guardar</button>
 				<button form="formCrearFicha" type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -128,5 +129,25 @@
 
 	for (var i = 1; i <= 100; i++) {
 		$("#cantidad").append("<option value='" + i + "'>" + i + "</option>");
-	};
+	}
+
+	$("#formCrearFicha").submit(function(e){
+		
+		$.ajax({
+			url: baseURL("Ficha/validarCampos"),
+			data: $(this).serialize(),
+			type: "post",
+			datatype: "html",
+			success: function(data){
+				if(data != ""){
+					e.preventDefault();
+					$("#errorArea").show();
+					$("#errorArea").html(data);
+				}
+			},
+			async: false
+		});
+	});
+
+
 </script>

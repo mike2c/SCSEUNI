@@ -7,17 +7,10 @@
 
 		}
 
-		function insertar($data_publicacion,$data_ficha,$ficha_carreras,$data_imagen){
+		function insertar($data_ficha){
 			
-			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
-
-			$data_ficha["publicacion_id"] = $this->insertarPublicacion($data_publicacion);
-
-			$this->insertarFiltro($data_ficha);
-			$this->actualizarFiltro($ficha_carreras,$data_ficha["publicacion_id"]);
-	
 			$this->db->insert("ficha",$data_ficha);
-			
+			return $this->db->insert_id();	
 		}
 
 		function actualizar($data_publicacion,$data_ficha,$ficha_carreras,$data_imagen){

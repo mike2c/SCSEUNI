@@ -22,7 +22,7 @@
 		function validarCampos(){
 			$this->form_validation->set_rules("descripcion","Descripcion","required|max_length[200]|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
-			$this->form_validation->set_rules("cargo","Denominacion Cargo","required|max_length[20]|min_length[3]");
+			$this->form_validation->set_rules("cargo","Denominacion del cargo","required|max_length[20]|min_length[5]");
 			$this->form_validation->set_rules("ubicacion","Ubicacion del Cargo","required|max_length[20]|min_length[3]");
 			$this->form_validation->set_rules("cantidad","Cantidad de Puestos","required|max_length[20]|min_length[1]");
 			$this->form_validation->set_rules("jefe","Jefe inmediato","required|max_length[30]|min_length[3]");
@@ -35,31 +35,21 @@
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
 
 			if($this->form_validation->run()==FALSE){
-				return validation_errors();
-			}else{
-				return TRUE;
+				echo validation_errors();
 			}
 		}
 		
 		#CREANDO UNA FICHA OCUPACIONAL NUEVA	
 		function Crear(){
 			
-			$data["carreras"] = $this->lista->listarCarreras();
-			$data["errores"] = $this->validarCampos();
-			
-			if(!$data["errores"]==TRUE){
-				$this->load->view("ficha/crear_ficha",$data);
+			if(IS_AJAX){
+				if(is_string(validarCampos())){
+					echo validarCampos();
+				}
 			}else{
-				$this->Insertar();
-				$url = base_url("Perfil");
-				echo "
-					<script stype='text/javascript'>
-						alert('Ficha ocupacional guardada');
-						window.location='$url';
-					</script>
-				";
+				$this->insertar();
+				redirect("Perfil");
 			}
-	
 		}
 
 		function Listar(){
@@ -80,27 +70,31 @@
 			$data["carreras"] = $this->lista->listarCarreras();
 
 			if(IS_AJAX){
-				$this->load->view("ficha/editar_ficha",$data);	
+				$this->load->view("ficha/editar_ficha",$data);
 			}
 		}
 
 		private function Insertar(){
 
-			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
+			$img = escaparImagen("imagen");
+			$data_imagen = array();
+			if($img != null){
+				$data_imagen["imagen"]= $img["imagen"];
+				$data_imagen["tipo"]= $img["tipo"];
+			}else{
+				$data_imagen["imagen"]= null;
+				$data_imagen["tipo"]= null;
+			}
 			
+			$data_publicacion["imagen_publicacion_id"] = $this->ficha->insertarImagen($data_imagen);
+			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 			$data_publicacion["fecha_alta"] = format_date($this->input->post('fecha_alta'));
 			$data_publicacion["usuario_id"] = getUsuarioId();
-			
-			//ESCAPA LA IMAGEN DE CARACTERES QUE PUEDEN OCASIONAR UN ERROR EN LA CONSULTA SQL izi nab
-
-			$img = escaparImagen("imagen");
-			$data_imagen["imagen"]= $img["imagen"];
-			$data_imagen["tipo"]= $img["tipo"];
-
-
 			$data_publicacion["visible"] = true;
 			
+			$data_ficha["publicacion_id"] = $this->ficha->insertarPublicacion($data_publicacion);
+
 			$data_ficha["cargo"]= $this->input->post("cargo");
 			$data_ficha["ubicacion"]= $this->input->post("ubicacion");
 			$data_ficha["cantidad"]= $this->input->post("cantidad");
@@ -112,12 +106,16 @@
 			$data_ficha["experiencia"]= $this->input->post("experiencia");
 			$data_ficha["competencia"]= nl2br($this->input->post("competencia"));
 			
-
+			$this->ficha->insertar($data_ficha);
 			$data_carrera = $this->input->post("carreras[]");
-			$this->ficha->insertar($data_publicacion,$data_ficha,$data_carrera,$data_imagen);
+
+			$this->ficha->insertarFiltro($data_ficha);
+			$this->ficha->actualizarFiltro($data_carrera,$data_ficha["publicacion_id"]);
+						
 		}
 
 		function Actualizar(){
+
 			$ficha_id = $this->input->post("ficha_id");
 			$data["ficha"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"ficha_id"=>$ficha_id),"","listar_fichas")->result();
 			$data["carrera"] = $this->ficha->listarCarrera($data["ficha"]);
