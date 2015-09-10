@@ -8,13 +8,17 @@
 
 			parent::__construct();
 			$this->load->helper("url");
-			$this->load->library(array("form_validation","PHPExcel/Reader/Excel2007.php","PHPExcel.php"));
-			$this->load->helper(array("form_helper","sesion","fecha"));
+			$this->load->library(array("form_validation","PHPExcel","Encrypter"));
+			$this->load->helper(array("form_helper","sesion","fecha","pass_gen_helper"));
 			$this->load->model("egresado_model");
+
 		}
 
 		function Index(){
-			
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("upload_functions/importar_egresados");
+			$this->load->view("footer");
 		}
 
 		function cargarArchivo(){
@@ -34,21 +38,16 @@
 
 				if (copy($_FILES['excel']['tmp_name'],$destino)){
 					echo "Archivo Cargado Con Éxito";
-					return $archivo;
+					$this->importarEgresados($destino);
 				}else{
 					echo "Error Al Cargar el Archivo";
 				}
-
-				$this->importarEgresados();
 			}
 		}
-		function importarEgresados(){
+		function importarEgresados($destino){
 
-			if (file_exists ("bak_".$archivo)){
+			if (file_exists ($destino)){
 
-				echo "bak_".$archivo;
-
-				exit;
 				/** Clases necesarias */
 
 				/*require_once(‘Classes/PHPExcel.php’);
@@ -59,7 +58,7 @@
 
 				$objReader = new PHPExcel_Reader_Excel2007();
 
-				$objPHPExcel = $objReader->load("bak_".$archivo);
+				$objPHPExcel = $objReader->load($destino);
 
 				$objFecha = new PHPExcel_Shared_Date();
 
@@ -69,27 +68,35 @@
 
 				// Llenamos el arreglo con los datos  del archivo xlsx
 
+				echo $objPHPExcel->getHighestRow();
+
+				exit("no funciona :D");
+
 				for ($i=1;$i<=47;$i++){
 
-					$_DATOS_EXCEL[$i]['carnet'] = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
+					$data_egresado['carnet'] = $objPHPExcel->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['cedula'] = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
+					$data_egresado['cedula'] = $objPHPExcel->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['nombre']= $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
+					$data_persona['nombre']= $objPHPExcel->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['apellido']= $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
+					$data_persona['apellido']= $objPHPExcel->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['sexo'] = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
+					$data_persona['sexo'] = $objPHPExcel->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['fecha_nacimiento'] = $objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
+					$data_persona['fecha_nacimiento'] = format_date($objPHPExcel->getActiveSheet()->getCell('F'.$i)->getCalculatedValue());
 
-					$_DATOS_EXCEL[$i]['correo'] = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
+					$data_usuario['correo'] = $objPHPExcel->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['telefono'] = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
+					$data_usuario['clave'] = Encrypter::encrypt(generarClave(10));
 
-					$_DATOS_EXCEL[$i]['celular'] = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+					$data_contacto['telefono'] = $objPHPExcel->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
 
-					$_DATOS_EXCEL[$i]['direccion'] = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+					$data_contacto['celular'] = $objPHPExcel->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
+
+					$data_contacto['direccion'] = $objPHPExcel->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
+
+					$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 
 				}
 
@@ -105,24 +112,7 @@
 
 			//del excel e ir insertandolos en la BD
 
-			foreach($_DATOS_EXCEL as $campo => $valor){
 
-				$sql = “INSERT INTO alumnos VALUES (NULL,'”;
-
-				foreach ($valor as $campo2 => $valor2){
-
-				$campo2 == “sexo” ? $sql.= $valor2.”‘);” : $sql.= $valor2.”‘,'”;
-
-			}
-
-			$result = mysql_query($sql);
-
-			if (!$result){ 
-				echo "Error al insertar registro ".$campo;
-				$errores+=1;
-			}
-
-			/////////////////////////////////////////////////////////////////////////
 
 			echo "<strong><center>ARCHIVO IMPORTADO CON EXITO, EN TOTAL $campo REGISTROS Y $errores ERRORES</center></strong>";
 
@@ -132,7 +122,6 @@
 
 			unlink($destino);
 
-			}
 		}
 	}
 ?>
