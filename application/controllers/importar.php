@@ -68,7 +68,7 @@
 
 				// Llenamos el arreglo con los datos  del archivo xlsx
 
-				echo $objPHPExcel->getHighestRow();
+				//echo $objPHPExcel->getHighestRow();
 
 				exit("no funciona :D");
 

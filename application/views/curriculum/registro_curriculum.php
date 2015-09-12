@@ -1,8 +1,8 @@
 <!--BASE URL--><input type="hidden" value="<?=base_url()?>" name="base_url" id="base_url">
-
+<?php echo validation_errors(); ?>
 <div class="contenido" style="padding-top: 5px;" id="contenido">
 	<h2 class="form-title">Creación de curriculum</h2><br>
-	<form method="POST" action='<?=base_url('Curriculum/Guardar')?>'>
+	<form method="POST" action='<?=base_url('Curriculum/Crear')?>'>
 
 		<div id="formacion_academica" class="field"><!-- FORMACION ACADEMICA -->
 			<div class="group-title">
@@ -21,7 +21,8 @@
 					</div>
 					<div class='form-group'>
 						<label>Fecha de comienzo</label><br>
-						<input style='width:auto;' pattern="^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})" class='form-control fecha' type='text' name='comienzo_formacion[]' >
+						<!-- <input style='width:auto;' pattern="^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})" class='form-control fecha' type='text' name='comienzo_formacion[]' > -->
+						<input style='width:auto;'class='form-control fecha' type='text' name='comienzo_formacion[]' >
 					</div>
 					<div class='form-group'>
 						<label>Fecha de finalización</label><br>
@@ -47,7 +48,7 @@
 					</div>
 					<div class='form-group'>
 						<label>cargo</label><br>
-						<input style='width:auto;' class='form-control' type='text' name='cargo' >
+						<input style='width:auto;' class='form-control' type='text' name='cargo[]' >
 					</div>
 					<div class='form-group'>
 						<label>Fecha de comienzo</label><br>
@@ -104,7 +105,7 @@
 					<div class='form-group'>
 					<br>
 						<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_idioma[]'> Basico</label>	
-						<label class='radio' for=''><input type='radio' id='' value='medio' name='nivel_idioma[]'> Medio</label>	
+						<label class='radio' for=''><input type='radio' id='' value='medio' name='nivel_idioma[]'> Intermedio</label>	
 						<label class='radio' for=''><input type='radio' id='' value='alto' name='nivel_idioma[]'> Alto</label>	
 					</div>
 				</div>	
@@ -123,7 +124,7 @@
 				<div class='form-inline'>
 					<div class='form-group'>
 						<label>Softwares</label><br>
-						<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='idioma[]' >
+						<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='software[]' >
 					</div>
 					<div class='form-group'>
 					<br>
@@ -254,7 +255,7 @@
 					</div> \
 					<div class='form-group'> \
 						<label>Fecha de comienzo</label><br> \
-						<input style='width:auto;' pattern='^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})' class='form-control fecha' type='text' name='comienzo_formacion[]' > \
+						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_formacion[]' > \
 					</div> \
 					<div class='form-group'> \
 						<label>Fecha de finalización</label><br> \
@@ -275,7 +276,7 @@
 					</div> \
 					<div class='form-group'> \
 						<label>cargo</label><br> \
-						<input style='width:auto;' class='form-control' type='text' name='cargo' > \
+						<input style='width:auto;' class='form-control' type='text' name='cargo[]' > \
 					</div> \
 					<div class='form-group'> \
 						<label>Fecha de comienzo</label><br> \
@@ -318,7 +319,7 @@
 					<div class='form-group'> \
 					<br> \
 						<label class='radio' for='radio_nivel_1'><input type='radio' id='' value='basico' name='nivel_idioma[" + count + "]'> Basico</label>	\
-						<label class='radio' for='radio_nivel_2'><input type='radio' id='' value='medio' name='nivel_idioma[" + count + "]'> Medio</label>	\
+						<label class='radio' for='radio_nivel_2'><input type='radio' id='' value='medio' name='nivel_idioma[" + count + "]'> Intermedio</label>	\
 						<label class='radio' for='radio_nivel_3'><input type='radio' id='' value='alto' name='nivel_idioma[" + count + "]'> Alto</label>	 \
 					</div> \
 				</div>");
@@ -333,7 +334,7 @@
 		$("#informatica").find(".group-body").append("<div class='form-inline'> \
 					<div class='form-group'> \
 						<label>Softwares</label><br> \
-						<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='idioma[]' > \
+						<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='software[]' > \
 					</div> \
 					<div class='form-group'> \
 					<br> \
@@ -355,11 +356,11 @@
 	function formatear(){
 		$(".fecha").datepicker();
 		$(".fecha").attr("placeholder","00/00/0000");
-		$(".fecha").attr("pattern","^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})");
+		//$(".fecha").attr("pattern","^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})");
 		//$(".fecha").attr("required",true);
 		$(".fecha").css("width",150);
-		$("input[type='text']").attr("required",true);
-		$("input[type='radio']").attr("required",true);
+		//$("input[type='text']").attr("required",true);
+		//$("input[type='radio']").attr("required",true);
 
 		$("input").attr("autocomplete","off");
 	}

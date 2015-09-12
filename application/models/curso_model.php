@@ -5,14 +5,7 @@
 			parent::__contruct("listar_cursos");
 		}
 
-		function insertar($data_publicacion,$data_curso,$curso_carreras,$data_imagen){
-			$data_publicacion["imagen_publicacion_id"] = $this->insertarImagen($data_imagen);
-
-			$data_curso["publicacion_id"]=$this->insertarPublicacion($data_publicacion);
-
-			$this->insertarFiltro($data_curso);
-			$this->actualizarFiltro($curso_carreras,$data_curso["publicacion_id"]);
-
+		function insertar($data_curso){
 			$this->db->insert("curso",$data_curso);
 		}
 

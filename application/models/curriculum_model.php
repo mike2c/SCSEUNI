@@ -6,9 +6,18 @@
 			parent::__construct();
 			$this->load->database();
 		}
+		
+		public function getEgresadoID($usuario_id){
+			$query = $this->db->query("SELECT egresado_id from egresado where egresado.usuario_id=".$usuario_id.";");
+			if ($query->num_rows()>0){
+				return $query->row();
+			}else{
+				return FALSE;
+			}
+		}
 
-		public function guardarCurriculum($usuario_id){
-			$this->db->insert("curriculum",array("usuario_id"=>$usuario_id));
+		public function guardarCurriculum($egresado_id){
+			$this->db->insert("curriculum",array("egresado_id"=>$egresado_id));
 			return $this->db->insert_id();
 		}
 		
@@ -31,14 +40,18 @@
 		public function guardarInformatica($data){
 			$this->db->insert("informatica",$data);
 		}
-
-		public function existe($egresado_id){
-			$query = $this->db->query("select curriculum_id from curriculum where egresado_id=". $egresado_id);
-			if($query->num_rows()){
-				return $query->row()->curriculum_id;
+		
+		public function listar($egresado_id){
+			$query = $this->db->query("SELECT * FROM curriculum,experiencia_laboral,formacion_academica,formacion_complementaria,idioma,informatica where curriculum.egresado_id=".$egresado_id.";");
+			if ($query->num_rows()>0) {
+				return $query->result();
+			}else{
+				return false;
 			}
-
-			return false;
+		}
+		
+		public function actualizarFormacionAcademica(){
+			
 		}
 	}
 ?>

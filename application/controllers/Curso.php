@@ -71,7 +71,19 @@
 			
 			$data_carrera = $this->input->post("carreras[]");
 
-			$this->curso_model->Insertar($data_publicacion,$data_curso,data_carrera,$data_imagen);
+			$data_publicacion["imagen_publicacion_id"] = $this->curso_model->insertarImagen($data_imagen);
+
+			$data_curso["publicacion_id"]=$this->curso_model->insertarPublicacion($data_publicacion);
+
+			$this->curso_model->insertarFiltro($data_curso);
+			$this->curso_model->actualizarFiltro($data_carrera,$data_curso["publicacion_id"]);
+
+			$this->curso_model->Insertar($data_curso);
+
+			echo "<script>
+				alert('Publicacion guardada correctamente');
+				window.location= '". base_url('Perfil') ."';
+			</script>";
 		}
 
 		function Listar(){
