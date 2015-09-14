@@ -11,13 +11,13 @@
 		}
 
 		function Index(){
-			$data = $this->modelo->getEgresadoID(getUsuarioId());
-			if ($data==null) {
-				exit("ERROR DE ACCESO, no tienes acceso a esta pagina");
+			$data_curriculo["curriculum_id"] = $this->modelo->getCurriculumID(getUsuarioId());
+			if ($data_curriculo["curriculum_id"]==NULL) {
+				$this->Crear();
 			}else{
-				$data_curriculo = $this->modelo->listar($data->egresado_id);
+				$data_curriculo = $this->modelo->listarCurriculo($data_curriculo["curriculum_id"]->curriculum_id);
 				if(!$data_curriculo==null){
-					$this->listar($data_curriculo);
+					$this->Editar($data_curriculo);
 				}else{
 					$this->Crear();
 				}
@@ -44,14 +44,14 @@
 			}
 		}
 		
-		function Editar(){
+		function Editar($data_curriculo){
 			$validacion = $this->validarCampos();
 			
 			if(IS_AJAX){
 				if ($validacion==TRUE) {
 					$this->actualizar();
 				}else{
-					$this->load->view("curriculum/actualizar_curriculo");
+					$this->load->view("curriculum/actualizar_curriculo",$data_curriculo);
 				}
 			}else{
 				if ($validacion==TRUE) {
@@ -59,24 +59,13 @@
 				}else{
 					$this->load->view("cabecera");
 					$this->load->view("nav");
-					$this->load->view("curriculum/actualizar_curriculo");
+					$this->load->view("curriculum/actualizar_curriculo",$data_curriculo);
 					$this->load->view("footer");
 				}
 			}
 		}
-		
-		function listar($data_curriculo){
-			if(IS_AJAX){
-				$this->load->view("curriculum/listar_curriculum",$data_curriculo);
-			}else{
-				$this->load->view("cabecera");
-				$this->load->view("nav");
-				$this->load->view("curriculum/listar_curriculum",$data_curriculo);
-				$this->load->view("footer");
-			}
-		}
 
-		function Guardar(){
+		private function Guardar(){
 			#formacion academica
 			$titulo = $this->input->post("titulo[]");
 			$comienzo_formacion = $this->input->post("comienzo_formacion[]");
@@ -100,9 +89,15 @@
 			#informatica
 			$software = $this->input->post("software[]");
 			$nivel_software =$this->input->post("nivel_software[]");
-						
-			$curr_id = $this->modelo->guardarCurriculum(getUsuarioId());
-
+			
+			$egresado_id = $this->modelo->getEgresadoID(getUsuarioId());
+			
+			if (!$egresado_id==NULL) {
+				$curr_id = $this->modelo->guardarCurriculum($egresado_id->egresado_id);
+			}else {
+				exit("Error, no se encuentra el Egresado");
+			}
+			
 			for($i = 0; $i < count($this->input->post("titulo[]")); $i++){
 				if ($comienzo_formacion[$i]=="" || $finalizacion_formacion[$i]=="" || $titulo[$i]=="") {
 					# no guarda en caso de llevar campos vacios
@@ -131,36 +126,119 @@
 					$this->modelo->guardarIdiomas(array("curriculum_id"=>$curr_id,"idioma"=>$idioma[$i],"nivel"=>$nivel_idioma[$i]));
 				}
 			}
-			for ($i=0; $i < count($this->input->post("software[]")); $i++){ 
+			for ($i=0; $i < count($this->input->post("software[]")); $i++){
 				if ($software[$i]=="" || $nivel_software[$i]=="") {
 					# no guarda en caso de llevar campos vacios
 				}else{
 					$this->modelo->guardarInformatica(array("curriculum_id"=>$curr_id,"software"=>$software[$i],"nivel"=>$nivel_software[$i]));
 				}
 			}
+			echo "
+				<script stype='text/javascript'>
+					alert('Actualizada');
+					window.location='". base_url("Perfil")."';
+				</script>
+			";
 		}
 		
-		function actualizar(){
+		private function Actualizar(){
+			
+			#Se recive el ID del curriculo por medio de un campo hidden.
+			$curr_id = $this->input->post("curriculum_id");
+			
+			$id_academico = $this->input->post("formacion_academica_id[]");
 			$titulo[] = $this->input->post("titulo[]");
 			$comienzo_formacion[] = $this->input->post("comienzo_formacion[]");
 			$finalizacion_formacion[] = $this->input->post("finalizacion_formacion[]");
 			
+			$id_experiencia = $this->input->post("experiencia_laboral_id[]");
 			$empresa[] = $this->input->post("empresa[]");
 			$cargo[] = $this->input->post("cargo[]");
 			$comienzo_laboral[] = $this->input->post("comienzo_laboral[]");
 			$finalizacion_laboral[] = $this->input->post("finalizacion_laboral[]");
 			
+			$id_complemetario = $this->input->post("formacion_complementaria_id[]");
 			$curso[] = $this->input->post("curso[]");
 			$comienzo_curso[] = $this->input->post("comienzo_curso[]");
 			$finalizacion_curso[] = $this->input->post("finalizacion_curso[]");
 			
+			$idioma_id = $this->input->post("idioma_id[]");
 			$idioma[] = $this->input->post("idioma[]");
 			$nivel_idioma[] = $this->input->post("nivel_idioma[]");
 			
+			$inforamtica_id=$this->input->post("informatica_id[]");
 			$software[] = $this->input->post("software[]");
 			$nivel_software[] =$this->input->post("nivel_software[]");
 			
+			$data_curriculo = $this->modelo->listarCurriculo($curr_id);
 			
+			for($i = 0; $i < count($this->input->post("titulo[]")); $i++){
+				if ($comienzo_formacion[$i]=="" || $finalizacion_formacion[$i]=="" || $titulo[$i]=="") {
+					# no guarda en caso de llevar campos vacios
+				}else{
+					$save = $this->modelo->actualizarOGuardar($data_curriculo["formacion_academica"],array("formacion_academica_id"=>$id_academico[$i],"curriculum_id"=>$curr_id,"fecha_comienzo"=>$comienzo_formacion[$i],"fecha_finalizacion"=>$finalizacion_formacion[$i],"titulo_id"=>$titulo[$i]));
+					if ($save == TRUE) {
+						$this->modelo->guardarFormacionAcademica(array("curriculum_id"=>$curr_id,"fecha_comienzo"=>$comienzo_formacion[$i],"fecha_finalizacion"=>$finalizacion_formacion[$i],"titulo_id"=>$titulo[$i]));
+					}else{
+						$this->modelo->actualizarFormacionAcademica(array("formacion_academica_id"=>$id_academico[$i],"curriculum_id"=>$curr_id,"fecha_comienzo"=>$comienzo_formacion[$i],"fecha_finalizacion"=>$finalizacion_formacion[$i],"titulo_id"=>$titulo[$i]));
+					}
+				}
+			}
+			for ($i=0; $i < count($this->input->post("cargo[]")) ; $i++){ 
+				if ($empresa[$i]=="" || $cargo[$i]=="" || $comienzo_laboral[$i]=="" || $finalizacion_laboral[$i]=="") {
+					# no guarda en caso de llevar campos vacios
+				}else{
+					$save = $this->modelo->actualizarOGuardar($data_curriculo["experiencia_laboral"],array("experiencia_laboral_id"=>$id_experiencia[$i],"curriculum_id"=>$curr_id,"empresa"=>$empresa[$i],"cargo"=>$cargo[$i],"fecha_comienzo"=>$comienzo_laboral[$i],"fecha_finalizacion"=>$finalizacion_laboral[$i]));
+					if ($save == TRUE) {
+						$this->modelo->guardarExperienciaLaboral(array("curriculum_id"=>$curr_id,"empresa"=>$empresa[$i],"cargo"=>$cargo[$i],"fecha_comienzo"=>$comienzo_laboral[$i],"fecha_finalizacion"=>$finalizacion_laboral[$i]));
+					}else{
+						$this->modelo->actualizarExperienciaLaboral(array("experiencia_laboral_id"=>$id_experiencia[$i],"curriculum_id"=>$curr_id,"empresa"=>$empresa[$i],"cargo"=>$cargo[$i],"fecha_comienzo"=>$comienzo_laboral[$i],"fecha_finalizacion"=>$finalizacion_laboral[$i]));
+					}
+				}
+			}
+			for ($i=0; $i < count($this->input->post("curso[]")); $i++){ 
+				if ($curso[$i]=="" || $comienzo_curso[$i]=="" || $finalizacion_curso[$i]=="") {
+					# no guarda en caso de llevar campos vacios
+				}else{
+					$save = $this->modelo->actualizarOGuardar($data_curriculo["formacion_complementaria"],array("formacion_academica_id"=>$id_complemetario[$i],"curriculum_id"=>$curr_id,"curso"=>$curso[$i],"fecha_comienzo"=>$comienzo_curso[$i],"fecha_finalizacion"=>$finalizacion_curso[$i]));
+					if ($save == TRUE) {
+						$this->modelo->guardarformacionComplementaria(array("curriculum_id"=>$curr_id,"curso"=>$curso[$i],"fecha_comienzo"=>$comienzo_curso[$i],"fecha_finalizacion"=>$finalizacion_curso[$i]));
+					}else {
+						$this->modelo->actualizarFormacionComplementaria(array("formacion_academica_id"=>$id_complemetario[$i],"curriculum_id"=>$curr_id,"curso"=>$curso[$i],"fecha_comienzo"=>$comienzo_curso[$i],"fecha_finalizacion"=>$finalizacion_curso[$i]));
+					}
+				}
+			}
+			for ($i=0; $i < count($this->input->post("idioma[]")); $i++){ 
+				if ($idioma[$i]=="" || $nivel_idioma[$i]=="") {
+					# no guarda en caso de llevar campos vacios
+				}else{
+					$save = $this->modelo->actualizarOGuardar($data_curriculo["idioma"],array("idioma_id"=>$idioma_id[$i],"curriculum_id"=>$curr_id,"idioma"=>$idioma[$i],"nivel"=>$nivel_idioma[$i]));
+					if ($save == TRUE) {
+						$this->modelo->guardarIdiomas(array("curriculum_id"=>$curr_id,"idioma"=>$idioma[$i],"nivel"=>$nivel_idioma[$i]));
+					}else {
+						$this->modelo->actualizarIdiomas(array("idioma_id"=>$idioma_id[$i],"curriculum_id"=>$curr_id,"idioma"=>$idioma[$i],"nivel"=>$nivel_idioma[$i]));
+					}
+				}
+			}
+			for ($i=0; $i < count($this->input->post("software[]")); $i++){ 
+				if ($software[$i]=="" || $nivel_software[$i]=="") {
+					# no guarda en caso de llevar campos vacios
+				}else{
+					$save = $this->modelo->actualizarOGuardar($data_curriculo["informatica"],array("informatica_id"=>$inforamtica_id[$i],"curriculum_id"=>$curr_id,"software"=>$software[$i],"nivel"=>$nivel_software[$i]));
+					if ($save == TRUE) {
+						$this->modelo->guardarInformatica(array("curriculum_id"=>$curr_id,"software"=>$software[$i],"nivel"=>$nivel_software[$i]));
+					}else {
+						$this->modelo->actualizarInformatica(array("informatica_id"=>$inforamtica_id[$i],"curriculum_id"=>$curr_id,"software"=>$software[$i],"nivel"=>$nivel_software[$i]));
+					}
+				}
+			}
+			
+			echo "
+				<script stype='text/javascript'>
+					alert('Actualizada');
+					window.location='". base_url("Perfil")."';
+				</script>
+			";
 		}
 		
 		function validarCampos(){
@@ -175,7 +253,6 @@
 			$this->form_validation->set_rules("comienzo_formacion[]","Año Inicial","trim|required|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]|callback_periodoTitulo");
 			$this->form_validation->set_rules("finalizacion_formacion[]","Año Final","trim|required|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]");
 	
-			
 			$this->form_validation->set_rules("empresa[]","Nombre de la Empresa","trim|alpha|max_length[45]");
 			$this->form_validation->set_rules("cargo[]","Cargo","trim|alpha|max_length[45]");
 			$this->form_validation->set_rules("comienzo_laboral[]","Año Inicial","trim|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]|callback_periodoCargo");
@@ -223,6 +300,23 @@
 				return FALSE;
 			}else{
 				return TRUE;
+			}
+		}
+		
+		function prueba(){
+			$data = array("hola"=>"hola","mundo"=>"mundo","Probando"=>"probando","el"=>"el comportamiento de un arreglo");
+			
+			echo $data["hola"]."<br/>" ;
+			echo $data["Probando"]."<br/>" ;
+			echo $data["el"]."<br/>" ;
+			
+			$data_curriculo = $this->modelo->listarCurriculo('27');
+			foreach($data_curriculo["formacion_academica"]->result() as $formacion_academica){
+				if (isset($formacion_academica->fecha_comienzo)) {
+					echo $formacion_academica->fecha_comienzo."<br/>";
+				}else{
+					echo "no funciona - ";
+				}
 			}
 		}
 	}

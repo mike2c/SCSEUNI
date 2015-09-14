@@ -9,10 +9,80 @@
 		
 		public function getEgresadoID($usuario_id){
 			$query = $this->db->query("SELECT egresado_id from egresado where egresado.usuario_id=".$usuario_id.";");
-			if ($query->num_rows()>0){
+			if ($query->num_rows()>0) {
 				return $query->row();
+			}else {
+				return NULL;
+			}
+		}
+		
+		public function getCurriculumID($usuario_id){
+			$egresado_id = $this->getEgresadoID($usuario_id);
+			if (!$egresado_id->egresado_id==NULL){
+				$curriculum_id = $this->db->query("SELECT curriculum_id from curriculum where curriculum.egresado_id = '$egresado_id->egresado_id';");
+				if ($curriculum_id->num_rows()>0) {
+					return $curriculum_id->row();
+				}else {
+					return NULL;
+				}
+				
 			}else{
-				return FALSE;
+				return NULL;
+			}
+		}
+		
+		public function listarCurriculo($curriculum_id){
+			$data_curriculo["experiencia_laboral"]=$this->listarExperienciaLaboral($curriculum_id);
+			$data_curriculo["formacion_academica"]=$this->listarFormacionAcademica($curriculum_id);
+			$data_curriculo["formacion_complementaria"]=$this->listarFormacionComplementaria($curriculum_id);
+			$data_curriculo["idioma"]=$this->listarIdiomas($curriculum_id);
+			$data_curriculo["informatica"]=$this->listarInformatica($curriculum_id);
+			
+			return $data_curriculo;
+		}
+		
+		public function listarExperienciaLaboral($curriculum_id){
+			$query = $this->db->query("SELECT experiencia_laboral_id,empresa,cargo,fecha_comienzo,fecha_finalizacion from experiencia_laboral where experiencia_laboral.curriculum_id = '$curriculum_id';");
+			if ($query->num_rows()>0) {
+				return $query;
+			}else{
+				return NULL;
+			}
+		}
+		
+		public function listarFormacionAcademica($curriculum_id){
+			$query = $this->db->query("SELECT formacion_academica_id,fecha_comienzo, fecha_finalizacion, titulo_id from formacion_academica where formacion_academica.curriculum_id = '$curriculum_id';");
+			if ($query->num_rows()>0) {
+				return $query;
+			}else {
+				return NULL;
+			}
+		}
+		
+		public function listarFormacionComplementaria($curriculum_id){
+			$query = $this->db->query("select formacion_complementaria_id,curso, fecha_comienzo, fecha_finalizacion from formacion_complementaria where formacion_complementaria.curriculum_id='$curriculum_id';");
+			if ($query->num_rows()>0) {
+				return $query;
+			}else{
+				return NULL;
+			}
+		}
+		
+		public function listarIdiomas($curriculum_id){
+			$query =$this->db->query("select idioma_id,idioma, nivel from idioma where idioma.curriculum_id = '$curriculum_id';");
+			if ($query->num_rows()>0) {
+				return $query;
+			}else {
+				return NULL;
+			}
+		}
+		
+		public function listarInformatica($curriculum_id){
+			$query =$this->db->query("select informatica_id,software, nivel from informatica where informatica.curriculum_id = '$curriculum_id';");
+			if ($query->num_rows()>0) {
+				return $query;
+			}else {
+				return NULL;
 			}
 		}
 
@@ -41,17 +111,158 @@
 			$this->db->insert("informatica",$data);
 		}
 		
-		public function listar($egresado_id){
-			$query = $this->db->query("SELECT * FROM curriculum,experiencia_laboral,formacion_academica,formacion_complementaria,idioma,informatica where curriculum.egresado_id=".$egresado_id.";");
-			if ($query->num_rows()>0) {
-				return $query->result();
+		public function actualizarFormacionAcademica($data){
+			$data_db = $this->listarFormacionAcademica();
+			$this->db->where("formacion_academica_id",$data["formacion_academica_id"]);
+			$this->db->update("formacion_academica",$data);
+		}
+		
+		public function actualizarFormacionComplementaria($data){
+			$this->db->where("curriculum_id",$data["formacion_academica_id"]);
+			$this->db->update("formacion_complementaria",$data);
+		}
+		
+		public function actualizarExperienciaLaboral($data){
+			$this->db->where("curriculum_id",$data["experiencia_laboral_id"]);
+			$this->db->update("experiencia_laboral",$data);
+		}
+		
+		public function actualizarIdiomas($data){
+			$this->db->where("curriculum_id",$data["idioma_id"]);
+			$this->db->update("idioma",$data);
+		}
+		
+		public function actualizarInformatica($data){
+			$this->db->where("curriculum_id",$data["informatica_id"]);
+			$this->db->update("informatica",$data);
+		}
+		
+		public function actualizarOGuardar($data_bd,$data){
+			if(isset($data_bd->row()->experiencia_laboral_id)){
+				$save = TRUE;
+				foreach ($data_bd->result() as $bd_info) {
+					if ($bd_info->experiencia_laboral_id == $data["experiencia_laboral_id"]) {
+						$save = FALSE;
+						break;
+					}
+				}
+				if ($save==TRUE) {
+					return TRUE;
+				}else {
+					return FALSE;
+				}
+			}elseif (isset($data_bd->row()->formacion_academica_id)) {
+				$save = TRUE;
+				foreach ($data_bd->result() as $bd_info) {
+					if ($bd_info->formacion_academica_id == $data["formacion_academica_id"]) {
+						$save = FALSE;
+						break;
+					}
+				}
+				if ($save==TRUE) {
+					return TRUE;
+				}else {
+					return FALSE;
+				}
+			}elseif(isset($data_bd->row()->formacion_complementaria_id)){
+				$save = TRUE;
+				foreach ($data_bd->result() as $bd_info) {
+					if ($bd_info->formacion_complementaria_id == $data["formacion_complementaria_id"]) {
+						$save = FALSE;
+						break;
+					}
+				}
+				if ($save==TRUE) {
+					return TRUE;
+				}else {
+					return FALSE;
+				}
+			}elseif (isset($data_bd->row()->idioma_id)) {
+				$save = TRUE;
+				foreach ($data_bd->result() as $bd_info) {
+					if ($bd_info->idioma_id == $data["idioma_id"]) {
+						$save = FALSE;
+						break;
+					}
+				}
+				if ($save==TRUE) {
+					return TRUE;
+				}else {
+					return FALSE;
+				}
+				
+			}elseif (isset($data_bd->row()->informatica_id)) {
+				$save = TRUE;
+				foreach ($data_bd->result() as $bd_info) {
+					if ($bd_info->informatica_id == $data["informatica_id"]) {
+						$save = FALSE;
+						break;
+					}
+				}
+				if ($save==TRUE) {
+					return TRUE;
+				}else {
+					return FALSE;
+				}
 			}else{
-				return false;
+				return NULL;
+			}
+		}
+				
+		function borrarExperienciaLaboral($tipo,$data){
+			if($tipo==TRUE){
+				$this->db->where("experiencia_laboral_id",$data["experiencia_laboral_id"]);
+				$this->db->delete("experiencia_laboral");
+			}else{
+				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
+				foreach($data_bd["experiencia_laboral"]->result() as $db_data){
+					if ($db_data->experiencia_laboral_id != $data["experiencia_laboral_id"]) {
+						$this->db->where("experiencia_laboral_id",$data["experiencia_laboral_id"]);
+						$this->db->delete("experiencia_laboral");
+					}
+				}
 			}
 		}
 		
-		public function actualizarFormacionAcademica(){
+		function borrarFormacionAcademica($data){
 			
+			$this->db->where("formacion_academica_id",$data["formacion_academica_id"]);
+			$this->db->delete("formacion_academica");
+		}
+		
+		function borrarFormacionComplementaria($tipo,$data){
+			if($tipo==TRUE){
+				$this->db->where("formacion_complementaria_id",$data["formacion_complementaria_id"]);
+				$this->db->delete("formacion_complementaria");
+			}else{
+				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
+				if (condition) {
+					
+				}
+			}
+		}
+		
+		function borrarIdioma($tipo,$data){
+			if($tipo==TRUE){
+				$this->db->where("idioma_id",$data["idioma_id"]);
+				$this->db->delete("idioma");
+			}else{
+				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
+				if (condition) {
+					
+				}
+			}
+		}
+		function borrarInformatica($tipo,$data){
+			if($tipo==TRUE){
+				$this->db->where("informatica_id",$data["informatica_id"]);
+				$this->db->delete("informatica");
+			}else{
+				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
+				if (condition) {
+					
+				}
+			}
 		}
 	}
 ?>
