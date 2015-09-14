@@ -114,7 +114,11 @@
             <p id="estado"></p>
           </div>
           <div class="form-group">
-            <button class="btn btn-danger">Desactivar cuenta</button>
+            <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>">
+
+              <button class="btn btn-danger">Desactivar cuenta</button>
+            </form>
+            
           </div>
         </div>
       </div>
@@ -150,19 +154,19 @@
                     <div class="form-group">
                       <label for="">Digite su contraseña actual</label>
                       <input type="password" name="clave_actual" class="form-control">
+                    </div>
+                  <div class="form-group">
+                     <label for="">Contraseña</label>
+                    <input required type="password" name="clave_nueva" class="form-control">
                   </div>
                   <div class="form-group">
-                    <label for="">Contraseña</label>
-              <input required type="password" name="clave_nueva" class="form-control">
-            </div>
-                  <div class="form-group">
                     <label for="">Repite contraseña</label>
-              <input required type="password" name="clave_repetida" class="form-control">
-            </div>
+                  <input required type="password" name="clave_repetida" class="form-control">
+                </div>
                     <div class="form-group">
                       <input onclick="cambiarClave()" class="btn btn-danger" value="Cambiar contraseña">
                     </div>
-                </form>
+              </form>
           </div>
           <div class="col-md-5 col-lg-5">
               <div id="cambiarClaveRespuesta"></div>

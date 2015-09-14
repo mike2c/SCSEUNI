@@ -46,10 +46,16 @@
 			$this->db->update("imagen_publicacion",$data_imagen);
 		}
 
-		function listarCarrera($data_publicacion){
-			foreach($data_publicacion as $row){
-				return $data = $this->db->query("select publicacion_carrera_id, carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$row->publicacion_id';");
-			}
+		function listarCarrera($publicacion_id){
+		
+			return $this->db->query("select publicacion_carrera_id, carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$publicacion_id';");
+		}
+
+		function eliminarPublicacion($publicacion_id,$usuario_id){
+
+			$this->db->where("publicacion_id",$publicacion_id);
+			$this->db->where("usuario_id",$usuario_id);
+			$this->db->delete("publicacion");
 		}
 
 		function insertarFiltro($data_publicacion){

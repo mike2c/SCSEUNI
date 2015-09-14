@@ -123,8 +123,19 @@
 				$this->listar();
 		}
 	}
-	function eliminar(){
-		$this->beca_model->deleteBeca(null,null);
+	function Eliminar(){
+		$becas = $this->input->post("publicacion");
+		$usuario_id = getUsuarioId();
+
+		if(is_array($becas)){
+
+			foreach ($becas as $key => $value) {
+				$this->beca_model->eliminarBeca($value,$usuario_id);
+			}
+
+		}else{
+			$this->beca_model->deleteBeca($value,$usuario_id);
+		}
 	}
 }
 ?>

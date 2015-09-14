@@ -72,7 +72,7 @@
 					</div>
 					<div class="form-group">
 						<label for="">Seleccione la fecha en la que la publicación dejara de estar visible (<small>Obligatorio</small>)</label>
-						<input autocomplete="off" value="<?php echo set_value("fecha_alta"); ?>" class="form-control" style="width:150px;" type="text" id="fecha" maxlength="10" placeholder="dd/mm/aaaa" name="fecha_alta" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="Fecha de Alta" data-content="
+						<input autocomplete="off" class="form-control" style="width:150px;" type="text" id="fecha" maxlength="10" placeholder="dd/mm/aaaa" name="fecha_alta" data-toggle="popover" data-trigger="hover" data-placement="right" title="Fecha de Alta" data-content="
 						Seleccione la fecha en la que la publicación dejara de estar visible.">
 					</div>
 					<div class="">
@@ -97,7 +97,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="text-center bg-primary" style="padding:15px;display:none;" id="errorArea"></div>
+			<div class="text-center bg-primary" style="padding:10px;display:none;" id="errorArea"></div>
 			<div class="modal-footer">
 				<button form="formCrearFicha" class="btn btn-primary" type="submit">Guardar</button>
 				<button form="formCrearFicha" type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
@@ -132,21 +132,8 @@
 	}
 
 	$("#formCrearFicha").submit(function(e){
-		
-		$.ajax({
-			url: baseURL("Ficha/validarCampos"),
-			data: $(this).serialize(),
-			type: "post",
-			datatype: "html",
-			success: function(data){
-				if(data != ""){
-					e.preventDefault();
-					$("#errorArea").show();
-					$("#errorArea").html(data);
-				}
-			},
-			async: false
-		});
+		e.preventDefault();
+		validarFormulario(this);
 	});
 
 

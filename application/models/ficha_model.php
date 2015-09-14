@@ -21,9 +21,12 @@
 			$this->db->update("ficha",$data_ficha);
 		}
 
-		function eliminar($ficha_id){
+		function eliminarFicha($publicacion_id,$usuario_id){
 			
-			$this->db->query("call eliminar_ficha($ficha_id);");
+			parent::eliminarPublicacion($publicacion_id,$usuario_id);
+			
+			$this->db->where("publicacion_id",$publicacion_id);
+			$this->db->delete("ficha");
 		}
 
 	}

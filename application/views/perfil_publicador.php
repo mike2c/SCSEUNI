@@ -7,12 +7,11 @@
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
-<div class="container">
+<div class="container no-padding">
   <div class="col-md-2 col-lg-2 no-padding">
     <div class="perfil">
       <a href="#" id="cambiar_imagen" class="thumbnail">
         <?php
-      
           if(file_exists("uploads/". getImagenPerfil())){
             ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
           }else{

@@ -176,14 +176,9 @@
 
 		
 		function DesactivarCuenta(){
-			echo "terminar de programar esto";
-			return;
-			$this->load->model("perfil_model");
-			$usuario_id = $this->input->post("usuario_id");
-
-			$this->perfil_model->cambiarEstado();
-
-			$this->load->view("");
+			$this->load->model("perfil_model");			
+			$this->perfil_model->desactivarCuenta(getUsuarioId());
+			redirect("Sesion/CerrarSesion");		
 		}
 }
 ?>

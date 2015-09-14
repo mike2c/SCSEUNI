@@ -29,8 +29,13 @@
 			
 		}
 
-		function eliminarBeca($data_publicacion,$data_beca){
+		function eliminarBeca($publicacion_id,$usuario_id){
 
+			parent::eliminarPublicacion($publicacion_id,$usuario_id);
+
+			$this->db->where("publicacion_id",$publicacion_id);
+			$this->db->where("usuario_id",$usuario_id);
+			$this->db->delete("beca");
 		}
 
 	}

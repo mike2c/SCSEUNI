@@ -30,12 +30,18 @@
 				</strong>
 			</div>
 
-			<ul class="perfil-menu">
+			<ul id="perfil_menu" class="perfil-menu">
 				<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
 				<li><a href="javascript:cargarCurriculum()">Curriculum</a></li>
 				<li><a href="">Cursos</a></li>
 				<li style=""><a href="">Becas</a></li>
 			</ul>
+
+			<script type="text/javascript">
+
+				console.log($(".perfil-menu").html());
+				
+			</script>
 		</div>
 	</div>
 	<div class="col-md-10 col-lg-10" style="padding-right:0px;">
