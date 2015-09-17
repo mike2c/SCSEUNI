@@ -92,7 +92,7 @@ Te recomendamos que no borres este correo, en caso de que olvides tu contraseña
 				$this->load_>view("nav");
 				$this->load->view("busqueda_egresado");
 				$this->load_>view("lista_egresados");
-				$this->load_>view("cabecera");
+				$this->load_>view("footer");
 			}
 			
 			

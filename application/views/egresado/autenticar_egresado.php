@@ -35,7 +35,7 @@
 		background-color: #eaeaea;
 	}
 
-	h2{
+	.jumbotron h2{
 		font-size: 50px;
 	}
 	
