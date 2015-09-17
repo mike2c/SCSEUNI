@@ -225,44 +225,27 @@
 		}
 		
 		function borrarFormacionAcademica($data){
-			
 			$this->db->where("formacion_academica_id",$data["formacion_academica_id"]);
 			$this->db->delete("formacion_academica");
 		}
 		
 		function borrarFormacionComplementaria($tipo,$data){
-			if($tipo==TRUE){
-				$this->db->where("formacion_complementaria_id",$data["formacion_complementaria_id"]);
-				$this->db->delete("formacion_complementaria");
-			}else{
-				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
-				if (condition) {
-					
-				}
-			}
+			$this->db->where("formacion_complementaria_id",$data["formacion_complementaria_id"]);
+			$this->db->delete("formacion_complementaria");
 		}
 		
 		function borrarIdioma($tipo,$data){
-			if($tipo==TRUE){
-				$this->db->where("idioma_id",$data["idioma_id"]);
-				$this->db->delete("idioma");
-			}else{
-				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
-				if (condition) {
-					
-				}
-			}
+			$this->db->where("idioma_id",$data["idioma_id"]);
+			$this->db->delete("idioma");
 		}
 		function borrarInformatica($tipo,$data){
-			if($tipo==TRUE){
-				$this->db->where("informatica_id",$data["informatica_id"]);
-				$this->db->delete("informatica");
-			}else{
-				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
-				if (condition) {
-					
-				}
-			}
+			$this->db->where("informatica_id",$data["informatica_id"]);
+			$this->db->delete("informatica");
+		}
+		
+		function borrarCurriculo($data){
+			$this->db->where("curriculum_id",$data["curriculum_id"]);
+			$this->db->delete("curriculum",$data);
 		}
 	}
 ?>

@@ -1,16 +1,14 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	//DEFINIENDO LA CONSTANTE  IS_AJAX
 	define("IS_AJAX",isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == 'xmlhttprequest');
-	
 	class Egresado extends CI_Controller{
-
 		
 		function __construct(){
 			parent::__construct();
-			$this->load->helper("url");
-			$this->load->helper("form_helper");
-			$this->load->library(array("form_validation","session"));
-			$this->load->helper("sesion");
+			$this->load->library(array("form_validation","email","Encrypter"));
+			$this->email->set_newline("\r\n");
+			$this->load->model("egresado_model","modelo");
+			$this->load->helper(array("url","form_helper"));
 
 			#DEFINIENDO LAS REGLAS
 			$config = array(
@@ -30,12 +28,52 @@
 			);
 			
 		}
-
+		
+		function EnviarCorreoEgresado($data){
+			$clave = Encrypter::decrypt($data->clave);
+			 
+			$this->email->from("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
+			$this->email->reply_to("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
+			$this->email->to($data->correo);	
+			$this->email->subject("Autentificación de Egresados");
+			$this->email->message("Hola, tu cuenta ha sido autentificada, tu correo y contraseña para iniciar sesion son los siguientes:
+			Correo: $data->correo
+			Contraseña: $clave
+Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
+				
+			if (!$this->email->send()) {
+				echo "ERROR, no se pudo enviar el mensaje<br/>";
+				echo $this->email->print_debugger();
+			}else {
+				redirect("Sesion");
+			}
+		}
+		
 		function Autenticar(){
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("autenticar_egresado");
-			$this->load->view("footer");
+			if (!$this->input->post('correo')=="") {
+			
+				$data = $this->modelo->autenticarEgresado($this->input->post('correo'));
+				if ($data == TRUE || $data=="ERROR") {
+					
+					if ($data == 1){
+						$msg["existe"] = "El correo proporcionado ya se encuentra autenticado y en uso.";
+					}else{
+						$msg["no_existe"] = "El correo proporcionado no se encuentra registrado en el sistema, por favor contactar con el administrador.";
+					}
+					$this->load->view("cabecera");
+					$this->load->view("nav");
+					$this->load->view("egresado/error_autenticacion",$msg);
+					$this->load->view("footer");
+					
+				}else{
+					$this->EnviarCorreoEgresado($data);
+				}
+			}else{
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("egresado/autenticar_egresado");
+				$this->load->view("footer");
+			}
 		}
 		
 		function index(){
@@ -43,8 +81,6 @@
 		}
 
 		function Listar(){
-			$this->load->model("egresado_model","egresados");
-
 
 			if(IS_AJAX){
 			
@@ -68,8 +104,7 @@
 
 		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
 		function Registro(){
-			$this->load->model("egresado_model","modelo");
-			$this->load->library("Encrypter");
+			
 			$this->load->helper("pass_gen");
 
 			$rules = array(

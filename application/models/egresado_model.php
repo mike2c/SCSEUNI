@@ -6,6 +6,23 @@
 			parent::__construct();
 			/*$this->load->database();*/
 		}
+		
+		function autenticarEgresado($data){
+			$query = $this->db->query("select correo, clave, activo from usuario where usuario.correo='$data'");
+			if ($query->num_rows()>0) {
+				$data_user = $query->row();
+				if ($data_user->activo == TRUE) {
+					return TRUE;
+				}else {
+					$this->db->where("correo",$data);
+					$this->db->update("usuario",array("activo"=>TRUE));
+					return $data_user;
+				}
+			}else {
+				$msg = "ERROR";
+				return $msg;
+			}
+		}
 
 		function insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto){
 
