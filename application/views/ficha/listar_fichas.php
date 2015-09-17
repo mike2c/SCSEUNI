@@ -1,8 +1,8 @@
 <div class="def-bg">
 	<h3 class="form-title">Listado de fichas ocupacionales</h3>
 	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
-		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
-		<button id="btnEliminar" onclick="eliminarPublicaciones()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar fichas</button>
+		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
+		<button id="btnEliminar" onclick="eliminarPublicaciones()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicación</button>
 	</div>
 	<?php
 
@@ -17,6 +17,7 @@
 	<table class="table table-triped table-condensed" style="">
 		<thead>
 			<tr>
+				<td>#</td>
 				<td style='text-align:left'>Cargo</td>
 				<td>Ultima actualización</td>
 				<td data-container="body" data-trigger="hover" title="Visibilidad de la publicación" data-toggle="popover" data-placement="left" data-content="Hace que la publicacion sea visible para los egresados o no">Visible</td>
@@ -27,7 +28,7 @@
 			$cont = 1;
 			foreach ($fichas->result() as $row) {
 				echo "<tr>";
-				
+				echo "<td>$cont</td>";
 				echo "<td class='text-left'><input type='checkbox' name='fichas_a_eliminar' value='$row->publicacion_id'> <a href='javascript:editarFicha($row->publicacion_id)'>$row->cargo</a></td>";
 				echo "<td>$row->fecha_publicacion</td>";
 

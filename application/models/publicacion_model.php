@@ -48,7 +48,7 @@
 
 		function listarCarrera($publicacion_id){
 		
-			return $this->db->query("select publicacion_carrera_id, carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$publicacion_id';");
+			return $this->db->query("select publicacion_carrera_id,nombre_carrera, carrera.carrera_id,filtro from publicacion_carrera,carrera where publicacion_carrera.publicacion_id = '$publicacion_id' and carrera.carrera_id=publicacion_carrera.carrera_id;");
 		}
 
 		function eliminarPublicacion($publicacion_id,$usuario_id){

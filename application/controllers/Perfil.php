@@ -50,6 +50,7 @@
 			$this->load->view("nav");
 			$this->load->view("perfil_egresado",$data);
 			$this->load->view("footer");
+
 		}
 		
 		function PerfilEmpresa(){
@@ -62,16 +63,18 @@
 			
 			$this->load->view("perfil_empresa",$data);
 			$this->load->view("footer");
+
 		}
 
 		function PerfilPublicador(){
 			$this->load->model("publicador_model","modelo");
 			$resultado = $this->modelo->buscarPublicador(array("usuario_id"=>getUsuarioId()));
-				$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
+			$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
 			$this->load->view("cabecera");
 			$this->load->view("nav");
 			$this->load->view("perfil_publicador",$data);
 			$this->load->view("footer");
+
 		}
 
 
@@ -99,6 +102,42 @@
 				}
 			}else{
 				echo "La contraseña actual que digitaste es incorrecta";
+			}
+		}
+
+		private function cargarVistasDinamicamente(){
+
+			if(isset($_GET["page"])){
+				switch ($_GET["page"]){
+
+					case 'fichas':
+						echo "<script type='text/javascript'>
+							$(document).ready(function(){
+								
+								cargarFichas();
+							});
+						</script>";
+						break;
+					case 'cursos':
+						echo "<script type='text/javascript'>
+							$(document).ready(function(){
+								
+								cargarCursos();
+							});
+						</script>";
+						break;
+					case 'becas':
+						echo "<script type='text/javascript'>
+							$(document).ready(function(){
+								console.log('entro');
+								cargarBecas();
+							});
+						</script>";
+						break;
+					default:
+						echo "La pagina que estas intentando acceder no existe.\n ERROR 404";
+						break;
+				}
 			}
 		}
 

@@ -1,8 +1,6 @@
 <?php
   if(!isset($perfil) || $perfil == null){
       exit("<h3>No se ha podido cargar el perfil</h3>");
-  }else{
-
   }
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
@@ -151,7 +149,6 @@
     </div>
   </div>
   </div>
-
 </div>  
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
@@ -166,10 +163,6 @@
   
   $(document).ready(function(){
     var perfil = <?=json_encode($perfil)?>;
-
-    if(perfil == null || perfil == ""){
-      return;
-    }
 
     $("#nombre").val(perfil.nombre);
     $("#apellido").val(perfil.apellido);
@@ -202,26 +195,24 @@
        $("#cargo").attr("form","formActualizarPerfil");
     });
 
-  });
+    var get = "<?php
+          if(isset($_GET['page'])){
+            echo $_GET['page'];
+          }
+        ?>";
 
-  function cambiarClave(){
-    var form = document.getElementById("formCambiarClave");
+    switch(get){
 
-    if(form.clave_actual.value !="" && form.clave_nueva.value != "" && form.clave_repetida.value != ""){
-      if(confirm("¿Esta seguro que desea cambiar su contraseña?")){
-          $.ajax({url:form.action,
-        data: $(form).serialize(),
-        type: "post",
-        datatype: "html",
-        success:function(data){
-          $("#cambiarClaveRespuesta").html(data);
-        },
-        aync: false
-        });
-        }
-
-    }else{
-      alert("Hay campos incompletos");
+      case 'fichas':
+        cargarFichas();
+      break;
+      case 'becas':
+        cargarBecas();
+      break;
+      case 'cursos':
+        cargarCursos();
+      break;
     }
-  }
+
+  });
 </script>

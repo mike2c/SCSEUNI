@@ -5,7 +5,7 @@
 	}
 ?>
 <div class="def-bg">
-	<h3 class="form-title">Editar ficha ocupacional</h3>
+	<h3 class="form-title">Editar publicación <small>ficha ocupacional</small></h3>
 	<form action="<?=base_url('Ficha/Actualizar')?>" name="formEditarFicha" id="formEditarFicha" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="ficha_id" value="<?=$ficha->ficha_id?>">
 		<input type="hidden" name="publicacion_id" value="<?=$ficha->publicacion_id?>">
@@ -19,14 +19,14 @@
 		<div class="form-group">
 		<label for="descripcion">Descripción general (<small>Obligatorio</small>):</label><br>
 		<textarea required name="descripcion"  id="descripcion" cols="30" rows="4" class="form-control" data-trigger="focus" data-container="body" data-toggle="popover" data-placement="top" title="Descripción de la publicación" data-content="
-		Breve descripción generalizando la información del puesto o cargo."><?=$ficha->descripcion ?></textarea>
+		Breve descripción generalizando la información del puesto o cargo."><?=formatearTexto($ficha->descripcion)?></textarea>
 		</div>
 		<div class="form-group">
 			<input type="file" name="imagen" id="imagen"/>
 		</div>
 		<div class="form-group">
 			<label  for="" class="">Ubicación de cargo (<small>Obligatorio</small>):</label><br>		
-			<input required value="<?=$ficha->cargo?>" type="text" class="form-control" name="ubicacion" data-trigger="focus" data-toggle="popover" data-placement="right" title="Ubicacion del Cargo" data-content="
+			<input required value="<?=$ficha->ubicacion?>" type="text" class="form-control" name="ubicacion" data-trigger="focus" data-toggle="popover" data-placement="right" title="Ubicacion del Cargo" data-content="
 			Escriba el área en la que se ubica el Cargo, (ejemplo: Gerencia, Finanzas, etc.)">
 		</div>
 
@@ -51,7 +51,7 @@
 		</div>
 		<div class="form-group">
 		<label for="" class="">Experiencia (<small>Obligatorio</small>):</label>		
-			<input required value="<?=$ficha->jefe?>"  type="text" class="form-control" name="experiencia" data-toggle="popover" data-placement="right" title="Experiencia"  data-trigger="focus" data-content="
+			<input required value="<?=$ficha->experiencia?>"  type="text" class="form-control" name="experiencia" data-toggle="popover" data-placement="right" title="Experiencia"  data-trigger="focus" data-content="
 			Ingrese la experiencia requerida para el cargo ofertado.">
 		</div>
 		<div class="form-group">
@@ -64,22 +64,22 @@
 		<div class="form-group">
 			<label for="" class="">Finalidad (<small>Obligatorio</small>)</label>		
 			<textarea class="form-control" name="finalidad" id="" cols="30" rows="6" data-toggle="popover" data-placement="top" title="Finalidad" data-trigger="focus" data-content="
-			Digite la finalidad que tendrá el cargo, (ejemplo: Planificar, Organizar, Dirigir y controlar el funcionamiento y desarrollo de la empresa)."><?php echo set_value("finalidad"); ?><?=$ficha->finalidad?></textarea>
+			Digite la finalidad que tendrá el cargo, (ejemplo: Planificar, Organizar, Dirigir y controlar el funcionamiento y desarrollo de la empresa)."><?=formatearTexto($ficha->finalidad)?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="" class="">Requisitos (<small>Obligatorio</small>)</label>		
 			<textarea class="form-control" name="requisitos" id="requisitos" cols="30" rows="6" data-toggle="popover" data-placement="top" title="Requisitos" data-trigger="focus" data-content="
-			Titulaciones, certificaciones, cursos o el dominio de alguna herramienta.Describa las destrezas o estudios necesarios para aplicar al cargo ofertado."><?=$ficha->requisitos?></textarea>
+			Titulaciones, certificaciones, cursos o el dominio de alguna herramienta.Describa las destrezas o estudios necesarios para aplicar al cargo ofertado."><?=formatearTexto($ficha->requisitos)?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="" class="">Competencia (<small>Obligatorio</small>)</label>		
 			<textarea class="form-control" name="competencia" id="" cols="30" rows="6" class="form-control" data-toggle="popover" data-placement="top" title="Competencia" data-trigger="focus" data-content="
-			Escriba las aptitudes que deberá poseer el aplicante al cargo, (ejemplo: Ética, Alto sentido de la responsabilidad, Alta capacidad de análisis y de síntesis, etc.)"><?=$ficha->competencia?></textarea>
+			Escriba las aptitudes que deberá poseer el aplicante al cargo, (ejemplo: Ética, Alto sentido de la responsabilidad, Alta capacidad de análisis y de síntesis, etc.)"><?=formatearTexto($ficha->competencia)?></textarea>
 		</div>
 		<div class="form-group">
 			<label for="" class="">Funciones y/o responsabilidades (<small>Obligatorio</small>)</label>		
 			<textarea class="form-control" name="funciones" id="funciones" cols="30" rows="6" data-toggle="popover" data-placement="top" title="Funciones y responsabilidades" data-trigger="focus" data-content="
-			Defina las funciones y responsabilidades que debera de ejecutar el aspirante al puesto (ejemplo: mantener una línea directa de comunicación con sus colaboradores para estar al tanto de la situación de la empresa)."><?=$ficha->funciones?></textarea>
+			Defina las funciones y responsabilidades que debera de ejecutar el aspirante al puesto (ejemplo: mantener una línea directa de comunicación con sus colaboradores para estar al tanto de la situación de la empresa)."><?=formatearTexto($ficha->funciones)?></textarea>
 		</div>
 		<div class="form-group">
 			<?php
@@ -125,7 +125,7 @@
 							</div>
 							";
 							$cont=false;
-						}
+					}
 				}
 			}
 		?>
@@ -150,13 +150,18 @@
 <script type="text/javascript" src="<?=base_url('public/js/precarga.js')?>"></script>
 <script type="text/javascript">
 	
-	function buscarImagen(){
-		$("#imagen").trigger("click");
-	}
+	$("#imagen").filestyle({
+		input: true,
+		buttonText: "Añadir imagen publicitaria",
+		buttonName: "btn-default",
+		size: "sm",
+		buttonBefore: true,
+		icon: false
+
+	});
 
 	$("#fecha").datepicker({dateFormat: 'dd/mm/yy'});
-
-	$(function () {
+	$(function (){
   		$('[data-toggle="popover"]').popover()
 	})
 

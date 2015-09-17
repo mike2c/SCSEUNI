@@ -253,16 +253,16 @@
 			$this->form_validation->set_rules("comienzo_formacion[]","Año Inicial","trim|required|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]|callback_periodoTitulo");
 			$this->form_validation->set_rules("finalizacion_formacion[]","Año Final","trim|required|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]");
 	
-			$this->form_validation->set_rules("empresa[]","Nombre de la Empresa","trim|alpha|max_length[45]");
-			$this->form_validation->set_rules("cargo[]","Cargo","trim|alpha|max_length[45]");
+			$this->form_validation->set_rules("empresa[]","Nombre de la Empresa","trim|max_length[45]");
+			$this->form_validation->set_rules("cargo[]","Cargo","trim|max_length[45]");
 			$this->form_validation->set_rules("comienzo_laboral[]","Año Inicial","trim|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]|callback_periodoCargo");
 			$this->form_validation->set_rules("finalizacion_laboral[]","Año Final","trim|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]");
 			
-			$this->form_validation->set_rules("curso[]","Nombre del Curso","trim|alpha|max_length[45]");
+			$this->form_validation->set_rules("curso[]","Nombre del Curso","trim|max_length[45]");
 			$this->form_validation->set_rules("comienzo_curso[]","Año Inicial","trim|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]|callback_periodoCurso");
 			$this->form_validation->set_rules("finalizacion_curso[]","Año Final","trim|integer|exact_length[4]|less_than[$anio_actual]|greater_than[$anio_minimo]");
 			
-			$this->form_validation->set_rules("idioma[]","Idioma","trim|alpha|max_length[10]");
+			$this->form_validation->set_rules("idioma[]","Idioma","trim|max_length[10]");
 			
 			$this->form_validation->set_rules("software[]","Software","trim|max_length[45]");
 			

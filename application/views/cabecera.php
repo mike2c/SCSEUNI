@@ -16,10 +16,10 @@
 
 		<link rel="stylesheet" href="<?=base_url('public/css/default.css')?>">
 		<script type="text/javascript">
-			function baseURL(add){
+			function baseURL(ext){
 
-				if(add != undefined){
-					return "<?=base_url()?>" + add
+				if(ext != undefined){
+					return "<?=base_url()?>" + ext
 				}
 
 				return "<?=base_url()?>";

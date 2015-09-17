@@ -1,5 +1,5 @@
 <!--BASE URL--><input type="hidden" value="<?=base_url()?>" name="base_url" id="base_url">
-<?php echo validation_errors(); ?>
+<link rel="stylesheet" href="<?=base_url('public/js/jquery.mask.js')?>">
 <div class="contenido" style="padding-top: 5px;" id="contenido">
 	<h2 class="form-title">Creación de curriculum</h2><br>
 	<form method="POST" action='<?=base_url('Curriculum/Crear')?>'>
@@ -20,12 +20,12 @@
 					    </div><!-- /input-group -->
 					</div>
 					<div class='form-group'>
-						<label>Fecha de comienzo</label><br>
+						<label>Año de comienzo</label><br>
 						<!-- <input style='width:auto;' pattern="^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})" class='form-control fecha' type='text' name='comienzo_formacion[]' > -->
 						<input style='width:auto;'class='form-control fecha' type='text' name='comienzo_formacion[]' >
 					</div>
 					<div class='form-group'>
-						<label>Fecha de finalización</label><br>
+						<label>Año de finalización</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_formacion[]' >
 					</div><br>
 				</div>	
@@ -51,11 +51,11 @@
 						<input style='width:auto;' class='form-control' type='text' name='cargo[]' >
 					</div>
 					<div class='form-group'>
-						<label>Fecha de comienzo</label><br>
+						<label>Año de comienzo</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_laboral[]' >
 					</div>
 					<div class='form-group'>
-						<label>Fecha de finalización</label><br>
+						<label>Año Añode finalización</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_laboral[]' >
 					</div>
 				</div>	
@@ -77,11 +77,11 @@
 						<input style='width:300px;' class='form-control' type='text' name='curso[]' >
 					</div>
 					<div class='form-group'>
-						<label>Fecha de comienzo</label><br>
+						<label>Año de comienzo</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_curso[]' >
 					</div>
 					<div class='form-group'>
-						<label>Fecha de finalización</label><br>
+						<label>Año de finalización</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_curso[]' >
 					</div>
 				</div>	
@@ -254,11 +254,11 @@
 					    </div><!-- /input-group --> \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de comienzo</label><br> \
+						<label>Año de comienzo</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_formacion[]' > \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de finalización</label><br> \
+						<label>Año de finalización</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_formacion[]' > \
 					</div><br> \
 				</div>");
@@ -279,11 +279,11 @@
 						<input style='width:auto;' class='form-control' type='text' name='cargo[]' > \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de comienzo</label><br> \
+						<label>Año de comienzo</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_laboral[]' > \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de finalización</label><br> \
+						<label>Año de finalización</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_laboral[]' > \
 					</div> \
 				</div>");
@@ -297,11 +297,11 @@
 						<input style='width:300px;' class='form-control' type='text' name='curso[]' > \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de comienzo</label><br> \
+						<label>Año de comienzo</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_curso[]' > \
 					</div> \
 					<div class='form-group'> \
-						<label>Fecha de finalización</label><br> \
+						<label>Año de finalización</label><br> \
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_curso[]' > \
 					</div> \
 				</div>");
@@ -354,14 +354,12 @@
 
 	formatear();
 	function formatear(){
-		$(".fecha").datepicker();
-		$(".fecha").attr("placeholder","00/00/0000");
-		//$(".fecha").attr("pattern","^([0-9]{2})+[/]+([0-9]{2})+[/]+([0-9]{4})");
-		//$(".fecha").attr("required",true);
-		$(".fecha").css("width",150);
-		//$("input[type='text']").attr("required",true);
-		//$("input[type='radio']").attr("required",true);
+		//$(".fecha").datepicker();
 
+		$(".fecha").mask("0000",{
+			placeholder: "0000"
+		});
+		$(".fecha").css("width",150);
 		$("input").attr("autocomplete","off");
 	}
 
@@ -394,5 +392,4 @@
 			async: true
 		});
 	}
-
 </script>
