@@ -9,5 +9,5 @@
 	$config['smtp_pass'] = 'clave';
 	$config['smtp_timeout'] = '4';
 	$config['mailtype'] = 'text';
-	$config['charset'] = 'iso-8859-1';
+	$config['charset'] = 'utf-8';
 ?>
