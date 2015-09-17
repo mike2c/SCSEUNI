@@ -16,7 +16,7 @@ Administrador
 	crear perfil
 Publicadores
 	
-Componer lo de las iamgenes en la publicacion
+Componer lo de las imagenes en la publicacion
 redimensionar imagenes de perfil
 Desactivar cuenta
 Hacer todo lo del curriculum

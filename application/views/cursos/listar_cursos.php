@@ -1,8 +1,8 @@
 <div class="def-bg">
-	<h3 class="form-title">Listado de cursos</h3>
+	<h3 class="form-title">Listado de publicaciones <small>cursos</small></h3>
 	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
-		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear ficha</button>
-		<button onclick="eliminarFichas()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar fichas</button>
+		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
+		<button onclick="eliminarFichas()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
 	</div>
 	<?php
 
@@ -30,7 +30,7 @@
 			foreach ($cursos->result() as $row) {
 				echo "<tr>";
 				echo "<td class='text-center'><strong>$cont</strong></td>";
-				echo "<td ><input type='checkbox' name='fichas_a_eliminar' value='$row->publicacion_id'></td>";
+				echo "<td ><input type='checkbox' value='$row->publicacion_id'></td>";
 				
 				#echo "<td style='text-align:left'><a href='javascript:editarFicha($row->ficha_id)'>$row->cargo</a></td>";
 				echo "<td>$row->fecha_publicacion</td>";
@@ -54,34 +54,9 @@
 </style>
 <script type="text/javascript">
 	
-	function eliminarFichas(){
-
-		var fichas_checked = $("input:checked");
-		var arr_fichas = Array();
-
-		$(fichas_checked).each(function(indice, elemento){
-
-			arr_fichas.push(elemento.value);
-		});
-
-		if(arr_fichas.length > 0){
-
-			$.post(baseURL("Ficha/EliminarFichas"),
-				{fichas: arr_fichas},
-				function(data,textStatus,jqXHR){
-					if(data == ""){
-						alert("Publicaciones eliminadas");
-					}else{
-						alert("Ha ocurrido un error y no se ha podido ejecutar la solicitud. \n" + textStatus);
-						console.log(jqXHR.responseText);
-					}
-				});
-		}else{
-			alert("No se han seleccionado publicaciones");
-		}
-	}
-
-	$("#crearFicha").on("hidden.bs.modal", function(){
-		$("#formCrearFicha").trigger("reset");
+	$("#crearPublicacion").on("hidden.bs.modal", function(){
+		$("#formCrearPublicacion").trigger("reset");
 	});
+
+
 </script>

@@ -1,9 +1,4 @@
-var tipoPublicacion = null;
-
-$(document).ready(function(){
-
-	
-});
+tipoPublicacion = "";
 
 function validarFormulario(form){
 
@@ -46,12 +41,14 @@ function editarFicha(id){
 }
 
 function cargarBecas(){
-	$("#area_perfil").load(baseURL("Beca/Listar"));
 	tipoPublicacion = "beca";
+	$("#area_perfil").load(baseURL("Beca/Listar"));
+	
 }
 
-function editarBecas(id){
+function editarBeca(id){
 	$("#area_perfil").load(baseURL("Beca/Editar/") + id);
+
 }
 
 function cargarCursos(){
@@ -76,12 +73,11 @@ function cambiarVisibilidad(button){
 	}else if(tipoPublicacion == "curso"){
 		action = baseURL("Curso/CambiarVisibilidad");
 	}
-
 	
 }
 
 function eliminarPublicaciones(){
-	var publicaciones = Array();
+	publicaciones = Array();
 	$("input:checked").each(function(indice,elemento){
 
 		publicaciones.push(elemento.value);
@@ -104,6 +100,7 @@ function eliminarPublicaciones(){
 			type: "post",
 			datatype: "html",
 			success: function(data,textStatus,jqXHR){
+				console.log(data);
 				if(data == ""){
 					return true;
 				}
@@ -112,12 +109,10 @@ function eliminarPublicaciones(){
 				alert("Ha ocurrido un error y no se ha podido procesar la petición.\n"+textStatus);
 				console.log(jqXHR.responseText);
 			},
-			async: true
+			async: false
 		});
-	
-		return false;
+	return false;
 	}else{
 		alert("No se han seleccionado publicaciones");
-		
 	}
 }

@@ -1,31 +1,26 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	include "publicacion_model.php";
-	class curso_model extends Publicacion_model{
-		function __contruct(){
-			parent::__contruct("listar_cursos");
+
+	class Curso_model extends Publicacion_model{
+
+		function __construct(){
+			parent::__construct("listar_cursos");
 		}
 
 		function insertar($data_curso){
 			$this->db->insert("curso",$data_curso);
 		}
 
-		function actualizar($data_publicacion,$data_curso,$curso_carreras,$data_imagen){
-
-			if($data_imagen["imagen"]="" && $data_imagen["tipo"]==""){
-
-			}else{
-				$this->actualizarImagen($data_imagen);
-			}
-
-			$this->actualizarPublicacion($data_publicacion);
-
-			$this->actualizarFiltro($curso_carreras,$data_publicacion["publicacion_id"]);
+		function actualizar($data_curso){
 
 			$this->db->where("curso_id",$data_curso["curso_id"]);
 			$this->db->update("curso",$data_curso);
 		}
+		
+		function eliminar($publicacion_id){
 
-		function eliminar(){
-
+			$this->db->where("publicacion_id",$publicacion_id);
+			$this->db->delete("curso");
 		}
+
 	}

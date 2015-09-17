@@ -30,6 +30,7 @@
 			if($this->form_validation->run()==FALSE){
 				echo  validation_errors();
 			}
+
 		}
 
 		function crearBeca(){
@@ -47,6 +48,7 @@
 			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 			$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
+			$data_publicacion["visible"] = TRUE;
 
 			//Insertamos la informacion de la imagen y capturamos su id
 			$data_publicacion["imagen_publicacion_id"] = $this->beca_model->insertarImagen($data_imagen);
@@ -74,55 +76,55 @@
 			$this->load->model("listas_model");
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			if (IS_AJAX) {
-				$this->load->view("beca/publicar_beca",$data);
+				$this->load->view("beca/crear_beca",$data);
 				$this->load->view("beca/listar_becas",$data);
 			}
 		}
 
-		function editar($beca_id){
-			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"beca_id"=>$beca_id),"","listar_becas")->result();
-			$data["carrera"] = $this->beca_model->listarCarrera($data["beca"]);
-			$data["carreras"] = $this->listas_model->listarCarreras();
+		function Editar($publicacion_id){
+			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"publicacion_id"=>$publicacion_id));
+			
+			$data["carrera"] = $this->beca_model->listarCarrera($publicacion_id);
 			if (IS_AJAX) {
-				$this->load->view("update_beca",$data);
+				$this->load->view("beca/editar_beca",$data);
 			}
 		}
 
-		function updateBeca(){
+	function Actualizar(){
 
-			$beca_id=$this->input->post("beca_id");
-			$data["beca"]=$this->beca_model->listar(array("usuario_id"=>getUsuarioId(),"beca_id"=>$beca_id),"","listar_becas")->result();
-			$data["carrera"] = $this->beca_model->listarCarrera($data["beca"]);
-			$data["carreras"] = $this->listas_model->listarCarreras();
+		if(IS_AJAX){
 
-			$data["errores"] = $this->validarCampos();
+			echo $this->validarCampos();
+		}else{
 
-			if(!$data["errores"]==TRUE){
-				$this->load->view("beca/update_beca",$data);
-			}else{
-
-				$data_publicacion["usuario_id"] = getUsuarioId();
-				$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
-				$data_beca["beca_id"] = $this->input->post("beca_id");
-				$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
-
-				$data_publicacion["fecha_publicacion"] = date("Y-m-d");
-				$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
-				
-				$img = escaparImagen("imagen");
+			$data_publicacion["usuario_id"] = getUsuarioId();
+			$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
+			$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
+			$data_publicacion["fecha_publicacion"] = date("Y-m-d");
+			$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
+			
+			$img = escaparImagen("imagen");
+			if($img != null && !empty($img)){
 				$data_imagen["imagen"] = $img["imagen"];
 				$data_imagen["tipo"] = $img["tipo"];
+				$data_imagen["imagen_publicacion_id"] = $this->input->post("imagen_publicacion_id");
+				$this->beca_model->actualizarImagen($data_imagen);
+			}
+		
+			$data_beca["beca_id"] = $this->input->post("beca_id");
+			$data_beca["programa_academico"] = $this->input->post("programa_academico");
+			$data_beca["url"] = $this->input->post("url");
 
-				
-				$data_beca["url"] = $this->input->post("url");
+			$data_carrera = $this->input->post("carreras[]");
 
-				$data_carrera = $this->input->post("carreras[]");
+			$this->beca_model->actualizarPublicacion($data_publicacion);
+			$this->beca_model->actualizarFiltro($data_carrera,$data_publicacion["publicacion_id"]);
+			$this->beca_model->actualizarBeca($data_beca);
+			redirect("Perfil?page=becas");
 
-				$this->beca_model->updateBeca($data_publicacion,$data_beca,$data_carrera,$data_imagen);
-
-				$this->listar();
 		}
 	}
+	
 	function Eliminar(){
 		$becas = $this->input->post("publicacion");
 		$usuario_id = getUsuarioId();

@@ -3,7 +3,7 @@
 		<div class="modal-content" style="">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="crearFichaLabel">Nueva Publicación <small>Ficha Ocupacional</small></h4>
+				<h4 class="modal-title" id="crearFichaLabel">Nueva publicación <small>Ficha Ocupacional</small></h4>
 			</div>
 			<div class="modal-body" style="max-height:450px;overflow:hidden;overflow-y:scroll;">
 				<form action="<?=base_url('Ficha/Crear')?>" name="formCrearFicha" id="formCrearFicha" method="post" enctype="multipart/form-data">
@@ -119,7 +119,7 @@
 	$("select").css("max-width",500);
 	$("#imagen").filestyle({
 		input: true,
-		buttonText: "Imagen para publicación",
+		buttonText: "Añadir imagen publicitaria",
 		buttonName: "btn-default",
 		size: "sm",
 		buttonBefore: true,
