@@ -4,8 +4,8 @@
 
 		function __construct(){
 			parent::__construct();
-			$this->load->library("session");
-			$this->load->helper("sesion","sesion_helper");
+			$this->load->library(array("session"));
+			$this->load->helper(array("sesion","sesion_helper","imagen"));
 			if(!sesionIniciada()){
 				exit("error 404 page not found");
 			}
@@ -193,6 +193,14 @@
 			}else{
 								
 				$new_name = $this->upload->data();
+				
+				//casoEmergencia($new_name["full_path"]);
+				
+				$config = redimensionarImagen($new_name["full_path"]);
+				
+				$this->load->library("image_lib",$config);
+				$this->image_lib->resize();
+				
 				if($last_name != $new_name["file_name"]){
 				
 					if(($last_name == "male.jpg") || ($last_name == "female.jpg")){

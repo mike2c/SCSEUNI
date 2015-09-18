@@ -47,6 +47,59 @@
 		return $this->upload->data();
 	}
 
-	function redimensionarImagen(){
+	function redimensionarImagen($ruta){
 		
+		list($ancho,$alto,$tipo_imagen) = getimagesize($ruta);
+			if ($alto<=350 && $ancho<=350) {
+				
+			}else{
+				$config["image_library"] = "gd2";
+				$config["source_image"] = $ruta;
+				$config["maintain_ratio"] = TRUE;
+				$config["width"] = 350;
+				$config["height"] = 350;
+				
+				return $config;
+			}
 	}
+	function casoEmergencia($ruta){
+		/*$img = $empresa['data_usuario']->row()->imagen_perfil;
+			if ($img == "") {
+				$defaultImg = "/Tesis/uploads/Male.jpg";
+			}else{
+				$defaultImg= "/Tesis/uploads/".$img;
+				$ruta = "C:/AppServ/www/Tesis/uploads/".$img;
+			}*/
+
+			list($ancho,$alto,$tipo_imagen) = getimagesize($ruta);
+			if ($alto>350 && $ancho >350) {
+				return $ruta;
+			}else{
+				$nuevo_ancho = 350;
+				$nuevo_alto = 350;
+			}
+
+			$thumb = imagecreatetruecolor($nuevo_ancho, $nuevo_alto);
+
+			switch ( $tipo_imagen ){
+			case "image/jpg":
+				$origen = imagecreatefromjpeg($ruta);
+				$this->output->set_header("image/jpeg");
+				break;
+			case IMAGETYPE_JPEG:
+				$origen = imagecreatefromjpeg($ruta);
+				$this->output->set_header("image/jpeg");
+				break;
+			case IMAGETYPE_PNG:
+				$origen = imagecreatefrompng($ruta);
+				$this->output->set_header("image/png");
+				break;
+			case IMAGETYPE_GIF:
+				$origen = imagecreatefromgif($ruta);
+				$this->output->set_header("image/gif");
+				break;
+		}
+			imagecopyresampled($thumb, $origen, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
+			imagejpeg($thumb,$ruta, 90);
+	}
+?>
