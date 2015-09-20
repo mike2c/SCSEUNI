@@ -62,8 +62,8 @@
 			if(sesionIniciada()){
 			?>
 			<div style="float:right">
-				<a id="btn_perfil" href="#">
-				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=getNombre()?> 
+				<a id="btn_perfil" href="#" title="<?=getNombre()?>">
+				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=recortar_texto(getNombre(),15)?> 
 				<span class="glyphicon glyphicon-chevron-down"></span>
 				<ul class="btn-menu-perfil">
 					<li><a href="<?=base_url('Perfil')?>">Mi perfil</a></li>

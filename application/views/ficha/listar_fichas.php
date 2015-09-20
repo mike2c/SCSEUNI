@@ -1,8 +1,8 @@
 <div class="def-bg">
-	<h3 class="form-title">Listado de fichas ocupacionales</h3>
+	<h3 class="form-title">Listado de publicaciones <small>fichas ocupacionales</small></h3>
 	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
 		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
-		<button id="btnEliminar" onclick="eliminarPublicaciones()" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicación</button>
+		<button id="btnEliminar" data-target='<?=base_url('Ficha/Eliminar')?>' class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
 	</div>
 	<?php
 
@@ -33,10 +33,9 @@
 				echo "<td>$row->fecha_publicacion</td>";
 
 				if($row->visible){
-					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-primary btn-xs' data-idpublicacion='$row->publicacion_id' data-visible='$row->visible'><i class='glyphicon glyphicon-eye-open'></i> Visible</button></td>";
-					#echo "<td><input onchange='cambiarVisibilidad($row->publicacion_id);' checked type='checkbox' value='$row->publicacion_id'></td>";
+					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-default btn-xs' data-publicacion='$row->publicacion_id' data-visible='true'> <i class='glyphicon glyphicon-eye-open'></i> Visible</button></td>";
 				}else{
-					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-danger btn-xs' data-idpublicacion='$row->publicacion_id' data-visible='$row->visible'><i class='glyphicon glyphicon-eye-close'></i> No visible</button></td>";					
+					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-default btn-xs' data-publicacion='$row->publicacion_id' data-visible='false'><i class='glyphicon glyphicon-eye-close'></i> No visible</button></td>";					
 				}
 				echo "</tr>";
 				$cont++;
@@ -48,30 +47,17 @@
 </div>
 <script type="text/javascript">
 
-	$("button[name='btnCambiarVisibilidad']").click(function(){
-
-		if($(this).data("visible") == 1){
-
-			$(this).text("No visible");
-			$(this).data("visible",0);
-			$(this).find(".glyphicon").removeClass("glyphicon-eye-open").addClass("glyphicon-eye-close");
-		}else{
-			$(this).text("Visible");
-			$(this).data("visible",1);
-			$(this).find(".glyphicon").removeClass("glyphicon-eye-close").addClass("glyphicon-eye-open");
-		}
-
-		alert($(this).data("visible"));
+	$("[name='btnCambiarVisibilidad']").click(function(){
+		cambiarVisibilidad(this);
 	});
 
 	$("#crearFicha").on("hidden.bs.modal", function(){
 		$("#formCrearFicha").trigger("reset");
 	});
 
-	$("#benEliminar").click(function(){
-		if(eliminarPublicaciones("ficha") == TRUE){
-			alert("Publicaciones eliminadas");
-			cargarFichas();
-		}
+	$("#btnEliminar").click(function(){
+		
+		eliminarPublicaciones($(this).data("target"));	
+		cargarFichas();
 	});
 </script>

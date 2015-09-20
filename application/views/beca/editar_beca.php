@@ -67,8 +67,9 @@
 	</form>
 	<div class="text-center bg-primary" style="padding:15px;display:none;" id="errorArea"></div>
 	<div class="modal-footer">
-		<button onclick="cargarBecas()" class="btn btn-default" form="formPublicarBeca" data-dismiss="modal">Cancelar</button>
 		<button type="submit" form="formEditarPublicacion" type="button" class="btn btn-primary">Guardar</button>
+		<button type="button" onclick="cargarBecas()" class="btn btn-default">Cancelar</button>
+		
 	</div>	
 </div>
 <?php

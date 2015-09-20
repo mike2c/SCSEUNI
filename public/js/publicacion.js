@@ -56,27 +56,41 @@ function cargarCursos(){
 	tipoPublicacion = "curso";
 }
 
-function editarCursos(id){
+function editarCurso(id){
 	$("#area_perfil").load(baseURL("Curso/Editar/") + id);
 }
 
-function cambiarVisibilidad(button){
+function cambiarVisibilidad(data){
 
-	var idPublicacion = $(button).data("publicacion_id");
-	var valor = $(button).data("visible");
-	var action = "";
+	var params = {visible: data.getAttribute("data-visible"),publicacion: $(data).data("publicacion")};
+	$.ajax({
+		url: baseURL("Ficha/CambiarVisibilidad"),
+		type: "post",
+		datatype: "html",
+		data: params,
+		success: function(response){
+			if(response != ""){
+				console.log(response);
+			}
 
-	if(tipoPublicacion == "ficha"){
-		action = baseURL("Ficha/CambiarVisibilidad");
-	}else if(tipoPublicacion == "beca"){
-		action = baseURL("Beca/CambiarVisibilidad");
-	}else if(tipoPublicacion == "curso"){
-		action = baseURL("Curso/CambiarVisibilidad");
-	}
-	
+			if(data.getAttribute("data-visible") == 'true'){
+				$(data).html("<i class='glyphicon glyphicon-eye-close'></i> No visible");
+				data.setAttribute("data-visible",'false');
+			}else{
+				$(data).html("<i class='glyphicon glyphicon-eye-open'></i> visible");
+				data.setAttribute("data-visible",'true');
+			}
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log(jqXHR);
+			alert("Ha ocurrido un error y no se ha podido procesar la petición");
+		},
+		async: false
+	});
 }
 
-function eliminarPublicaciones(){
+function eliminarPublicaciones(target){
+	
 	publicaciones = Array();
 	$("input:checked").each(function(indice,elemento){
 
@@ -85,17 +99,8 @@ function eliminarPublicaciones(){
 
 	if(publicaciones.length > 0){
 
-		var action;
-		if(tipoPublicacion == "ficha"){
-			action = baseURL("Ficha/Eliminar");
-		}else if(tipoPublicacion == "beca"){
-			action = baseURL("Beca/Eliminar");
-		}else if(tipoPublicacion == "curso"){
-			action = baseURL("Curso/Eliminar");
-		}
-
 		$.ajax({
-			url: action,
+			url: target,
 			data: {publicacion:publicaciones},
 			type: "post",
 			datatype: "html",

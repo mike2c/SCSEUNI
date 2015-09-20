@@ -41,5 +41,24 @@
 		function registrarTitulo($titulo){
 			$this->db->insert("titulo",array("titulo"=>$titulo));
 		}
+
+		function registrarArea($area){
+
+			$this->db->insert("area",array("area"=>$area));
+			return $this->db->insert_id();
+		}
+
+		function registrarCargo($area,$cargo){
+
+			$this->db->insert("cargo",array("area_id"=>$area,"cargo"=>$cargo));
+			return $this->db->insert_id();
+		}
+
+		#Registros
+		function registrarSociedad($sociedad){
+
+			$this->db->insert("sociedad",array("sociedad"=>$sociedad));
+			return $this->db->insert_id();
+		}
 	}
 ?>

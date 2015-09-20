@@ -33,7 +33,7 @@
 
 		}
 
-		function crearBeca(){
+		function CrearBeca(){
 			
 			$imagen = escaparImagen("imagen");	
 			if($imagen != null){
@@ -128,7 +128,9 @@
 	function Eliminar(){
 		$becas = $this->input->post("publicacion");
 		$usuario_id = getUsuarioId();
-
+		if(empty($becas)){
+			return;
+		}
 		if(is_array($becas)){
 
 			foreach ($becas as $key => $value) {
@@ -136,7 +138,7 @@
 			}
 
 		}else{
-			$this->beca_model->deleteBeca($value,$usuario_id);
+			$this->beca_model->eliminarBeca($value,$usuario_id);
 		}
 	}
 }

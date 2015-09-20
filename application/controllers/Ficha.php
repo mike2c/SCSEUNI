@@ -86,6 +86,9 @@
 
 			$publicacion = $this->input->post("publicacion");
 			$usuario_id = getUsuarioId();
+			if(empty($publicacion)){
+				return;
+			}
 			if(is_array($publicacion)){
 				foreach ($publicacion as $key => $value) {
 					$this->ficha->eliminarFicha($value,$usuario_id);
@@ -182,5 +185,16 @@
 			}
 		}
 
+		function CambiarVisibilidad(){
+			
+			if(!empty($_POST["visible"]) && !empty($_POST["publicacion"])){
+			
+				$visible = ($this->input->post("visible") == "true") ? 0 : 1;
+				echo $visible;	
+				$data["visible"] = $visible;
+				$data["publicacion_id"] = $this->input->post("publicacion");
+				$this->ficha->cambiarVisibilidad($data);
+			}
+		}
 	}
 ?>

@@ -134,7 +134,7 @@
 	<div class="text-center bg-primary" style="padding:10px;display:none;" id="errorArea"></div>
 	<div class="modal-footer">
 		<button form="formEditarFicha" class="btn btn-primary" type="submit">Guardar</button>
-		<button form="formEditarFicha" type="reset" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+		<button onclick="cargarFichas()" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 	</div>
 <?php
 	function formatearTexto($str){

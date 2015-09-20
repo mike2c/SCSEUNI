@@ -91,11 +91,23 @@
             <div class="col-md-6 col-lg-6">
               <div class="form-group">
                   <label for="">Area actual</label>
-                  <div id="area_seleccion"></div>
+                  <div class="input-group">
+                    <div id="area_seleccion"></div>
+                     <div class="input-group-btn">
+                     <button id="btnAgregarTitulo" onclick='registrarArea()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                    </div>
+                  </div>
+                  
                 </div>
                  <div class="form-group">
                   <label for="">Cargo actual</label>
-                  <div id="cargo_seleccion"></div>
+                  <div class="input-group">
+                    <div id="cargo_seleccion"></div>
+                    <div class="input-group-btn">
+                       <button id="btnAgregarTitulo" onclick='registrarCargo()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                    </div>
+                  </div>
+                 
                 </div>
             </div>
          </div>
@@ -164,6 +176,7 @@
   $(document).ready(function(){
     var perfil = <?=json_encode($perfil)?>;
 
+    $("#fecha_nacimiento").datepicker({dateFormat: 'dd/mm/yy'});
     $("#nombre").val(perfil.nombre);
     $("#apellido").val(perfil.apellido);
     $("#correo").val(perfil.correo);
@@ -195,6 +208,18 @@
        $("#cargo").attr("form","formActualizarPerfil");
     });
 
+    $("#formActualizarPerfil").submit(function(e){
+      e.preventDefault();
+      if($("#cargo").length && $("#area").length){
+        this.submit()
+      }else{
+        alert("Tienes que seleccionar una area y un cargo");
+      }
+    });
+
+    listarAreas(<?=$perfil->area_id?>);
+    listarCargos(<?=$perfil->area_id?>,<?=$perfil->cargo_id?>);
+  
     var get = "<?php
           if(isset($_GET['page'])){
             echo $_GET['page'];

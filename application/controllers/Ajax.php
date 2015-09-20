@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-	
+	define("IS_AJAX",isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == 'xmlhttprequest');
+
 	class Ajax extends CI_Controller{
 
 		function __construct(){
@@ -26,6 +27,38 @@
 			}
 			echo "</select>";
 			
+		}
+
+		function RegistrarSociedad(){
+
+			if(IS_AJAX){
+				$sociedad = $this->input->post("sociedad");
+				if(!empty($sociedad)){
+					$this->registro->registrarSociedad($sociedad);
+				}
+			}
+		}
+
+		function RegistrarArea(){
+
+			if(IS_AJAX){
+				$area = $this->input->post("area");
+				if(!empty($area)){
+					$this->registro->registrarArea($area);
+				}
+			}
+		}
+
+		function RegistrarCargo(){
+
+			if(IS_AJAX){
+				$area = $this->input->post("area");
+				$cargo = $this->input->post("cargo");
+
+				if(!empty($area) && !empty($cargo)){
+					$this->registro->registrarCargo($area,$cargo);
+				}
+			}
 		}
 
 		function CargarMunicipios($municipio_id,$selected = ""){

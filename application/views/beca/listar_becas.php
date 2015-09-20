@@ -2,7 +2,7 @@
 	<h3 class="form-title">Listado de publicaciones <small>Becas</small></h3>
 	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
 		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicarBeca"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
-		<button id="btnEliminar"  class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicación</button>
+		<button id="btnEliminar" data-target="<?=base_url('Beca/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
 	</div>
 	<?php
 
@@ -32,9 +32,9 @@
 				echo "<td colspan='2' style='text-align:left'><input type='checkbox' name='becas_a_eliminar' value='$row->publicacion_id'> <a href='javascript:editarBeca($row->publicacion_id)'>$row->programa_academico</a></td>";
 				echo "<td>$row->fecha_publicacion</td>";
 				if($row->visible){
-					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-primary btn-xs' data-idpublicacion='$row->publicacion_id' data-visible='$row->visible'><i class='glyphicon glyphicon-eye-open'></i> Visible</button></td>";
+					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-default btn-xs' data-publicacion='$row->publicacion_id' data-visible='true'> <i class='glyphicon glyphicon-eye-open'></i> Visible</button></td>";
 				}else{
-					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-danger btn-xs' data-idpublicacion='$row->publicacion_id' data-visible='$row->visible'><i class='glyphicon glyphicon-eye-close'></i> No visible</button></td>";					
+					echo "<td><button name='btnCambiarVisibilidad' class='btn btn-default btn-xs' data-publicacion='$row->publicacion_id' data-visible='false'><i class='glyphicon glyphicon-eye-close'></i> No visible</button></td>";					
 				}
 				echo "</tr>";
 				$cont++;
@@ -52,8 +52,11 @@
 <script type="text/javascript">
 	
 	$("#btnEliminar").click(function(){
-		eliminarPublicaciones();
+		eliminarPublicaciones($(this).data("target"));
 		cargarBecas();
+	});
+	$("[name='btnCambiarVisibilidad']").click(function(){
+		cambiarVisibilidad(this);
 	});
 
 </script>

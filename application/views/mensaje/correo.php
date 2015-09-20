@@ -55,10 +55,10 @@
 <div class="container no-padding">
 	<div class="col-md-2 col-lg-2 no-padding">
 		<ul class="left-menu">
+			<li><a href="<?=base_url('Perfil')?>" class="">Perfil</a></li>
 			<li data-bandeja="inbox"><a href="javascript:getInbox();" class="activo">Recibidos <span class="badge">1999</span></a></li>
 			<li data-bandeja="sent"><a href="javascript:getSent();" class="">Enviados <span class="badge">100</span></a></li>
 			<li data-bandeja="drafts"><a href="javascript:getDrafts();" class="">Borrador <span class="badge">0</span></a></li>
-			<li><a href="<?=base_url('Perfil')?>" class="">Perfil</a></li>
 		</ul>
 			
 		</div>

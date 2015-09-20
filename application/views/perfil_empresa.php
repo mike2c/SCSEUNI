@@ -78,7 +78,13 @@
               </div>
             <div class="form-group">
                   <label for="">Sociedad</label>
-                  <div id="sociedad_seleccion"></div>
+                  <div class="input-group">
+                    <div id="sociedad_seleccion"></div>
+                    <div class="input-group-btn">
+                     <button id="btnAgregarTitulo" onclick='registrarSociedad()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                    </div>
+                  </div>
+                 
               </div>
             </div>
             <div class="col-md-6 col-lg-6">
@@ -181,6 +187,7 @@
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
 <script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/perfil.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>

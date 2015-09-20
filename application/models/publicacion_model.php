@@ -65,6 +65,12 @@
 			}
 		}
 		
+		function cambiarVisibilidad($data){
+
+			$this->db->where("publicacion_id",$data["publicacion_id"]);
+			$this->db->update("publicacion",$data);
+		}
+
 		function actualizarFiltro($data_carrera,$publicacion_id){
 			$data = $this->db->query("select publicacion_id,carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$publicacion_id';");
 			$this->db->where("publicacion_id",$publicacion_id);
