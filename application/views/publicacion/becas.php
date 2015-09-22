@@ -116,6 +116,6 @@
 </style>
 <script type="text/javascript">
 	$(".post button").click(function(){
-		$(this).parent().children(".hide-content").show();
+		$(this).parent().children(".hide-content").toggle("slow");
 	});
 </script>
