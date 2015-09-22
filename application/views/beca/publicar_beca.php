@@ -20,7 +20,7 @@
 					</div>
 					<div class="form-group">
 						<label for="">Sitio web <small>para mayor informacion</small></label>
-						<input placeholder="www.ejemplo.com" class="form-control" type="text" name="url" id="url">
+						<input placeholder="htttp://www.ejemplo.com/" class="form-control" type="url" pattern="|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i" name="url" id="url">
 					</div>
 					<div class="form-group">
 						<label for="">Dejar de publicar hasta:</label>

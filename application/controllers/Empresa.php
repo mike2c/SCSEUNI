@@ -6,7 +6,7 @@
 		function __construct(){
 
 			parent::__construct();
-			$this->load->library('session');
+			$this->load->library(array('session'));
 			$this->load->helper(array('form','url'));	
 	
 		}
@@ -14,7 +14,7 @@
 		function Actualizar(){
 			$this->load->model("empresa_model","modelo");
 			$this->load->model("listas_model","lista");
-			$this->load->library("form_validation");
+			$this->load->library(array("form_validation",'MY_validation'));
 
 			
 			$this->form_validation->set_rules("nombre_empresa","Nombre de la empresa","required|trim|max_length[45]");
@@ -26,9 +26,7 @@
 			$this->form_validation->set_rules("telefono","Telefono","trim|max_length[10]");
 
 			if($this->form_validation->run() == false){
-
 				echo validation_errors();
-
 			}else{
 			
 				$data["empresa"]["empresa_id"] = $this->input->post("empresa_id");

@@ -74,7 +74,7 @@
               </div>
               <div class="form-group">
                   <label for="">Sitio web</label>
-                  <input form="formActualizarPerfil" type="text" id="sitio_web" name="sitio_web"  class="form-control">
+                  <input form="formActualizarPerfil" type="url" placeholder="http://www.ejemplo.com/" pattern="|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i" id="sitio_web" name="sitio_web"  class="form-control">
               </div>
             <div class="form-group">
                   <label for="">Sociedad</label>
