@@ -20,18 +20,18 @@
 		}
 
 		function validarCampos(){
-			$this->form_validation->set_rules("descripcion","Descripcion","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("descripcion","Descripcion","required|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("cargo","Denominacion del cargo","required|max_length[60]|min_length[10]");
 			$this->form_validation->set_rules("ubicacion","Ubicacion del Cargo","required|max_length[40]|min_length[6]");
 			$this->form_validation->set_rules("cantidad","Cantidad de Puestos","required|max_length[20]|min_length[1]");
 			$this->form_validation->set_rules("jefe","Jefe inmediato","required|max_length[30]|min_length[6]");
-			$this->form_validation->set_rules("a_cargo","Personal a Cargo","required|max_length[100]|min_length[10]");
-			$this->form_validation->set_rules("finalidad","Finalidad del Puesto","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("a_cargo","Personal a Cargo","required|min_length[10]");
+			$this->form_validation->set_rules("finalidad","Finalidad del Puesto","required|min_length[10]");
 			$this->form_validation->set_rules("funciones","Funciones y Responsabilidades","required|max_length[300]|min_length[10]");
-			$this->form_validation->set_rules("requisitos","Requisitos del Puesto","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("requisitos","Requisitos del Puesto","required|min_length[10]");
 			$this->form_validation->set_rules("experiencia","Experiencia Necesario","required|max_length[100]|min_length[4]");
-			$this->form_validation->set_rules("competencia","Competencia","required|max_length[100]|min_length[10]");
+			$this->form_validation->set_rules("competencia","Competencia","required|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
 
 			if($this->form_validation->run()==FALSE){

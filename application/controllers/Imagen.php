@@ -34,7 +34,10 @@
 			$this->load->model("imagen_model","imagenes");
 			$data= escaparImagen("imagen");
 			$this->imagenes->guardar($data);
-			
+		}
+
+		function MostrarImagen(){
+
 		}
 	}
 ?>

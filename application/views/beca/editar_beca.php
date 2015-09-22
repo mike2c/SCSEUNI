@@ -33,6 +33,7 @@
 				$fecha = date_create($beca->fecha_alta);
 			?>
 			<input required class="form-control" value="<?=date_format($fecha,'d-m-Y')?>" type="text" name="fecha_alta" id="fecha">
+			<span class="help-block">Si desea publicar nuevamente esta información solo necesita modificar esta fecha</span>
 		</div>
 		<div class="form-group">
 			<label for="">Filtrar publicación para las siguientes carreras:</label>

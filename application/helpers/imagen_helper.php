@@ -14,7 +14,7 @@
 		        //echo "<BR>".$info[3]; //cadena de texto para el tag <img
 		 
 		        # Escapa caracteres especiales
-		        $data["imagen"]= mysql_escape_string(file_get_contents($_FILES["$nombre"]["tmp_name"]));
+		        $data["imagen"]= mysql_real_escape_string(file_get_contents($_FILES["$nombre"]["tmp_name"]));
 		 		$data["tipo"]= $_FILES["$nombre"]["type"];
 		 		return $data;
 		  	}else{

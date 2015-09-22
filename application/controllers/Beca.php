@@ -25,7 +25,7 @@
 		function validarCampos(){
 			$this->form_validation->set_rules("programa_academico","Programa académico","required|max_length[60]|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
-			$this->form_validation->set_rules("descripcion","Descripción","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("descripcion","Descripción","required|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
 			if($this->form_validation->run()==FALSE){
 				echo  validation_errors();

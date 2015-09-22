@@ -146,6 +146,7 @@ function listarAreas(area_actual){
 	success: function(data){
 		$("#area_seleccion").html(data);
 		$("#area").addClass("form-control");
+		$("#area").attr("form","formActualizarPerfil");
 		$("#area").change(function(){
 	      listarCargos(this.value);
 	    });
@@ -165,6 +166,7 @@ function listarCargos(area,cargo_actual){
 		success: function(data){
 			$("#cargo_seleccion").html(data);
 			$("#cargo").addClass("form-control");
+			$("#cargo").attr("form","formActualizarPerfil");
 		},
 		async: false
 	});

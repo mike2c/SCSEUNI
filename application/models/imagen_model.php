@@ -13,7 +13,7 @@
 
 		function mostrar($id_imagen){
 
-			$result= $this->db->query("select imagen,tipo from imagen where imagen_id=".$id_imagen)->result_array();
+			$result= $this->db->query("select imagen,tipo from imagen_publicacion where imagen_publicacion_id=".$id_imagen)->result_array();
 			$data["data"]=$result[0]["imagen"];
 			$data["tipo"]=$result[0]["tipo"];
 

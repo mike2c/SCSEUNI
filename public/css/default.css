@@ -37,8 +37,8 @@ footer{
 
 	background-color: white;
 	padding: 15px 15px;
-	border-radius: 6px;
-	margin: 20px 0px;
+	border-radius: 2px;
+	margin: 10px 0px;
 	border:1px solid lightgray;
 	display: block;
 	overflow: auto;
@@ -200,7 +200,7 @@ nav .container{
 	float: right;
 	display: block;
 	text-decoration: none;
-
+	
 }
 
 .no-padding{
@@ -208,7 +208,7 @@ nav .container{
 }
 
 .btn-menu-perfil{
-	
+	overflow: hidden;
 	position: absolute;
 	display: none;
 	list-style: none;
@@ -222,13 +222,20 @@ nav .container{
 }
 
 .btn-menu-perfil li a{
-
+	
+	text-decoration: none;
 	display: block;
-	padding-left:15px;
+	padding-left:0px;
 	line-height: 30px;
 	border-bottom: 1px solid lightgray;
-
+	padding-left: 15px;
 }
+
+.btn-menu-perfil li a:hover{
+	background-color: #337ab7;
+	color: white;
+}
+
 /*ESTILO PARA FORMULARIOS*/
 .form-title{
 	display: block;

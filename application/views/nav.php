@@ -1,7 +1,7 @@
 <header id="cabecera" class="header">
 	<div class="container">
 			<div class="row">
-			<div class="col-md-2 col-lg-2 no-padding">
+			<div class="col-md-2 col-lg-2">
 				<a href="<?=base_url('Bienvenido')?>"><img style="border: 1px solid white;height:40%;width:60%;margin-top:10px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
 			</div>
 			<div class="col-md-8 col-lg-8 auto-size">
@@ -13,7 +13,7 @@
 					<h5>Estelí, Nicaragua</h5>
 				</center>
 			</div>
-				<div class="col-md-2 col-lg-2 no-padding">
+				<div class="col-md-2 col-lg-2">
 				<img class="" style="margin-left:auto;margin-top:5px;display:block;width:45%;" src="<?=base_url('public/res/jicara_sandino.png');?>" alt="">
 			</div>
 		</div>
@@ -38,14 +38,14 @@
 						</ul>
 					</li>
 					<li style="border-top:1px dotted lightgray"><a href="<?=base_url('Informacion/misionVision')?>">Mision y Vision</a></li>
-					<li><a href="<?=base_url('Informacion/Cursos')?>">Cursos</a></li>
-					<li><a href="<?=base_url('Informacion/Becas')?>">Becas</a></li>
+					<li><a href="<?=base_url('Publicaciones/Cursos')?>">Cursos</a></li>
+					<li><a href="<?=base_url('Publicaciones/Becas')?>">Becas</a></li>
 				</ul>
 			</li>
 			<?php
 				if(sesionIniciada()){
 					if(esEgresado()){
-						?><li><a href="<?=base_url('Informacion/BolsaDeTrabajo')?>"><span class="glyphicon glyphicon-briefcase"></span> Bolsa de trabajo</a></li>	<?
+						?><li><a href="<?=base_url('Publicaciones/BolsaDeTrabajo')?>"><span class="glyphicon glyphicon-briefcase"></span> Bolsa de trabajo</a></li>	<?
 					}
 				}
 			?>
@@ -64,7 +64,7 @@
 			<div style="float:right">
 				<a id="btn_perfil" href="#" title="<?=getNombre()?>">
 				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=recortar_texto(getNombre(),15)?> 
-				<span class="glyphicon glyphicon-chevron-down"></span>
+				<span class="caret"></span>
 				<ul class="btn-menu-perfil">
 					<li><a href="<?=base_url('Perfil')?>">Mi perfil</a></li>
 					<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>

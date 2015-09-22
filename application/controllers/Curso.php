@@ -20,7 +20,7 @@
 		function validarCampos(){
 
 			$this->load->library("form_validation");
-			$this->form_validation->set_rules("descripcion","Descripcion","required|max_length[200]|min_length[10]");
+			$this->form_validation->set_rules("descripcion","Descripcion","required|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras del Curso","required");
 			$this->form_validation->set_rules("costo","Costo del Curso","required|min_length[1]|max_length[5]");
