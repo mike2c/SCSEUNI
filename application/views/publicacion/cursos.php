@@ -7,18 +7,38 @@
 
 					foreach ($cursos->result() as $row) {
 						echo "<div class='post'>";
-						#echo "<h3>$row->programa_academico</h3>";
+						echo "<h3>$row->nombre_curso</h3>";
 						echo "<p class=''>$row->descripcion</p>";
-						echo "<div class='hide-content'>";
-						
-						if($row->libre == TRUE){
-							echo "<label class=''>Tipo de curso: </label><label class='text-primary'> Curso libre</label>";
-						}else{
-							echo "<label class=''>Tipo de curso: </label><label class='text-primary'> Curso de posgrado</label>";
+						if(empty($row->imagen)){
+							echo "<img class='img-responsive' src='" . base_url("Imagen/Cargar/".$row->imagen_publicacion_id) ."'>";
 						}
-						echo "<br>";
-						echo "<label class=''>Duración: </label><label class='text-primary'>$row->duracion</label><br>";
-						echo "<label class=''>Costo: </label><label class='text-primary'>$row->costo</label><br>";
+				
+						echo "<div class='hide-content'>";
+						?>
+						<label for="">Información</label>
+						<table class="table table-hover">
+							<tr>
+								<td>Duración</td>
+								<td><?=$row->duracion?> meses</td>
+							</tr>
+							<tr>
+								<td>Costo</td>
+								<td><?="$".$row->costo?> dólares</td>
+							</tr>
+							<tr>
+								<td>Tipo de curso</td>
+								<td>
+								<?php
+									if($row->libre == TRUE){
+										echo "Curso libre";
+									}else{
+										echo "Curso de posgrado";
+									}
+								?>
+								</td>
+							</tr>
+						</table>
+						<?
 						echo "<label class=''><small>Esta publicación estara disponible hasta el dia " . date_toDMY($row->fecha_alta) . "</small></label>";
 						echo "</div>";
 						echo "<button class='btn btn-link btn-sm' >ver mas <span class='caret'></span></button>";
@@ -31,25 +51,29 @@
 		</div>
 		<div class="col-md-3 col-lg-3" >
 			<h2><small>Filtrar por carreras</small></h2>
-			<ul class="filtro">
-				<?php
-					if(isset($carreras) && !empty($carreras)){
-						foreach ($carreras->result() as $row) {
-						
-							echo "<li><div class='checkbox'>";
-							echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carreras' value='$row->carrera_id'> $row->nombre_carrera</label>";
-							echo "</div></li>";
+			<form method="post" action="<?=base_url("Publicaciones/Cursos")?>">
+				<ul class="filtro">
+					<?php
+						if(isset($carreras) && !empty($carreras)){
+							foreach ($carreras->result() as $row) {
+							
+								echo "<li><div class='checkbox'>";
+								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera' value='$row->carrera_id'> $row->nombre_carrera</label>";
+								echo "</div></li>";
+							}
 						}
-					}
-				?>
-			</ul>
-			<button class="btn btn-sm btn-primary pull-right">Buscar</button>	
+					?>
+				</ul>
+				<button class="btn btn-sm btn-primary pull-right">Buscar</button>	
+			</form>
 		</div>
 	</div>
 </div>
 
 <style type="text/css">
-	
+	body{
+		overflow-y: scroll;
+	}
 	.bg-primary{
 		
 		font-size: 18px;
@@ -119,6 +143,7 @@
 	.hide-content{
 		display: none;
 	}
+
 </style>
 <script type="text/javascript">
 	$(".post button").click(function(){

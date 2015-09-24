@@ -1,9 +1,9 @@
 <?php
-
-	class Egresado_model extends CI_Model{
+	include "publicacion_model.php";
+	class Egresado_model extends Publicacion_model{
 
 		function __construct(){
-			parent::__construct();
+			parent::__construct("listar_egresados");
 			/*$this->load->database();*/
 		}
 		

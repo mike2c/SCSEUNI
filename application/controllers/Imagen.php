@@ -12,7 +12,8 @@
 		function Cargar($imagen_id){
 			
 			$data = $this->imagenes->mostrar($imagen_id);
-			$this->load->view("imagen",$data);
+			header("CONTENT-TYPE: $data[tipo]");
+			echo $data["data"];
 		}
 
 		function DeFichaOcupacional($ficha_id){

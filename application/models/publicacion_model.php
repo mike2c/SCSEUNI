@@ -22,7 +22,7 @@
 			return $this->db->insert_id();
 		}
 
-		function listar($where = "",$like = "",$fields = ""){
+		function listar($where = "",$like = "",$order_by="",$where_in="",$fields = ""){
 			if($where != ""){
 				$this->db->where($where);
 			}
@@ -32,7 +32,12 @@
 			if($fields != ""){
 				$this->db->select($fields);
 			}
-
+			if($order_by != ""){
+				$this->db->order_by($order_by,"asc");
+			}
+			if($where_in != ""){
+				$this->db->where_in(key($where_in),$where[key($where_in)]);
+			}
 			return $this->db->get($this->view_name);
 		}
 

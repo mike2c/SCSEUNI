@@ -12,6 +12,7 @@
 						if(!empty($row->url)){
 							echo "<p>Para mas información puedes consultar el siguiente enlace: <a target='_blank' href='$row->url'>$row->url</a></p>";
 						}
+						echo "<img src='" . base_url("Imagen/Cargar/".$row->imagen_publicacion_id) ."'><br>";
 						echo "<label><small>Esta publicación estara disponible hasta el dia " . date_toDMY($row->fecha_alta) . "</small></label>";
 						echo "</div>";
 						echo "<button class='btn btn-link btn-sm' >ver mas <span class='caret'></span></button>";

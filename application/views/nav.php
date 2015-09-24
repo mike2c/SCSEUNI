@@ -29,6 +29,7 @@
 						<ul>
 							<li><a href="<?=base_url('Informacion/Egresados')?>">Información</a></li>
 							<li><a href="<?=base_url('Egresado/Autenticar')?>">Autenticación</a></li>
+							<li><a href="<?=base_url('Egresado/Listado')?>">Listado de egresados</a></li>
 						</ul>
 					</li>
 					<li class="sub-menu"><a href="#">Empresa <span class="glyphicon glyphicon-chevron-down"></span></a>
