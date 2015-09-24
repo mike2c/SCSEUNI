@@ -39,7 +39,7 @@
 			$this->email->message("Hola, tu cuenta ha sido autentificada, tu correo y contraseña para iniciar sesion son los siguientes:
 			Correo: $data->correo
 			Contraseña: $clave
-Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
+			Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
 				
 			if (!$this->email->send()) {
 				echo "ERROR, no se pudo enviar el mensaje<br/>";
@@ -96,6 +96,34 @@ Te recomendamos que no borres este correo, en caso de que olvides tu contraseña
 			}
 			
 			
+		}
+
+		function Listado(){
+			
+			$this->load->model("listas_model","lista");
+			try{
+				if(isset($_POST["carrera"]) && $this->input->post("carrera") !== '0'){
+
+					$data["registro"] = $this->modelo->listar(array("carrera_id"=>$this->input->post("carrera")),array("nombre"=>$this->input->post("nombre")),"nombre");
+					$data["carrera"] = $this->input->post("carrera");
+				}else{
+				
+					$data["registro"] = $this->modelo->listar(null,null,"nombre");
+				}
+
+			}catch(Exception $e){
+				exit($e->getMessage());
+			}
+			
+			$data["carreras"] = $this->lista->listarCarreras();
+			if($data["registro"] != null){
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("egresado/listado",$data);
+				$this->load->view("footer");
+			}else{
+				exit("No ha registros");
+			}
 		}
 
 		function info(){
@@ -155,9 +183,9 @@ Te recomendamos que no borres este correo, en caso de que olvides tu contraseña
 				$data_egresado["carrera_id"] = $this->input->post("carrera");;
 
 				if($data_persona["sexo"] == "M"){
-					$data_usuario["imagen"]="male.jpeg";
+					$data_usuario["imagen"]="male.jpg";
 				}else{
-					$data_usuario["imagen"]="female.jpeg";
+					$data_usuario["imagen"]="female.jpg";
 				}
 
 				$data_usuario["correo"] = $this->input->post("correo");

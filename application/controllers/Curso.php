@@ -21,9 +21,10 @@
 
 			$this->load->library("form_validation");
 			$this->form_validation->set_rules("descripcion","Descripcion","required|min_length[10]");
+			$this->form_validation->set_rules("nombre_curso","Nombre del curso","required|min_length[10]|max_length[80]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras del Curso","required");
-			$this->form_validation->set_rules("costo","Costo del Curso","required|min_length[1]|max_length[5]");
+			$this->form_validation->set_rules("costo","Costo del Curso","numeric|required|min_length[1]|max_length[10]");
 			$this->form_validation->set_rules("duracion","Duracion del Curso","required|integer");
 
 			if ($this->form_validation->run()==FALSE) {
@@ -56,6 +57,7 @@
 					$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 					$data_publicacion["fecha_publicacion"] = date("Y-m-d");
 					$data_publicacion["fecha_alta"] =  format_date($this->input->post("fecha_alta"));
+					$data_publicacion["visible"] = TRUE;
 
 					$img = escaparImagen("imagen");
 					if($img != null){
@@ -68,7 +70,9 @@
 
 					$data_curso["costo"] = $this->input->post("costo");
 					$data_curso["duracion"] = $this->input->post("duracion");
+					$data_curso["nombre_curso"] = $this->input->post("nombre_curso");
 					$data_curso["libre"] = FALSE;
+
 					if (isset($_POST["libre"])) {
 						$data_curso["libre"] = TRUE;
 					}
@@ -132,7 +136,8 @@
 				if($img != null){
 					$data_imagen["imagen"] = $img["imagen"];
 					$data_imagen["tipo"] = $img["tipo"];
-					$data_imagen["imagen_publicacion_id"] = $img["imagen_publicacion_id"];
+					$data_imagen["imagen_publicacion_id"] = $this->input->post("imagen_publicacion_id");
+					$this->curso_model->actualizarImagen($data_imagen);
 				}
 			
 				$data_curso["costo"] = $this->input->post("costo");

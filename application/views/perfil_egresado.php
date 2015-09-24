@@ -60,148 +60,358 @@
 			
 			<!--menu de pestañas-->
 			<ul class="nav nav-tabs" role="tablist">
-			    <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Informacion personal</a></li>
-			    <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
-			    <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>
-			    <li role="presentation"><a href="#contraseña" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
+			    <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Datos personales</a></li>
+			    <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Mi cuenta</a></li>
+			    <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Contacto</a></li>
+			    <li role="presentation"><a href="#privacidad" aria-="settings" role="tab" data-toggle="tab">Privacidad</a></li>
 			
 				<li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
 			</ul>
 
 			<!--Paneles-->
 			<div class="tab-content">
-			    <div role="tabpanel" class="tab-pane active" id="info_personal">
-			   		<div class="col-md-6 col-lg-6">
-			   			<div class="form-group">
-				   			<label for="">Nombre</label>
-			                 <input required form="formActualizarPerfil" type="text" id="nombre" name="nombre" class="form-control">
-		                </div>
-		                <div class="form-group">
-			                <label for="">Apellido</label>
-			                <input required form="formActualizarPerfil" type="text" id="apellido" name="apellido" class="form-control">
-		                </div>
-		                <div class="form-group">
-		                	<label required for="">Sexo</label>
-		                	<select form="formActualizarPerfil" name="genero" id="genero" class="form-control">
-			              	    <option value="M">Masculino</option>
-				                <option value="F">Femenino</option>
-		               		</select>
-		                </div>
-		                <div class="form-group">
-             				<label for="">Fecha de nacimiento</label>
-			                <?php
-			                	$sqldate = $perfil->fecha_nacimiento;
-								$fecha = date("d/m/Y",strtotime($sqldate));
-			                ?>
-			               	<input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
+
+			<!--Informacion personal-->
+			<div role="tabpanel" class="tab-pane active" id="info_personal">
+				<div class="col-md-12 col-lg-12">
+					<p class="help-block">Información personal</p>
+					<hr>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Cedula:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="cedula" class="form-control" type="text" value="<?=$perfil->cedula?>">
+							</div>
 						</div>
 						<div class="form-group">
-		                    <label for="">Carrera</label>
-		                    <div id="carrera_seleccion"></div>
-		              	</div>
-			    	</div>
-			    	<div class="col-md-6 col-lg-6">
-			    		<div class="form-group">
-			                <label for="">Carnet</label>
-			                <input form="formActualizarPerfil" form="formActualizarPerfil" type="text" id="carnet" disabled class="form-control" >
-		                </div>
-		                <div class="form-group">
-			                <label for="">Cedula</label>
-			                <input form="formActualizarPerfil" form="formActualizarPerfil" type="text" id="cedula" name="cedula" class="form-control">
-		                </div>
-		                <div class="form-group">
-		                	<label for="">¿Te encuentras trabajando actualmente?</label>
-		                	<div class="radio">
-		                		<label for="check_trabaja_1"><input form="formActualizarPerfil" type="radio" name="trabaja" value="1" id="check_trabaja_1">Si</label>
-          					</div>
-          					<div class="radio">
-          						<label for="check_trabaja_2"><input form="formActualizarPerfil" type="radio" name="trabaja" value="0" id="check_trabaja_2">No</label>
-          					</div>
-		                </div>
-		                <div class="form-group">
-		                	<label for="">¿Posees tu titulo?</label>
-		                	<div class="radio">
-		                		<label for="check_titulado_1"><input form="formActualizarPerfil" type="radio" name="titulado" value="1" id="check_titulado_1">Si</label>
-          					</div>
-          					<div class="radio">
-          						<label for="check_titulado_2"><input form="formActualizarPerfil" type="radio" name="titulado" value="0" id="check_titulado_2">No</label>
-          					</div>
-		                </div>
-			    	</div>
-			   </div>
-			<div role="tabpanel" class="tab-pane" id="info_cuenta">
-				<div class="col-md-5 col-lg-5">
-					<div class="form-group">
-						<label for="">Correo</label>
-						<input required form="formActualizarPerfil" type="text" name="correo" id="correo" class="form-control">
+							<label class="control-label col-sm-3">Nombre:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="nombre" class="form-control" type="text" value="<?=$perfil->nombre?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Apellido:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="apellido" class="form-control" type="text" value="<?=$perfil->apellido?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Genero:</label>
+							<div class="col-sm-6">
+								<select form="formActualizarPerfil" class="form-control" name="genero" id="genero">
+									<?php
+										if($perfil->sexo == "F"){
+											echo "<option value='M'>Masculino</option>";
+											echo "<option selected value='F'>Femenino</option>";
+										}else{
+											echo "<option selected value='M'>Masculino</option>";
+											echo "<option value='F'>Femenino</option>";
+										}
+									?>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Fecha de nacimiento:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
+							</div>
+						</div>
 					</div>
+					<p class="help-block">Información de estudio</p><hr>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Carnet:</label>
+							<div class="col-sm-6">
+								<input disabled class="form-control" type="text" value="<?=$perfil->carnet?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Carrera:</label>
+							<div class="col-sm-6">
+								<div id="carrera_seleccion"></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Año de egresado:</label>
+							<div class="col-sm-6">
+								<input name="año_egresado" id="año_egresado" class="form-control" type="text" value="<?=""/*$perfil->año_egresado*/?>">
+							</div>
+						</div>
+					</div>
+
+					<p class="help-block">Información adicional</p><hr>
+					<!--Trabajando-->
+					<label for="">¿Actualmente te encuentras trabajando?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="trabaja" id="optionsRadios1" value="1" checked>
+					  	Si, actualmente me encuentro trabajando.
+					  </label>
+					</div>
+					<?php
+						if(!$perfil->trabaja){
+							?>
+							<div class="radio">
+							  <label>
+							    <input form="formActualizarPerfil" type="radio" name="trabaja" id="optionsRadios1" value="0" checked>
+							  	No.
+							  </label>
+							</div>
+							<?
+						}else{
+						?>
+						<div class="radio">
+						  <label>
+						    <input form="formActualizarPerfil" type="radio" name="trabaja" id="optionsRadios1" value="0">
+						  	No.
+						  </label>
+						</div>
+						<?
+						}
+					?>
 					
-				</div>
-				<div class="col-md-5 col-lg-5">
-					<div class="form-group">
-						<label for="">Ultima vez que iniciaste sesión</label>
-						<p id="sesion"></p>
+					<!--Curriculum-->
+					<label for="">¿Ya posees el titulo de ingeniero de la UNI?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="titulado" value="1" checked>
+					  	Si, ya poseo el titulo.
+					  </label>
 					</div>
-					<div class="form-group">
-						<label for="">Estado de la cuenta</label>
-						<p id="estado"></p>
-					</div>
-					<div class="form-group">
-						<button class="btn btn-danger">Desactivar cuenta</button>
-					</div>
+					<?php
+						if(!$perfil->titulado){
+							?>
+							<div class="radio">
+							  <label>
+							    <input form="formActualizarPerfil" type="radio" name="titulado" value="0" checked>
+							  	No, aun no poseo el titulo.
+							  </label>
+							</div>
+							<?
+						}else{
+							?>
+							<div class="radio">
+							  <label>
+							    <input form="formActualizarPerfil" type="radio" name="titulado" value="0">
+							  	No, aun no poseo el titulo.
+							  </label>
+							</div>
+							<?
+						}
+					?>
+				
 				</div>
 			</div>
+
+			<!--Informacion de la cuenta-->
+			<div role="tabpanel" class="tab-pane" id="info_cuenta">
+				<div class="col-md-12 col-lg-12">
+					<p class="help-block">Cambiar correo</p>
+					<hr>
+						<div class="form-horizontal">
+							<div class="form-group">
+						    	<label for="inputEmail3" class="col-sm-3 control-label">Correo:</label>
+						    	<div class="col-sm-6">
+							    	<input required value="<?=$perfil->correo?>" form="formActualizarPerfil" type="correo" class="form-control" name="correo" id="correo" placeholder="cambiar correo">
+							    </div>
+						  	</div>
+						</div>
+					<p class="help-block">Cambiar contraseña</p>							
+					<hr>
+					<form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
+						<div class="form-group">
+					    	<label for="inputEmail3" class="col-sm-3 control-label">Actual:</label>
+					    	<div class="col-sm-6">
+						      <input required type="password" class="form-control" name="clave_actual" placeholder="contraseña actual">
+						    </div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="inputEmail3" class="col-sm-3 control-label">Nueva:</label>
+					    	<div class="col-sm-6">
+						      <input required type="password" class="form-control" name="clave_nueva" placeholder="nueva contraseña">
+						    </div>
+					  	</div>
+					  	<div class="form-group">
+					    	<label for="inputEmail3" class="col-sm-3 control-label">Repite la contraseña</label>
+					    	<div class="col-sm-6">
+						      <input required type="password" class="form-control" name="clave_repetida" placeholder="repite la contraseña">
+						    </div>
+					  	</div>
+					  	<div class="form-group">
+					  		<div class="col-sm-9">
+					  			<button type="submit" class="pull-right btn btn-danger btn-sm">Cambiar contraseña</button>
+					  		</div>
+					  	</div>
+					  	<div class="form-group">
+					  		<p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
+					  	</div>
+					</form>
+					<p class="help-block">Desactivar cuenta</p>
+					<hr>
+					<form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
+						<div class="form-group">
+							<span class="help-block">Puedes desactivar temporalmente tu cuenta, esta volvera a estar activa la proxima vez que inicies sesión.
+							Cuando tu cuenta se encuentre inactiva los demás usuarios no podran enviarte mensajes.</span>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-danger btn-sm">Desactivar cuenta</button>
+						</div>
+					</form>
+				</div><!--Fin de la columna-->
+			</div><!--Fin de informacion de la cuenta-->
+				
+			<!--Informacion de contacto-->
 		    <div role="tabpanel" class="tab-pane" id="info_contacto">
-		    	<div class="col-lg-5 col-md-5">
-			    	<div class="form-group">
-			        	<label for="">Telefono</label>
-			        	<input form="formActualizarPerfil tel" type="text" name="telefono" value="<?=$perfil->telefono?>" class="form-control tel">
-			        </div>
-	        		<div class="form-group">
-	          			<label for="">Celular</label>
-	          			<input form="formActualizarPerfil" type="text" name="celular" value="<?=$perfil->celular?>" class="form-control tel">
-	        		</div>
-		    	</div>
-				<div class="col-lg-5 col-md-5">
-					<div class="form-group">
-            			<label for="">Departamento</label>
-           				<div id="departamento_seleccion"></div>
-        			</div>
-			        <div class="form-group">
-			        	<label for="">Municipio</label>
-						<div id="municipio_seleccion"></div>
-			        </div>
-			        <div class="form-group">
-			          	<label for="">Dirección actual</label>
-			          	<textarea form="formActualizarPerfil" class="form-control" name="direccion" id="direccion" cols="30" rows="4"><?=$perfil->direccion?></textarea>
-			        </div>
+				<div class="col-md-12 col-lg-12">
+				<p class="help-block">Información de contacto</p>
+				<hr>
+					<div class="form-horizontal">
+						<div class="form-group">
+							<label class="control-label col-sm-3">Telefono:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-sm-3">Celular:</label>
+							<div class="col-sm-6">
+								<input form="formActualizarPerfil" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
+							</div>
+						</div>	
+					</div>
+					<p class="help-block">Ubicación actual</p>
+					<hr>
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label class="control-label col-sm-3">Departamento:</label>
+								<div class="col-sm-6">
+									<div id="departamento_seleccion"></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">Municipio:</label>
+								<div class="col-sm-6">
+									<div id="municipio_seleccion"></div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">Dirección:</label>
+								<div class="col-sm-6">
+									<textarea form="formActualizarPerfil" name="direccion" id="direccion" class="form-control" rows="4"><?=$perfil->direccion?></textarea>
+								</div>
+							</div>
+						</div>
+				</div>
+        	</div><!--Fin de la informacion de contacto-->
+
+        	<div role="tabpanel" class="tab-pane" id="privacidad">
+				<div class="col-md-12 col-lg-12">
+					<p class="help-danger">La configuración de privacidad te permite que información parcial de tu perfil sea filtrada solamente a determinados grupos de usuarios, ejemplo: empresas, usuarios no registrados en el sistema.</p>
+					<p class="text-danger">Puedes filtrar la información de contacto,ubicación actual, foto de perfil, curriculum, empleado o no.</p>
+					<br>
+					<label>¿Quienes pueden ver mi foto de perfil?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="publica">
+					  	Publica
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="empresas">
+					  	Solamente empresas
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="privada">
+					  	Unicamente yo o privada
+					  </label>
+					</div>
+
+					<label>¿Quienes pueden ver mi informacion de contacto?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="publica">
+					  	Publica
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="empresas">
+					  	Solamente empresas
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="privada">
+					  	Unicamente yo o privada
+					  </label>
+					</div>
+
+					<label>¿Quienes pueden saber mi ubicación?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="publica">
+					  	Publica
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="empresas">
+					  	Solamente empresas
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="privada">
+					  	Unicamente yo o privada
+					  </label>
+					</div>
+
+					<label>¿Quienes pueden ver mi curriculum?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="publica">
+					  	Publica
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="empresas">
+					  	Solamente empresas
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="privada">
+					  	Unicamente yo o privada
+					  </label>
+					</div>
+
+					<label>¿Quienes pueden ver mi informacion adicional?</label>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="publica">
+					  	Publica
+						  </label>
+						</div>
+					<div class="radio">
+					  <label>
+					    <input form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="empresas">
+					  	Solamente empresas
+					  </label>
+					</div>
+					<div class="radio">
+					  <label>
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="privada">
+					  	Unicamente yo o privada
+					  </label>
+					</div>
 				</div>
         	</div>
-	  		<div role="tabpanel" class="tab-pane" id="contraseña">
-		  		<div class="col-lg-5 col-md-5">
-		  			<form method="post" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
-	              		<div class="form-group">
-			                <label for="">Digite su contraseña actual</label>
-			                <input type="password" name="clave_actual" class="form-control">
-	             		</div>
-			           	<div class="form-group">
-			            	<label for="">Contraseña</label>
-							<input required type="password" name="clave_nueva" class="form-control">
-						</div>
-			            <div class="form-group">
-			            	<label for="">Repite contraseña</label>
-							<input required type="password" name="clave_repetida" class="form-control">
-						</div>
-		              	<div class="form-group">
-		                	<input onclick="cambiarClave()" class="btn btn-danger" value="Cambiar contraseña">
-		              	</div>
-           			</form>
-		  		</div>
-		  		<div class="col-md-5 col-lg-5">
-		        	<div id="cambiarClaveRespuesta"></div>
-		        </div>
-			</div>
-		</div>
+	  	</div>
 	</div>
 	</div>
 
@@ -211,6 +421,7 @@
 </form>
 <link rel="stylesheet" href="<?=base_url('public/css/perfil.css')?>"></link>
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
 	
@@ -247,11 +458,6 @@
 
 		$("#carrera").attr("form","formActualizarPerfil");
 
-		$("#formCambiarClave").submit(function(e){
-			e.preventDefault();
-			cambiarClave(this);
-		});
-			
 		$("#cambiar_imagen").click(function(){
 			$("#imagen").trigger("click");
 		});
@@ -269,24 +475,21 @@
 		$("#area_perfil").load("<?=base_url('Curriculum')?>");
 	}
 
-	function cambiarClave(){
-		var form = document.getElementById("formCambiarClave");
-
-		if(form.clave_actual.value !="" && form.clave_nueva.value != "" && form.clave_repetida.value != ""){
-			if(confirm("¿Esta seguro que desea cambiar su contraseña?")){
-			   	$.ajax({url:form.action,
-				data: $(form).serialize(),
-				type: "post",
-				datatype: "html",
-				success:function(data){
-					$("#cambiarClaveRespuesta").html(data);
-				},
-				aync: false
-				});
-    		}
-
-		}else{
-			alert("Hay campos incompletos");
-		}
-	}
+	
 </script>
+<style type="text/css">
+body{
+	overflow-y:scroll;
+}
+	hr{
+		margin: 0px 0px;
+		margin-bottom: 10px;
+	}
+
+	p.help-block{
+		margin-bottom: 4px;
+	}
+	.bg-primary{
+		padding: 10px;
+	}
+</style>

@@ -174,6 +174,30 @@
 <script type="text/javascript">
   
   $(document).ready(function(){
+
+    var get = "<?php
+          if(isset($_GET['page'])){
+            echo $_GET['page'];
+          }
+        ?>";
+
+    switch(get){
+
+      case 'fichas':
+        cargarFichas();
+      break;
+      case 'becas':
+        cargarBecas();
+      break;
+      case 'cursos':
+        cargarCursos();
+      break;
+    }
+
+    if(get != ""){
+      return;
+    }
+
     var perfil = <?=json_encode($perfil)?>;
 
     $("#fecha_nacimiento").datepicker({dateFormat: 'dd/mm/yy'});
@@ -220,24 +244,5 @@
     listarAreas(<?=$perfil->area_id?>);
     listarCargos(<?=$perfil->area_id?>,<?=$perfil->cargo_id?>);
   
-    var get = "<?php
-          if(isset($_GET['page'])){
-            echo $_GET['page'];
-          }
-        ?>";
-
-    switch(get){
-
-      case 'fichas':
-        cargarFichas();
-      break;
-      case 'becas':
-        cargarBecas();
-      break;
-      case 'cursos':
-        cargarCursos();
-      break;
-    }
-
   });
 </script>

@@ -8,7 +8,11 @@
 	<h3 class="form-title">Editar publicación <small>Curso</small></h3>
 	<input type="hidden" name="publicacion_id" value="<?=$curso->publicacion_id?>">
 	<input type="hidden" name="curso_id" value="<?=$curso->curso_id?>">
-
+	<input type="hidden" name="imagen_publicacion_id" value="<?=$curso->imagen_publicacion_id?>">
+	<div class="form-group">
+		<label for="">Nombre del curso:</label>
+		<input required class="form-control" type="text" value="<?=$curso->nombre_curso?>" name="nombre_curso" id="nombre_curso">
+	</div>
 	<div class="form-group">
 		<label for="">Descripción:</label>
 		<textarea required class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"><?=$curso->descripcion?></textarea>

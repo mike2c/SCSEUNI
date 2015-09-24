@@ -2,11 +2,16 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
+
 				<button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="crearFichaLabel">Nueva Publicación <small>Beca</small></h4>
 			</div>
 			<div class="modal-body">
 				<form action="<?=base_url("Curso/Insertar")?>" method="post" id="formPublicacion" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="">Nombre del curso:</label>
+						<input required class="form-control" type="text" name="nombre_curso" id="nombre_curso">
+					</div>
 					<div class="form-group">
 						<label for="">Descripción:</label>
 						<textarea required class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"></textarea>
@@ -81,7 +86,6 @@
 		placement: "bottom"
 	});
 	
-
 	$("#imagen").filestyle({
 		input: true,
 		buttonText: "Añadir imagen publicitaria",
