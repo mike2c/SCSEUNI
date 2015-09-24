@@ -233,7 +233,7 @@
 			document.getElementById("genero").selectedIndex = 1;
 		}
 
-		if(perfil.trabaja == true){
+		if(perfil.trabaja == true){ 
 			$("#check_trabaja_1").attr("checked",true);
 		}else{
 			$("#check_trabaja_2").attr("checked",true);

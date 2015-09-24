@@ -43,7 +43,7 @@
 	<div class="form-group">
 	    <label for="inputEmail3" class="col-sm-3 control-label">Cedula:</label>
 	    <div class="col-sm-9">
-	     	<input type="text" class="form-control" name="cedula" id="inputEmail3" placeholder="000-000000-0000L">
+	     	<input type="text" class="form-control" name="cedula" id="cedula" placeholder="000-000000-0000L">
 	    </div>
   	</div>
   	<div class="form-group">
@@ -128,7 +128,7 @@
  	</div>
  	<div class="form-group">
  		<div class="col-sm-9 col-sm-push-3">
- 			<input type="submit" class="btn btn-primary" value="Registrar">	
+ 			<input type="button" id="insert" class="btn btn-primary" value="Registrar">	
  			<input type="reset" class="btn btn-primary" value="Limpiar">	
  		</div>
  		
@@ -136,11 +136,11 @@
 </form>
 </div>
 </div>
+<script type="text/javascript" src="<?=base_url('public/js/cedula.js')?>" ></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
-<script type="text/javascript">
-
+<script type="text/javascript">	
 	$(document).ready(function(){
-		$("#formRegistroEgresado").submit(function(e){
+		$("#insert").click(function(e){	
 			e.preventDefault();
 			$.post("<?=base_url().'Egresado/Registro'?>",
 			$(this).serialize(),
@@ -148,7 +148,5 @@
 				alert("Egresado registrado");
 			});
 		});
-		
-	});
-	
+	});	
 </script>
