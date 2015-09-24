@@ -1,15 +1,18 @@
 (function($){
 	$.fn.extend({
 		valida: function(){
-            $(this).keypress(function(){
-                var ced = new ValidarCedula();
-                var cedula = $(this);
+            var ced = new ValidarCedula();
+            var cedula = $(this);
+            ced.setCedula(cedula.val());
+            if(cedula.val()==""){
+                return true
+            }else{       
                 if(ced.isCedulaValida(cedula.val())){
-                    $(this).css({'background-color':"RED"});
+                    return true
                 }else{
-                    $(this).css({'background-color':"BLUE"});
+                    return false
                 }
-            });
+            }
 		}
 	});
 })(jQuery)

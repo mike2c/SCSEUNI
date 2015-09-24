@@ -134,37 +134,37 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		var cedula = $("#cedula").val();
-		$("#cedula").valida();
 		
-		$("#formRegistroEgresado").submit(function(e){
+		$("#insert").click(function(e){
 			e.preventDefault();
-			$.ajax({
-				url: "<?=base_url('Egresado/Registro')?>",
-				data: $(this).serialize(),
-				datatype: "text",
-				type: "post",
-				success: function(data){
-					console.log(data);
-					if(data == ""){
-						alert("El egresado se ha registrado correctamente");
-						document.getElementById("formRegistroEgresado").reset();
-					}else{
-						data = data.replace("<p>","");
-						data = data.replace("</p>","");
-						alert(data);
-					}
-				},
-				error: function(jqXHR, textStatus, errorThrown){
-					alert("Ha ocurrido un error y no se ha podido ejecutar la petición.");
-					console.log(jqXHR);
-					console.log(textStatus);
-					console.log(errorThrown);
-				},
-				async: false
-
-			});
-
+			if($("#cedula").valida()){
+				$.ajax({
+					url: "<?=base_url('Egresado/Registro')?>",
+					data: $("#formRegistroEgresado").serialize(),
+					datatype: "text",
+					type: "post",
+					success: function(data){
+						console.log(data);
+						if(data == ""){
+							alert("El egresado se ha registrado correctamente");
+							document.getElementById("formRegistroEgresado").reset();
+						}else{
+							data = data.replace("<p>","");
+							data = data.replace("</p>","");
+							alert(data);
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown){
+						alert("Ha ocurrido un error y no se ha podido ejecutar la petición.");
+						console.log(jqXHR);
+						console.log(textStatus);
+						console.log(errorThrown);
+					},
+					async: false
+				});
+			}else{
+				alert("Formato de Cedula invalido");
+			}
 		});
 		
 		 $("#fecha_nacimiento").datepicker();

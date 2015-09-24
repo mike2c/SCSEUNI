@@ -1,8 +1,18 @@
-<form action="<?=base_url('Perfil/accion')?>" method="post" id="formPrueba">
-	
-</form>
-<input type="text" name="var1" form="formPrueba">
-<input type="text" name="var2" form="formPrueba">
 
-<input type="submit" form="formPrueba">
-<button form="formPrueba">Guardar</button>
+<input type="text" name="cedula" id="cedula" form="formPrueba">
+
+<button id="validar">Guardar</button>
+
+<script type="text/javascript" src="<?=base_url('public/js/Jquery.cedula_plugin.js')?>"></script>
+<script>
+	$(document).ready(function(){
+		var cedula = $("#cedula").val();
+		$("#validar").click(function(){
+			if($("#cedula").valida()){
+				alert("funciona");
+			}else{
+				alert("ele o ele");
+			}
+		});
+	});
+</script>

@@ -65,7 +65,7 @@
 			    <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Contacto</a></li>
 			    <li role="presentation"><a href="#privacidad" aria-="settings" role="tab" data-toggle="tab">Privacidad</a></li>
 			
-				<li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
+				<li><button form="formActualizarPerfil" id="update" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
 			</ul>
 
 			<!--Paneles-->
@@ -80,7 +80,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Cedula:</label>
 							<div class="col-sm-6">
-								<input form="formActualizarPerfil" name="cedula" class="form-control" type="text" value="<?=$perfil->cedula?>">
+								<input form="formActualizarPerfil" name="cedula" id="cedula" class="form-control" type="text" value="<?=$perfil->cedula?>">
 							</div>
 						</div>
 						<div class="form-group">
@@ -423,6 +423,7 @@
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/Jquery.cedula_plugin.js')?>"></script>
 <script type="text/javascript">
 	
 	$(document).ready(function(){
@@ -474,7 +475,15 @@
 	function cargarCurriculum(){
 		$("#area_perfil").load("<?=base_url('Curriculum')?>");
 	}
-
+	
+	$("#formActualizarPerfil").submit(function(){
+		if($("#cedula").valida()){
+			return true;
+		}else{
+			alert("Formato de Cedula Incorrecto");
+			return false;
+		}
+	});
 	
 </script>
 <style type="text/css">
