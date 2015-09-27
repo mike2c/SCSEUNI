@@ -52,132 +52,169 @@
       
       <!--menu de pestañas-->
       <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Informacion personal</a></li>
-          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
-          <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>
-          <li role="presentation"><a href="#contraseña" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
-      
-        <li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
+          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Datos de la empresa</a></li>
+          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Mi cuenta</a></li>
+          <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Contacto</a></li>
+          <li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
       </ul>
 
       <!--Paneles-->
       <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="info_personal">
-            <div class="col-md-6 col-lg-6">
-              <div class="form-group">
-                  <label for="">Nombre de la empresa</label>
-                  <input required form="formActualizarPerfil" type="text" id="nombre_empresa" name="nombre_empresa"  class="form-control">
-              </div>
-              <div class="form-group">
-                  <label for="">Numero ruc</label>
-                  <input form="formActualizarPerfil" type="text" id="ruc" name="ruc"  class="form-control">
-              </div>
-              <div class="form-group">
-                  <label for="">Sitio web</label>
-                  <input form="formActualizarPerfil" type="url" placeholder="http://www.ejemplo.com/" pattern="|^http(s)?://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i" id="sitio_web" name="sitio_web"  class="form-control">
-              </div>
-            <div class="form-group">
-                  <label for="">Sociedad</label>
-                  <div class="input-group">
+            <div class="col-md-12 col-lg-12">
+              <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Nombre de la empresa:</label>
+                  <div class="col-sm-7">
+                    <input form="formActualizarPerfil" name="nombre_empresa" class="form-control" type="text" value="<?=$perfil->nombre_empresa?>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">RUC:</label>
+                  <div class="col-sm-7">
+                    <input form="formActualizarPerfil" name="ruc" class="form-control" type="text" value="<?=$perfil->ruc?>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Sitio web:</label>
+                  <div class="col-sm-7">
+                    <input form="formActualizarPerfil" name="sitio_web" class="form-control" type="text" value="<?=$perfil->sitio_web?>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Sociedad:</label>
+                  <div class="col-sm-7">
+                     <div class="input-group">
                     <div id="sociedad_seleccion"></div>
                     <div class="input-group-btn">
                      <button id="btnAgregarTitulo" onclick='registrarSociedad()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
                     </div>
                   </div>
-                 
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-6">
-               <div class="form-group">
-                  <label for="">Misión</label>
-                  <textarea form="formActualizarPerfil" class="form-control" id="mision" name="mision" id="" cols="30" rows="4"><?=$perfil->mision?></textarea>
-                </div>
-                   <div class="form-group">
-                  <label for="">Visión</label>
-                  <textarea form="formActualizarPerfil" class="form-control" id="vision" name="vision" id="" cols="30" rows="4"><?=$perfil->vision?></textarea>
+                  </div>
                 </div>
                 <div class="form-group">
-                  <label for="">Ocupación</label>
-                  <textarea form="formActualizarPerfil" class="form-control" id="ocupacion" name="ocupacion" id="" cols="30" rows="4"><?=$perfil->ocupacion?></textarea>
+                  <label class="control-label col-sm-3">Misión:</label>
+                  <div class="col-sm-7">
+                    <textarea form="formActualizarPerfil" class="form-control" name="mision" id="mision" rows="4"><?=$perfil->mision?></textarea>             
+                  </div>
                 </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Visión:</label>
+                  <div class="col-sm-7">
+                    <textarea form="formActualizarPerfil" class="form-control" name="vision" id="vision" rows="4"><?=$perfil->vision?></textarea>             
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-3">Ocupación:</label>
+                  <div class="col-sm-7">
+                    <textarea form="formActualizarPerfil" class="form-control" name="ocupacion" id="ocupacion" rows="4"><?=$perfil->ocupacion?></textarea>             
+                  </div>
+                </div>
+              </div>
             </div>
          </div>
-      <div role="tabpanel" class="tab-pane" id="info_cuenta">
-        <div class="col-md-5 col-lg-5">
-          <div class="form-group">
-            <label for="">Correo</label>
-            <input required form="formActualizarPerfil" type="text" name="correo" id="correo" class="form-control">
-          </div>
-          
-        </div>
-        <div class="col-md-5 col-lg-5">
-          <div class="form-group">
-            <label for="">Ultima vez que iniciaste sesión</label>
-            <p id="sesion"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Estado de la cuenta</label>
-            <p id="estado"></p>
-          </div>
-          <div class="form-group">
-            <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>">
-
-              <button class="btn btn-danger">Desactivar cuenta</button>
-            </form>
-            
-          </div>
-        </div>
-      </div>
-        <div role="tabpanel" class="tab-pane" id="info_contacto">
-          <div class="col-lg-5 col-md-5">
-            <div class="form-group">
-                <label for="">Telefono</label>
-                <input form="formActualizarPerfil" type="text" id="telefono" name="telefono" value="<?=$perfil->telefono?>" class="form-control tel">
-              </div>
+         <!--Informacion de la cuenta-->
+        <div role="tabpanel" class="tab-pane" id="info_cuenta">
+          <div class="col-md-12 col-lg-12">
+          <p class="help-block">Cambiar correo</p>
+          <hr>
+            <div class="form-horizontal">
               <div class="form-group">
-                  <label for="">Celular</label>
-                  <input form="formActualizarPerfil" type="text" id="celular" name="celular" value="<?=$perfil->celular?>" class="form-control tel">
-              </div>
-          </div>
-        <div class="col-lg-6 col-md-6">
-          <div class="form-group">
-                  <label for="">Departamento</label>
-                  <div id="departamento_seleccion"></div>
-              </div>
-              <div class="form-group">
-                <label for="">Municipio</label>
-            <div id="municipio_seleccion"></div>
-              </div>
-              <div class="form-group">
-                  <label for="">Dirección actual</label>
-                  <textarea form="formActualizarPerfil" class="form-control" id="direccion" name="direccion" id="direccion" cols="30" rows="4"><?=$perfil->direccion?></textarea>
-              </div>
-        </div>
-          </div>
-        <div role="tabpanel" class="tab-pane" id="contraseña">
-          <div class="col-lg-5 col-md-5">
-            <form method="post" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
-                    <div class="form-group">
-                      <label for="">Digite su contraseña actual</label>
-                      <input type="password" name="clave_actual" class="form-control">
-                    </div>
-                  <div class="form-group">
-                     <label for="">Contraseña</label>
-                    <input required type="password" name="clave_nueva" class="form-control">
+                  <label for="inputEmail3" class="col-sm-3 control-label">Correo:</label>
+                  <div class="col-sm-6">
+                    <input required value="<?=$perfil->correo?>" form="formActualizarPerfil" type="correo" class="form-control" name="correo" id="correo" placeholder="cambiar correo">
                   </div>
-                  <div class="form-group">
-                    <label for="">Repite contraseña</label>
-                  <input required type="password" name="clave_repetida" class="form-control">
                 </div>
-                    <div class="form-group">
-                      <input onclick="cambiarClave()" class="btn btn-danger" value="Cambiar contraseña">
-                    </div>
-              </form>
-          </div>
-          <div class="col-md-5 col-lg-5">
-              <div id="cambiarClaveRespuesta"></div>
             </div>
+          <p class="help-block">Cambiar contraseña</p>              
+          <hr>
+          <form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Actual:</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_actual" placeholder="contraseña actual">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Nueva:</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_nueva" placeholder="nueva contraseña">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Repite la contraseña</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_repetida" placeholder="repite la contraseña">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <button type="submit" class="pull-right btn btn-danger btn-sm">Cambiar contraseña</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
+              </div>
+          </form>
+          <p class="help-block">Desactivar cuenta</p>
+          <hr>
+          <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
+            <div class="form-group">
+              <span class="help-block">Puedes desactivar temporalmente tu cuenta, esta volvera a estar activa la proxima vez que inicies sesión.
+              Cuando tu cuenta se encuentre inactiva los demás usuarios no podran enviarte mensajes.</span>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-danger btn-sm">Desactivar cuenta</button>
+            </div>
+          </form>
+        </div><!--Fin de la columna-->
+        </div><!--Fin de la informacion de la cuenta-->
+
+        <!--Informacion de contacto-->
+        <div role="tabpanel" class="tab-pane" id="info_contacto">
+          <div class="col-md-12 col-lg-12">
+        <p class="help-block">Información de contacto</p>
+        <hr>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-3">Telefono:</label>
+              <div class="col-sm-6">
+                <input form="formActualizarPerfil" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">Celular:</label>
+              <div class="col-sm-6">
+                <input form="formActualizarPerfil" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
+              </div>
+            </div>  
+          </div>
+          <p class="help-block">Ubicación actual</p>
+          <hr>
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-sm-3">Departamento:</label>
+                <div class="col-sm-6">
+                  <div id="departamento_seleccion"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3">Municipio:</label>
+                <div class="col-sm-6">
+                  <div id="municipio_seleccion"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="control-label col-sm-3">Dirección:</label>
+                <div class="col-sm-6">
+                  <textarea form="formActualizarPerfil" name="direccion" id="direccion" class="form-control" rows="4"><?=$perfil->direccion?></textarea>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
       </div>
+    
     </div>
   </div>
   </div>
@@ -188,6 +225,7 @@
 </form>
 <script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/perfil.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
@@ -204,22 +242,9 @@
 
     $("#correo").val(perfil.correo);
     $("#sesion").text(perfil.ultima_sesion);
-
-    if(perfil.activo){
-      $("#estado").text("Activa");
-    }
     
-    if(perfil.sexo == 'F'){
-      document.getElementById("genero").selectedIndex = 1;
-    }
-
     $("#sociedad").attr("form","formActualizarPerfil");
 
-    $("#formCambiarClave").submit(function(e){
-      e.preventDefault();
-      cambiarClave(this);
-    });
-      
     $("#cambiar_imagen").click(function(){
       $("#imagen").trigger("click");
     });
