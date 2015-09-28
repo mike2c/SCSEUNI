@@ -21,51 +21,27 @@
 			$this->load->view("footer");
 		}
 
-		function cargarArchivo(){
-			//extract($_POST);
-			if ( !$_FILES["excel"]["name"] == "" ){
-				
-				//cargamos el archivo al servidor con el mismo nombre
-
-				//solo le agregue el sufijo bak_
-
-				$archivo = $_FILES["excel"]["name"];
-
-				$tipo = $_FILES['excel']['type'];
-
-				$destino = "bak_".$archivo;
-
-				if (copy($_FILES['excel']['tmp_name'],$destino)){
-					echo "Archivo Cargado Con Éxito <br>";
-					$this->importarEgresados($destino);
-				}else{
-					echo "Error Al Cargar el Archivo";
-				}
-			}else {
-				echo "ERROR, No se pudo cargar el archivo selecionado";
-			}
-		}
-		
-		function importarEgresados($filename){
+		function importarEgresados(){
 			$this->load->library("import_manager");
+			$filename = $this->import_manager->cargar_archivo($_FILES);
 			//Cargar PHPExcel library
-			//$name   = $_FILES['file']['name'];
-			//$tname  = $_FILES['file']['tmp_name'];
-			$tname = $filename;
-			$obj_excel = PHPExcel_IOFactory::load($tname);       
+			$obj_excel = PHPExcel_IOFactory::load($filename);       
 			$sheetData = $obj_excel->getActiveSheet()->toArray(null,true,true,true);
 			
 			$data_egresado = array();
 			$data_persona = array();
 			$data_usuario = array();
 			$data_contacto = array();
-			
+			$cont = null;
 			//llenamos los arreglos con la informacion del archivo excel.
-			foreach ($sheetData as $index => $value) {            
-				if ( $index != 1 ){
+			foreach ($sheetData as $index => $value) { 
+				$cont += 1;
+				//La primer fila del archivo excel deben ser los encabezados.           
+				if ( $index != 1){
 					$data_egresado = array(
 						'carnet'  => $value['A'],
-						'cedula'  =>  $value['B']					                                  
+						'cedula'  =>  $value['B'],
+						'carrera_id' => $value['K']					                                  
 					); 
 					//convertimos la fecha del archivo de excel a el formato de Mysql.
 					$fecha = format_date($value['F']);
@@ -96,12 +72,19 @@
 					foreach ($data_usuario as $llave4 => $valor4) {
 					$data_usuario[$llave4] = $valor4;
 					}
-					
+			
 					$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 					
-				} 
+				}
 			}
-			unlink($tname);
+			
+			if($cont > 1){
+				echo "Datos importados Correctamente";
+			}else{
+				echo "No se encontraron datos a importar, revise que el archivo contenga datos a importar";
+			}
+			unlink($filename);
 		}
+
 	}
 ?>
