@@ -192,11 +192,11 @@
 				$data_usuario["correo"] = $this->input->post("correo");
 				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
 				$data_usuario["activo"] = FALSE;
-				if($this->egresado_model->validar_cedula_y_carnet($data_egresado)){
+				#if($this->modelo->validar_cedula_y_carnet($data_egresado)){
 					$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-				}else{
-					echo "Los campos Cedula o Carnet ya se encuentran registrados en la base de datos";
-				}
+				#}else{
+					#echo "Los campos Cedula o Carnet ya se encuentran registrados en la base de datos";
+				#}
 			
 			}
 		
@@ -229,7 +229,7 @@
 			$data_contacto["direccion"] = $this->input->post("direccion");
 			$data_contacto["municipio_id"] = $this->input->post("municipio");
 			$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
-			
+
 			$data_egresado["egresado_id"]= $this->input->post("egresado_id");
 			
 			//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet

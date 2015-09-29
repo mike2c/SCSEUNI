@@ -1,6 +1,6 @@
 <?php
 
-	function crearGraficoPastel($arr,$text = "",$tooltipText = ""){
+	function crear_grafico_pastel($arr,$text = "",$tooltipText = ""){
 		if($text== null || $text == ""){
 			$text = "Titulo por default";
 		}
@@ -8,13 +8,10 @@
 			$tooltipText = "Titulo por default";
 		}
 		?>
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-			<style type="text/css">
+		<style type="text/css">
 			${demo.css}
 			</style>
-			<script src="js/highcharts.js"></script>
-			<script src="js/modules/exporting.js"></script>
-			<div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+			<div id="container" style="min-width: 310px; height: 500px; max-width: 600px; margin: 0 auto"></div>
 			<script type="text/javascript">
 				
 				var data = <?=json_encode($arr)?>;
@@ -52,6 +49,6 @@
 			             });
 			</script>
 		<?
+
 	}
-?>
 ?>

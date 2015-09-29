@@ -1,7 +1,7 @@
 <!-- FontAwesome Styles-->
 <link href="<?=base_url('public/css/font-awesome.css')?>" rel="stylesheet" />
-<!-- Morris Chart Styles-->
-<link href="<?=base_url('public/js/morris/morris-0.4.3.min.css')?>" rel="stylesheet" />
+<!-- Morris Chart Styles<link href="<?=base_url('public/js/morris/morris-0.4.3.min.css')?>" rel="stylesheet" />-->
+
 <!-- Custom Styles-->
 <link href="<?=base_url('public/css/custom-styles.css')?>" rel="stylesheet" />
 <!-- Google Fonts-->
@@ -29,25 +29,25 @@
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
 
-                 <li><a href="#" class="active-menu"><i class="fa fa-graduation-cap"></i> Egresados<span class="fa arrow"></span></a>
+                 <li class="active"><a href="#" class="active-menu"><i class="fa fa-graduation-cap"></i> Egresados<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="javascript:registrarEgresado()"><i class="fa fa-user-plus"></i> Registrar</a></li>
-                        <li><a href="javascript:listarEgresado()"><i class="fa fa-list-alt"></i>Listado</a></li>
+                        <li><a href="javascript:listarEgresados()"><i class="fa fa-list-alt"></i>Listado</a></li>
                         <li><a href="javascript:importarEgresado()"><i class="fa fa-upload"></i> Importar desde excel</a></li>
                     </ul>
                 </li>
-                 <li><a href="#"><i class="fa fa-sitemap"></i> Empresas<span class="fa arrow"></span></a>
+                 <li><a href="#"><i class="fa fa-industry"></i> Empresas<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#"><i class="fa fa-list-alt"></i> Listado</a></li>
+                        <li><a href="javascript:listarEmpresas()"><i class="fa fa-list-alt"></i> Listado</a></li>
                     </ul>
                 </li>
-				 <li><a href="#" class="active"><i class="fa fa-sitemap"></i> Publicadores<span class="fa arrow"></span></a>
+				 <li><a href="#" class="active"><i class="fa fa-user"></i> Publicadores<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#"><i class="fa fa-user-plus"></i> Registrar</a></li>
-                        <li><a href="#"><i class="fa fa-list-alt"></i> Listado</a></li>
+                        <li><a href="javascript:registrarPublicador();"><i class="fa fa-user-plus"></i> Registrar</a></li>
+                        <li><a href="javascript:listarPublicador();"><i class="fa fa-list-alt"></i> Listado</a></li>
                     </ul>
                 </li>
-                 <li><a href="#" class="active"><i class="fa fa-sitemap"></i> Admins<span class="fa arrow"></span></a>
+                 <li><a href="#" class="active"><i class="fa fa-user"></i> Admins<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a href="#"><i class="fa fa-user-plus"></i>Registrar</a></li>
                         <li><a href="#"><i class="fa fa-list-alt"></i>Listado</a></li>
@@ -60,22 +60,19 @@
                             <a href="#"><i class="fa fa-graduation-cap"></i> Egresados<span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
-                                    <a href="#">Trabajando</a>
+                                    <a href="javascript:reporteEgresadosTrabajando();">Trabajando</a>
                                 </li>
                                 <li>
-                                    <a href="#">Titulados</a>
+                                    <a href="javascript:reporteEgresadosTitulados()">Titulados</a>
                                 </li>
                                 <li>
-                                    <a href="#">Por carrera</a>
+                                    <a href="javascript:reporteEgresadosPorCarrera()">Por carrera</a>
                                 </li>
 
                             </ul>
 
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a href="empty.html"><i class="fa fa-fw fa-file"></i> Empty Page</a>
                 </li>
             </ul>
 
@@ -100,11 +97,13 @@
 <!-- Metis Menu Js -->
 <script src="<?=base_url('public/js/jquery.metisMenu.js')?>"></script>
 
-<!-- Custom Js -->
-<script src="<?=base_url('public/js/custom-scripts.js')?>"></script>
-<!-- Morris Chart Js -->
-<script src="<?=base_url('public/js/morris/raphael-2.1.0.min.js')?>"></script>
-<script src="<?=base_url('public/js/morris/morris.js')?>"></script>
+<!-- Custom Js <script src="<?=base_url('public/js/custom-scripts.js')?>"></script>-->
+
+<!-- Morris Chart Js<script src="<?=base_url('public/js/morris/raphael-2.1.0.min.js')?>"></script>
+<script src="<?=base_url('public/js/morris/morris.js')?>"></script> -->
+<!-- Libreria HighCharts-->
+<script type="text/javascript" src="<?=base_url('public/js/highcharts/highcharts.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/highcharts/modules/exporting.js')?>"></script>
 <script type="text/javascript">
 
     //Cambiamos de color al menu para saber cual es el activo
@@ -116,4 +115,36 @@
     function registrarEgresado(){
         $("#page-inner").load("<?=base_url('CPanel/RegistrarEgresado')?>");
     }
+
+    function listarEgresados(){
+        $("#page-inner").load("<?=base_url('CPanel/ListarEgresados')?>");   
+    }
+
+    function listarEmpresas(){
+        $("#page-inner").load("<?=base_url('CPanel/ListarEmpresas')?>");      
+    }
+
+    function reporteEgresadosTrabajando(){
+        $("#page-inner").load("<?=base_url('CPanel/ReporteEgresadosTrabajando')?>");
+    }
+
+    function reporteEgresadosTitulados(){
+        $("#page-inner").load("<?=base_url('CPanel/ReporteEgresadosTitulados')?>");
+    }
+
+    function reporteEgresadosPorCarrera(){
+        $("#page-inner").load("<?=base_url('CPanel/ReporteEgresadosPorCarrera')?>");
+    }
+
+    function registrarPublicador(){
+        $("#page-inner").load("<?=base_url('CPanel/RegistrarPublicador')?>");
+    }
+
+    //Añadir animacion al menu
+    $('#main-menu').metisMenu();
 </script>
+<style type="text/css">
+    .nav-second-level li a:hover{
+        border-left: 3px solid lightgray;
+    }
+</style>

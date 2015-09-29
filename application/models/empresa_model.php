@@ -1,9 +1,10 @@
 <?php 
+	include "publicacion_model.php";
 
-	class Empresa_model extends CI_Model{
+	class Empresa_model extends Publicacion_model{
 
 		function __construct(){
-			parent:: __construct();
+			parent:: __construct("listar_empresas");
 
 			$this->load->library('session');
 			$this->load->database();

@@ -151,23 +151,47 @@ function registrarSociedad(){
 	});
 }
 
-function listarAreas(area_actual){
+function listarAreas(area_actual,form,classes){
 
-	$.ajax({url: baseURL(+ "Ajax/CargarAreas/" + area_actual),
-	type: "post",
-	datatype: "html",
-	success: function(data){
-		$("#area_seleccion").html(data);
-		$("#area").addClass("form-control");
-		$("#area").attr("form","formActualizarPerfil");
-		$("#area").change(function(){
-	      listarCargos(this.value);
-	    });
-	},
-	async: false});
+	if(area_actual == undefined){
+		area_actual = "";
+	}
+
+	$.ajax({
+		url: baseURL("Ajax/CargarAreas/" + area_actual),
+		type: "post",
+		datatype: "html",
+		success: function(data){
+
+			if($("#area_area").length){
+				$("#area_area").html(data);
+			}
+
+			if(form != undefined && form != null){
+				$("#area").attr("form",form);
+			}
+			if(classes != undefined && classes != null){
+				$("#area").addClass(classes);
+			}else{
+				return;
+			}
+		
+			$("#area").change(function(){
+		      listarCargos($("#area").val(),null,$("#area").attr("form"),$("#area").attr("class"));
+		    });
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log(jqXHR.responseText);
+			alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
+		},
+		async: false});
 }
 
-function listarCargos(area,cargo_actual){
+function listarCargos(area,cargo_actual,form,classes){
+
+	if(area == undefined || area == null || area == ""){
+		return;
+	}
 
 	if(cargo_actual == undefined){
 		cargo_actual = "";	
@@ -177,9 +201,23 @@ function listarCargos(area,cargo_actual){
 		type: "get",
 		datatype: "html",
 		success: function(data){
-			$("#cargo_seleccion").html(data);
-			$("#cargo").addClass("form-control");
-			$("#cargo").attr("form","formActualizarPerfil");
+			
+			if($("#cargo_area").length){
+				$("#cargo_area").html(data);
+			}else{
+				return;
+			}
+
+			if(form != undefined && form != null){
+				$("#cargo").attr("form",form);
+			}
+			if(classes != undefined && classes != null){
+				$("#cargo").addClass(classes);
+			}
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log(jqXHR.responseText);
+			alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
 		},
 		async: false
 	});
