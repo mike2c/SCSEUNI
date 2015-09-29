@@ -1,0 +1,362 @@
+[1mdiff --git a/application/config/autoload.php b/application/config/autoload.php[m
+[1mindex bc823ad..fe32593 100644[m
+[1m--- a/application/config/autoload.php[m
+[1m+++ b/application/config/autoload.php[m
+[36m@@ -60,7 +60,7 @@[m [m$autoload['packages'] = array();[m
+ |	$autoload['libraries'] = array('user_agent' => 'ua');[m
+ */[m
+ [m
+[31m-$autoload['libraries'] = array("database");[m
+[32m+[m[32m$autoload['libraries'] = array("database","session");[m
+ [m
+ [m
+ /*[m
+[1mdiff --git a/application/controllers/CPanel.php b/application/controllers/CPanel.php[m
+[1mindex 5f48946..10d6181 100644[m
+[1m--- a/application/controllers/CPanel.php[m
+[1m+++ b/application/controllers/CPanel.php[m
+[36m@@ -1,17 +1,53 @@[m
+ <?php defined('BASEPATH') OR exit('No direct script access allowed');[m
+[31m-	[m
+[32m+[m	[32mdefine("IS_AJAX",isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == 'xmlhttprequest');[m
+[32m+[m
+ 	class CPanel extends CI_Controller{[m
+ [m
+ 		function __construct(){[m
+ 			parent::__construct();[m
+[32m+[m			[32m$this->load->helper("sesion");[m
+[32m+[m			[32mif(!esAdministrador()){[m
+[32m+[m				[32m//show_404();[m
+[32m+[m			[32m}[m
+ 		}[m
+ [m
+ 		function index(){[m
+ 			$this->load->view("cabecera");[m
+[31m-			$this->load->view("c_panel");[m
+[32m+[m			[32m$this->load->view("panel/panel.php");[m
+ 			$this->load->view("footer");[m
+ 		}[m
+ [m
+[32m+[m		[32mfunction ListarEgresados(){[m
+[32m+[m[41m			[m
+[32m+[m			[32mif(IS_AJAX){[m
+[32m+[m				[32m$this->load->model("egresado_model","egresados");[m
+[32m+[m				[32m$this->load->model("listas_model","listas");[m
+[32m+[m
+[32m+[m				[32m$data["carreras"] = $this->listas->listarCarreras();[m
+[32m+[m				[32m$data["registro"] = $this->egresados->listar();[m
+[32m+[m
+[32m+[m				[32m$this->load->view("panel/lista/listar_egresados",$data);[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m		[32mfunction RegistrarEgresado(){[m
+[32m+[m
+[32m+[m			[32mif(IS_AJAX){[m
+[32m+[m
+[32m+[m				[32m$this->load->view("panel/registro/registrar_egresado");[m
+[32m+[m			[32m}[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m		[32mfunction ListarEmpresas(){[m
+[32m+[m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m		[32mfunction ListarPublicadores(){[m
+ [m
+[32m+[m		[32m}[m
+[32m+[m
+[32m+[m		[32mfunction ListarAdmins(){[m
+[32m+[m
+[32m+[m		[32m}[m
+ 	}[m
+ ?>[m
+\ No newline at end of file[m
+[1mdiff --git a/application/controllers/Perfil.php b/application/controllers/Perfil.php[m
+[1mindex 095bedb..4cf8852 100644[m
+[1m--- a/application/controllers/Perfil.php[m
+[1m+++ b/application/controllers/Perfil.php[m
+[36m@@ -5,7 +5,7 @@[m
+ 		function __construct(){[m
+ 			parent::__construct();[m
+ 			$this->load->library(array("session"));[m
+[31m-			$this->load->helper(array("sesion","sesion_helper","imagen"));[m
+[32m+[m			[32m$this->load->helper(array("sesion","sesion_helper","imagen","fecha"));[m
+ 			if(!sesionIniciada()){[m
+ 				exit("error 404 page not found");[m
+ 			}[m
+[1mdiff --git a/application/controllers/egresado.php b/application/controllers/egresado.php[m
+[1mindex 08085ff..3d7ab18 100644[m
+[1m--- a/application/controllers/egresado.php[m
+[1m+++ b/application/controllers/egresado.php[m
+[36m@@ -180,7 +180,8 @@[m
+ 				$data_egresado["cedula"] = $this->input->post("cedula");;[m
+ 				$data_egresado["titulado"] = FALSE;[m
+ 				$data_egresado["trabaja"] = FALSE;[m
+[31m-				$data_egresado["carrera_id"] = $this->input->post("carrera");;[m
+[32m+[m				[32m$data_egresado["carrera_id"] = $this->input->post("carrera");[m
+[32m+[m				[32m$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");[m
+ [m
+ 				if($data_persona["sexo"] == "M"){[m
+ 					$data_usuario["imagen"]="male.jpg";[m
+[36m@@ -236,6 +237,7 @@[m
+ 			$data_egresado["titulado"] = $this->input->post("titulado");[m
+ 			$data_egresado["trabaja"] = $this->input->post("trabaja");[m
+ 			$data_egresado["carrera_id"] = $this->input->post("carrera");[m
+[32m+[m			[32m$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");[m
+ [m
+ 			$data_usuario["usuario_id"]= $this->input->post("usuario_id");[m
+ 			$data_usuario["correo"] = $this->input->post("correo");[m
+[1mdiff --git a/application/views/footer.php b/application/views/footer.php[m
+[1mindex 2500954..e69de29 100644[m
+[1m--- a/application/views/footer.php[m
+[1m+++ b/application/views/footer.php[m
+[36m@@ -1,7 +0,0 @@[m
+[31m-	<footer id="footer" class="navbar navbar-default navbar-fixed-bottom">[m
+[31m-		<div class="container">[m
+[31m-			<p class="navbar-text text-center" style="color:black">Universidad Nacional de Ingenieria - Recinto Universitario Augusto César Sandino. Todos los derechos reservados 2015 ©</p>[m
+[31m-		</div>[m
+[31m-	</footer>[m
+[31m-</body>[m
+[31m-</html>[m
+\ No newline at end of file[m
+[1mdiff --git a/application/views/perfil_egresado.php b/application/views/perfil_egresado.php[m
+[1mindex bea5a2e..6697941 100644[m
+[1m--- a/application/views/perfil_egresado.php[m
+[1m+++ b/application/views/perfil_egresado.php[m
+[36m@@ -36,12 +36,6 @@[m
+ 				<li><a href="">Cursos</a></li>[m
+ 				<li style=""><a href="">Becas</a></li>[m
+ 			</ul>[m
+[31m-[m
+[31m-			<script type="text/javascript">[m
+[31m-[m
+[31m-				console.log($(".perfil-menu").html());[m
+[31m-				[m
+[31m-			</script>[m
+ 		</div>[m
+ 	</div>[m
+ 	<div class="col-md-10 col-lg-10" style="padding-right:0px;">[m
+[36m@@ -114,7 +108,7 @@[m
+ 						<div class="form-group">[m
+ 							<label class="control-label col-sm-3">Fecha de nacimiento:</label>[m
+ 							<div class="col-sm-6">[m
+[31m-								<input form="formActualizarPerfil" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">[m
+[32m+[m								[32m<input form="formActualizarPerfil" value="<?=date_toDMY($perfil->fecha_nacimiento)?>" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">[m
+ 							</div>[m
+ 						</div>[m
+ 					</div>[m
+[36m@@ -129,13 +123,13 @@[m
+ 						<div class="form-group">[m
+ 							<label class="control-label col-sm-3">Carrera:</label>[m
+ 							<div class="col-sm-6">[m
+[31m-								<div id="carrera_seleccion"></div>[m
+[32m+[m								[32m<div id="carrera_area"></div>[m
+ 							</div>[m
+ 						</div>[m
+ 						<div class="form-group">[m
+ 							<label class="control-label col-sm-3">Año de egresado:</label>[m
+ 							<div class="col-sm-6">[m
+[31m-								<input name="año_egresado" id="año_egresado" class="form-control" type="text" value="<?=""/*$perfil->año_egresado*/?>">[m
+[32m+[m								[32m<input form="formActualizarPerfil" value="<?=$perfil->fecha_egresado?>" id="fecha_egresado" name="fecha_egresado" id="fecha_egresado" class="form-control" type="text" value="<?=""/*$perfil->año_egresado*/?>">[m
+ 							</div>[m
+ 						</div>[m
+ 					</div>[m
+[36m@@ -270,13 +264,13 @@[m
+ 						<div class="form-group">[m
+ 							<label class="control-label col-sm-3">Telefono:</label>[m
+ 							<div class="col-sm-6">[m
+[31m-								<input form="formActualizarPerfil" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">[m
+[32m+[m								[32m<input form="formActualizarPerfil" id="telefono" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">[m
+ 							</div>[m
+ 						</div>[m
+ 						<div class="form-group">[m
+ 							<label class="control-label col-sm-3">Celular:</label>[m
+ 							<div class="col-sm-6">[m
+[31m-								<input form="formActualizarPerfil" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">[m
+[32m+[m								[32m<input form="formActualizarPerfil" id="celular" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">[m
+ 							</div>[m
+ 						</div>	[m
+ 					</div>[m
+[36m@@ -286,13 +280,13 @@[m
+ 							<div class="form-group">[m
+ 								<label class="control-label col-sm-3">Departamento:</label>[m
+ 								<div class="col-sm-6">[m
+[31m-									<div id="departamento_seleccion"></div>[m
+[32m+[m									[32m<div id="departamento_area"></div>[m
+ 								</div>[m
+ 							</div>[m
+ 							<div class="form-group">[m
+ 								<label class="control-label col-sm-3">Municipio:</label>[m
+ 								<div class="col-sm-6">[m
+[31m-									<div id="municipio_seleccion"></div>[m
+[32m+[m									[32m<div id="municipio_area"></div>[m
+ 								</div>[m
+ 							</div>[m
+ 							<div class="form-group">[m
+[36m@@ -427,37 +421,10 @@[m
+ <script type="text/javascript">[m
+ 	[m
+ 	$(document).ready(function(){[m
+[31m-		var perfil = <?=json_encode($perfil)?>;[m
+[31m-[m
+[31m-		$("#nombre").val(perfil.nombre);[m
+[31m-		$("#apellido").val(perfil.apellido);[m
+[31m-		$("#carnet").val(perfil.carnet);[m
+[31m-		$("#cedula").val(perfil.cedula);[m
+[31m-[m
+[31m-		$("#correo").val(perfil.correo);[m
+[31m-		$("#sesion").text(perfil.ultima_sesion);[m
+[31m-[m
+[31m-		if(perfil.activo){[m
+[31m-			$("#estado").text("Activa");[m
+[31m-		}[m
+[31m-		[m
+[31m-		if(perfil.sexo == 'F'){[m
+[31m-			document.getElementById("genero").selectedIndex = 1;[m
+[31m-		}[m
+[31m-[m
+[31m-		if(perfil.trabaja == true){ [m
+[31m-			$("#check_trabaja_1").attr("checked",true);[m
+[31m-		}else{[m
+[31m-			$("#check_trabaja_2").attr("checked",true);[m
+[31m-		}[m
+[31m-[m
+[31m-		if(perfil.titulado == true){[m
+[31m-			$("#check_titulado_1").attr("checked",true);[m
+[31m-		}else{[m
+[31m-			$("#check_titulado_1").attr("checked",true);[m
+[31m-		}[m
+ [m
+[31m-		$("#carrera").attr("form","formActualizarPerfil");[m
+[32m+[m		[32mlistarDepartamentos(<?=$perfil->departamento_id?>,"formActualizarPerfil","form-control");[m
+[32m+[m		[32mlistarMunicipios($("#departamento").val(),<?=$perfil->municipio_id?>,"formActualizarPerfil","form-control");[m
+[32m+[m		[32mlistarCarreras(<?=$perfil->carrera_id?>,"formActualizarPerfil","form-control");[m
+ [m
+ 		$("#cambiar_imagen").click(function(){[m
+ 			$("#imagen").trigger("click");[m
+[36m@@ -467,9 +434,13 @@[m
+ 			$("#formSubirImg").submit();[m
+ 		});[m
+ [m
+[31m-		$(".tel").mask("0000-0000",{placeholder: "0000-0000"});[m
+[31m-		$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000S"});[m
+[32m+[m		[32m$("#telefono").mask("0000-0000",{placeholder: "0000-0000"});[m
+[32m+[m		[32m$("#celular").mask("0000-0000",{placeholder: "0000-0000"});[m
+[32m+[m		[32m$("#fecha_nacimiento").datepicker({dateFormat:"dd/mm/yy"});[m
+ [m
+[32m+[m		[32m$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000S"});[m
+[32m+[m		[32m$("#fecha_egresado").mask("0000",{placeholder: "0000"});[m
+[32m+[m[41m		[m
+ 	});[m
+ 	[m
+ 	function cargarCurriculum(){[m
+[36m@@ -485,20 +456,4 @@[m
+ 		}[m
+ 	});[m
+ 	[m
+[31m-</script>[m
+[31m-<style type="text/css">[m
+[31m-body{[m
+[31m-	overflow-y:scroll;[m
+[31m-}[m
+[31m-	hr{[m
+[31m-		margin: 0px 0px;[m
+[31m-		margin-bottom: 10px;[m
+[31m-	}[m
+[31m-[m
+[31m-	p.help-block{[m
+[31m-		margin-bottom: 4px;[m
+[31m-	}[m
+[31m-	.bg-primary{[m
+[31m-		padding: 10px;[m
+[31m-	}[m
+[31m-</style>[m
+[32m+[m[32m</script>[m
+\ No newline at end of file[m
+[1mdiff --git a/application/views/perfil_egresado1.php b/application/views/perfil_egresado1.php[m
+[1mdeleted file mode 100644[m
+[1mindex f499ea7..0000000[m
+[1m--- a/application/views/perfil_egresado1.php[m
+[1m+++ /dev/null[m
+[36m@@ -1,243 +0,0 @@[m
+[31m-<input type="hidden" value="<?=base_url()?>" id="base_url">[m
+[31m-<input type="hidden" value="formActualizarPerfil" id="defaultForm">[m
+[31m-[m
+[31m-<div>[m
+[31m-  <!-- FORMULARIO DE LOS CONTROLES-->[m
+[31m-   <form action="<?=base_url('Egresado/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">[m
+[31m-    <input type="hidden" id="egresado_id" name="egresado_id" value="<?=$perfil->egresado_id?>">[m
+[31m-    <input type="hidden" id="persona_id" name="persona_id" value="<?=$perfil->persona_id?>">[m
+[31m-    <input type="hidden" id="contacto_id" name="contacto_id" value="<?=$perfil->contacto_id?>">[m
+[31m-    <input type="hidden" id="usuario_id" name="usuario_id" value="<?=$perfil->usuario_id?>">[m
+[31m-[m
+[31m-    <input type="hidden" id="municipio_id" name="municipio_id" value="<?=$perfil->municipio_id?>">[m
+[31m-    <input type="hidden" id="departamento_id" name="departamento_id" value="<?=$perfil->departamento_id?>">[m
+[31m-     <input type="hidden" id="carrera_id" name="carrera_id" value="<?=$perfil->carrera_id?>">   [m
+[31m-   </form>[m
+[31m-  <!-- -->[m
+[31m-[m
+[31m-  <!-- Nav tabs -->[m
+[31m-  <ul class="nav nav-tabs" role="tablist">[m
+[31m-    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Informacion personal</a></li>[m
+[31m-    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>[m
+[31m-    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Informacion de contacto</a></li>[m
+[31m-    <li role="presentation"><a href="#settings" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>[m
+[31m-    [m
+[31m-    <input form="formActualizarPerfil" class="btn btn-primary navbar-right navbar-btn btn-sm" style="margin:0px;" type="submit" value="Guardar cambios">[m
+[31m-  </ul>[m
+[31m-    [m
+[31m-   <!-- Tab panes -->[m
+[31m-   <div class="tab-content">[m
+[31m-      <div role="tabpanel" class="tab-pane active v-line" id="info_personal">[m
+[31m-        <div class="container">[m
+[31m-          <div class="row">[m
+[31m-            <div class="col-md-5 col-lg-5">[m
+[31m-               <div class="form-group">[m
+[31m-                  <label for="">Nombre</label>[m
+[31m-                  <input required form="formActualizarPerfil" type="text" name="nombre" class="form-control" value="<?=$perfil->nombre?>">[m
+[31m-                </div>[m
+[31m-                <div class="form-group">[m
+[31m-                  <label for="">Apellido</label>[m
+[31m-                  <input required form="formActualizarPerfil" type="text" name="apellido" value="<?=$perfil->apellido?>" class="form-control">[m
+[31m-                </div>[m
+[31m-                <div class="form-group">[m
+[31m-                  <label required for="">Sexo</label>[m
+[31m-                  <select form="formActualizarPerfil" name="genero" id="genero" class="form-control">[m
+[31m-              [m
+[31m-                   <option value="M">Masculino</option>[m
+[31m-                   <option value="F">Femenino</option>[m
+[31m-                  </select>[m
+[31m-                </div>[m
+[31m-                  <?php[m
+[31m-                    if($perfil->sexo == "F"){[m
+[31m-                      ?>[m
+[31m-                        <script type="text/javascript">[m
+[31m-                          document.getElementById("genero").selectedIndex=1;[m
+[31m-                        </script>[m
+[31m-                      <?[m
+[31m-                    }[m
+[31m-                  ?>[m
+[31m-           [m
+[31m-                <div class="form-group">[m
+[31m-             [m
+[31m-              [m
+[31m-[m
+[31m-                  <label for="">Fecha de nacimiento</label>[m
+[31m-                  <?php[m
+[31m-                    $sqldate = $perfil->fecha_nacimiento;[m
+[31m-                    $fecha = date("d/m/Y",strtotime($sqldate));[m
+[31m-                  ?>[m
+[31m-[m
+[31m-[m
+[31m-                  <input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">[m
+[31m-                  <script type="text/javascript">[m
+[31m-                   // $("#fecha_nacimiento").datepicker();[m
+[31m-                  </script>[m
+[31m-                </div>[m
+[31m-                <div class="form-group">[m
+[31m-                    <label for="">Carrera</label>[m
+[31m-                    <div id="carrera_seleccion">[m
+[31m-                    </div>[m
+[31m-                    <script type

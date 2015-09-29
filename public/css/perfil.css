@@ -102,3 +102,17 @@
 	height: 30px;
 	border-radius: 2px;
 }
+body{
+	overflow-y:scroll;
+}
+	hr{
+		margin: 0px 0px;
+		margin-bottom: 10px;
+	}
+
+	p.help-block{
+		margin-bottom: 4px;
+	}
+	.bg-primary{
+		padding: 10px;
+	}

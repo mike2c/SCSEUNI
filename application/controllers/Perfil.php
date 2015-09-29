@@ -5,7 +5,7 @@
 		function __construct(){
 			parent::__construct();
 			$this->load->library(array("session"));
-			$this->load->helper(array("sesion","sesion_helper","imagen"));
+			$this->load->helper(array("sesion","sesion_helper","imagen","fecha"));
 			if(!sesionIniciada()){
 				exit("error 404 page not found");
 			}

@@ -85,7 +85,7 @@
                   <label class="control-label col-sm-3">Sociedad:</label>
                   <div class="col-sm-7">
                      <div class="input-group">
-                    <div id="sociedad_seleccion"></div>
+                    <div id="sociedad_area"></div>
                     <div class="input-group-btn">
                      <button id="btnAgregarTitulo" onclick='registrarSociedad()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
                     </div>
@@ -195,13 +195,13 @@
               <div class="form-group">
                 <label class="control-label col-sm-3">Departamento:</label>
                 <div class="col-sm-6">
-                  <div id="departamento_seleccion"></div>
+                  <div id="departamento_area"></div>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label col-sm-3">Municipio:</label>
                 <div class="col-sm-6">
-                  <div id="municipio_seleccion"></div>
+                  <div id="municipio_area"></div>
                 </div>
               </div>
               <div class="form-group">
@@ -233,18 +233,11 @@
 <script type="text/javascript">
   
   $(document).ready(function(){
-    var perfil = <?=json_encode($perfil)?>;
-
-    $("#ruc").val(perfil.ruc);
-    $("#nombre_empresa").val(perfil.nombre_empresa);
-    $("#sitio_web").val(perfil.sitio_web);
-    $("#cedula").val(perfil.cedula);
-
-    $("#correo").val(perfil.correo);
-    $("#sesion").text(perfil.ultima_sesion);
     
-    $("#sociedad").attr("form","formActualizarPerfil");
-
+    listarSociedades(<?=$perfil->sociedad_id?>,"formActualizarPerfil","form-control");
+    listarDepartamentos(<?=$perfil->departamento_id?>,"formActualizarPerfil","form-control");
+    listarMunicipios($("#departamento").val(),<?=$perfil->municipio_id?>,"formActualizarPerfil","form-control");
+    
     $("#cambiar_imagen").click(function(){
       $("#imagen").trigger("click");
     });
@@ -253,7 +246,9 @@
       $("#formSubirImg").submit();
     });
 
-    $(".tel").mask("0000-0000",{placeholder: "0000-0000"});
+    $("#telefono").mask("0000-0000",{placeholder: "0000-0000"});
+    $("#celular").mask("0000-0000",{placeholder: "0000-0000"});
+   
     $("#ruc").mask("AAAAAAAAAA-AAAA",{placeholder: "AAAAAAAAAA-AAAA"});
 
   });

@@ -36,12 +36,6 @@
 				<li><a href="">Cursos</a></li>
 				<li style=""><a href="">Becas</a></li>
 			</ul>
-
-			<script type="text/javascript">
-
-				console.log($(".perfil-menu").html());
-				
-			</script>
 		</div>
 	</div>
 	<div class="col-md-10 col-lg-10" style="padding-right:0px;">
@@ -114,7 +108,7 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Fecha de nacimiento:</label>
 							<div class="col-sm-6">
-								<input form="formActualizarPerfil" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
+								<input form="formActualizarPerfil" value="<?=date_toDMY($perfil->fecha_nacimiento)?>" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
 							</div>
 						</div>
 					</div>
@@ -129,13 +123,13 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Carrera:</label>
 							<div class="col-sm-6">
-								<div id="carrera_seleccion"></div>
+								<div id="carrera_area"></div>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-3">Año de egresado:</label>
 							<div class="col-sm-6">
-								<input name="año_egresado" id="año_egresado" class="form-control" type="text" value="<?=""/*$perfil->año_egresado*/?>">
+								<input form="formActualizarPerfil" value="<?=$perfil->fecha_egresado?>" id="fecha_egresado" name="fecha_egresado" id="fecha_egresado" class="form-control" type="text" value="<?=""/*$perfil->año_egresado*/?>">
 							</div>
 						</div>
 					</div>
@@ -270,13 +264,13 @@
 						<div class="form-group">
 							<label class="control-label col-sm-3">Telefono:</label>
 							<div class="col-sm-6">
-								<input form="formActualizarPerfil" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
+								<input form="formActualizarPerfil" id="telefono" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-sm-3">Celular:</label>
 							<div class="col-sm-6">
-								<input form="formActualizarPerfil" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
+								<input form="formActualizarPerfil" id="celular" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
 							</div>
 						</div>	
 					</div>
@@ -286,13 +280,13 @@
 							<div class="form-group">
 								<label class="control-label col-sm-3">Departamento:</label>
 								<div class="col-sm-6">
-									<div id="departamento_seleccion"></div>
+									<div id="departamento_area"></div>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="control-label col-sm-3">Municipio:</label>
 								<div class="col-sm-6">
-									<div id="municipio_seleccion"></div>
+									<div id="municipio_area"></div>
 								</div>
 							</div>
 							<div class="form-group">
@@ -427,37 +421,10 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		var perfil = <?=json_encode($perfil)?>;
 
-		$("#nombre").val(perfil.nombre);
-		$("#apellido").val(perfil.apellido);
-		$("#carnet").val(perfil.carnet);
-		$("#cedula").val(perfil.cedula);
-
-		$("#correo").val(perfil.correo);
-		$("#sesion").text(perfil.ultima_sesion);
-
-		if(perfil.activo){
-			$("#estado").text("Activa");
-		}
-		
-		if(perfil.sexo == 'F'){
-			document.getElementById("genero").selectedIndex = 1;
-		}
-
-		if(perfil.trabaja == true){ 
-			$("#check_trabaja_1").attr("checked",true);
-		}else{
-			$("#check_trabaja_2").attr("checked",true);
-		}
-
-		if(perfil.titulado == true){
-			$("#check_titulado_1").attr("checked",true);
-		}else{
-			$("#check_titulado_1").attr("checked",true);
-		}
-
-		$("#carrera").attr("form","formActualizarPerfil");
+		listarDepartamentos(<?=$perfil->departamento_id?>,"formActualizarPerfil","form-control");
+		listarMunicipios($("#departamento").val(),<?=$perfil->municipio_id?>,"formActualizarPerfil","form-control");
+		listarCarreras(<?=$perfil->carrera_id?>,"formActualizarPerfil","form-control");
 
 		$("#cambiar_imagen").click(function(){
 			$("#imagen").trigger("click");
@@ -467,9 +434,13 @@
 			$("#formSubirImg").submit();
 		});
 
-		$(".tel").mask("0000-0000",{placeholder: "0000-0000"});
-		$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000S"});
+		$("#telefono").mask("0000-0000",{placeholder: "0000-0000"});
+		$("#celular").mask("0000-0000",{placeholder: "0000-0000"});
+		$("#fecha_nacimiento").datepicker({dateFormat:"dd/mm/yy"});
 
+		$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000S"});
+		$("#fecha_egresado").mask("0000",{placeholder: "0000"});
+		
 	});
 	
 	function cargarCurriculum(){
@@ -486,19 +457,3 @@
 	});
 	
 </script>
-<style type="text/css">
-body{
-	overflow-y:scroll;
-}
-	hr{
-		margin: 0px 0px;
-		margin-bottom: 10px;
-	}
-
-	p.help-block{
-		margin-bottom: 4px;
-	}
-	.bg-primary{
-		padding: 10px;
-	}
-</style>

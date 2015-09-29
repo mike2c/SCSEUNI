@@ -181,6 +181,7 @@
 				$data_egresado["titulado"] = FALSE;
 				$data_egresado["trabaja"] = FALSE;
 				$data_egresado["carrera_id"] = $this->input->post("carrera");;
+				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
 
 				if($data_persona["sexo"] == "M"){
 					$data_usuario["imagen"]="male.jpg";
@@ -227,7 +228,8 @@
 			$data_contacto["celular"] = $this->input->post("celular");
 			$data_contacto["direccion"] = $this->input->post("direccion");
 			$data_contacto["municipio_id"] = $this->input->post("municipio");
-
+			$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+			
 			$data_egresado["egresado_id"]= $this->input->post("egresado_id");
 			
 			//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet

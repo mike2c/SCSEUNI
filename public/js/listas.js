@@ -1,124 +1,137 @@
+function listarDepartamentos(dep_actual,form,classes){
 	
-	var base_url = baseURL();
-
-	var default_form = null;
-	if($("#defaultForm").length){
-		default_form = document.getElementById("defaultForm").value;
+	if(dep_actual == undefined){
+		dep_actual = "";
 	}
-
-	var mun_actual = null;
-	if(esta("municipio_id")){
-		mun_actual = document.getElementById("municipio_id").value;
-	}
-
-	var dep_actual = null
-	if(esta("departamento_id")){
-		dep_actual = document.getElementById("departamento_id").value
-	}
-
-	var carr_actual = "";
-	if(esta("carrera_id")){
-		carr_actual = document.getElementById("carrera_id").value;
-	}
-	var soc_actual = null;//Si el usuario es una empresa cargamos la sociedad actual
-	if($("#sociedad_id").length){
-		soc_actual = $("#sociedad_id").val();
-	}
-
-	if($("#sociedad_seleccion").length){
-		console.log("se ha cargado la sociedad actual");
-		listarSociedades();
-
-	}
-
-	//PREGUNTAMOS SI EXISTE EL ELEMENTO departamento _selección
-if($("#departamento_seleccion").length){
-		listarDepartamentos();//cargamos los departamentos via ajax
 	
-	$("#departamento").addClass("form-control");
-	$("#departamento").attr("form",default_form);
+	$.ajax({url: baseURL("Ajax/CargarDepartamentos/"+dep_actual),
+	type: "post",
+	dataType: "html",
+	success: function(data){
+		//Comprobamos si el elemento existe
+		if($("#departamento_area").length){
 
-	//agregamos el evento Change de jquery para saber cuando la combo ha cambiado de valor
-	$("#departamento").change(function(){
-		listarMunicipios($("#departamento").val());
+			$("#departamento_area").html(data);
+
+			if(form != undefined && form != null){
+				$("#departamento").attr("form",form);
+			}
+			if(classes != undefined && classes != null){
+				$("#departamento").addClass(classes);
+			}
+
+			$("#departamento").change(function(){
+				listarMunicipios($("#departamento").val(),null,$("#departamento").attr("form"),$("#departamento").attr("class"));
+			});
+		}
+	},
+	error: function(jqXHR,textStatus,errorThrown){
+		console.log(jqXHR.responseText);
+		alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
+	},
+	async: false});
+
+}
+
+function listarMunicipios(departamento,mun_actual,form,classes){
+	
+	//Salimos de la funcion si no se proporciona la variable departamento
+	if(departamento == undefined){
+		return;
+	}
+
+	if(mun_actual == undefined){
+		mun_actual == "";
+	}
+	
+	$.ajax({url: baseURL("Ajax/CargarMunicipios/"+departamento+"/"+mun_actual),
+	type: "post",
+	dataType: "html",
+	success: function(data){
+		if($("#municipio_area").length){
+			
+			$("#municipio_area").html(data);
+
+			if(form != undefined && form != null){
+				$("#municipio").attr("form",form);
+			}
+			if(classes != undefined && classes != null){
+				$("#municipio").addClass(classes);
+			}
+		}
+	},
+	error: function(jqXHR,textStatus,errorThrown){
+		console.log(jqXHR.responseText);
+		alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
+	},
+	async: false}); 
+
+}
+
+function listarCarreras(carr_actual,form,classes){
+
+	if(carr_actual == undefined){
+		carr_actual = "";
+	}
+
+	$.ajax({
+		url: baseURL("Ajax/CargarCarreras/"+carr_actual),
+		type: "post",
+		datatype: "html",
+		success: function(data){
+
+			if($("#carrera_area").length){
+
+				$("#carrera_area").html(data);
+
+				if(form != undefined && form != null){
+					$("#carrera").attr("form",form);
+				}
+				if(classes != undefined && classes != null){
+					$("#carrera").addClass(classes);
+				}
+			}
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log(jqXHR.responseText);
+			alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
+		},
+		async: false
 	});
 
+}
+
+function listarSociedades(soc_actual,form,classes){
+
+	if(soc_actual == undefined){
+		soc_actual = "";
 	}
 
-if($("#municipio_seleccion").length){
+	$.ajax({
+		url: baseURL("Ajax/CargarSociedades/"+soc_actual),
+		type: "post",
+		datatype: "html",
+		success: function(data){
 
-	listarMunicipios($("#departamento").val());
+			if($("#sociedad_area").length){
 
-}
-	
-	if($("#carrera_seleccion").length){
-	
-		listarCarreras();
-		//console.log("asdasd");
-	}
+				$("#sociedad_area").html(data);
 
-	if(base_url == ""){
-		console.log("No se ha encontrado el elemento base_url");
-		console.log("porfavor cree un elemento input type=hidden con el valor de la url base de codeigniter");
-	}
+				if(form != undefined && form != null){
+					$("#sociedad").attr("form",form);
+				}
+				if(classes != undefined && classes != null){
+					$("#sociedad").addClass(classes);
+				}
+			}
+		},
+		error: function(jqXHR,textStatus,errorThrown){
+			console.log(jqXHR.responseText);
+			alert("Ha ocurrido un error y no se ha podido procesar la petición \n"+textStatus);
+		},
+		async: false
+	});
 
-	function listarDepartamentos(){
-	var dir = base_url+"Ajax/CargarDepartamentos/"+dep_actual;
-	var settings = {url: dir,
-	type: "post",
-	dataType: "html",
-	success: function(data){
-		$("#departamento_seleccion").html(data);
-	},
-	async: false}; 
-
-	$.ajax(settings);
-}
-
-function listarMunicipios(id_departamento){
-	var dir = base_url+"Ajax/CargarMunicipios/"+id_departamento+"/"+mun_actual;
-	var settings = {url: dir,
-	type: "post",
-	dataType: "html",
-	success: function(data){
-		$("#municipio_seleccion").html(data);
-	},
-	async: false}; 
-
-	$.ajax(settings);
-	$("#municipio").addClass("form-control");
-	$("#municipio").attr("form",default_form);
-
-}
-
-function listarCarreras(){
-	var dir = base_url+"Ajax/CargarCarreras/"+carr_actual;
-	var settings = {url: dir,
-	type: "post",
-	dataType: "html",
-	success: function(data){
-		$("#carrera_seleccion").html(data);
-	},
-	async: false}; 
-
-	$.ajax(settings);
-	$("#carrera").addClass("form-control");
-	$("#carrera").attr("form",default_form);
-}
-
-function listarSociedades(){
-	var dir = base_url+"Ajax/CargarSociedades/"+soc_actual;
-	var settings = {url: dir,
-	type: "post",
-	dataType: "html",
-	success: function(data){
-		$("#sociedad_seleccion").html(data);
-	},
-	async: false}; 
-
-	$.ajax(settings);
-	$("#sociedad").addClass("form-control");
-	$("#sociedad").attr("form",default_form);
 }
 
 function registrarSociedad(){
@@ -131,7 +144,7 @@ function registrarSociedad(){
 		function(data){
 			if(data == ""){
 				alert("Sociedad registrada");
-				listarSociedades();
+				listarSociedades($("#sociedad").val(),$("#sociedad").attr("form"),$("#sociedad").attr("class"));
 			}else{
 				console.log(data);
 			}
@@ -140,7 +153,7 @@ function registrarSociedad(){
 
 function listarAreas(area_actual){
 
-	$.ajax({url: base_url + "Ajax/CargarAreas/" + area_actual,
+	$.ajax({url: baseURL(+ "Ajax/CargarAreas/" + area_actual),
 	type: "post",
 	datatype: "html",
 	success: function(data){
@@ -160,7 +173,7 @@ function listarCargos(area,cargo_actual){
 		cargo_actual = "";	
 	}
 
-	$.ajax({url: base_url+"Ajax/CargarCargos/"+area+"/"+cargo_actual,
+	$.ajax({url: baseURL("Ajax/CargarCargos/"+area+"/"+cargo_actual),
 		type: "get",
 		datatype: "html",
 		success: function(data){
