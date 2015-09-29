@@ -102,6 +102,16 @@
 			$query = $this->db->query("select carrera,count(egresado_id) as cantidad from listar_egresados group by carrera;");
 			return $query;
 		}
+		
+		function validar_cedula_y_carnet($datos){
+			$query = $this->db->query("select carnet,cedula from egresado;");
+			foreach($query->result() as $db_data){
+				if($datos["cedula"]==$db_data->cedula || $datos["carnet"] == $db_data->carnet){
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 ?>

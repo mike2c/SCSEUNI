@@ -191,8 +191,11 @@
 				$data_usuario["correo"] = $this->input->post("correo");
 				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
 				$data_usuario["activo"] = FALSE;
-
-				$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				if($this->egresado_model->validar_cedula_y_carnet($data_egresado)){
+					$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				}else{
+					echo "Los campos Cedula o Carnet ya se encuentran registrados en la base de datos";
+				}
 			
 			}
 		

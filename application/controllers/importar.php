@@ -72,12 +72,16 @@
 					foreach ($data_usuario as $llave4 => $valor4) {
 					$data_usuario[$llave4] = $valor4;
 					}
-			
-					$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+					if($this->egresado_model->validar_cedula_y_carnet($data_egresado)){
+						$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+					}else{
+						echo "Los campos Cedula o Carnet del registro N#".$index." ya se encuentran registrados en la base de datos <br/>" ;
+						$cont -= 1; 
+					}
+					
 					
 				}
-			}
-			
+			}		
 			if($cont > 1){
 				echo "Datos importados Correctamente";
 			}else{
@@ -85,6 +89,5 @@
 			}
 			unlink($filename);
 		}
-
 	}
 ?>
