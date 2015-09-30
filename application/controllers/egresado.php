@@ -121,8 +121,8 @@
 			if(!$this->validarCampos($this->input->post("carnet"),$this->input->post("cedula"))){
 
 				if(IS_AJAX){
-					
 					if(!$_POST){
+						echo validation_errors();
 						$this->load->view("registro_egresado");
 					}else{
 						echo validation_errors();
@@ -239,6 +239,22 @@
 		}
 		
 		function validarCampos($carnet,$cedula){
+			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
+			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
+			$this->form_validation->set_rules("nombre","Genero","trim|required");
+			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_length[10]");
+			
+			if($this->form_validation->run()==false){
+				return FALSE;
+			}elseif($this->validarCedulaCarnet($carnet,$cedula)==false){
+				$this->form_validation->set_message('carnet',"El Carnet o Cedula proporcionado ya se encuentra registrado, por favor revise los datos");
+				return FALSE;
+			}else{
+				return TRUE;
+			}
+		}
+		
+		function validarCedulaCarnet($carnet,$cedula){
 			$bd_carnet = $this->modelo->getCarnetEgresado();
 			$bd_cedula = $this->modelo->getCedulaEgresado();
 			$CarVal = true;
@@ -261,19 +277,6 @@
 						break;
 					}
 				}
-			}
-				
-			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_lenght[45]");
-			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_lenght[45]");
-			$this->form_validation->set_rules("nombre","Genero","trim|required|max_lenght[1]");
-			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_lenght[10]");
-			
-			if($this->form_validation->run()==false){
-				return FALSE;
-			}elseif($cedVal == false || $CarVal == false){
-				return FALSE;
-			}else{
-				return TRUE;
 			}
 		}
 	}	
