@@ -72,8 +72,9 @@
 					foreach ($data_usuario as $llave4 => $valor4) {
 					$data_usuario[$llave4] = $valor4;
 					}
-					if($this->egresado_model->validar_cedula_y_carnet($data_egresado)){
+					if($this->validarCampos($data_egresado)){
 						$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+						echo "Se guardo el Registro N#". $index."<br/>";
 					}else{
 						echo "Los campos Cedula o Carnet del registro N#".$index." ya se encuentran registrados en la base de datos <br/>" ;
 						$cont -= 1; 
@@ -88,6 +89,39 @@
 				echo "No se encontraron datos a importar, revise que el archivo contenga datos a importar";
 			}
 			unlink($filename);
+		}
+		
+		function validarCampos($campo){
+			$cedula = $this->egresado_model->getCedulaEgresado();
+			$carnet = $this->egresado_model->getCarnetEgresado();
+			$CarVal = true;
+			$cedVal = true;
+			
+			if($carnet==false){
+				return true;
+			}else{
+				foreach($carnet->result() as $data_car){
+					if($campo["carnet"] == $data_car->carnet){
+						$CarVal = false;
+						break;
+					}
+				}
+				
+			}
+			if($cedula!=false){
+				for($i=0;$i<=count($cedula);$i++){
+					if($campo["cedula"] == $cedula[$i]){
+						$cedVal = false;
+						break;
+					}
+				}
+			}
+			
+			if($cedVal == false || $CarVal == false){
+				return false;
+			}else{
+				return true;	
+			}
 		}
 	}
 ?>

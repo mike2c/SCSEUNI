@@ -9,23 +9,6 @@
 			$this->email->set_newline("\r\n");
 			$this->load->model("egresado_model","modelo");
 			$this->load->helper(array("url","form_helper"));
-
-			#DEFINIENDO LAS REGLAS
-			$config = array(
-				array('field'=>"nombre",'label'=>"Nombre",'rules'=>'required|max_lenght[45]',
-					'errors'=>array('required'=>'El campo nombre no puede quedar vacio')),
-				array('field'=>"apellido",'label'=>"Apellido",'rules'=>'required|max_lenght[45]',
-					'errors'=>array('required'=>'El campo apellido no puede quedar vacio')),
-				array('field'=>"carnet",'label'=>"Carnet",'rules'=>'required|max_lenght[10]',
-					'errors'=>array('required'=>'El campo carnet no puede quedar vacio')),
-				array('field'=>"genero",'label'=>"Genero",'rules'=>'required',
-					'errors'=>array('required'=>'El campo sexo no puede quedar vacio')),
-				array('field'=>"celular",'label'=>"Celular",'rules'=>'max_lenght[10]'),
-				array('field'=>"telefono",'label'=>"Celular",'rules'=>'max_lenght[10]'),
-				array('field'=>"correo",'label'=>"Correo",'rules'=>'max_lenght[45]'),
-				array('field'=>"direccion",'label'=>"Dirección",'rules'=>'max_lenght[100]')
-
-			);
 			
 		}
 		
@@ -134,17 +117,8 @@
 		function Registro(){
 			
 			$this->load->helper("pass_gen");
-
-			$rules = array(
-				array('field'=>"nombre",'label'=>"Nombre",'rules'=>'required'),
-				array('field'=>"apellido",'label'=>"Apellido",'rules'=>'required'),
-				array('field'=>"genero",'label'=>"Genero",'rules'=>'required'),
-				);
-
-
-			$this->form_validation->set_rules($rules);
 			
-			if($this->form_validation->run() == false){
+			if(!$this->validarCampos($this->input->post("carnet"),$this->input->post("cedula"))){
 
 				if(IS_AJAX){
 					
@@ -177,7 +151,7 @@
 				$data_contacto["municipio_id"] = $this->input->post("municipio");;
 
 				$data_egresado["carnet"] = $this->input->post("carnet");
-				$data_egresado["cedula"] = $this->input->post("cedula");;
+				$data_egresado["cedula"] = $this->input->post("cedula");
 				$data_egresado["titulado"] = FALSE;
 				$data_egresado["trabaja"] = FALSE;
 				$data_egresado["carrera_id"] = $this->input->post("carrera");;
@@ -192,11 +166,8 @@
 				$data_usuario["correo"] = $this->input->post("correo");
 				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
 				$data_usuario["activo"] = FALSE;
-				#if($this->modelo->validar_cedula_y_carnet($data_egresado)){
-					$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-				#}else{
-					#echo "Los campos Cedula o Carnet ya se encuentran registrados en la base de datos";
-				#}
+
+				$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 			
 			}
 		
@@ -266,5 +237,44 @@
 			echo Encrypter::decrypt("'fFJRohBIq2R8JCLh3sMO+Urc09+eHKP/kfQrzo0UHFI='");
 
 		}
-	}
+		
+		function validarCampos($carnet,$cedula){
+			$bd_carnet = $this->modelo->getCarnetEgresado();
+			$bd_cedula = $this->modelo->getCedulaEgresado();
+			$CarVal = true;
+			$cedVal = true;
+			
+			if($bd_carnet==false){
+				
+			}else{
+				foreach($bd_carnet->result() as $data_car){
+					if($carnet == $data_car->carnet){
+						$CarVal = false;
+						break;
+					}
+				}
+			}
+			if($bd_cedula!=false){
+				for($i=0;$i<=count($bd_cedula);$i++){
+					if($cedula == $cedula[$i]){
+						$cedVal = false;
+						break;
+					}
+				}
+			}
+				
+			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_lenght[45]");
+			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_lenght[45]");
+			$this->form_validation->set_rules("nombre","Genero","trim|required|max_lenght[1]");
+			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_lenght[10]");
+			
+			if($this->form_validation->run()==false){
+				return FALSE;
+			}elseif($cedVal == false || $CarVal == false){
+				return FALSE;
+			}else{
+				return TRUE;
+			}
+		}
+	}	
 ?>

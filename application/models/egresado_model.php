@@ -103,14 +103,27 @@
 			return $query;
 		}
 		
-		function validar_cedula_y_carnet($datos){
-			$query = $this->db->query("select carnet,cedula from egresado;");
-			foreach($query->result() as $db_data){
-				if($datos["cedula"]==$db_data->cedula || $datos["carnet"] == $db_data->carnet){
-					return false;
-				}
+		function getCarnetEgresado(){
+			$query = $this->db->query("select carnet from egresado;");
+			if($query->num_rows()>0){
+				return $query;
+			}else{
+				return false;	
 			}
-			return true;
+		}
+		function getCedulaEgresado(){
+			$query = $this->db->query("select cedula from egresado;");
+			if($query->num_rows()>0){
+				foreach($query->result() as $cedula){
+					if($cedula->cedula == ""){
+						
+					}else{
+						return $cedula->cedula;
+					}
+				}
+			}else{
+				return false;	
+			}
 		}
 	}
 

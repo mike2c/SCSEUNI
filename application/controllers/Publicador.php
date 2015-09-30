@@ -23,7 +23,7 @@
 			/*Terminar de valiadar*/
 
 			if(!IS_AJAX){
-				if($this->form_validation->run() == false){
+				if(!$this->validarCampos()){
 					echo validation_errors();
 					$this->load->view("cabecera");
 					$this->load->view("nav");
@@ -36,7 +36,7 @@
 				if(!$_POST){
 					$this->load->view("publicador/registro_publicador");
 				}else{
-					if($this->form_validation->run() == false){
+					if(!$this->validarCampos()){
 						echo validation_errors();
 					}else{
 						$this->Registrar();
@@ -144,6 +144,19 @@
 
 		function Eliminar($id_publicador){
 
+		}
+		
+		function validarCampos(){
+				$this->form_validation->set_rules("nombre","Nombre","trim|required|max_lenght[45]");
+				$this->form_validation->set_rules("apellido","Apellido","trim|required|max_lenght[45]");
+				$this->form_validation->set_rules("nombre","Genero","trim|required|max_lenght[1]");
+				$this->form_validation->set_rules("cargo_id","Cargo","trim|required|max_lenght[1]");
+				
+				if($this->form_validation->run()==false){
+					return FALSE;
+				}else{
+					return TRUE;
+				}
 		}
 	}
 
