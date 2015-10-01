@@ -63,6 +63,7 @@
 							<td>Genero</td>
 							<td>Trabajando</td>
 							<td>Titulado</td>
+							<td>Año de egresado</td>
 							<td>Correo</td>
 							<td>Cuenta</td>
 							<td>Telefono</td>
@@ -82,6 +83,7 @@
 								echo "<td>$row->sexo</td>";
 								echo "<td>". (($row->trabaja)? "Trabajando":"Desempleado") ."</td>";
 								echo "<td>". (($row->titulado)? "Titulado":"Sin titulo") ."</td>";
+								echo "<td>$row->fecha_egresado</td>";
 								echo "<td>$row->correo</td>";
 								echo "<td>". (($row->activo == TRUE)? "Activa":"Desactivada") ."</td>";
 								echo "<td>$row->telefono</td>";

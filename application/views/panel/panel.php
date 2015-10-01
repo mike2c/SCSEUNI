@@ -1,11 +1,10 @@
 <!-- FontAwesome Styles-->
 <link href="<?=base_url('public/css/font-awesome.css')?>" rel="stylesheet" />
-<!-- Morris Chart Styles<link href="<?=base_url('public/js/morris/morris-0.4.3.min.css')?>" rel="stylesheet" />-->
-
 <!-- Custom Styles-->
 <link href="<?=base_url('public/css/custom-styles.css')?>" rel="stylesheet" />
 <!-- Google Fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+
 <body>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
@@ -47,10 +46,10 @@
                         <li><a href="javascript:listarPublicador();"><i class="fa fa-list-alt"></i> Listado</a></li>
                     </ul>
                 </li>
-                 <li><a href="#" class="active"><i class="fa fa-user"></i> Admins<span class="fa arrow"></span></a>
+                 <li><a href="#" class="active"><i class="fa fa-user"></i> Administradores<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
-                        <li><a href="#"><i class="fa fa-user-plus"></i>Registrar</a></li>
-                        <li><a href="#"><i class="fa fa-list-alt"></i>Listado</a></li>
+                        <li><a href="javascript:registrarAdministrador()"><i class="fa fa-user-plus"></i>Registrar</a></li>
+                        <li><a href="javascript:listarAdministradores()"><i class="fa fa-list-alt"></i>Listado</a></li>
                     </ul>
                 </li>
                 <li>
@@ -89,18 +88,9 @@
     <!-- /. PAGE WRAPPER  -->
 </div>
 <!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js   <script src="assets/js/jquery-1.10.2.js"></script>-->
-
-<!-- Bootstrap Js   <script src="assets/js/bootstrap.min.js"></script>-->
 
 <!-- Metis Menu Js -->
 <script src="<?=base_url('public/js/jquery.metisMenu.js')?>"></script>
-
-<!-- Custom Js <script src="<?=base_url('public/js/custom-scripts.js')?>"></script>-->
-
-<!-- Morris Chart Js<script src="<?=base_url('public/js/morris/raphael-2.1.0.min.js')?>"></script>
-<script src="<?=base_url('public/js/morris/morris.js')?>"></script> -->
 <!-- Libreria HighCharts-->
 <script type="text/javascript" src="<?=base_url('public/js/highcharts/highcharts.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/highcharts/modules/exporting.js')?>"></script>
@@ -124,6 +114,14 @@
         $("#page-inner").load("<?=base_url('CPanel/ListarEmpresas')?>");      
     }
 
+    function listarPublicador(){
+        $("#page-inner").load("<?=base_url('CPanel/ListarPublicadores')?>");
+    }
+
+    function listarAdministradores(){
+        $("#page-inner").load("<?=base_url('CPanel/listarAdministradores')?>");   
+    }
+
     function reporteEgresadosTrabajando(){
         $("#page-inner").load("<?=base_url('CPanel/ReporteEgresadosTrabajando')?>");
     }
@@ -138,6 +136,10 @@
 
     function registrarPublicador(){
         $("#page-inner").load("<?=base_url('CPanel/RegistrarPublicador')?>");
+    }
+
+    function registrarAdministrador(){
+        $("#page-inner").load("<?=base_url('CPanel/RegistrarAdministrador')?>");
     }
 
     //Añadir animacion al menu

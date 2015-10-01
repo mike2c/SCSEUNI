@@ -1,9 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	
-	class Publicador_model extends CI_Model{
+	include "publicacion_model.php";
+	class Publicador_model extends Publicacion_model{
 
 		function __construct(){
-			parent::__construct();
+			parent::__construct("listar_publicadores");
 			$this->load->database();
 		}
 
@@ -29,12 +30,6 @@
 
 			$this->db->where("publicador_id",$data_publicador["publicador_id"]);
 			$this->db->update("publicador",$data_publicador);
-		}
-
-		function listar(){
-
-			return ($this->db->get("listar_publicadores"));
-			
 		}
 
 		function buscarPublicador($where){

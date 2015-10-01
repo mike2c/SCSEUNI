@@ -13,12 +13,13 @@
 		private function validarCampos(){
 
 			$this->load->library("form_validation");
-			$this->form_validation->set_rules('nombre_empresa','Nombre de la Empresa','trim|required|min_length[2]|max_length[60]');
-			$this->form_validation->set_rules('telefono','Telefono','trim|max_length[10]|min_length[8]');
+			$this->form_validation->set_rules('nombre_empresa','Nombre de la Empresa','trim|required|min_length[5]|max_length[60]');
+			$this->form_validation->set_rules('ruc','RUC','trim|max_length[9]|min_length[9]');
+			$this->form_validation->set_rules('telefono','Telefono','trim|max_length[9]|min_length[9]');
 			$this->form_validation->set_rules('direccion','Direccion','trim|max_length[100]');
-			$this->form_validation->set_rules('correo','Correo','trim|required|max_length[45]|valid_email');
-			$this->form_validation->set_rules('clave','Confirmar Contraseña','trim|min_length[6]|required|max_length[100]');
-			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[6]|max_length[100]',
+			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
+			$this->form_validation->set_rules('clave','Confirmar Contraseña','trim|min_length[5]|required|max_length[15]');
+			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
 				array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
 			
 			if($this->form_validation->run() == FALSE){

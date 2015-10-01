@@ -1,12 +1,12 @@
 <h1 class="page-header">
 	Registro
-	<small>egresado</small>
+	<small>Publicador</small>
 </h1>
 <div class="row">
 	<div class="col-md-12 col-lg-12">
 		<div class="panel panel-default" style="">
 			<div class="panel-body">
-				<form class="" action="<?=base_url('Egresado/Registro')?>" method="post" id="formRegistro">
+				<form class="" action="<?=base_url('Publicador/Registro')?>" method="post" id="formRegistro">
 					<div class="row">
 						<div class="col-md-6 col-lg-6">
 							<div class="form-group">
@@ -31,6 +31,10 @@
 							<div class="form-group">
 								<label for="">Contraseña</label>
 								<input class="form-control" type="password" name="clave" id="clave" required>
+							</div>
+							<div class="form-group">
+								<label for="">Repite la contraseña</label>
+								<input class="form-control" type="password" name="clave_conf" id="clave_conf" required>
 							</div>
 							<div class="form-group">
 								<label for="">Area</label>

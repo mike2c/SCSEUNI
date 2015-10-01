@@ -1,7 +1,10 @@
 <?php
-	class Admin_model extends CI_Model{
+	
+	include "publicacion_model.php";
+	class Admin_model extends Publicacion_model{
+		
 		function __construct(){
-			parent::__construct();
+			parent::__construct("listar_admins");
 			$this->load->library('session');
 		}
 

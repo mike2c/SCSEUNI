@@ -1,13 +1,15 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	define("IS_AJAX",isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER["HTTP_X_REQUESTED_WITH"]) == 'xmlhttprequest');
 
+	
 	class CPanel extends CI_Controller{
 
 		function __construct(){
 			parent::__construct();
-			$this->load->helper(array("sesion","fecha"));
+			
+			$this->load->helper("sesion");
 			if(!esAdministrador()){
-				//show_404();
+			#echo_404();
 			}
 		}
 
@@ -58,6 +60,7 @@
 			if(IS_AJAX){
 				$this->load->model("empresa_model","empresas");
 				$this->load->model("listas_model","listas");
+				$this->load->helper("fecha");
 
 				if(isset($_POST["busqueda"])){
 
@@ -84,11 +87,60 @@
 
 		function ListarPublicadores(){
 
+			if(IS_AJAX){
+				$this->load->model("publicador_model","publicadores");
+
+				if(isset($_POST["busqueda"])){
+
+					if(isset($_POST["area"])){
+
+						$like["area_id"] = $this->input->post("area");
+						$data["area_seleccionada"] = $this->input->post("area");
+					}
+					if(isset($_POST["cargo"])){
+
+						$like["cargo_id"] = $this->input->post("cargo");
+						$data["cargo_seleccionado"] = $this->input->post("cargo");
+					}
+
+					if(isset($_POST["campo"]) && !empty($_POST["campo"])){
+						$campo = $this->input->post("campo");
+						$like[$campo] = $this->input->post("busqueda");
+						$data["busqueda"] = $this->input->post("busqueda");
+						$data["campo"] = $this->input->post("campo");
+					}
+
+					$data["registros"] = $this->publicadores->listar(null,$like);
+				}else{
+					$data["registros"] = $this->publicadores->listar();
+				}
+
+				$this->load->view("panel/lista/listar_publicadores",$data);
+			}
 		}
 
-		function ListarAdmins(){
+		function ListarAdministradores(){
 
+			if(IS_AJAX){
+				$this->load->model("admin_model","admin");
+				$this->load->helper("fecha");
+				
+				if(isset($_POST["busqueda"])){
 
+					if(isset($_POST["campo"]) && !empty($_POST["campo"])){
+						$campo = $this->input->post("campo");
+						$like[$campo] = $this->input->post("busqueda");
+						$data["busqueda"] = $this->input->post("busqueda");
+						$data["campo"] = $this->input->post("campo");
+					}
+
+					$data["registros"] = $this->admin->listar(null,$like);
+				}else{
+					$data["registros"] = $this->admin->listar();
+				}
+
+				$this->load->view("panel/lista/listar_admins",$data);
+			}
 		}
 
 		/*Creacion de reportes*/
@@ -159,8 +211,14 @@
 		function RegistrarPublicador(){
 
 			if(IS_AJAX){
-
 				$this->load->view("panel/registro/registrar_publicador");
+			}
+		}
+
+		function RegistrarAdministrador(){
+
+			if(IS_AJAX){
+				$this->load->view("panel/registro/registrar_admin");
 			}
 		}
 	}

@@ -30,6 +30,10 @@
 								<div id="carrera_area"></div>
 							</div>
 							<div class="form-group">
+								<label for="">Año de egresado</label>
+								<input class="form-control" type="text" name="fecha_egresado" id="fecha_egresado" required>
+							</div>
+							<div class="form-group">
 								<label for="">Genero</label>
 								<select required class="form-control" name="genero" id="genero">
 									<option value="M">Masculino</option>
@@ -39,7 +43,7 @@
 
 							<div class="form-group">
 								<label for="">Correo</label>
-								<input class="form-control" type="text" name="correo" id="correo" required>
+								<input placeholder="ejemplo@gmail.com" class="form-control" type="text" name="correo" id="correo" required>
 							</div>
 							<div class="form-group">
 								<label for="">Teléfono</label>
@@ -91,6 +95,7 @@
 		$("#cedula").mask("000-000000-0000S",{placeholder:"000-000000-0000L"});
 		$("#telefono").mask("0000-0000",{placeholder:"0000-0000"});
 		$("#celular").mask("0000-0000",{placeholder:"0000-0000"});
+		$("#fecha_egresado").mask("0000",{placeholder: "0000"});
 
 		$("#formRegistro").submit(function(e){
 			e.preventDefault();

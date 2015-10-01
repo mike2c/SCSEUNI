@@ -17,7 +17,7 @@
 				/*Volvemos a preguntar si los campos recibidos son validos para cuando
 				se haga una peticion sin previa validacion por AJAX*/
 				if($this->validarCampos()){
-					
+					echo "entro";
 					$this->load->library("Encrypter");
 					$this->load->helper("fecha");
 
@@ -39,6 +39,11 @@
 					$data_publicador["cargo_id"] = $this->input->post("cargo");
 
 					$this->publicador->insertar($data_persona,$data_usuario,$data_publicador);
+
+					echo "<script type='text/javascript'>
+						alert('Registrado');
+						window.location='". base_url('CPanel') ."';
+					</script>";
 				}
 			}
 		}
@@ -51,7 +56,6 @@
 					window.location='". base_url('Perfil') ."';
 				</script>";
 			}
-		
 		}
 
 		function Actualizar(){
@@ -89,9 +93,14 @@
 			$this->load->library("form_validation");
 			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
 			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
-			$this->form_validation->set_rules("nombre","Genero","trim|required|min_length[1]");
-			$this->form_validation->set_rules("cargo","Cargo","trim|required|min_length[1]");
-			
+			$this->form_validation->set_rules("genero","Genero","trim|required|min_length[1]|max_length[1]");
+				$this->form_validation->set_rules("area","Area","trim|required|min_length[1]|max_length[4]");
+			$this->form_validation->set_rules("cargo","Cargo","trim|required|min_length[1]|max_length[4]");
+			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
+			$this->form_validation->set_rules("clave","Contraseña","trim|required|min_length[5]|max_length[15]");
+			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
+				array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
+
 			if($this->form_validation->run()==false){
 				
 				echo validation_errors();
