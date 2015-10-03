@@ -8,7 +8,7 @@
 			$this->load->library(array("form_validation","email","Encrypter"));
 			$this->email->set_newline("\r\n");
 			$this->load->model("egresado_model","modelo");
-			$this->load->helper(array("url","form_helper"));
+			$this->load->helper(array("url","form_helper","sesion"));
 			
 		}
 		
@@ -180,46 +180,49 @@
 		}
 
 		function Actualizar(){
-		
-			$this->load->model("egresado_model");
-		
-			$modelo = new Egresado_model();
-
-			$data_persona["persona_id"] = $this->input->post("persona_id");
-			$data_persona["nombre"] = $this->input->post("nombre");
-			$data_persona["apellido"] = $this->input->post("apellido");
-			$data_persona["sexo"] = $this->input->post("genero");
-
-			$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
-			$newDate = date("Y-m-d", strtotime($originalDate));
-			$data_persona["fecha_nacimiento"] = $newDate;
-
-			$data_contacto["contacto_id"]= $this->input->post("contacto_id");
-			$data_contacto["telefono"] = $this->input->post("telefono");
-			$data_contacto["celular"] = $this->input->post("celular");
-			$data_contacto["direccion"] = $this->input->post("direccion");
-			$data_contacto["municipio_id"] = $this->input->post("municipio");
-			$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
-
-			$data_egresado["egresado_id"]= $this->input->post("egresado_id");
 			
-			//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet
-			if(esAdministrador()){
-				$data_egresado = $this->input->post("carnet");
+			if(!$this->validarCampos($this->input->post("carnet"),$this->input->post("cedula"),true)){
+				
+			}else{
+				$this->load->model("egresado_model");
+			
+				$modelo = new Egresado_model();
+	
+				$data_persona["persona_id"] = $this->input->post("persona_id");
+				$data_persona["nombre"] = $this->input->post("nombre");
+				$data_persona["apellido"] = $this->input->post("apellido");
+				$data_persona["sexo"] = $this->input->post("genero");
+	
+				$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
+				$newDate = date("Y-m-d", strtotime($originalDate));
+				$data_persona["fecha_nacimiento"] = $newDate;
+	
+				$data_contacto["contacto_id"]= $this->input->post("contacto_id");
+				$data_contacto["telefono"] = $this->input->post("telefono");
+				$data_contacto["celular"] = $this->input->post("celular");
+				$data_contacto["direccion"] = $this->input->post("direccion");
+				$data_contacto["municipio_id"] = $this->input->post("municipio");
+				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+	
+				$data_egresado["egresado_id"]= $this->input->post("egresado_id");
+				
+				//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet
+				if(esAdministrador()){
+					$data_egresado = $this->input->post("carnet");
+				}
+	
+				$data_egresado["cedula"] = $this->input->post("cedula");
+				$data_egresado["titulado"] = $this->input->post("titulado");
+				$data_egresado["trabaja"] = $this->input->post("trabaja");
+				$data_egresado["carrera_id"] = $this->input->post("carrera");
+	
+				$data_usuario["usuario_id"]= $this->input->post("usuario_id");
+				$data_usuario["correo"] = $this->input->post("correo");
+				#$data_usuario["clave"] = $this->input->post("clave");
+				#$data_usuario["activo"] = $this->input->post("activo");
+	
+				$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
 			}
-
-			$data_egresado["cedula"] = $this->input->post("cedula");
-			$data_egresado["titulado"] = $this->input->post("titulado");
-			$data_egresado["trabaja"] = $this->input->post("trabaja");
-			$data_egresado["carrera_id"] = $this->input->post("carrera");
-
-			$data_usuario["usuario_id"]= $this->input->post("usuario_id");
-			$data_usuario["correo"] = $this->input->post("correo");
-			#$data_usuario["clave"] = $this->input->post("clave");
-			#$data_usuario["activo"] = $this->input->post("activo");
-
-			$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-			
 		}
 
 		function Busqueda(){
@@ -246,7 +249,7 @@
 			
 			if($this->form_validation->run()==false){
 				return FALSE;
-			}elseif($this->validarCedulaCarnet($carnet,$cedula)==false){
+			}elseif($this->existeCedulaCarnet($carnet,$cedula)==false){
 				$this->form_validation->set_message('carnet',"El Carnet o Cedula proporcionado ya se encuentra registrado, por favor revise los datos");
 				return FALSE;
 			}else{
@@ -254,28 +257,21 @@
 			}
 		}
 		
-		function validarCedulaCarnet($carnet,$cedula){
-			$bd_carnet = $this->modelo->getCarnetEgresado();
-			$bd_cedula = $this->modelo->getCedulaEgresado();
-			$CarVal = true;
-			$cedVal = true;
-			
-			if($bd_carnet==false){
-				
-			}else{
-				foreach($bd_carnet->result() as $data_car){
-					if($carnet == $data_car->carnet){
-						$CarVal = false;
-						break;
-					}
+		function existeCedulaCarnet($carnet,$cedula,$update=false){
+			if($update==false){
+				$bd_carnet = $this->modelo->validarCarnetEgresado($carnet);
+				$bd_cedula = $this->modelo->validarCedulaEgresado($cedula);
+				if ($bd_carnet || $bd_cedula) {
+					return false;
+				}else {
+					return true;
 				}
-			}
-			if($bd_cedula!=false){
-				for($i=0;$i<=count($bd_cedula);$i++){
-					if($cedula == $cedula[$i]){
-						$cedVal = false;
-						break;
-					}
+			}else{
+				$bd_carnet = $this->modelo->getCarnetEgresado(getUsuarioId());
+				if ($bd_carnet->carnet==$carnet){
+					return true;
+				}else{
+					return false;
 				}
 			}
 		}

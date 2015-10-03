@@ -72,15 +72,17 @@
 					foreach ($data_usuario as $llave4 => $valor4) {
 					$data_usuario[$llave4] = $valor4;
 					}
-					if($this->validarCampos($data_egresado)){
-						$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-						echo "Se guardo el Registro N#". $index."<br/>";
+					if($data_egresado["carnet"]!=""|| $data_persona["nombre"]!="" || $data_persona["apellido"]!="" || $data_persona["sexo"]!=""){
+						if($this->validarCampos($data_egresado)){
+							$this->egresado_model->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+							echo "Se guardo el Registro N#". $index."<br/>";
+						}else{
+							echo "Los campos Cedula o Carnet del registro N#".$index." ya se encuentran registrados en la base de datos <br/>" ;
+							$cont -= 1; 
+						}
 					}else{
-						echo "Los campos Cedula o Carnet del registro N#".$index." ya se encuentran registrados en la base de datos <br/>" ;
 						$cont -= 1; 
 					}
-					
-					
 				}
 			}		
 			if($cont > 1){
@@ -92,35 +94,12 @@
 		}
 		
 		function validarCampos($campo){
-			$cedula = $this->egresado_model->getCedulaEgresado();
-			$carnet = $this->egresado_model->getCarnetEgresado();
-			$CarVal = true;
-			$cedVal = true;
-			
-			if($carnet==false){
-				return true;
-			}else{
-				foreach($carnet->result() as $data_car){
-					if($campo["carnet"] == $data_car->carnet){
-						$CarVal = false;
-						break;
-					}
-				}
-				
-			}
-			if($cedula!=false){
-				for($i=0;$i<=count($cedula);$i++){
-					if($campo["cedula"] == $cedula[$i]){
-						$cedVal = false;
-						break;
-					}
-				}
-			}
-			
-			if($cedVal == false || $CarVal == false){
+			$cedula = $this->egresado_model->validarCedulaEgresado($campo["cedula"]);
+			$carnet = $this->egresado_model->validarCarnetEgresado($campo["carnet"]);
+			if ($cedula || $carnet) {
 				return false;
-			}else{
-				return true;	
+			}else {
+				return true;
 			}
 		}
 	}
