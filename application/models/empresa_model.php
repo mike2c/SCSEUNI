@@ -1,5 +1,5 @@
 <?php 
-	include "publicacion_model.php";
+	include_once "publicacion_model.php";
 
 	class Empresa_model extends Publicacion_model{
 

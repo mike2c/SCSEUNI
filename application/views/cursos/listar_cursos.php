@@ -1,9 +1,9 @@
+<h2 class="form-title">Listado de publicaciones <small>Cursos libres y de posgrado</small></h2>
+<div style="margin-top:15px;margin-bottom:7px;">
+	<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicacion"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
+	<button id="btnEliminar" data-target="<?=base_url('Curso/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
+</div>
 <div class="def-bg">
-	<h3 class="form-title">Listado de publicaciones <small>cursos</small></h3>
-	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
-		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicacion"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
-		<button id="btnEliminar" data-target="<?=base_url('Curso/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
-	</div>
 	<?php
 
 		if($cursos == null){

@@ -34,42 +34,47 @@
 		}
 
 		function IniciarSesion(){
-			//cargando el modelo del login
-			$this->load->model('sesion_model','',true);
-			$this->load->library("Encrypter");
-
-			if($this->form_validation->run()== false){
-				$data["sesion_errors"] = validation_errors();
-				$this->Login($data);
 			
-			}else{
-			
-				$data_usuario['correo'] = $this->input->post('correo');
-				$data_usuario['clave'] = Encrypter::encrypt( $this->input->post('clave'));
+			if($this->validar_entrada()){
 				
-				if($usuario = $this->sesion_model->esEgresado($data_usuario)){
-					$this->session->set_userdata("egresado",$usuario);
-					$this->RegistrarUltimaSesion();
-					redirect("perfil");		
-				}elseif($usuario = $this->sesion_model->esEmpresa($data_usuario)){
-					$this->session->set_userdata("empresa",$usuario);
-					$this->RegistrarUltimaSesion();
-					redirect("perfil");			
-				}elseif($usuario = $this->sesion_model->esPublicador($data_usuario)){
-					$this->session->set_userdata("publicador",$usuario);
-					$this->RegistrarUltimaSesion();
+				$this->load->library("Encrypter");
+				$this->load->model("egresado_model");
+				$this->load->model("empresa_model");
+				$this->load->model("publicador_model");
+				$this->load->model("admin_model");
+
+				$cond["correo"] = $this->input->post("correo");
+				$cond["clave"] = Encrypter::encrypt($this->input->post("clave"));
+				$fields = array("correo","imagen","nombre","apellido","usuario_id");
+				
+				$egresado = $this->egresado_model->listar($cond,null,null,null,$fields);
+				$empresa = $this->empresa_model->listar($cond,null,null,null,array("usuario_id","nombre_empresa as nombre","correo","imagen"));
+				$publicador = $this->publicador_model->listar($cond,null,null,null,$fields);
+				$admin = $this->admin_model->listar($cond,null,null,null,$fields);
+
+				if($egresado->num_rows() == 1){
+					$_SESSION["egresado"] = $egresado->row_array();
 					redirect("perfil");
-				}elseif($usuario = $this->sesion_model->esAdministrador($data_usuario)){
-					$this->session->set_userdata("administrador",$usuario);
-					$this->RegistrarUltimaSesion();
+				}elseif($empresa->num_rows() == 1){
+					$_SESSION["empresa"] = $empresa->row_array();
+					redirect("perfil");
+				}elseif($publicador->num_rows() == 1){
+					$_SESSION["publicador"] = $publicador->row_array();
+					redirect("perfil");
+				}elseif($admin->num_rows() == 1){
+					$_SESSION["administrador"] = $admin->row_array();
 					redirect("perfil");
 				}else{
-					
-					$data["sesion_errors"] = "El usuario o contraseña que digitaste no son correctos";
+
+					$data["sesion_errors"] = "El usuario o clave que ingresaste no son correctos";
 					$this->Login($data);
 				}
-				
+
+			}else{
+				$data["sesion_errors"] = validation_errors();
+				$this->Login($data);
 			}
+
 		}
 
 		function CerrarSesion(){
@@ -80,5 +85,18 @@
 					window.location="<?=base_url()?>";
 				</script>
 			<?
+		}
+
+		private function validar_entrada(){
+
+			$this->load->library("form_validation");
+			$this->form_validation->set_rules("correo","correo","required|valid_email|min_length[10]");
+			$this->form_validation->set_rules("clave","clave","required");
+
+			if($this->form_validation->run() == FALSE){
+				return FALSE;
+			}
+
+			return TRUE;			
 		}
 } 

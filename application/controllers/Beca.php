@@ -4,37 +4,33 @@
 	
 		function __construct(){
 			parent::__construct();
+			
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
-			$this->load->library("form_validation");
-			$this->load->helper(array("sesion","imagen","url","form","fecha"));
-			
-			if(sesionIniciada()){
-				if(esEmpresa() || esPublicador() || esAdminitrador()){
-
-				}else{
-					exit ("mensaje");
-				}
+			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["administrador"])){
+				show_404();
 			}
 		}
 
-		function Index(){
-			$this->listar();
-		}
-
 		function validarCampos(){
+
+			$this->load->library("form_validation");
+
 			$this->form_validation->set_rules("programa_academico","Programa académico","required|max_length[60]|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("descripcion","Descripción","required|min_length[10]");
 			$this->form_validation->set_rules("carreras[]","Carreras","required");
 			if($this->form_validation->run()==FALSE){
 				echo  validation_errors();
+				return FALSE;
 			}
 
+			return TRUE;
 		}
 
 		function CrearBeca(){
-			
+
+			$this->load->helper("imagen");
 			$imagen = escaparImagen("imagen");	
 			if($imagen != null){
 				$data_imagen["imagen"] = $imagen["imagen"];
@@ -72,6 +68,7 @@
 		}
 
 		function Listar(){
+
 			$data["becas"] = $this->beca_model->listar(array("usuario_id"=>getUsuarioId()));
 			$this->load->model("listas_model");
 			$data["carreras"] = $this->listas_model->listarCarreras();
@@ -93,9 +90,14 @@
 	function Actualizar(){
 
 		if(IS_AJAX){
-
-			echo $this->validarCampos();
+			$this->validarCampos();
 		}else{
+			if(!$this->validarCampos()){
+				echo "Los campos que estas ingresando son invalidos";
+			}
+			$this->load->model("beca_model");
+			$this->load->model("listas_model");
+			$this->load->helper(array("imagen","fecha"));
 
 			$data_publicacion["usuario_id"] = getUsuarioId();
 			$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
@@ -120,12 +122,19 @@
 			$this->beca_model->actualizarPublicacion($data_publicacion);
 			$this->beca_model->actualizarFiltro($data_carrera,$data_publicacion["publicacion_id"]);
 			$this->beca_model->actualizarBeca($data_beca);
-			redirect("Perfil?page=becas");
 
+			echo "<script stype='text/javascript'>
+			alert('Actualizada');
+			window.location='". base_url("Perfil")."?page=becas';
+			</script>";
+			
 		}
 	}
 	
 	function Eliminar(){
+
+		$this->load->model("beca_model");
+
 		$becas = $this->input->post("publicacion");
 		$usuario_id = getUsuarioId();
 		if(empty($becas)){

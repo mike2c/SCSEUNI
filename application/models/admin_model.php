@@ -1,6 +1,6 @@
 <?php
 	
-	include "publicacion_model.php";
+	include_once "publicacion_model.php";
 	class Admin_model extends Publicacion_model{
 		
 		function __construct(){

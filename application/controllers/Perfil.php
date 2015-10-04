@@ -4,16 +4,36 @@
 
 		function __construct(){
 			parent::__construct();
-			$this->load->library(array("session"));
 			$this->load->helper(array("sesion","sesion_helper","imagen","fecha"));
 			if(!sesionIniciada()){
 				exit("error 404 page not found");
 			}
 		}
 
-		function Index(){
+		function Index($page = "default"){
 		
 			$this->CargarPerfil();
+
+			switch ($page) {
+				case 'fichas':
+					echo "<script type='text/javascript>
+					cargarFichas();
+					</script>";
+					break;
+				case 'cursos':
+					echo "<script type='text/javascript>
+					cargarCursos();
+					</script>";
+					break;
+				case 'becas':
+					echo "<script type='text/javascript>
+					cargarBecas();
+					</script>";
+					break;
+				default:
+					# code...
+					break;
+			}
 		}
 
 		function getPass(){
@@ -33,8 +53,7 @@
 			}elseif(esAdministrador()){
 				
 			}
-
-			
+		
 		
 			$this->load->view("footer");
 		}

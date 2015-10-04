@@ -109,7 +109,7 @@
 					
 				}/*END IF*/
 
-			}/*END ELSE*>
+			}/*END ELSE*/
 
 		}/*END FUNCTION*/
 	}

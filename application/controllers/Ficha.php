@@ -5,21 +5,17 @@
 
 		function __construct(){
 			parent::__construct();
+			
 			$this->load->model("ficha_model","ficha");
-			$this->load->model("listas_model","lista");
-			$this->load->library("form_validation");
-			$this->load->helper(array("imagen","fecha","sesion"));
-
-			if(!sesionIniciada()){
-				exit("ERROR DE ACCESO, no hay una sesion activa");
+			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["empresa"]) && !isset($_SESSION["admin"])){
+				show_404();
 			}
 		}
 
-		function Index(){
-			$this->Listar();
-		}
-
 		function validarCampos(){
+
+			$this->load->library("form_validation");
+
 			$this->form_validation->set_rules("descripcion","Descripcion","required|min_length[10]");
 			$this->form_validation->set_rules("fecha_alta","Fecha de Alta","required|max_length[10]|min_length[10]");
 			$this->form_validation->set_rules("cargo","Denominacion del cargo","required|max_length[60]|min_length[10]");
@@ -57,6 +53,8 @@
 		}
 
 		function Listar(){
+
+			$this->load->model("ficha_model","ficha");
 			$this->load->model("listas_model","lista");
 
 			$data["fichas"] = $this->ficha->listar(array("usuario_id"=>getUsuarioId()));
@@ -71,12 +69,16 @@
 		function Editar($publicacion_id){
 
 			if(IS_AJAX){
+				
+				$this->load->model("ficha_model","ficha");
+				$this->load->model("listas_model","lista");
 
 				$result = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"publicacion_id"=>$publicacion_id));
 				if($result != null){
 					$data["ficha"] = $result->row();
 				}
-					$data["carrera"] = $this->ficha->listarCarrera($publicacion_id);
+				
+				$data["carrera"] = $this->ficha->listarCarrera($publicacion_id);
 				$data["carreras"] = $this->lista->listarCarreras();
 				$this->load->view("ficha/editar_ficha",$data);
 			}
@@ -84,6 +86,7 @@
 
 		function Eliminar(){
 
+			$this->load->model("ficha_model","ficha");
 			$publicacion = $this->input->post("publicacion");
 			$usuario_id = getUsuarioId();
 			if(empty($publicacion)){
@@ -101,6 +104,7 @@
 		private function Insertar(){
 
 			try{
+				$this->load->model("ficha_model","ficha");
 				$img = escaparImagen("imagen");
 				$data_imagen = array();
 				if($img != null){
@@ -147,6 +151,10 @@
 			if(IS_AJAX){
 				echo $this->validarCampos();
 			}else{
+
+				$this->load->helper("fecha");
+				$this->load->helper("imagen");
+
 				$data_publicacion["publicacion_id"] = $this->input->post("publicacion_id");
 				$data_publicacion["descripcion"] = nl2br($this->input->post("descripcion"));
 				$data_publicacion["fecha_publicacion"] = date("Y-m-d");

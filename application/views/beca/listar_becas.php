@@ -1,9 +1,10 @@
+<h2 class="form-title">Listado de publicaciones <small>Becas</small></h2>
+<div style="margin-bottom:7px;margin-top:15px;">
+	<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicarBeca"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
+	<button id="btnEliminar" data-target="<?=base_url('Beca/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
+</div>
 <div class="def-bg">
-	<h3 class="form-title">Listado de publicaciones <small>Becas</small></h3>
-	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
-		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicarBeca"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
-		<button id="btnEliminar" data-target="<?=base_url('Beca/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
-	</div>
+	<br>
 	<?php
 
 		if($becas == null){

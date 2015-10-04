@@ -1,9 +1,11 @@
-<div class="def-bg">
-	<h3 class="form-title">Listado de publicaciones <small>fichas ocupacionales</small></h3>
-	<div style="overflow:auto;padding:10px 0px;margin-bottom:10px;">
+<h2 class="form-title">Listado de publicaciones <small>Fichas ocupacionales</small></h2>
+<div style="margin-bottom:7px;margin-top:15px;">
 		<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#crearFicha"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
 		<button id="btnEliminar" data-target='<?=base_url('Ficha/Eliminar')?>' class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
 	</div>
+<div class="def-bg">
+	<br>
+	
 	<?php
 
 		if($fichas == null){

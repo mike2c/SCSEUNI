@@ -1,10 +1,12 @@
+
 <div class="container">
-	<div class="row contenido">
-		
-		<div class="col-md-5 col-lg-5">
-			<h2 class="form-title">
+	<h2 class="form-title">
 				Bienvenido
 			</h2>
+	<div class="row ">
+		
+		<div class="col-md-6 col-lg-6 contenido">
+		<br>
 			<form class="" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
 				<div class="form-group">
 					<label>Correo</label>
@@ -28,8 +30,8 @@
 			<hr>
 				<a href="#" class="pull-right">He olvidado mi contraseña</a>
 		</div>
-		<div class="col-md-6 col-lg-6" style="">
-		<br><br><br><br><br><br>
+		<div class="col-md-4 col-lg-4" style="margin-top:10px">
+		
 			<?php
 				if(isset($sesion_errors) && !empty($sesion_errors)){
 					?>

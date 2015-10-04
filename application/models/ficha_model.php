@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-	include "publicacion_model.php";
+	include_once "publicacion_model.php";
 	class  Ficha_model extends Publicacion_model{
 
 		function __construct(){
