@@ -68,9 +68,27 @@
 		}
 
 		function Registro(){
+			
 			if(!isset($_SESSION["administrador"])){
 				#show_404();
 			}
+			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
+			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
+			$this->form_validation->set_rules("nombre","Genero","trim|required");
+			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_length[10]");
+
+			if($this->form_validation->run()==false){
+				echo validation_errors();
+			}elseif($this->modelo->existe_cedula($this->input->post("cedula"))){
+				echo "La cedula que estas ingresando ya existe";
+			}elseif($this->modelo->existe_carnet($this->input->post("carnet"))){
+				echo "El carnet que estas ingresando ya existe";
+			}elseif($this->modelo->existe_correo($this->input->post("correo"))){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
+			}
+
+		
 						
 			if(IS_AJAX){
 				$this->validarCampos();
@@ -167,10 +185,7 @@
 
 		function validarCampos(){
 
-			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
-			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
-			$this->form_validation->set_rules("nombre","Genero","trim|required");
-			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_length[10]");
+			
 			
 			if($this->form_validation->run()==false){
 				echo validation_errors();

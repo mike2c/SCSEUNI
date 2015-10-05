@@ -79,9 +79,20 @@
 			return $this->db->get("listar_egresados");
 		}
 
-		function existe_cedula($cedula,$egresado_id){
+		function existe_cedula($cedula,$egresado = null){
 			
-			$query = $this->db->query("select cedula from egresado where cedula='$cedula' and egresado_id != '$egresado_id'");
+			if($cedula != null && !empty($cedula)){
+				$this->db->where("cedula",$cedula);
+			}else{
+				throw new Exception("Error el parametro cedula es null o vacio", 1);
+			}
+
+			if($egresado != null && !empty($egresado)){
+				$this->db->where("egresado_id !=",$egresado);
+			}
+
+			$query = $this->db->get("egresado");
+
 			if($query->num_rows() > 0){
 				return TRUE;
 			}
@@ -110,7 +121,7 @@
 			if($correo != null && !empty($correo)){
 				$this->db->where("correo",$correo);	
 			}else{
-				return;
+				throw new Exception("Error el parametro correo es null o vacio", 1);
 			}
 
 			$query = $this->db->get("usuario");

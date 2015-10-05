@@ -11,18 +11,23 @@ class Correo extends CI_Controller{
 		$this->load->helper("sesion");
 					
 		if(!sesionIniciada()){
-			exit("<center>error 404 page not found</center>");
+			show_404();
 		}
 	}
 
 	function index(){
 
 		$this->load->model("perfil_model");
+		$this->load->model("mensaje_model");
 
 		$data["lista_egresados"] = $this->perfil_model->getUsuarioEgresados();
 		$data["lista_empresas"] = $this->perfil_model->getUsuarioEmpresas();
 		$data["lista_publicadores"] = $this->perfil_model->getUsuarioPublicadores();
 		
+		$data["no_inbox"] = $this->mensaje_model->listarInbox(array("usuario_id"=>getUsuarioId()))->num_rows();
+		$data["no_sent"] = $this->mensaje_model->listarSent(array("usuario_id"=>getUsuarioId()))->num_rows();
+		$data["no_drafts"] = $this->mensaje_model->listarDrafts(array("usuario_id"=>getUsuarioId()))->num_rows();
+
 		$this->load->view("cabecera");
 		$this->load->view("nav");
 		$this->load->view("mensaje/correo",$data);
