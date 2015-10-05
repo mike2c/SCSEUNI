@@ -1,6 +1,6 @@
 <?php
-  if(!isset($perfil) || $perfil == null){
-      exit("<h3>No se ha podido cargar el perfil</h3>");
+  if($perfil == null){
+    exit("<h3>No se ha podido cargar el perfil</h3>");
   }
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
@@ -10,6 +10,7 @@
     <div class="perfil">
       <a href="#" id="cambiar_imagen" class="thumbnail">
         <?php
+      
           if(file_exists("uploads/". getImagenPerfil())){
             ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
           }else{
@@ -29,12 +30,12 @@
         </strong>
       </div>
 
-      <ul class="perfil-menu">
+      <ul id="perfil_menu" class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
         <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-        <li><a href="javascript:cargarFichas();">Fichas ocupacionales</a></li>
-        <li><a href="javascript:cargarCursos();">Cursos</a></li>
-        <li style=""><a href="javascript:cargarBecas();">Becas</a></li>
+        <li><a href="javascript:cargarCursos()">Cursos</a></li>
+        <li><a href="javascript:cargarBecas()">Becas</a></li>
+        <li><a href="javascript:cargarFichas()">Fichas ocupacionales</a></li>
       </ul>
     </div>
   </div>
@@ -46,142 +47,160 @@
           <input type="hidden" id="publicador_id" name="publicador_id" value="<?=$perfil->publicador_id?>">
           <input type="hidden" id="persona_id" name="persona_id" value="<?=$perfil->persona_id?>">
           <input type="hidden" id="usuario_id" name="usuario_id" value="<?=$perfil->usuario_id?>">
-          <input type="hidden" id="cargo_id" name="cargo_id" value="<?=$perfil->cargo_id?>">
-          <input type="hidden" id="area_id" name="area_id" value="<?=$perfil->area_id?>">
+          
       </form>
       
       <!--menu de pestañas-->
       <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Informacion personal</a></li>
-          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Informacion de cuenta</a></li>
-          <li role="presentation"><a href="#contraseña" aria-="settings" role="tab" data-toggle="tab">Cambiar contraseña</a></li>
-      
-        <li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
+          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Datos personales</a></li>
+          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Mi cuenta</a></li>
+        <li><button form="formActualizarPerfil" id="update" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
       </ul>
 
       <!--Paneles-->
       <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="info_personal">
-            <div class="col-md-6 col-lg-6">
-              <div class="form-group">
-                <label for="">Nombre</label>
-                       <input required form="formActualizarPerfil" type="text" id="nombre" name="nombre" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label for="">Apellido</label>
-                      <input required form="formActualizarPerfil" type="text" id="apellido" name="apellido" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label required for="">Sexo</label>
-                      <select form="formActualizarPerfil" name="genero" id="genero" class="form-control">
-                          <option value="M">Masculino</option>
-                        <option value="F">Femenino</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                    <label for="">Fecha de nacimiento</label>
-                      <?php
-                        $sqldate = $perfil->fecha_nacimiento;
-                        $fecha = date("d/m/Y",strtotime($sqldate));
-                      ?>
-                      <input maxlength="10" required form="formActualizarPerfil" value="<?=$fecha?>" type="text" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control">
-                      </div>
-            
+
+      <!--Informacion personal-->
+      <div role="tabpanel" class="tab-pane active" id="info_personal">
+        <div class="col-md-12 col-lg-12">
+          <p class="help-block">Información personal</p>
+          <hr>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-3">Nombre:</label>
+              <div class="col-sm-6">
+                <input form="formActualizarPerfil" name="nombre" class="form-control" type="text" value="<?=$perfil->nombre?>">
+              </div>
             </div>
-            <div class="col-md-6 col-lg-6">
-              <div class="form-group">
-                  <label for="">Area actual</label>
-                  <div class="input-group">
-                    <div id="area_seleccion"></div>
-                     <div class="input-group-btn">
-                     <button id="btnAgregarTitulo" onclick='registrarArea()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
-                    </div>
-                  </div>
-                  
-                </div>
-                 <div class="form-group">
-                  <label for="">Cargo actual</label>
-                  <div class="input-group">
-                    <div id="cargo_seleccion"></div>
-                    <div class="input-group-btn">
-                       <button id="btnAgregarTitulo" onclick='registrarCargo()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
-                    </div>
-                  </div>
-                 
-                </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">Apellido:</label>
+              <div class="col-sm-6">
+                <input form="formActualizarPerfil" name="apellido" class="form-control" type="text" value="<?=$perfil->apellido?>">
+              </div>
             </div>
-         </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">Genero:</label>
+              <div class="col-sm-6">
+                <select form="formActualizarPerfil" class="form-control" name="genero" id="genero">
+                  <?php
+                    if($perfil->sexo == "F"){
+                      echo "<option value='M'>Masculino</option>";
+                      echo "<option selected value='F'>Femenino</option>";
+                    }else{
+                      echo "<option selected value='M'>Masculino</option>";
+                      echo "<option value='F'>Femenino</option>";
+                    }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">Fecha de nacimiento:</label>
+              <div class="col-sm-6">
+                <input form="formActualizarPerfil" value="<?=date_toDMY($perfil->fecha_nacimiento)?>" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
+              </div>
+            </div>
+          </div>
+          <p class="help-block">Area y Cargo</p><hr>
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-3">Area:</label>
+              <div class="col-sm-6">
+                <div id="area_area"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">Cargo:</label>
+              <div class="col-sm-6">
+                <div id="cargo_area"></div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+      </div>
+
+      <!--Informacion de la cuenta-->
       <div role="tabpanel" class="tab-pane" id="info_cuenta">
-        <div class="col-md-5 col-lg-5">
-          <div class="form-group">
-            <label for="">Correo</label>
-            <input required form="formActualizarPerfil" type="text" name="correo" id="correo" class="form-control">
-          </div>
-          
-        </div>
-        <div class="col-md-5 col-lg-5">
-          <div class="form-group">
-            <label for="">Ultima vez que iniciaste sesión</label>
-            <p id="sesion"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Estado de la cuenta</label>
-            <p id="estado"></p>
-          </div>
-          <div class="form-group">
-            <button class="btn btn-danger">Desactivar cuenta</button>
-          </div>
-        </div>
-      </div>
-     
-        <div role="tabpanel" class="tab-pane" id="contraseña">
-          <div class="col-lg-5 col-md-5">
-            <form method="post" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
-                    <div class="form-group">
-                      <label for="">Digite su contraseña actual</label>
-                      <input type="password" name="clave_actual" class="form-control">
+        <div class="col-md-12 col-lg-12">
+          <p class="help-block">Cambiar correo</p>
+          <hr>
+            <div class="form-horizontal">
+              <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-3 control-label">Correo:</label>
+                  <div class="col-sm-6">
+                    <input required value="<?=$perfil->correo?>" form="formActualizarPerfil" type="correo" class="form-control" name="correo" id="correo" placeholder="cambiar correo">
                   </div>
-                  <div class="form-group">
-                    <label for="">Contraseña</label>
-              <input required type="password" name="clave_nueva" class="form-control">
+                </div>
             </div>
-                  <div class="form-group">
-                    <label for="">Repite contraseña</label>
-              <input required type="password" name="clave_repetida" class="form-control">
+          <p class="help-block">Cambiar contraseña</p>              
+          <hr>
+          <form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Actual:</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_actual" placeholder="contraseña actual">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Nueva:</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_nueva" placeholder="nueva contraseña">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Repite la contraseña</label>
+                <div class="col-sm-6">
+                  <input required type="password" class="form-control" name="clave_repetida" placeholder="repite la contraseña">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-9">
+                  <button type="submit" class="pull-right btn btn-danger btn-sm">Cambiar contraseña</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
+              </div>
+          </form>
+          <p class="help-block">Desactivar cuenta</p>
+          <hr>
+          <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
+            <div class="form-group">
+              <span class="help-block">Puedes desactivar temporalmente tu cuenta, esta volvera a estar activa la proxima vez que inicies sesión.
+              Cuando tu cuenta se encuentre inactiva los demás usuarios no podran enviarte mensajes.</span>
             </div>
-                    <div class="form-group">
-                      <input onclick="cambiarClave()" class="btn btn-danger" value="Cambiar contraseña">
-                    </div>
-                </form>
-          </div>
-          <div class="col-md-5 col-lg-5">
-              <div id="cambiarClaveRespuesta"></div>
+            <div class="form-group">
+              <button class="btn btn-danger btn-sm">Desactivar cuenta</button>
             </div>
+          </form>
+        </div><!--Fin de la columna-->
+      </div><!--Fin de informacion de la cuenta-->
+
       </div>
-    </div>
   </div>
   </div>
+
 </div>  
 <form action="<?=base_url('Perfil/CambiarImagenDePerfil')?>" method="POST" id="formSubirImg" enctype='multipart/form-data'>
   <input type="file" name="imagen" id="imagen" style="visibility:hidden" accept=".jpg,.png,.gif,.jpeg">
 </form>
-<link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" href="<?=base_url('public/css/perfil.css')?>"></link>
-<script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
+<link rel="stylesheet" href="<?=base_url('public/css/publicacion.css')?>"></link>
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript">
   
   $(document).ready(function(){
 
-    
+    var area_actual = <?=$perfil->area_id?>;
+    var cargo_actual = <?=$perfil->cargo_id?>;
 
-    $("#formCambiarClave").submit(function(e){
-      e.preventDefault();
-      cambiarClave(this);
-    });
-      
+    listarAreas(area_actual,"formActualizarPerfil","form-control");
+    listarCargos($("#area").val(),cargo_actual,"formActualizarPerfil","form-control");
+
     $("#cambiar_imagen").click(function(){
       $("#imagen").trigger("click");
     });
@@ -190,14 +209,21 @@
       $("#formSubirImg").submit();
     });
 
-    $("#formActualizarPerfil").submit(function(e){
-      e.preventDefault();
-      if($("#cargo").length && $("#area").length){
-        this.submit()
-      }else{
-        alert("Tienes que seleccionar una area y un cargo");
-      }
-    });
+    $("#fecha_nacimiento").datepicker({dateFormat:"dd/mm/yy"});
 
   });
+  
+  function cargarCurriculum(){
+    $("#area_perfil").load("<?=base_url('Curriculum')?>");
+  }
+  
+  $("#formActualizarPerfil").submit(function(){
+    if($("#cedula").valida()){
+      return true;
+    }else{
+      alert("Formato de Cedula Incorrecto");
+      return false;
+    }
+  });
+  
 </script>

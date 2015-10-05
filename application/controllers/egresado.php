@@ -11,27 +11,7 @@
 			$this->load->helper(array("url","form_helper","sesion"));
 			
 		}
-		
-		function EnviarCorreoEgresado($data){
-			$clave = Encrypter::decrypt($data->clave);
-			 
-			$this->email->from("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
-			$this->email->reply_to("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
-			$this->email->to($data->correo);	
-			$this->email->subject("Autentificación de Egresados");
-			$this->email->message("Hola, tu cuenta ha sido autentificada, tu correo y contraseña para iniciar sesion son los siguientes:
-			Correo: $data->correo
-			Contraseña: $clave
-			Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
-				
-			if (!$this->email->send()) {
-				echo "ERROR, no se pudo enviar el mensaje<br/>";
-				echo $this->email->print_debugger();
-			}else {
-				redirect("Sesion");
-			}
-		}
-		
+
 		function Autenticar(){
 			if (!$this->input->post('correo')=="") {
 			
@@ -57,28 +37,6 @@
 				$this->load->view("egresado/autenticar_egresado");
 				$this->load->view("footer");
 			}
-		}
-		
-		function index(){
-	
-		}
-
-		function Listar(){
-
-			if(IS_AJAX){
-			
-				$data["egresado"] = $this->egresados->listarEgresados();
-				$this->load->view("busqueda_egresado");
-				$this->load->view("egresado/listar_egresados",$data);
-			}else{
-				$this->load_>view("cabecera");
-				$this->load_>view("nav");
-				$this->load->view("busqueda_egresado");
-				$this->load_>view("lista_egresados");
-				$this->load_>view("footer");
-			}
-			
-			
 		}
 
 		function Listado(){
@@ -109,171 +67,155 @@
 			}
 		}
 
-		function info(){
-			phpinfo();
-		}
-
-		#FUNCION PARA REGISTRAR UN NUEVO EGRESADO
 		function Registro(){
-			
-			$this->load->helper("pass_gen");
-			
-			if(!$this->validarCampos($this->input->post("carnet"),$this->input->post("cedula"))){
-
-				if(IS_AJAX){
-					if(!$_POST){
-						echo validation_errors();
-						$this->load->view("registro_egresado");
-					}else{
-						echo validation_errors();
-					}
-					
-				}else{
-					echo validation_errors();
-					$this->load->view("cabecera");
-					$this->load->view("nav");
-					$this->load->view("registro_egresado");
-					$this->load->view("footer");	
-				}
+			if(!isset($_SESSION["administrador"])){
+				#show_404();
+			}
+						
+			if(IS_AJAX){
+				$this->validarCampos();
 			}else{
 
-				$data_persona["nombre"] = $this->input->post("nombre");
-				$data_persona["apellido"] = $this->input->post("apellido");
-				$data_persona["sexo"] = $this->input->post("genero");
-				
-				$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
-				$newDate = date("Y-m-d", strtotime($originalDate));
-				$data_persona["fecha_nacimiento"] = $newDate;
-				
-				$data_contacto["telefono"] = $this->input->post("telefono");
-				$data_contacto["celular"] = $this->input->post("celular");
-				$data_contacto["direccion"] = $this->input->post("direccion");
-				$data_contacto["municipio_id"] = $this->input->post("municipio");;
+				if($this->validarCampos()){
 
-				$data_egresado["carnet"] = $this->input->post("carnet");
-				$data_egresado["cedula"] = $this->input->post("cedula");
-				$data_egresado["titulado"] = FALSE;
-				$data_egresado["trabaja"] = FALSE;
-				$data_egresado["carrera_id"] = $this->input->post("carrera");;
-				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+					$this->load->helper(array("pass_gen","fecha"));
+					$data_persona["nombre"] = $this->input->post("nombre");
+					$data_persona["apellido"] = $this->input->post("apellido");
+					$data_persona["sexo"] = $this->input->post("genero");
+					
+					$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
+					
+					$data_contacto["telefono"] = $this->input->post("telefono");
+					$data_contacto["celular"] = $this->input->post("celular");
+					$data_contacto["direccion"] = $this->input->post("direccion");
+					$data_contacto["municipio_id"] = $this->input->post("municipio");;
 
-				if($data_persona["sexo"] == "M"){
-					$data_usuario["imagen"]="male.jpg";
-				}else{
-					$data_usuario["imagen"]="female.jpg";
+					$data_egresado["carnet"] = $this->input->post("carnet");
+					$data_egresado["cedula"] = $this->input->post("cedula");
+					$data_egresado["titulado"] = FALSE;
+					$data_egresado["trabaja"] = FALSE;
+					$data_egresado["carrera_id"] = $this->input->post("carrera");;
+					$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+
+					if($data_persona["sexo"] == "M"){
+						$data_usuario["imagen"]="male.jpg";
+					}else{
+						$data_usuario["imagen"]="female.jpg";
+					}
+
+					$data_usuario["correo"] = $this->input->post("correo");
+					$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
+					$data_usuario["activo"] = FALSE;
+
+					$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				
+					//REDIRECCIONAR
 				}
-
-				$data_usuario["correo"] = $this->input->post("correo");
-				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
-				$data_usuario["activo"] = FALSE;
-
-				$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-			
 			}
-		
 		}
-		
-		
+
 		function ActualizarPerfil(){
-			$this->Actualizar();
-			redirect("Perfil");
+
+			if($this->Actualizar()){
+				echo "<script type='text/javascript'>
+					alert('Perfil actualizado');
+					window.location='". base_url('Perfil') ."';
+				</script>";
+			}
 		}
 
 		function Actualizar(){
-			
-			if(!$this->validarCampos($this->input->post("carnet"),$this->input->post("cedula"),true)){
-				
-			}else{
-				$this->load->model("egresado_model");
-			
-				$modelo = new Egresado_model();
-	
-				$data_persona["persona_id"] = $this->input->post("persona_id");
-				$data_persona["nombre"] = $this->input->post("nombre");
-				$data_persona["apellido"] = $this->input->post("apellido");
-				$data_persona["sexo"] = $this->input->post("genero");
-	
-				$originalDate = str_replace("/", "-",$this->input->post("fecha_nacimiento") );
-				$newDate = date("Y-m-d", strtotime($originalDate));
-				$data_persona["fecha_nacimiento"] = $newDate;
-	
-				$data_contacto["contacto_id"]= $this->input->post("contacto_id");
-				$data_contacto["telefono"] = $this->input->post("telefono");
-				$data_contacto["celular"] = $this->input->post("celular");
-				$data_contacto["direccion"] = $this->input->post("direccion");
-				$data_contacto["municipio_id"] = $this->input->post("municipio");
-				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
-	
-				$data_egresado["egresado_id"]= $this->input->post("egresado_id");
-				
-				//Capturamos el valor del carnet solo si es administrador porque los egresados no pueden cambiar su numero de carnet
-				if(esAdministrador()){
-					$data_egresado = $this->input->post("carnet");
-				}
-	
-				$data_egresado["cedula"] = $this->input->post("cedula");
-				$data_egresado["titulado"] = $this->input->post("titulado");
-				$data_egresado["trabaja"] = $this->input->post("trabaja");
-				$data_egresado["carrera_id"] = $this->input->post("carrera");
-	
-				$data_usuario["usuario_id"]= $this->input->post("usuario_id");
-				$data_usuario["correo"] = $this->input->post("correo");
-				#$data_usuario["clave"] = $this->input->post("clave");
-				#$data_usuario["activo"] = $this->input->post("activo");
-	
-				$modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+			if(!isset($_SESSION["egresado"])){
+				#show_404();
 			}
-		}
-
-		function Busqueda(){
-			$this->load->model("egresado_model","egresado");
-				
-			$data["egresado"] = $this->egresado->buscarEgresado($_POST);
 			if(IS_AJAX){
-				$this->load->view("egresado/listar_egresados",$data);
+				$this->validarCampos();
+			}else{
+				
+				if($this->validarCampos()){
+
+					$this->load->helper("fecha");#HELPER DE FECHA
+
+					$data_persona["persona_id"] = $this->input->post("persona_id");
+					$data_persona["nombre"] = $this->input->post("nombre");
+					$data_persona["apellido"] = $this->input->post("apellido");
+					$data_persona["sexo"] = $this->input->post("genero");
+		
+					$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
+		
+					$data_contacto["contacto_id"]= $this->input->post("contacto_id");
+					$data_contacto["telefono"] = $this->input->post("telefono");
+					$data_contacto["celular"] = $this->input->post("celular");
+					$data_contacto["direccion"] = $this->input->post("direccion");
+					$data_contacto["municipio_id"] = $this->input->post("municipio");
+					$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+		
+					$data_egresado["egresado_id"]= $this->input->post("egresado_id");
+					
+					$data_egresado["cedula"] = $this->input->post("cedula");
+					$data_egresado["titulado"] = $this->input->post("titulado");
+					$data_egresado["trabaja"] = $this->input->post("trabaja");
+					$data_egresado["carrera_id"] = $this->input->post("carrera");
+		
+					$data_usuario["usuario_id"]= $this->input->post("usuario_id");
+					$data_usuario["correo"] = $this->input->post("correo");
+						
+					$this->modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				}
 			}
 		}
 
-		function revelar(){
-			$this->load->library("Encrypter");
-		
-			echo Encrypter::decrypt("'fFJRohBIq2R8JCLh3sMO+Urc09+eHKP/kfQrzo0UHFI='");
+		function validarCampos(){
 
-		}
-		
-		function validarCampos($carnet,$cedula){
 			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
 			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
 			$this->form_validation->set_rules("nombre","Genero","trim|required");
 			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_length[10]");
 			
 			if($this->form_validation->run()==false){
+				echo validation_errors();
 				return FALSE;
-			}elseif($this->existeCedulaCarnet($carnet,$cedula)==false){
-				$this->form_validation->set_message('carnet',"El Carnet o Cedula proporcionado ya se encuentra registrado, por favor revise los datos");
+			}elseif($this->modelo->existe_cedula($this->input->post("cedula"),getUsuarioId())){
+				echo "La cedula que estas ingresando ya existe";
 				return FALSE;
-			}else{
-				return TRUE;
+			}elseif(isset($_POST["carnet"])){
+				if($this->modelo->existe_carnet($this->input->post("carnet"))){
+					echo "El carnet que estas ingresando ya existe";
+					return FALSE;
+				}
+				if($this->modelo->existe_correo($this->input->post("correo"))){
+					echo "El correo que estas ingresando ya existe";
+					return FALSE;
+				}
+			}elseif($this->modelo->existe_correo($this->input->post("correo"),getUsuarioId())){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
+			}
+
+			return TRUE;
+		}
+
+	}
+
+	/*		
+		function EnviarCorreoEgresado($data){
+			$clave = Encrypter::decrypt($data->clave);
+			 
+			$this->email->from("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
+			$this->email->reply_to("UniAdmin@gmail.com","UNIVERSIDAD NACIONAL DE INGENIERIA");
+			$this->email->to($data->correo);	
+			$this->email->subject("Autentificación de Egresados");
+			$this->email->message("Hola, tu cuenta ha sido autentificada, tu correo y contraseña para iniciar sesion son los siguientes:
+			Correo: $data->correo
+			Contraseña: $clave
+			Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
+				
+			if (!$this->email->send()) {
+				echo "ERROR, no se pudo enviar el mensaje<br/>";
+				echo $this->email->print_debugger();
+			}else {
+				redirect("Sesion");
 			}
 		}
-		
-		function existeCedulaCarnet($carnet,$cedula,$update=false){
-			if($update==false){
-				$bd_carnet = $this->modelo->validarCarnetEgresado($carnet);
-				$bd_cedula = $this->modelo->validarCedulaEgresado($cedula);
-				if ($bd_carnet || $bd_cedula) {
-					return false;
-				}else {
-					return true;
-				}
-			}else{
-				$bd_carnet = $this->modelo->getCarnetEgresado(getUsuarioId());
-				if ($bd_carnet->carnet==$carnet){
-					return true;
-				}else{
-					return false;
-				}
-			}
-		}
-	}	
+		*/	
 ?>

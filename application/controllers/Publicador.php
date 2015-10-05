@@ -84,6 +84,7 @@
 					$data_publicador["cargo_id"] = $this->input->post("cargo");
 			
 					$this->publicador->actualizar($data_usuario,$data_persona,$data_publicador);
+					return TRUE;
 				}
 			}
 		}
@@ -97,9 +98,9 @@
 				$this->form_validation->set_rules("area","Area","trim|required|min_length[1]|max_length[4]");
 			$this->form_validation->set_rules("cargo","Cargo","trim|required|min_length[1]|max_length[4]");
 			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
-			$this->form_validation->set_rules("clave","Contraseña","trim|required|min_length[5]|max_length[15]");
-			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
-				array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
+			#$this->form_validation->set_rules("clave","Contraseña","trim|required|min_length[5]|max_length[15]");
+			#$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
+				#array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
 
 			if($this->form_validation->run()==false){
 				

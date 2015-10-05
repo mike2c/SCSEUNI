@@ -79,65 +79,46 @@
 			return $this->db->get("listar_egresados");
 		}
 
-		function getReporteEgresadosTrabajando(){
-			$query = $this->db->query("select count(*) as trabajando from listar_egresados where trabaja = true;")->row();
-			$data["trabajando"] = $query->trabajando;
+		function existe_cedula($cedula,$egresado_id){
 			
-			$query = $this->db->query("select count(*) as no_trabajando from listar_egresados where trabaja = false;")->row();
-			$data["no_trabajando"] = $query->no_trabajando;
-
-			return $data;	
-		}
-
-		function getReporteEgresadosTitulados(){
-			$query = $this->db->query("select count(*) as titulado from listar_egresados where titulado = true;")->row();
-			$data["titulados"] = $query->titulado;
-			$query = $this->db->query("select count(*) as no_titulado from listar_egresados where titulado = false;")->row();
-			$data["no_titulados"] = $query->no_titulado;
-
-			return $data;
-		}
-
-		function getReporteEgresadosCarrera(){
-			$query = $this->db->query("select carrera,count(egresado_id) as cantidad from listar_egresados group by carrera;");
-			return $query;
-		}
-		
-		function validarCarnetEgresado($data){
-			$query = $this->db->query("select carnet from egresado where egresado.carnet = '$data';");
-			if($query->num_rows()==0){
-				return false;
-			}else{
-				return true;
+			$query = $this->db->query("select cedula from egresado where cedula='$cedula' and egresado_id != '$egresado_id'");
+			if($query->num_rows() > 0){
+				return TRUE;
 			}
+
+			return  FALSE;
 		}
-		function validarCedulaEgresado($data){
-			if ($data == ""){
-				return false;
-			}else{
-				$query = $this->db->query("select cedula from egresado where egresado.cedula = '$data';");
-				if($query->num_rows()>0){
-					return true;
-				}else{
-					return false;	
-				}
+
+		function existe_carnet($carnet){
+			
+			$query = $this->db->query("select carnet from egresado where carnet='$carnet'");
+			if($query->num_rows() > 0){
+				return TRUE;
 			}
+
+			return  FALSE;
 		}
-		function getCedulaEgresado($egresado_id){
-			$query = $this->db->query("select carnet from egresado where egresado.egresado_id = '$egresado_id';");
-			if($query->num_rows()>0){
-					return $query->row();
-				}else{
-					return false;	
-				}
-		}
-		function getCarnetEgresado($egresado_id){
-			$query = $this->db->query("select carnet from egresado where egresado.egresado_id = '$egresado_id';");
-			if($query->num_rows()>0){
-					return $query->row();
-				}else{
-					return false;	
-				}
+
+		function existe_correo($correo,$usuario = null){
+			
+			#Verificamos si el usuario no es null y no esta vacio
+			if($usuario != null && !empty($usuario)){
+				$this->db->where("usuario_id !=",$usuario);	
+			}
+
+			#Verificamos si el correo no es null o esta vacio
+			if($correo != null && !empty($correo)){
+				$this->db->where("correo",$correo);	
+			}else{
+				return;
+			}
+
+			$query = $this->db->get("usuario");
+			if($query->num_rows() > 0){
+				return TRUE;
+			}
+			
+			return  FALSE;
 		}
 	}
 

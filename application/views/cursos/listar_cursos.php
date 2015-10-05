@@ -3,7 +3,7 @@
 	<button style="margin-right:5px" class="btn-sm btn btn-primary" data-toggle="modal" data-target="#modalPublicacion"><span class="glyphicon glyphicon-file"></span> Crear publicación</button>
 	<button id="btnEliminar" data-target="<?=base_url('Curso/Eliminar')?>" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span> Eliminar publicaciones</button>
 </div>
-<div class="def-bg">
+<div class="def-bg"><br>
 	<?php
 
 		if($cursos == null){
