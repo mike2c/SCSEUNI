@@ -81,6 +81,7 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="<?=base_url('public/js/jquery.cedula_plugin.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
@@ -93,13 +94,18 @@
 
 		$("#carnet").mask("0000-00000",{placeholder:"0000-00000"});
 		$("#cedula").mask("000-000000-0000S",{placeholder:"000-000000-0000L"});
+		$("#cedula").cedula();
 		$("#telefono").mask("0000-0000",{placeholder:"0000-0000"});
 		$("#celular").mask("0000-0000",{placeholder:"0000-0000"});
 		$("#fecha_egresado").mask("0000",{placeholder: "0000"});
 
 		$("#formRegistro").submit(function(e){
 			e.preventDefault();
-			validarForm(this,$("#response_area"));
+			if($("#cedula").valida()){
+				validarForm(this,$("#area_response"));
+			}else{
+				alert("Formato de Cedula Incorrecto");
+			}
 		});
 	});
 </script>
