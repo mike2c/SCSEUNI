@@ -112,9 +112,9 @@
 			$this->load->library("Encrypter");
 			$this->load->library("form_validation");
 
-			$this->form_validation->set_rules('clave_actual','Clave actual','trim|required|min_length[5]|max_length[15]');
-			$this->form_validation->set_rules('clave_nueva','Clave nueva','trim|required|min_length[5]|max_length[15]');
-			$this->form_validation->set_rules('clave_repetida','Clave repetida','trim|required|min_length[5]|max_length[15]');
+			$this->form_validation->set_rules('clave_actual','Clave actual','trim|required|min_length[5]|max_length[20]');
+			$this->form_validation->set_rules('clave_nueva','Clave nueva','trim|required|min_length[5]|max_length[20]');
+			$this->form_validation->set_rules('clave_repetida','Clave repetida','trim|required|min_length[5]|max_length[20]');
 
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();

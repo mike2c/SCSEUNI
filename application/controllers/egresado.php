@@ -150,7 +150,7 @@
 				#show_404();
 			}
 
-			$this->form_validation->set_rules("cedula","Cedula","trim|required|max_length[16]|min_length[16]");			
+			$this->form_validation->set_rules("cedula","Cedula","trim|max_length[16]|min_length[16]");			
 			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]|min_length[5]");
 			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]|min_length[5]");
 			$this->form_validation->set_rules("genero","Genero","trim|required");

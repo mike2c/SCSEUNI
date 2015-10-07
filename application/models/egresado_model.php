@@ -84,7 +84,7 @@
 			if($cedula != null && !empty($cedula)){
 				$this->db->where("cedula",$cedula);
 			}else{
-				throw new Exception("Error el parametro cedula es null o vacio", 1);
+				return FALSE;
 			}
 
 			if($egresado != null && !empty($egresado)){

@@ -423,6 +423,7 @@
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/Jquery.cedula_plugin.js')?>"></script>
 <script type="text/javascript">
 	
