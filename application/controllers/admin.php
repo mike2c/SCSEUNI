@@ -10,12 +10,12 @@
 		function __construct(){
 			parent:: __construct();
 			
+			$this->load->library("form_validation");		
 			$this->load->model("admin_model","admin");
 		}
 
-		private function validarCampos(){
+		function Registro(){
 
-			$this->load->library("form_validation");
 			$this->form_validation->set_rules('nombre','Nombre','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('apellido','Apellido','trim|required|min_length[2]|max_length[45]');
 			$this->form_validation->set_rules('genero','Sexo','trim|required|max_length[1]');
@@ -24,66 +24,56 @@
 			$this->form_validation->set_rules('clave_conf','Confirmar Contraseña','trim|matches[clave]|min_length[5]|required|max_length[100]');
 		
 			if($this->form_validation->run() == FALSE){
-
-				echo validation_errors();
-				return FALSE;
-			}
-
-			return TRUE;
-		}
-
-		function Registro(){
-
-			if(IS_AJAX){
-
-				$this->validarCampos();
+				echo validation_errors();			
 			}else{
 
 				$this->load->library("Encrypter");//Cargamos la libreria para encriptar
-				if($this->validarCampos()){
+			
+				#Tabla usuario
+				$data_usuario["correo"] = $this->input->post('correo');
+				$data_usuario["clave"] = Encrypter::encrypt($this->input->post('clave'));
+				$data_usuario["activo"] = true;
 
-					#Tabla usuario
-					$data_usuario["correo"] = $this->input->post('correo');
-					$data_usuario["clave"] = Encrypter::encrypt($this->input->post('clave'));
-					$data_usuario["activo"] = true;
+				#Tabla persona
+				$data_persona["nombre"] = $this->input->post('nombre');
+				$data_persona["apellido"] = $this->input->post('apellido');
+				$data_persona["sexo"] = $this->input->post('genero');
+				
+				$this->admin->insertarAdmin($data_usuario,$data_persona);
 
-					#Tabla persona
-					$data_persona["nombre"] = $this->input->post('nombre');
-					$data_persona["apellido"] = $this->input->post('apellido');
-					$data_persona["sexo"] = $this->input->post('genero');
-					
-					$this->admin->insertarAdmin($data_usuario,$data_persona);
-
-					echo "<script type='text/javascript'>
-					alert('Registrado');
-					window.location='". base_url('CPanel') ."';
-					</script>";
-				}
+				echo "<script type='text/javascript'>
+				alert('Registrado');
+				window.location='". base_url('CPanel') ."';
+				</script>";
 			}
 		}
 		
 		function Actualizar(){
 			
-			if(IS_AJAX){
-				$this->validarCampos();
+			$this->form_validation->set_rules('nombre','Nombre','trim|required|min_length[2]|max_length[45]');
+			$this->form_validation->set_rules('apellido','Apellido','trim|required|min_length[2]|max_length[45]');
+			$this->form_validation->set_rules('genero','Sexo','trim|required|max_length[1]');
+			$this->form_validation->set_rules('correo','Correo','trim|required|max_length[45]|valid_email');
+			
+			if($this->form_validation->run() == FALSE){
+				echo validation_errors();
 			}else{
 
 				$this->load->library("Encrypter");
-				if($this->validarCampos()){
+				$this->load->helper("fecha");
 
-					$data_usuario["correo"] = $this->input->post('correo');
-					$data_usuario["clave"] = Encrypter::encrypt($this->input->post('clave'));
-					$data_usuario["usuario_id"] = getUsuarioId();
-		
-					$data_persona["nombre"] = $this->input->post('nombre');
-					$data_persona["apellido"] = $this->input->post('apellido');
-					$data_persona["sexo"] = $this->input->post('genero');
-					$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha"));
-					$data_persona["persona_id"] = $user_data->persona_id;
-		
-					$this->admin_model->updateAdmin($data_usuario,$data_persona);
-					return TRUE;
-				}
+				$data_usuario["correo"] = $this->input->post('correo');
+				$data_usuario["clave"] = Encrypter::encrypt($this->input->post('clave'));
+				$data_usuario["usuario_id"] = getUsuarioId();
+	
+				$data_persona["nombre"] = $this->input->post('nombre');
+				$data_persona["apellido"] = $this->input->post('apellido');
+				$data_persona["sexo"] = $this->input->post('genero');
+				$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha"));
+				$data_persona["persona_id"] = $this->input->post("persona_id");
+	
+				$this->admin->updateAdmin($data_usuario,$data_persona);
+				return TRUE;
 			}
 		}
 

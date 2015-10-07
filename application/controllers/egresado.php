@@ -68,14 +68,22 @@
 		}
 
 		function Registro(){
-			
+
 			if(!isset($_SESSION["administrador"])){
 				#show_404();
 			}
+			$this->form_validation->set_rules("cedula","Cedula","trim|max_length[16]|min_length[16]");	
 			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]");
 			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]");
-			$this->form_validation->set_rules("nombre","Genero","trim|required");
+			$this->form_validation->set_rules("genero","Genero","trim|required|max_length[1]");
 			$this->form_validation->set_rules("carnet","Carnet","trim|required|max_length[10]");
+			$this->form_validation->set_rules("telefono","Telefono","trim|max_length[9]");
+			$this->form_validation->set_rules("celular","Celular","trim|max_length[9]");
+			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
+			$this->form_validation->set_rules("direccion","Direccion","trim|max_length[100]|min_length[6]");
+			$this->form_validation->set_rules("municipio","Municipio","trim|required|max_length[10]|min_length[1]");
+			$this->form_validation->set_rules("departamento","Departamento","trim|required|max_length[10]|min_length[1]");
+
 
 			if($this->form_validation->run()==false){
 				echo validation_errors();
@@ -86,49 +94,43 @@
 			}elseif($this->modelo->existe_correo($this->input->post("correo"))){
 				echo "El correo que estas ingresando ya existe";
 				return FALSE;
-			}
-
-		
-						
-			if(IS_AJAX){
-				$this->validarCampos();
 			}else{
 
-				if($this->validarCampos()){
-
-					$this->load->helper(array("pass_gen","fecha"));
-					$data_persona["nombre"] = $this->input->post("nombre");
-					$data_persona["apellido"] = $this->input->post("apellido");
-					$data_persona["sexo"] = $this->input->post("genero");
-					
-					$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
-					
-					$data_contacto["telefono"] = $this->input->post("telefono");
-					$data_contacto["celular"] = $this->input->post("celular");
-					$data_contacto["direccion"] = $this->input->post("direccion");
-					$data_contacto["municipio_id"] = $this->input->post("municipio");;
-
-					$data_egresado["carnet"] = $this->input->post("carnet");
-					$data_egresado["cedula"] = $this->input->post("cedula");
-					$data_egresado["titulado"] = FALSE;
-					$data_egresado["trabaja"] = FALSE;
-					$data_egresado["carrera_id"] = $this->input->post("carrera");;
-					$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
-
-					if($data_persona["sexo"] == "M"){
-						$data_usuario["imagen"]="male.jpg";
-					}else{
-						$data_usuario["imagen"]="female.jpg";
-					}
-
-					$data_usuario["correo"] = $this->input->post("correo");
-					$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
-					$data_usuario["activo"] = FALSE;
-
-					$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				$this->load->helper(array("pass_gen","fecha"));
+				$data_persona["nombre"] = $this->input->post("nombre");
+				$data_persona["apellido"] = $this->input->post("apellido");
+				$data_persona["sexo"] = $this->input->post("genero");
 				
-					//REDIRECCIONAR
+				$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
+				
+				$data_contacto["telefono"] = $this->input->post("telefono");
+				$data_contacto["celular"] = $this->input->post("celular");
+				$data_contacto["direccion"] = $this->input->post("direccion");
+				$data_contacto["municipio_id"] = $this->input->post("municipio");;
+
+				$data_egresado["carnet"] = $this->input->post("carnet");
+				$data_egresado["cedula"] = $this->input->post("cedula");
+				$data_egresado["titulado"] = FALSE;
+				$data_egresado["trabaja"] = FALSE;
+				$data_egresado["carrera_id"] = $this->input->post("carrera");;
+				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+
+				if($data_persona["sexo"] == "M"){
+					$data_usuario["imagen"]="male.jpg";
+				}else{
+					$data_usuario["imagen"]="female.jpg";
 				}
+
+				$data_usuario["correo"] = $this->input->post("correo");
+				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
+				$data_usuario["activo"] = FALSE;
+
+				$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				echo "<script type='text/javascript'>
+					alert('Registrado');
+					window.location='". base_url('CPanel') ."';
+				</script>";
+		
 			}
 		}
 
@@ -143,71 +145,61 @@
 		}
 
 		function Actualizar(){
+
 			if(!isset($_SESSION["egresado"])){
 				#show_404();
 			}
-			if(IS_AJAX){
-				$this->validarCampos();
-			}else{
-				
-				if($this->validarCampos()){
 
-					$this->load->helper("fecha");#HELPER DE FECHA
+			$this->form_validation->set_rules("cedula","Cedula","trim|required|max_length[16]|min_length[16]");			
+			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]|min_length[5]");
+			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]|min_length[5]");
+			$this->form_validation->set_rules("genero","Genero","trim|required");
+			$this->form_validation->set_rules("telefono","Telefono","trim|max_length[9]");
+			$this->form_validation->set_rules("celular","Celular","trim|max_length[9]");
+			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
+			$this->form_validation->set_rules("telefono","Telefono","trim|max_length[9]");
+			$this->form_validation->set_rules("direccion","Direccion","trim|max_length[100]|min_length[6]");
+			$this->form_validation->set_rules("municipio","Municipio","trim|required|max_length[10]|min_length[1]");
+			$this->form_validation->set_rules("departamento","Departamento","trim|required|max_length[10]|min_length[1]");
 
-					$data_persona["persona_id"] = $this->input->post("persona_id");
-					$data_persona["nombre"] = $this->input->post("nombre");
-					$data_persona["apellido"] = $this->input->post("apellido");
-					$data_persona["sexo"] = $this->input->post("genero");
-		
-					$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
-		
-					$data_contacto["contacto_id"]= $this->input->post("contacto_id");
-					$data_contacto["telefono"] = $this->input->post("telefono");
-					$data_contacto["celular"] = $this->input->post("celular");
-					$data_contacto["direccion"] = $this->input->post("direccion");
-					$data_contacto["municipio_id"] = $this->input->post("municipio");
-					$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
-		
-					$data_egresado["egresado_id"]= $this->input->post("egresado_id");
-					
-					$data_egresado["cedula"] = $this->input->post("cedula");
-					$data_egresado["titulado"] = $this->input->post("titulado");
-					$data_egresado["trabaja"] = $this->input->post("trabaja");
-					$data_egresado["carrera_id"] = $this->input->post("carrera");
-		
-					$data_usuario["usuario_id"]= $this->input->post("usuario_id");
-					$data_usuario["correo"] = $this->input->post("correo");
-						
-					$this->modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
-				}
-			}
-		}
-
-		function validarCampos(){
-
-			
-			
 			if($this->form_validation->run()==false){
 				echo validation_errors();
-				return FALSE;
 			}elseif($this->modelo->existe_cedula($this->input->post("cedula"),getUsuarioId())){
 				echo "La cedula que estas ingresando ya existe";
-				return FALSE;
-			}elseif(isset($_POST["carnet"])){
-				if($this->modelo->existe_carnet($this->input->post("carnet"))){
-					echo "El carnet que estas ingresando ya existe";
-					return FALSE;
-				}
-				if($this->modelo->existe_correo($this->input->post("correo"))){
-					echo "El correo que estas ingresando ya existe";
-					return FALSE;
-				}
 			}elseif($this->modelo->existe_correo($this->input->post("correo"),getUsuarioId())){
 				echo "El correo que estas ingresando ya existe";
 				return FALSE;
-			}
+			}else{
+				
+				$this->load->helper("fecha");#HELPER DE FECHA
 
-			return TRUE;
+				$data_persona["persona_id"] = $this->input->post("persona_id");
+				$data_persona["nombre"] = $this->input->post("nombre");
+				$data_persona["apellido"] = $this->input->post("apellido");
+				$data_persona["sexo"] = $this->input->post("genero");
+	
+				$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
+	
+				$data_contacto["contacto_id"]= $this->input->post("contacto_id");
+				$data_contacto["telefono"] = $this->input->post("telefono");
+				$data_contacto["celular"] = $this->input->post("celular");
+				$data_contacto["direccion"] = $this->input->post("direccion");
+				$data_contacto["municipio_id"] = $this->input->post("municipio");
+				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
+	
+				$data_egresado["egresado_id"]= $this->input->post("egresado_id");
+				
+				$data_egresado["cedula"] = $this->input->post("cedula");
+				$data_egresado["titulado"] = $this->input->post("titulado");
+				$data_egresado["trabaja"] = $this->input->post("trabaja");
+				$data_egresado["carrera_id"] = $this->input->post("carrera");
+	
+				$data_usuario["usuario_id"]= $this->input->post("usuario_id");
+				$data_usuario["correo"] = $this->input->post("correo");
+					
+				$this->modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				return TRUE;
+			}
 		}
 
 	}

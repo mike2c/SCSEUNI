@@ -158,9 +158,37 @@
 				echo '<div class="panel panel-default">';
 				echo '<div class="panel-body">';
 
-					crear_grafico_pastel($data,"Porcentaje de egresados trabajando","Porcentaje");
+				crear_grafico_pastel($data,"Porcentaje de egresados trabajando","Porcentaje");
+			$porcentaje_trabajando = (($data[0]["y"]/($data[0]["y"]+$data[1]["y"]))*100);	
+				$porcentaje_notrabajando = (($data[1]["y"]/($data[0]["y"]+$data[1]["y"]))*100);	
+				echo "<table class='table table-striped table-hover'>";
+				echo "<thead>
+				<tr>
+					<td></td>
+					<td>Cantidad</td>
+					<td>Porcentaje</td>
+					
+				</tr>
+				</thead>";
+				echo "<tbody>";
+				echo "<tr>
+				<td>Egresados trabajando</td><td>".$data[0]["y"]."</td><td>".(round($porcentaje_trabajando*100)/100)."% </td>
+
+				</tr>";
+					echo "<tr>
+				<td>Egresados desempleados</td><td>".$data[1]["y"]."</td><td>".(round($porcentaje_notrabajando*100)/100)."% </td>
+
+				</tr>";
+					echo "<tr>
+				<td>Totales</td><td>".($data[1]["y"] + $data[0]["y"])."</td><td>".($porcentaje_notrabajando + $porcentaje_trabajando)."% </td>
+
+				</tr>";
+				echo "</tbody>";
+				echo "</table>";
 				echo '</div>';
 				echo '</div>';
+
+				
 			}
 		}
 
@@ -179,8 +207,38 @@
 				echo '<div class="panel-body">';
 
 				crear_grafico_pastel($data,"Porcentaje de egresados titulados","Porcentaje");
+					
+
+					$porcentaje_titulados = (($data[0]["y"]/($data[0]["y"]+$data[1]["y"]))*100);
+					$porcentaje_notitulados = (($data[1]["y"]/($data[0]["y"]+$data[1]["y"]))*100);
+					echo "<table class='table table-striped table-hover'>";
+					echo "<thead>
+					<tr>
+						<td></td>
+						<td>Cantidad</td>
+						<td>Porcentaje</td>
+						
+					</tr>
+					</thead>";
+					echo "<tbody>";
+					echo "<tr>
+					<td>Titulados</td><td>".$data[0]["y"]."</td><td>".$porcentaje_titulados."% </td>
+
+					</tr>";
+						echo "<tr>
+					<td>No Titulados</td><td>".$data[1]["y"]."</td><td>".$porcentaje_notitulados."% </td>
+
+					</tr>";
+						echo "<tr>
+					<td>Totales</td><td>".($data[1]["y"] + $data[0]["y"])."</td><td>".($porcentaje_notitulados + $porcentaje_titulados)."% </td>
+
+					</tr>";
+					echo "</tbody>";
+					echo "</table>";
 				echo '</div>';
 				echo '</div>';
+
+				
 			}
 		}
 
@@ -193,9 +251,11 @@
 
 				$carreras = $this->listas->listarCarreras();
 				$contador = 0;
+				$total_egresados = 0;
 				foreach ($carreras->result() as $row) {
 					$data[$contador]["name"] = $row->nombre_carrera;
 					$data[$contador]["y"] = $this->egresados->listar(array("carrera_id"=>$row->carrera_id))->num_rows();
+					$total_egresados += $data[$contador]["y"];
 					$contador++;
 				}
 
@@ -203,6 +263,29 @@
 				echo '<div class="panel-body">';
 
 				crear_grafico_pastel($data,"Porcentaje de egresados titulados","Porcentaje");
+
+				$porcentaje_titulados = (($data[0]["y"]/($data[0]["y"]+$data[1]["y"]))*100);
+					$porcentaje_notitulados = (($data[1]["y"]/($data[0]["y"]+$data[1]["y"]))*100);
+					echo "<table class='table table-striped table-hover'>";
+					echo "<thead>
+					<tr>
+						<td></td>
+						<td>Cantidad</td>
+						<td>Porcentaje</td>
+						
+					</tr>
+					</thead>";
+					echo "<tbody>";
+					
+					foreach ($data as $key => $value) {
+						$porcentaje = ($value['y']/$total_egresados)*100;
+						echo "<tr><td>$value[name]</td><td>$value[y]</td><td>". round($porcentaje,2) ."% </td></td>";
+					}
+					echo "<tr><td>Total</td><td>$total_egresados</td><td>100%</td></tr>";
+					echo "</tbody>";
+					echo "</table>";
+
+
 				echo '</div>';
 				echo '</div>';
 			}

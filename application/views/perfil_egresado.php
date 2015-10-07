@@ -1,3 +1,4 @@
+
 <?php
 	if($perfil == null){
 		exit("<h3>No se ha podido cargar el perfil</h3>");
@@ -31,16 +32,21 @@
 			</div>
 
 			<ul id="perfil_menu" class="perfil-menu">
+				<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
 				<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+			
+				<li><a href="<?=base_url('Publicaciones/Cursos')?>">Cursos</a></li>
+				<li><a href="<?=base_url('Publicaciones/Becas')?>">Becas</a></li>
 				<li><a href="javascript:cargarCurriculum()">Curriculum</a></li>
-				<li><a href="">Cursos</a></li>
-				<li style=""><a href="">Becas</a></li>
 			</ul>
 		</div>
 	</div>
 	<div class="col-md-10 col-lg-10" style="padding-right:0px;">
 		<div id="area_perfil">
-
+					  
+		    <!--Div a donde se cargan los errores-->
+		    <div id="area_response" class="panel panel-danger text-danger panel-body response-area"></div>
+		      
 			<!-- formulario-->
 			<form action="<?=base_url('Egresado/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
 			    <input type="hidden" id="egresado_id" name="egresado_id" value="<?=$perfil->egresado_id?>">
@@ -438,7 +444,7 @@
 		$("#celular").mask("0000-0000",{placeholder: "0000-0000"});
 		$("#fecha_nacimiento").datepicker({dateFormat:"dd/mm/yy"});
 
-		$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000S"});
+		$("#cedula").mask("000-000000-0000A",{placeholder: "000-000000-0000L"});
 		$("#fecha_egresado").mask("0000",{placeholder: "0000"});
 		
 	});
@@ -447,12 +453,12 @@
 		$("#area_perfil").load("<?=base_url('Curriculum')?>");
 	}
 	
-	$("#formActualizarPerfil").submit(function(){
+	$("#formActualizarPerfil").submit(function(e){
+		e.preventDefault();
 		if($("#cedula").valida()){
-			return true;
+			validarForm(this,$("#area_response"));
 		}else{
 			alert("Formato de Cedula Incorrecto");
-			return false;
 		}
 	});
 	

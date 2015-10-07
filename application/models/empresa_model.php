@@ -1,7 +1,7 @@
 <?php 
-	include_once "publicacion_model.php";
+	include_once "usuario_model.php";
 
-	class Empresa_model extends Publicacion_model{
+	class Empresa_model extends Usuario_model{
 
 		function __construct(){
 			parent:: __construct("listar_empresas");

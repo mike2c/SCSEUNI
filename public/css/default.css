@@ -221,6 +221,10 @@ nav .container{
 	margin-top: 32px;
 }
 
+.response-area{
+	display: none;
+}
+
 .btn-menu-perfil li a{
 	
 	text-decoration: none;

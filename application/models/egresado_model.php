@@ -1,6 +1,6 @@
 <?php
-	include "publicacion_model.php";
-	class Egresado_model extends Publicacion_model{
+	include "usuario_model.php";
+	class Egresado_model extends Usuario_model{
 
 		function __construct(){
 			parent::__construct("listar_egresados");
@@ -88,7 +88,7 @@
 			}
 
 			if($egresado != null && !empty($egresado)){
-				$this->db->where("egresado_id !=",$egresado);
+				$this->db->where("usuario_id !=",$egresado);
 			}
 
 			$query = $this->db->get("egresado");
@@ -110,27 +110,6 @@
 			return  FALSE;
 		}
 
-		function existe_correo($correo,$usuario = null){
-			
-			#Verificamos si el usuario no es null y no esta vacio
-			if($usuario != null && !empty($usuario)){
-				$this->db->where("usuario_id !=",$usuario);	
-			}
-
-			#Verificamos si el correo no es null o esta vacio
-			if($correo != null && !empty($correo)){
-				$this->db->where("correo",$correo);	
-			}else{
-				throw new Exception("Error el parametro correo es null o vacio", 1);
-			}
-
-			$query = $this->db->get("usuario");
-			if($query->num_rows() > 0){
-				return TRUE;
-			}
-			
-			return  FALSE;
-		}
 	}
 
 ?>

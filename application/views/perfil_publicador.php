@@ -40,8 +40,12 @@
     </div>
   </div>
   <div class="col-md-10 col-lg-10" style="padding-right:0px;">
+    
     <div id="area_perfil">
-
+    
+      <!--Div a donde se cargan los errores-->
+      <div id="area_response" class="panel panel-danger text-danger panel-body response-area"></div>
+      
       <!-- formulario-->
       <form action="<?=base_url('Publicador/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
           <input type="hidden" id="publicador_id" name="publicador_id" value="<?=$perfil->publicador_id?>">
@@ -191,6 +195,7 @@
 <script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript">
   
   $(document).ready(function(){
@@ -217,13 +222,9 @@
     $("#area_perfil").load("<?=base_url('Curriculum')?>");
   }
   
-  $("#formActualizarPerfil").submit(function(){
-    if($("#cedula").valida()){
-      return true;
-    }else{
-      alert("Formato de Cedula Incorrecto");
-      return false;
-    }
+  $("#formActualizarPerfil").submit(function(e){
+    e.preventDefault();
+    validarForm(this,$("#area_response"));
   });
   
 </script>

@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 
 	function esAdministrador(){
-		if(isset($_SESSION["adminsitrador"])){
+		if(isset($_SESSION["administrador"])){
 			return true;
 		}
 		return false;

@@ -38,7 +38,7 @@
 
 		function getPass(){
 			$this->load->library("Encrypter");
-			$value = $this->input->get("val");
+			$value = '/hQ/NR204fSFMDPbYeja8U3UtVQBQ1mARhYLeGlySCk=';
 			echo Encrypter::decrypt($value);
 		}
 
@@ -51,11 +51,8 @@
 			}elseif(esPublicador()){
 				$this->PerfilPublicador();
 			}elseif(esAdministrador()){
-				
+				$this->PerfilAdmin();
 			}
-		
-		
-			$this->load->view("footer");
 		}
 
 		#Cargar perfil de la empresa
@@ -96,31 +93,54 @@
 
 		}
 
+		function PerfilAdmin(){
+
+			$this->load->model("admin_model");
+			$resultado = $this->admin_model->listar(array("usuario_id"=>getUsuarioId()));
+
+			$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
+			
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("perfil_admin",$data);
+			$this->load->view("footer");
+		}
 
 		function CambiarClave(){
+
 			$this->load->model("perfil_model");
 			$this->load->library("Encrypter");
+			$this->load->library("form_validation");
 
-			$clave_actual = Encrypter::encrypt($this->input->post("clave_actual"));
-			$clave_nueva = $this->input->post("clave_nueva");
-			$clave_repetida = $this->input->post("clave_repetida");
+			$this->form_validation->set_rules('clave_actual','Clave actual','trim|required|min_length[5]|max_length[15]');
+			$this->form_validation->set_rules('clave_nueva','Clave nueva','trim|required|min_length[5]|max_length[15]');
+			$this->form_validation->set_rules('clave_repetida','Clave repetida','trim|required|min_length[5]|max_length[15]');
 
-			if($clave_actual == $this->perfil_model->getClave(getUsuarioId())){
-				if($clave_nueva == $clave_repetida){
-
-					$clave_nueva = Encrypter::encrypt($clave_nueva);
-					$this->perfil_model->cambiarClave(getUsuarioId(),$clave_nueva);
-					echo "<script type='text/javascript'>
-						alert('La contraseña ha sido cambiada');
-						window.location='". base_url('Perfil')."'"; 
-						echo "
-					</script>";
-					
-				}else{
-					echo "Las contraseñas no coinciden";
-				}
+			if($this->form_validation->run() == FALSE){
+				echo validation_errors();
 			}else{
-				echo "La contraseña actual que digitaste es incorrecta";
+
+				$clave_actual = Encrypter::encrypt($this->input->post("clave_actual"));
+				$clave_nueva = $this->input->post("clave_nueva");
+				$clave_repetida = $this->input->post("clave_repetida");
+
+				if($clave_actual == $this->perfil_model->getClave(getUsuarioId())){
+					if($clave_nueva == $clave_repetida){
+
+						$clave_nueva = Encrypter::encrypt($clave_nueva);
+						$this->perfil_model->cambiarClave(getUsuarioId(),$clave_nueva);
+						echo "<script type='text/javascript'>
+							alert('La contraseña ha sido cambiada');
+							window.location='". base_url('Perfil')."'"; 
+							echo "
+						</script>";
+						
+					}else{
+						echo "Las contraseñas no coinciden";
+					}
+				}else{
+					echo "La contraseña actual que digitaste es incorrecta";
+				}
 			}
 		}
 
