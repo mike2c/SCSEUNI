@@ -46,7 +46,6 @@
 		
 		function Editar($data_curriculo=""){
 			$validacion = $this->validarCampos();	
-			print_r($validacion);
 			if(IS_AJAX){
 				if ($validacion==TRUE) {
 					$this->actualizar();
