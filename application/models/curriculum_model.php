@@ -37,7 +37,7 @@
 			$data_curriculo["formacion_complementaria"]=$this->listarFormacionComplementaria($curriculum_id);
 			$data_curriculo["idioma"]=$this->listarIdiomas($curriculum_id);
 			$data_curriculo["informatica"]=$this->listarInformatica($curriculum_id);
-			
+			$data_curriculo["curriculum_id"]= $curriculum_id;
 			return $data_curriculo;
 		}
 		
@@ -111,101 +111,88 @@
 			$this->db->insert("informatica",$data);
 		}
 		
-		public function actualizarFormacionAcademica($data){
-			$data_db = $this->listarFormacionAcademica();
-			$this->db->where("formacion_academica_id",$data["formacion_academica_id"]);
+		public function actualizarFormacionAcademica($data,$id){
+			$this->db->where("formacion_academica_id",$id);
 			$this->db->update("formacion_academica",$data);
 		}
 		
-		public function actualizarFormacionComplementaria($data){
-			$this->db->where("curriculum_id",$data["formacion_academica_id"]);
+		public function actualizarFormacionComplementaria($data,$id){
+			$this->db->where("curriculum_id",$id);
 			$this->db->update("formacion_complementaria",$data);
 		}
 		
-		public function actualizarExperienciaLaboral($data){
-			$this->db->where("curriculum_id",$data["experiencia_laboral_id"]);
+		public function actualizarExperienciaLaboral($data,$id){
+			$this->db->where("curriculum_id",$id);
 			$this->db->update("experiencia_laboral",$data);
 		}
 		
-		public function actualizarIdiomas($data){
-			$this->db->where("curriculum_id",$data["idioma_id"]);
+		public function actualizarIdiomas($data,$id){
+			$this->db->where("curriculum_id",$id);
 			$this->db->update("idioma",$data);
 		}
 		
-		public function actualizarInformatica($data){
-			$this->db->where("curriculum_id",$data["informatica_id"]);
+		public function actualizarInformatica($data,$id){
+			$this->db->where("curriculum_id",$id);
 			$this->db->update("informatica",$data);
 		}
 		
-		public function actualizarOGuardar($data_bd,$data){
-			if(isset($data_bd->row()->experiencia_laboral_id)){
-				$save = TRUE;
-				foreach ($data_bd->result() as $bd_info) {
-					if ($bd_info->experiencia_laboral_id == $data["experiencia_laboral_id"]) {
-						$save = FALSE;
+		public function actualizarOGuardar($data_bd,$id="",$data){
+			if($data_bd!=""){
+			foreach ($data_bd->result() as $bd_info) {
+				if(isset($bd_info->formacion_academica_id)){//FORMACION ACADEMICA
+					if ($bd_info->formacion_academica_id == $id) {
+						$this->actualizarFormacionAcademica($data,$id);
+						break;
+					}else{
+						$this->guardarFormacionAcademica($data);
+						break;
+					}
+				}elseif(isset($bd_info->experiencia_laboral_id)){//EXPERIENCIA LABORAL
+					if ($bd_info->experiencia_laboral_id == $id){
+						$this->actualizarExperienciaLaboral($data,$id);
+						break;
+					}else{
+						$this->guardarExperienciaLaboral($data);
+						break;	
+					}
+				}elseif(isset($bd_info->formacion_complementaria_id)){//FORMACION COMPLEMENTARIA
+					if ($bd_info->formacion_complementaria_id == $id) {
+						$this->actualizarFormacionComplementaria($data,$id);
+						break;
+					}else{
+						$this->guardarformacionComplementaria($data);
+						break;
+					}
+				}elseif(isset($bd_info->idioma_id)){//IDIOMA
+					if ($bd_info->idioma_id == $id) {
+						$this->actualizarIdiomas($data,$id);
+						break;
+					}else{
+						$this->guardarIdiomas($data);
+						break;
+					}
+				}elseif(isset($bd_info->informatica_id)){//INFORMATICA
+					if ($bd_info->informatica_id == $id) {
+						$this->actualizarInformatica($data,$id);
+						break;
+					}else{
+						$this->guardarInformatica($data);
 						break;
 					}
 				}
-				if ($save==TRUE) {
-					return TRUE;
-				}else {
-					return FALSE;
-				}
-			}elseif (isset($data_bd->row()->formacion_academica_id)) {
-				$save = TRUE;
-				foreach ($data_bd->result() as $bd_info) {
-					if ($bd_info->formacion_academica_id == $data["formacion_academica_id"]) {
-						$save = FALSE;
-						break;
-					}
-				}
-				if ($save==TRUE) {
-					return TRUE;
-				}else {
-					return FALSE;
-				}
-			}elseif(isset($data_bd->row()->formacion_complementaria_id)){
-				$save = TRUE;
-				foreach ($data_bd->result() as $bd_info) {
-					if ($bd_info->formacion_complementaria_id == $data["formacion_complementaria_id"]) {
-						$save = FALSE;
-						break;
-					}
-				}
-				if ($save==TRUE) {
-					return TRUE;
-				}else {
-					return FALSE;
-				}
-			}elseif (isset($data_bd->row()->idioma_id)) {
-				$save = TRUE;
-				foreach ($data_bd->result() as $bd_info) {
-					if ($bd_info->idioma_id == $data["idioma_id"]) {
-						$save = FALSE;
-						break;
-					}
-				}
-				if ($save==TRUE) {
-					return TRUE;
-				}else {
-					return FALSE;
-				}
-				
-			}elseif (isset($data_bd->row()->informatica_id)) {
-				$save = TRUE;
-				foreach ($data_bd->result() as $bd_info) {
-					if ($bd_info->informatica_id == $data["informatica_id"]) {
-						$save = FALSE;
-						break;
-					}
-				}
-				if ($save==TRUE) {
-					return TRUE;
-				}else {
-					return FALSE;
-				}
+			}
 			}else{
-				return NULL;
+				if(isset($data["titulo_id"])){
+					$this->guardarFormacionAcademica($data);
+				}elseif(isset($data["empresa"])){
+					$this->guardarExperienciaLaboral($data);
+				}elseif (isset($data["curso"])) {
+					$this->guardarformacionComplementaria($data);
+				}elseif (isset($data["idioma"])) {
+					$this->guardarIdiomas($data);
+				}elseif (isset($data["software"])) {
+					$this->guardarInformatica($data);
+				}
 			}
 		}
 				
