@@ -30,7 +30,7 @@
 
 		function CrearBeca(){
 
-			$this->load->helper("imagen");
+			$this->load->helper(array("imagen","fecha"));
 			$imagen = escaparImagen("imagen");	
 			if($imagen != null){
 				$data_imagen["imagen"] = $imagen["imagen"];

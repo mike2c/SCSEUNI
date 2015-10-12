@@ -54,16 +54,16 @@
 
 				if($egresado->num_rows() == 1){
 					$_SESSION["egresado"] = $egresado->row_array();
-					redirect("perfil");
+					redirect("Perfil");
 				}elseif($empresa->num_rows() == 1){
 					$_SESSION["empresa"] = $empresa->row_array();
-					redirect("perfil");
+					redirect("Perfil");
 				}elseif($publicador->num_rows() == 1){
 					$_SESSION["publicador"] = $publicador->row_array();
-					redirect("perfil");
+					redirect("Perfil");
 				}elseif($admin->num_rows() == 1){
 					$_SESSION["administrador"] = $admin->row_array();
-					redirect("perfil");
+					redirect("Perfil");
 				}else{
 
 					$data["sesion_errors"] = "El usuario o clave que ingresaste no son correctos";

@@ -72,6 +72,7 @@
 				
 				$this->load->model("ficha_model","ficha");
 				$this->load->model("listas_model","lista");
+				$this->load->helper("texto");
 
 				$result = $this->ficha->listar(array("usuario_id"=>getUsuarioId(),"publicacion_id"=>$publicacion_id));
 				if($result != null){
@@ -105,6 +106,8 @@
 
 			try{
 				$this->load->model("ficha_model","ficha");
+				$this->load->helper(array("imagen","fecha"));
+
 				$img = escaparImagen("imagen");
 				$data_imagen = array();
 				if($img != null){

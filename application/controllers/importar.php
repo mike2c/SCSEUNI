@@ -15,10 +15,17 @@
 		}
 
 		function Index(){
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("upload_functions/importar_egresados");
-			$this->load->view("footer");
+
+			if(IS_AJAX){
+				$this->load->view("upload_functions/importar_egresados");
+			}else{
+
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("upload_functions/importar_egresados");
+				$this->load->view("footer");
+			}
+		
 		}
 
 		function importarEgresados(){

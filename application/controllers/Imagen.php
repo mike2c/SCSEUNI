@@ -4,11 +4,14 @@
 
 		function __construct(){
 			parent::__construct();
+
 			$this->load->model("imagen_model","imagenes");
 			$this->load->helper("imagen");
-			$this->load->database();
 		}
 
+		function index(){
+			echo "hola";
+		}
 		function Cargar($imagen_id){
 			
 			$data = $this->imagenes->mostrar($imagen_id);
@@ -37,8 +40,5 @@
 			$this->imagenes->guardar($data);
 		}
 
-		function MostrarImagen(){
-
-		}
 	}
 ?>

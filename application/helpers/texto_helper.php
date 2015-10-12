@@ -15,4 +15,9 @@
 	    }   
 	    return $resultado;
 	}
+
+	function saltar_linea($str){
+
+		return str_replace("<br />", "", $str);
+	}
 ?>

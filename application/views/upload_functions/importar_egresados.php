@@ -1,21 +1,26 @@
-<div class="container">
-	<div class="contenido">
-		<h3 class="form-title">
-			Importar egresados al sistema
-		</h3>
-		<div class="col-md-2 col-lg-2">
-			<img class="img-responsive" src="http://www.cavsi.com/preguntasrespuestas/images/excel/xlsx.png" alt="Excel Files">
-		</div>
-		<div class="col-md-9 col-lg-9">
-			<form action="<?=base_url("importar/importarEgresados")?>" method="post" id="formImportarEgresados" enctype="multipart/form-data">
+<h1 class="page-header">
+	Importar egresados al sistema
+</h1>
+
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="col-md-12">
+			<form class="form-inline" action="<?=base_url("importar/importarEgresados")?>" method="post" id="formImportarEgresados" enctype="multipart/form-data">
+							
+			<input type="hidden" value="upload" name="action">
+			<label for="">Selecciona un archivo de excel</label><br>
+			<div class="form-group">
 				<input type="file" name="excel" accept=".xlsx">
-				<input type="submit" value="subir archivo">
-				<input type="hidden" value="upload" name="action">
-			</form>
 			</div>
+			<div class="form-group">
+				<input class="btn btn-primary btn-sm" type="submit" value="subir archivo">	
+			</div>
+			<div class="form-group">
+				
+			</div>
+		</form>
 		</div>
+		<br> <br>
+		<img src="<?=base_url('public/res/formato.png')?>" alt="">
 	</div>
-<br>
-
-
-
+</div>
