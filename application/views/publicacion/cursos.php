@@ -1,18 +1,22 @@
 <div class="container no-padding">
 <div class="contenido">
-		<div class="col-md-9 col-lg-9" style="border-right:1px solid lightgray">
+	<h2 class="page-header">Cursos ofertados</h2>
+		<div class="col-md-9 col-lg-9" >
 			<?php
 				
 				if(isset($cursos) && !empty($cursos)){
 
 					foreach ($cursos->result() as $row) {
 						echo "<div class='post'>";
-						echo "<h3>$row->nombre_curso</h3>";
-						echo "<p class=''>$row->descripcion</p>";
-						if(empty($row->imagen)){
-							echo "<img class='img-responsive' src='" . base_url("Imagen/Cargar/".$row->imagen_publicacion_id) ."'>";
+						echo "<img class='logo' src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
+						echo "<hr>";
+						echo "<h3 class='text-primary'>".ucfirst($row->nombre_curso)."</h3>";
+
+						echo "<p class=''>".ucfirst($row->descripcion)."</p>";
+						if(!empty($row->imagen)){
+							echo "<img class='img-responsive' src='" . base_url("Imagen/Cargar/".$row->imagen_publicacion_id) ."'><br>";
 						}
-				
+						
 						echo "<div class='hide-content'>";
 						?>
 						<label for="">Información</label>
@@ -50,7 +54,7 @@
 			?>
 		</div>
 		<div class="col-md-3 col-lg-3" >
-			<h2><small>Filtrar por carreras</small></h2>
+		
 			<form method="post" action="<?=base_url("Publicaciones/Cursos")?>">
 				<ul class="filtro">
 					<?php
@@ -64,80 +68,43 @@
 						}
 					?>
 				</ul>
-				<button class="btn btn-sm btn-primary pull-right">Buscar</button>	
+				<button class="btn btn-sm btn-primary">Buscar</button>	
 			</form>
 		</div>
 	</div>
 </div>
 
 <style type="text/css">
-	body{
-		overflow-y: scroll;
-	}
-	.bg-primary{
-		
-		font-size: 18px;
-		padding: 10px;
-		text-align: center;
-		border-radius: 4px;
-	}
 	
 	.post{
-		border-top: 1px solid white;
-		border-right: 1px solid lightgray;
-		border-left: 4px solid #337ab7;
-		margin-top: 10px;
-		margin-bottom:40px;
-		padding: 8px 10px;
-		padding-left:20px;
-		padding-bottom: 0px;
-		background-color: none;
-	}
-	.post:hover{
 		
-		box-shadow: 0px 2px 1px #aeaeae;
+		border:1px solid lightgray;
+		padding: 15px 20px;
+		margin-bottom:20px;
+	}	
+	.post .logo{
+		width: 8%;
+	
+	}
+	.post hr{
+		margin: 10px 0px;
+	}
+	.post h3{
+		margin-bottom:15px;
+		font-family: "Calibri";
+		font-weight: bold;
 	}
 
 	.post p{
-		
-		font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-		padding: 10px 10px;
-		//border:1px solid lightgray;
-		line-height: 18px;
 		font-size: 16px;
-	}
-
-	.post h3{
-		
-		font-weight: none;
-		color: #337ab7;
-		margin-bottom: 10px;
-
-	}
-	
-	.post .btn-link{
-		outline: none;
-		border-top: 1px solid lightgray;
-		display: block;
-		text-align: right;
-		width: 100%;
-		font-size: 14px;
-	}
-	.post .btn-link:active{
-		outline:none;
-	}
-	.filtro{
-		margin-top: 5px;
-		padding-left: 15px;
-		list-style: none;
-	}
-	.filtro li{
-		font-size: 16px;	
+		line-height:20px;
+		font-family: "Arial";
 		padding: 0px 0px;
-		border-bottom: 1px solid lightgray;
 	}
-	.checkbox{
-		margin: 5px 0px;
+
+	ul{
+		list-style:none;
+		padding-left: 0px;
 	}
 
 	.hide-content{

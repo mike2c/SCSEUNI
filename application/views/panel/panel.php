@@ -141,6 +141,10 @@
     function registrarAdministrador(){
         $("#page-inner").load("<?=base_url('CPanel/RegistrarAdministrador')?>");
     }
+    
+    function importarEgresado(){
+        $("#page-inner").load("<?=base_url('Importar')?>");
+    }
 
     //Añadir animacion al menu
     $('#main-menu').metisMenu();

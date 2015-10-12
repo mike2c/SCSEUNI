@@ -15,7 +15,7 @@
 	</div>
 	<div class="form-group">
 		<label for="">Descripción:</label>
-		<textarea required class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"><?=$curso->descripcion?></textarea>
+		<textarea required class="form-control" name="descripcion" id="descripcion" cols="30" rows="4"><?=saltar_linea($curso->descripcion)?></textarea>
 	</div>
 	<div class="form-group">
 		<input class="" type="file" name="imagen" id="imagen">

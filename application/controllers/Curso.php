@@ -7,7 +7,7 @@
 			parent::__construct();
 			
 			$this->load->library("session");
-			$this->load->helper(array("imagen","fecha","sesion"));
+			$this->load->helper(array("imagen","fecha","sesion","texto"));
 			if (!sesionIniciada()) {
 				exit("ERROR DE ACCESO, no hay una sesion activa");
 			}
@@ -96,8 +96,7 @@
 		function Listar(){
 			$this->load->model("curso_model");
 			$this->load->model("listas_model","lista");
-			$this->load->helper("texto");
-
+		
 			$data["cursos"] = $this->curso_model->listar(array("usuario_id"=>getUsuarioId()));
 			$data["carreras"] = $this->lista->listarCarreras();
 
