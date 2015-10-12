@@ -56,6 +56,7 @@ $route['Perfil'] = "Perfil";
 $route['Mensajes'] = "Correo";
 $route['Perfil'] = "Perfil";
 $route['Mensajes'] = "Correo";
+$route['Curriculum'] = "Curriculum";
 
 
 
