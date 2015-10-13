@@ -211,12 +211,6 @@
 					# no guarda en caso de llevar campos vacios
 				}else{
 					if(isset($idioma_id[$i])){
-						print_r($idioma[0][$i]);
-						echo "---";
-						print_r($nivel_idioma[0][$i]);
-						echo "---";
-						echo $idioma_id[$i];
-						echo "<br>";
 						$this->modelo->actualizarIdiomas(array("curriculum_id"=>$curr_id,"idioma"=>$idioma[0][$i],"nivel"=>$nivel_idioma[0][$i]),$idioma_id[$i]);
 					}else{
 						$this->modelo->guardarIdiomas(array("curriculum_id"=>$curr_id,"idioma"=>$idioma[0][$i],"nivel"=>$nivel_idioma[0][$i]));
@@ -230,12 +224,6 @@
 					# no guarda en caso de llevar campos vacios
 				}else{
 					if(isset($informatica_id[$i])){
-						print_r($software[0][$i]);
-						echo "---";
-						print_r($nivel_software[0][$i]);
-						echo "---";
-						echo $informatica_id[$i];
-						echo "<br>";
 						$this->modelo->actualizarInformatica(array("curriculum_id"=>$curr_id,"software"=>$software[0][$i],"nivel"=>$nivel_software[0][$i]),$informatica_id[$i]);
 					}else{
 						$this->modelo->guardarInformatica(array("curriculum_id"=>$curr_id,"software"=>$software[0][$i],"nivel"=>$nivel_software[0][$i]));
@@ -243,12 +231,12 @@
 				}
 			}
 			
-			/*echo "
+			echo "
 				<script stype='text/javascript'>
 					alert('Actualizada');
 					window.location='". base_url("Perfil")."';
 				</script>
-			";*/
+			";
 		}
 		
 		function validarCampos(){

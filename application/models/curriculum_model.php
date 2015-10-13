@@ -117,83 +117,23 @@
 		}
 		
 		public function actualizarFormacionComplementaria($data,$id){
-			$this->db->where("curriculum_id",$id);
+			$this->db->where("formacion_complementaria_id",$id);
 			$this->db->update("formacion_complementaria",$data);
 		}
 		
 		public function actualizarExperienciaLaboral($data,$id){
-			$this->db->where("curriculum_id",$id);
+			$this->db->where("experiencia_laboral_id",$id);
 			$this->db->update("experiencia_laboral",$data);
 		}
 		
 		public function actualizarIdiomas($data,$id){
-			$this->db->where("curriculum_id",$id);
+			$this->db->where("idioma_id",$id);
 			$this->db->update("idioma",$data);
 		}
 		
 		public function actualizarInformatica($data,$id){
-			$this->db->where("curriculum_id",$id);
+			$this->db->where("informatica_id",$id);
 			$this->db->update("informatica",$data);
-		}
-		
-		public function actualizarOGuardar($data_bd,$id="",$data){
-			if($data_bd!=""){
-			foreach ($data_bd->result() as $bd_info) {
-				if(isset($bd_info->formacion_academica_id)){//FORMACION ACADEMICA
-					if ($bd_info->formacion_academica_id == $id) {
-						$this->actualizarFormacionAcademica($data,$id);
-						break;
-					}else{
-						$this->guardarFormacionAcademica($data);
-						break;
-					}
-				}elseif(isset($bd_info->experiencia_laboral_id)){//EXPERIENCIA LABORAL
-					if ($bd_info->experiencia_laboral_id == $id){
-						$this->actualizarExperienciaLaboral($data,$id);
-						break;
-					}else{
-						$this->guardarExperienciaLaboral($data);
-						break;	
-					}
-				}elseif(isset($bd_info->formacion_complementaria_id)){//FORMACION COMPLEMENTARIA
-					if ($bd_info->formacion_complementaria_id == $id) {
-						$this->actualizarFormacionComplementaria($data,$id);
-						break;
-					}else{
-						$this->guardarformacionComplementaria($data);
-						break;
-					}
-				}elseif(isset($bd_info->idioma_id)){//IDIOMA
-					if ($bd_info->idioma_id == $id) {
-						$this->actualizarIdiomas($data,$id);
-						break;
-					}else{
-						$this->guardarIdiomas($data);
-						break;
-					}
-				}elseif(isset($bd_info->informatica_id)){//INFORMATICA
-					if ($bd_info->informatica_id == $id) {
-						$this->actualizarInformatica($data,$id);
-						break;
-					}else{
-						$this->guardarInformatica($data);
-						break;
-					}
-				}
-			}
-			}else{
-				if(isset($data["titulo_id"])){
-					$this->guardarFormacionAcademica($data);
-				}elseif(isset($data["empresa"])){
-					$this->guardarExperienciaLaboral($data);
-				}elseif (isset($data["curso"])) {
-					$this->guardarformacionComplementaria($data);
-				}elseif (isset($data["idioma"])) {
-					$this->guardarIdiomas($data);
-				}elseif (isset($data["software"])) {
-					$this->guardarInformatica($data);
-				}
-			}
 		}
 				
 		function borrarExperienciaLaboral($tipo,$data){
