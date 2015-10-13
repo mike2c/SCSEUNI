@@ -278,7 +278,7 @@
 			$comienzo = $this->input->post("comienzo_laboral[]");
 			$finalizacion = $this->input->post("finalizacion_laboral[]");
 			for ($i=0; $i < count( $this->input->post("comienzo_laboral[]")) ; $i++) {
-				$periodoTitulo = menor_o_igual($comienzo[$i],$finalizacion[$i]);
+				$periodoCargo = menor_o_igual($comienzo[$i],$finalizacion[$i]);
 				if(!$periodoCargo==TRUE){
 					$this->form_validation->set_message("periodoCargo","El campo Año Inicial debe ser menor que el Año Final en la Seccion de <strong>Experiencia Laboral</strong>");
 					return FALSE;
@@ -291,7 +291,7 @@
 			$comienzo = $this->input->post("comienzo_curso[]");
 			$finalizacion = $this->input->post("finalizacion_curso[]");
 			for ($i=0; $i < count($this->input->post("comienzo_curso[]")) ; $i++) { 
-				$periodoTitulo = menor_o_igual($comienzo[$i],$finalizacion[$i]);
+				$periodoCurso = menor_o_igual($comienzo[$i],$finalizacion[$i]);
 				if(!$periodoCurso==TRUE){
 					$this->form_validation->set_message("periodoCurso","El campo Año Inicial debe ser menor que el Año Final en la Seccion de <strong>Formacion Complementaria</strong>");
 					return FALSE;
