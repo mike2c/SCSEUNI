@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="<?=base_url('public/js/jquery.mask.js')?>">
 <div class="contenido">
     <h2 class="form-title">Editar curriculum</h2>
-    <form id="form_actualizar_curriculum" action="<?=base_url('Curriculum/Editar')?>" method="POST">
+    <form id="form_actualizar_curriculum" action="<?=base_url('Curriculum/Actualizar')?>" method="POST">
 	
     <div id="formacion_academica" class="field"><!-- FORMACION ACADEMICA -->
 	<input name="curriculum_id" type="hidden" value="<?php echo $curriculum_id; ?>">
@@ -305,6 +305,11 @@
 		</div>
 	</form>
 </div>
+<div class="panel panel-default">
+	<div class="panel-body" id="respuesta">
+		
+	</div>
+</div>
 <style type="text/css">
 	input{
 		height: 20px;
@@ -399,6 +404,7 @@
 	}
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/curriculum.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript">
 	
 	function nuevaFormacionAcademica(){
@@ -532,6 +538,8 @@
 		}
 		
 	}
-
-	//cargarTitulos($(".titulo"));
+	$("#form_actualizar_curriculum").submit(function(e){
+		e.preventDefault();
+		validarForm(this,$("#respuesta"));
+	});
 </script>

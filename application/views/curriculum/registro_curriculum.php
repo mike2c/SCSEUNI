@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="<?=base_url('public/js/jquery.mask.js')?>">
 <div class="contenido" style="padding-top: 5px;" id="contenido">
 	<h2 class="form-title">Creación de curriculum</h2><br>
-	<form method="POST" action='<?=base_url('Curriculum/Crear')?>'>
+	<form id="form_guardar_curriculum" method="POST" action='<?=base_url('Curriculum/Guardar')?>'>
 
 		<div id="formacion_academica" class="field"><!-- FORMACION ACADEMICA -->
 			<div class="group-title">
@@ -145,6 +145,11 @@
 		</div>
 	</form>
 </div>
+<div class="panel panel-default">
+	<div class="panel-body" id="respuesta">
+		
+	</div>
+</div>
 <style type="text/css">
 	input{
 		height: 20px;
@@ -239,6 +244,7 @@
 	}
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/curriculum.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript">
 	
 	function nuevaFormacionAcademica(parent){
@@ -391,5 +397,10 @@
 			},
 			async: true
 		});
+		
+		$("#form_guardar_curriculum").submit(function(e){
+		e.preventDefault();
+		validarForm(this,$("#respuesta"));
+	});
 	}
 </script>
