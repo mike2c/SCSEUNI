@@ -32,10 +32,12 @@
 
       <ul id="perfil_menu" class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-        <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+        <li><a href="<?=base_url('Cpanel')?>">Panel de administración</a></li>
+        <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
         <li><a href="javascript:cargarCursos()">Cursos</a></li>
         <li><a href="javascript:cargarBecas()">Becas</a></li>
         <li><a href="javascript:cargarFichas()">Fichas ocupacionales</a></li>
+
       </ul>
     </div>
   </div>

@@ -36,7 +36,8 @@
 			$data_egresado["persona_id"] = $this->db->insert_id();
 
 			$this->db->insert("egresado",$data_egresado);
-		
+
+			return $data_egresado["usuario_id"];		
 		}
 
 		function actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto){

@@ -125,7 +125,18 @@
 				$data_usuario["clave"] =  Encrypter::encrypt(generarClave(20));
 				$data_usuario["activo"] = FALSE;
 
-				$this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				$privacidad["usuario_id"] = $this->modelo->insertarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				
+				$this->load->model("privacidad_model");
+				
+				$privacidad["foto_perfil"] = "empresas";
+				$privacidad["info_contacto"] = "empresas";
+				$privacidad["info_ubicacion"] = "empresas";
+				$privacidad["info_curriculum"] = "empresas";
+				$privacidad["info_adicional"] = "empresas";
+
+				$this->privacidad_model->configurar_privacidad($privacidad);
+
 				echo "<script type='text/javascript'>
 					alert('Registrado');
 					window.location='". base_url('CPanel') ."';
@@ -147,9 +158,11 @@
 		function Actualizar(){
 
 			if(!isset($_SESSION["egresado"])){
-				#show_404();
+				show_404();
 			}
 
+			#print_r($_POST);
+			#exit();
 			$this->form_validation->set_rules("cedula","Cedula","trim|max_length[16]|min_length[16]");			
 			$this->form_validation->set_rules("nombre","Nombre","trim|required|max_length[45]|min_length[5]");
 			$this->form_validation->set_rules("apellido","Apellido","trim|required|max_length[45]|min_length[5]");
@@ -198,6 +211,20 @@
 				$data_usuario["correo"] = $this->input->post("correo");
 					
 				$this->modelo->actualizarEgresado($data_egresado,$data_persona,$data_usuario,$data_contacto);
+				
+				#Actualizar privacidad
+				$this->load->model("privacidad_model");
+				
+				$privacidad["usuario_id"] = getUsuarioId();
+
+				$privacidad["foto_perfil"] = $this->input->post("visibilidad_foto");
+				$privacidad["info_contacto"] = $this->input->post("visibilidad_contacto");
+				$privacidad["info_ubicacion"] = $this->input->post("visibilidad_ubicacion");
+				$privacidad["info_curriculum"] = $this->input->post("visibilidad_curriculum");
+				$privacidad["info_adicional"] = $this->input->post("visibilidad_info_adicional");
+
+				$this->privacidad_model->actualizar_privacidad($privacidad);
+
 				return TRUE;
 			}
 		}

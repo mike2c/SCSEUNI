@@ -73,7 +73,7 @@
 				<textarea class="form-control" autocomplete="off" name="direccion" id="" rows="3" class="form-control"></textarea>
 			</div>
 			<div class="form-group">
-				<input type="submit" class="btn btn-default" value="Registrar">
+				<input type="submit" class="btn btn-primary" value="Registrar">
 			</div>
 
 		</form>

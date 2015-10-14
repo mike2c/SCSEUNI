@@ -55,8 +55,11 @@ $route['(:any)'] = 'Pages/view/$1';
 $route['Perfil'] = "Perfil";
 $route['Mensajes'] = "Correo";
 $route['Perfil'] = "Perfil";
+$route['CPanel'] = "CPanel";
 $route['Mensajes'] = "Correo";
 $route['Curriculum'] = "Curriculum";
+$route['Importar'] = "Importar";
+$route['listado_egresados'] = "Egresado/Listado";
 
 
 

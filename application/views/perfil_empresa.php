@@ -32,7 +32,7 @@
 
       <ul class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-        <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+        <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
         <li><a href="javascript:cargarFichas()">Fichas</a></li>
         </ul>
     </div>

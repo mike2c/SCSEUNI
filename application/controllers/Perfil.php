@@ -38,7 +38,7 @@
 
 		function getPass(){
 			$this->load->library("Encrypter");
-			$value = '/hQ/NR204fSFMDPbYeja8U3UtVQBQ1mARhYLeGlySCk=';
+			$value = 'oAVOMJUHkfEVFWasmDjk4zmp8lQqEZxBQxC6lXmG+S0=';
 			echo Encrypter::decrypt($value);
 		}
 
@@ -59,9 +59,11 @@
 		function PerfilEgresado(){
 
 			$this->load->model("egresado_model","modelo");
+			$this->load->model("privacidad_model");
 			$resultado = $this->modelo->buscarEgresado(array("usuario_id"=>getUsuarioId()));
 			$data["perfil"] = ($resultado != null) ? $resultado->row() : null;
-			
+			$data["privacidad"] = $this->privacidad_model->consultar_privacidad(getUsuarioId());
+ 
 			$this->load->view("cabecera");
 			$this->load->view("nav");
 			$this->load->view("perfil_egresado",$data);

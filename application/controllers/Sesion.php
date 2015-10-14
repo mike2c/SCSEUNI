@@ -10,7 +10,6 @@
 			parent:: __construct() 	;
 			$this->load->helper(array('form','url',"sesion"));
 			$this->load->library('form_validation');
-			$this->load->library('session');
 			$this->form_validation->set_rules('correo','Correo','required');
 			$this->form_validation->set_rules('clave','Contraseña','required');
 		}
@@ -24,13 +23,8 @@
 		function Login($data = null){
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("login",$data);
+			$this->load->view("pages/login",$data);
 			$this->load->view("footer");
-		}
-
-		function RegistrarUltimaSesion(){
-			$this->load->model("sesion_model","modelo");
-			$this->modelo->actualizarSesion(getUsuarioId());
 		}
 
 		function IniciarSesion(){
@@ -54,27 +48,35 @@
 
 				if($egresado->num_rows() == 1){
 					$_SESSION["egresado"] = $egresado->row_array();
+					$this->actualizarInformacionUsuario();
 					redirect("Perfil");
 				}elseif($empresa->num_rows() == 1){
 					$_SESSION["empresa"] = $empresa->row_array();
+					$this->actualizarInformacionUsuario();
 					redirect("Perfil");
 				}elseif($publicador->num_rows() == 1){
 					$_SESSION["publicador"] = $publicador->row_array();
+					$this->actualizarInformacionUsuario();
 					redirect("Perfil");
 				}elseif($admin->num_rows() == 1){
 					$_SESSION["administrador"] = $admin->row_array();
+					$this->actualizarInformacionUsuario();
 					redirect("Perfil");
 				}else{
-
-					$data["sesion_errors"] = "El usuario o clave que ingresaste no son correctos";
-					$this->Login($data);
+					$data["sesion_errors"] = "<p class='text-danger'>El usuario o clave que ingresaste no son correctos</p>";
 				}
 
 			}else{
 				$data["sesion_errors"] = validation_errors();
-				$this->Login($data);
 			}
 
+		}
+
+		private function actualizarInformacionUsuario(){
+
+			$this->load->model("sesion_model");
+
+			$this->sesion_model->actualizarInfoUsuario(getUsuarioId());
 		}
 
 		function CerrarSesion(){
@@ -82,7 +84,7 @@
 			?>
 				<script type="text/javascript">
 					window.alert("Has cerrado sesion");
-					window.location="<?=base_url()?>";
+					window.location="<?=base_url('login')?>";
 				</script>
 			<?
 		}

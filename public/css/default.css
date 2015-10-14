@@ -6,11 +6,6 @@ h1,h2,h3,h4,h5{
 	margin: 2px 0px;
 }
 
-html,body{
-
-	padding-bottom: 4px;
-
-}
 body{
 	//background-color: rgba(245,245,245,1.0);
 	background-color: #E5EBF2;
@@ -20,17 +15,6 @@ header{
 	background-color: #03447F;
 	color: white;
 	padding: 5px 0px;
-}
-
-header img{
-	
-}
-
-footer{
-
-	font-size: 12px;
-	padding-top: 0px;
-	height: 25px;
 }
 
 .contenido{
@@ -51,29 +35,6 @@ footer{
 }
 
 
-.v-line{
-	border-left: 1px solid lightgray;
-}
-
-.h-line{
-	border-bottom: 1px solid lightgray;
-}
-
-#btn_perfil {
-
-  margin-top: 3px;
-  margin-bottom: 0px;
-  border: none;
-  border-radius: 0px;
-}
-
-.navbar{
-	
-	
-}
-.navbar-text{
-	float:none;
-}
 /*REDIMENSIONANDO IMAGENES DE LA CABECERA*/
 .img{
 
@@ -84,106 +45,93 @@ footer{
 	display: block;
 	
 }
-.img-redonda{
-	border-radius: 50%;
-}
-
-.menu li:hover > ul{
-	display: block;
-
-}
 
 /*ESTILO PARA EL MENU*/
 nav{
 	background-color: white;
-}
-nav .container{
-	padding: 0px;
+	border-bottom: 1px solid lightgray;
 }
 
-.menu{
+nav ul{
 	list-style: none;
 	padding-left: 0px;
-	margin: 0px 0px;
-	overflow: auto;
+}
+
+.menu >li{
 	float: left;
 }
 
-.menu > li{
-
-	display: block;
-	float: left;
-	font-size: 15px;
+.menu ul li a span{
+	float: right;
 	line-height: 30px;
-	margin: 0px 0px;
-	
-	text-align: left;
-	border-right:1px solid lightgray;
+	font-size: 12px;
 }
 
-.menu li a{
-	font-family: 'Lucida sans';
-	font-weight: ;
-	font-size: 12px;
+nav .menu li{
+	font-family: "Calibri";
+	font-size: 14px;
+	font-weight: bold;
+	height: 30px;
+	min-width: 80px;
+	border-right: 1px solid lightgray;
+}
+
+nav .menu li a{
+	font-weight: bolder;
+	padding:0px 10px;
+	text-decoration: none;
+	line-height: 30px;
 	display: block;
 	height: inherit;
 	width: inherit;
-	text-decoration: none;
-	padding-left: 10px;
-	padding-right: 15px;
-
 }
 
-.menu li ul li{
+.menu{
+	float: left;
+	overflow: auto;
+	margin-bottom: 0px;
+}
+
+nav .menu li a:hover{
+	color: white;
+	background-color: #458;
+	
+}
+
+nav .menu ul{
+	z-index: 1;
+	position: absolute;
+	border-top: 1px solid lightgray;
 	border-left: 1px solid lightgray;
 	border-right: 1px solid lightgray;
+	margin-left: -1px;
+	display: none;
+	background-color: white;
+	border: 1px solid lightgray;
+	width: 170px;
 
 }
-.sub-menu:hover{
-	border-right: none;
+
+nav .menu ul li a{
+	margin:1px 0px;
 }
-.sub-menu span{
-	float:right;line-height:30px;font-size:12px;
+
+nav .menu ul ul{
+	margin-left: 167px;
+	margin-top:-32px;
+	width: 180px;
 }
-.menu li ul li a{
+
+nav .menu ul li a{
+	min-width: 130px;
 	padding-left: 20px;
 }
-.menu li a:hover{
-	background-color: #458;
-	color: white;
-}
 
-.menu li:hover > ul{
-
+nav .menu li:hover > ul{
 	display: block;
 }
 
-.menu li ul{
-	border-bottom: 1px solid lightgray;
-	margin-left: -1px;
-	display: none;
-	list-style: none;
-	background-color: white;
-	z-index: 1;
-	position: absolute;
-	text-align: left;
-	padding-left: 0px;
-	min-width: 150px;
-	box-shadow: 1px 0px 1px 0px gray;
-}
-
-.menu li ul li ul{
-	border-top: 1px solid lightgray;
-
-	margin-top: -30px;
-	right: -150px;
-	position: absolute;
-}
-
-.menu li ul li ul li{
-	border-left: none;
-}
-
+/*Estilo para menu desplegable*/
 #img_perfil{
 
 	max-width: 40px;
@@ -251,4 +199,8 @@ nav .container{
 /*HELPERS*/
 .border{
 	border: 1px solid lightgray;
+}
+
+.hidden-content{
+	display: none;
 }

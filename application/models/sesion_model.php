@@ -49,9 +49,11 @@
    $this->session->set_userdata('tipo_usuario',$user_id['tipo_usuario']);
   }
 
-  function actualizarSesion($usuario){
+  function actualizarInfoUsuario($usuario){
   
-   $this->db->query("call actualizar_sesion('$usuario');");
-  
+    $this->db->query("update usuario set activo = TRUE where usuario_id='$usuario';");
+    $this->db->query("update usuario set ultima_sesion='" . date('Y-m-d') . "' where usuario_id='$usuario';");
+
   }
- }
+
+}

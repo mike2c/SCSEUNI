@@ -1,14 +1,12 @@
 <div class="container">
 	<div class="contenido">
-		<h2 class="form-title">Lista de egresados</h2>
-		<p class="text-helper">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
-		<br>
+		<h2 class="form-title">Lista de egresados</h2><br>
 		<div class="col-lg-12 col-md-12" style="overflow:auto">
 			<form class="form-inline pull-right" method="post" action="<?=base_url("Egresado/Listado")?>" id="formBuscarEgresado">
 				<div class="form-group">
-				<label for=""> </label>
+				<label for="">CARRERAS </label>
 					 <select class="form-control" name="carrera" id="carrera">
-					 	<option value="0">- Carreras -</option>
+					 	<option value="0">- Todas -</option>
 					  	<?php
 					 		if(isset($carreras)){
 					 			foreach ($carreras->result() as $row) {
@@ -59,7 +57,7 @@
 				}
 				
 				echo "<td>$row->municipio, $row->departamento. <br>$row->direccion</td>";
-				echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";
+				echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary'>Ver curriculum</a></td>";
 				echo "</tr>";
 			}
 		?>

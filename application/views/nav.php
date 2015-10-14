@@ -19,7 +19,7 @@
 		</div>
 	</div>
 </header><!--FIN DEL ENCABEZADO-->
-<nav style="border-bottom: 1px solid lightgray;">
+<nav>
 	<div class="container">
 		<ul class="menu">
 			<li style="border-left:1px solid lightgray"><a href="<?=base_url()?>"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>

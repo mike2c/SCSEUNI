@@ -1,8 +1,8 @@
-
 <?php
 	if($perfil == null){
 		exit("<h3>No se ha podido cargar el perfil</h3>");
 	}
+
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
@@ -33,7 +33,7 @@
 
 			<ul id="perfil_menu" class="perfil-menu">
 				<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-				<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+				  <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
 			
 				<li><a href="<?=base_url('Publicaciones/Cursos')?>">Cursos</a></li>
 				<li><a href="<?=base_url('Publicaciones/Becas')?>">Becas</a></li>
@@ -313,19 +313,19 @@
 					<label>¿Quienes pueden ver mi foto de perfil?</label>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="publica">
+					    <input form="formActualizarPerfil" type="radio"  name="visibilidad_foto" value="publica" <?=($privacidad["foto_perfil"] == "publica")? "checked":""?>>
 					  	Publica
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="empresas">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_foto" value="empresas" <?=($privacidad["foto_perfil"] == "empresas")? "checked":""?>>
 					  	Solamente empresas
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_foto" value="privada">
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visibilidad_foto" value="privada" <?=($privacidad["foto_perfil"] == "privada")? "checked":""?>>
 					  	Unicamente yo o privada
 					  </label>
 					</div>
@@ -333,19 +333,19 @@
 					<label>¿Quienes pueden ver mi informacion de contacto?</label>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="publica">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_contacto" value="publica" <?=($privacidad["info_contacto"] == "publica")? "checked":""?>>
 					  	Publica
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="empresas">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_contacto" value="empresas" <?=($privacidad["info_contacto"] == "empresas")? "checked":""?>>
 					  	Solamente empresas
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_contacto" value="privada">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_contacto" value="privada" <?=($privacidad["info_contacto"] == "privada")? "checked":""?>>
 					  	Unicamente yo o privada
 					  </label>
 					</div>
@@ -353,19 +353,19 @@
 					<label>¿Quienes pueden saber mi ubicación?</label>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="publica">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_ubicacion" value="publica" <?=($privacidad["info_ubicacion"] == "publica")? "checked":""?>>
 					  	Publica
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="empresas">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_ubicacion" value="empresas" <?=($privacidad["info_ubicacion"] == "empresas")? "checked":""?>>
 					  	Solamente empresas
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_ubicacion" value="privada">
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visibilidad_ubicacion" value="privada" <?=($privacidad["info_ubicacion"] == "privada") ? "checked":""?>>
 					  	Unicamente yo o privada
 					  </label>
 					</div>
@@ -373,19 +373,19 @@
 					<label>¿Quienes pueden ver mi curriculum?</label>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="publica">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_curriculum" value="publica" <?=($privacidad["info_curriculum"] == "publica")? "checked":""?>>
 					  	Publica
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="empresas">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_curriculum" value="empresas" <?=($privacidad["info_curriculum"] == "empresas")? "checked":""?>>
 					  	Solamente empresas
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_curriculum" value="privada">
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visibilidad_curriculum" value="privada" <?=($privacidad["info_curriculum"] == "privada")? "checked":""?>>
 					  	Unicamente yo o privada
 					  </label>
 					</div>
@@ -393,19 +393,19 @@
 					<label>¿Quienes pueden ver mi informacion adicional?</label>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="publica">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_info_adicional" value="publica" <?=($privacidad["info_adicional"] == "publica")? "checked":""?>>
 					  	Publica
 						  </label>
 						</div>
 					<div class="radio">
 					  <label>
-					    <input form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="empresas">
+					    <input form="formActualizarPerfil" type="radio" name="visibilidad_info_adicional" value="empresas" <?=($privacidad["info_adicional"] == "empresas")? "checked":""?>>
 					  	Solamente empresas
 					  </label>
 					</div>
 					<div class="radio">
 					  <label>
-					    <input class="privada" form="formActualizarPerfil" type="radio" name="visiblidad_info_adicional" value="privada">
+					    <input class="privada" form="formActualizarPerfil" type="radio" name="visibilidad_info_adicional" value="privada" <?=($privacidad["info_adicional"] == "privada")? "checked":""?>>
 					  	Unicamente yo o privada
 					  </label>
 					</div>
