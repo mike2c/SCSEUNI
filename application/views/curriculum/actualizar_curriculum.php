@@ -26,7 +26,8 @@
 <link rel="stylesheet" href="<?=base_url('public/js/jquery.mask.js')?>">
 <div class="contenido">
     <h2 class="form-title">Editar curriculum</h2>
-    <form id="form_actualizar_curriculum" action="<?=base_url('Curriculum/Editar')?>" method="POST">
+    <form id="form_actualizar_curriculum" action="<?=base_url('Curriculum/Actualizar')?>" method="POST">
+	
     <div id="formacion_academica" class="field"><!-- FORMACION ACADEMICA -->
 	<input name="curriculum_id" type="hidden" value="<?php echo $curriculum_id; ?>">
         <div class="group-title">
@@ -39,13 +40,13 @@
                 echo "
                         <div class='form-inline'>
                             <div class='form-group'>
-							<input name='formacion_academica_id[]' type='hidden' value='$FA->formacion_academica_id'>
+								<input name='formacion_academica_id[]' type='hidden' value='$FA->formacion_academica_id'>
                                 <label>Nombre de la titulación</label><br>
                                 <div class='input-group'>
                                     <div class='titulo' id='titulo_".$cont."'></div>
                                         <div class='input-group-btn'>
-                                        <button id='btnAgregarTitulo' onclick='agregarTitulo()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
-                                    </div>
+                                       	 	<button id='btnAgregarTitulo' onclick='agregarTitulo()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                                    	</div>
                                 </div>
                             </div>
                             <div class='form-group'>
@@ -65,8 +66,9 @@
             }
         ?>
 		</div>
+	</div>
         <div class="group-footer">
-			<a href='javascript:nuevaFormacionAcademica(formacion_academica)' name='btn_agregar'>Agregar Fila</a>
+			<a href='javascript:nuevaFormacionAcademica()' name='btn_agregar'>Agregar Fila</a>
 			<a href='javascript:removerFila(formacion_academica)' name='btn_eliminar'>Eliminar Fila</a>
 		</div>
 		 <hr class="">
@@ -214,6 +216,7 @@
 					';
 				}else{
 					echo "<div class='group-body'>";
+					$cont = 0;
 					foreach($idioma->result() as $idiom){
 						echo "
 							
@@ -225,13 +228,14 @@
 								</div>
 								<div class='form-group'>
 								<br>";
-									echo"<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_idioma[]' ".(($idiom->nivel == "basico") ? 'checked':'')." > Basico</label>";	
-									echo"<label class='radio' for=''><input type='radio' id='' value='medio' name='nivel_idioma[]' ".(($idiom->nivel == "medio") ? 'checked':'')."  > Intermedio</label>";	
-									echo"<label class='radio' for=''><input type='radio' id='' value='alto' name='nivel_idioma[]' ".(($idiom->nivel == "alto") ? 'checked':'')."  > Alto</label>";	
+									echo"<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_idioma[".$cont."]' ".(($idiom->nivel == "basico") ? 'checked':'')." > Basico</label>";	
+									echo"<label class='radio' for=''><input type='radio' id='' value='medio' name='nivel_idioma[".$cont."]' ".(($idiom->nivel == "medio") ? 'checked':'')."  > Intermedio</label>";	
+									echo"<label class='radio' for=''><input type='radio' id='' value='alto' name='nivel_idioma[".$cont."]' ".(($idiom->nivel == "alto") ? 'checked':'')."  > Alto</label>";	
 								echo"</div>
 							</div>	
 						
 						";
+						$cont += 1;
 					}
 				}
 			?>
@@ -266,8 +270,8 @@
 					';
 				}else{
 					echo "<div class='group-body'>";
-					foreach($informatica->result() as $infor){
-						
+					$cont = 0;
+					foreach($informatica->result() as $infor){	
 						echo "
 						
 						<div class='form-inline'>
@@ -278,13 +282,14 @@
 							</div>
 							<div class='form-group'>
 							<br>";
-							echo"<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_software[]' ".(($infor->nivel == "basico") ? 'checked':'')." > Basico</label>";	
-							echo"<label class='radio' for=''><input type='radio' id='' value='usuario' name='nivel_software[]' ".(($infor->nivel == "usuario") ? 'checked':'')."> Usuario</label>";	
-							echo"<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[]' ".(($infor->nivel == "experto") ? 'checked':'')."> Experto</label>";	
+							echo"<label class='radio' for=''><input type='radio' id='' value='basico' name='nivel_software[".$cont."]' ".(($infor->nivel == "basico") ? 'checked':'')." > Basico</label>";	
+							echo"<label class='radio' for=''><input type='radio' id='' value='usuario' name='nivel_software[".$cont."]' ".(($infor->nivel == "usuario") ? 'checked':'')."> Usuario</label>";	
+							echo"<label class='radio' for=''><input type='radio' id='' value='experto' name='nivel_software[".$cont."]' ".(($infor->nivel == "experto") ? 'checked':'')."> Experto</label>";	
 							echo"</div>
 						</div>
 					
 						";	
+						$cont += 1;
 					}
 				}
 			?>
@@ -299,6 +304,11 @@
 			<button class="btn btn-danger" type="button">Cancelar</button>
 		</div>
 	</form>
+</div>
+<div class="panel panel-default">
+	<div class="panel-body" id="respuesta">
+		
+	</div>
 </div>
 <style type="text/css">
 	input{
@@ -394,11 +404,12 @@
 	}
 </style>
 <script type="text/javascript" src="<?=base_url('public/js/curriculum.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript">
 	
-	function nuevaFormacionAcademica(parent){
+	function nuevaFormacionAcademica(){
 
-		var child = $(parent).find(".group-body").append("<div class='form-inline'> \
+		var child = $("#formacion_academica").find(".group-body").append("<div class='form-inline'> \
 					<div class='form-group'> \
 						<label>Nombre de la titulación</label><br> \
 						<div class='input-group'> \
@@ -527,6 +538,8 @@
 		}
 		
 	}
-
-	//cargarTitulos($(".titulo"));
+	$("#form_actualizar_curriculum").submit(function(e){
+		e.preventDefault();
+		validarForm(this,$("#respuesta"));
+	});
 </script>
