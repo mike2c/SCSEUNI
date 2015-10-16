@@ -57,6 +57,7 @@ $route['Mensajes'] = "Correo";
 $route['Perfil'] = "Perfil";
 $route['CPanel'] = "CPanel";
 $route['Mensajes'] = "Correo";
+$route['login'] = "Sesion";
 $route['Curriculum'] = "Curriculum";
 $route['Importar'] = "Importar";
 $route['listado_egresados'] = "Egresado/Listado";

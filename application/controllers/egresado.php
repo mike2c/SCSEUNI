@@ -48,7 +48,6 @@
 					$data["registro"] = $this->modelo->listar(array("carrera_id"=>$this->input->post("carrera")),array("nombre"=>$this->input->post("nombre")),"nombre");
 					$data["carrera"] = $this->input->post("carrera");
 				}else{
-				
 					$data["registro"] = $this->modelo->listar(null,null,"nombre");
 				}
 
@@ -56,6 +55,11 @@
 				exit($e->getMessage());
 			}
 			
+			$this->load->model("privacidad_model");
+			foreach ($data["registro"]->result() as $row) {
+				$data["privacidad"][$row->usuario_id] = $this->privacidad_model->consultar_privacidad($row->usuario_id);
+			}
+
 			$data["carreras"] = $this->lista->listarCarreras();
 			if($data["registro"] != null){
 				$this->load->view("cabecera");

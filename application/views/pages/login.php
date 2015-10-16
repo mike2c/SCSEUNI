@@ -3,7 +3,7 @@
 		<h2 class="page-header">Iniciar sesión</h2>
 		<div class="row">
 			<div class="col-md-5">
-				<form id="form_iniciar_sesion" class="" method="POST" action="<?=base_url().'index.php/Sesion/IniciarSesion'?>">
+				<form id="form_iniciar_sesion" class="" method="POST" action="<?=base_url('login')?>">
 					<div class="form-group">
 						<label>Correo</label>
 						<div class="input-group">
@@ -18,25 +18,30 @@
 						</div>
 					</div>
 					<div class="form-group" style="overflow:auto;">
-						<input autocomplete="off" type="submit" class="btn btn-primary pull-right" value="Iniciar Sesión">
+						<input autocomplete="off" type="submit" class="btn btn-primary" value="Iniciar Sesión">
 					</div>
 				</form>
+				<?php
+					if(isset($login_errors) && !empty($login_errors)){
+						?>
+					 	<div class="panel panel-danger">
+							<div id="respuesta" class="panel-body">
+								<?=$login_errors?>
+							</div>
+						</div>
+						<?
+					}
+				?>
 			</div>
 			<div class="col-md-6">
-	
-			 	<div class="panel panel-default">
-					<div id="respuesta" class="panel-body">
-					
-					</div>
-				</div>
-			
+				
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<hr>
 				<a href="javascript:mostrarsoluciones()">Problemas para iniciar sesión</a>
-				<div id="soluciones" class="hidden-">
+				<div id="soluciones" class="hidden-content">
 				<br>
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -63,14 +68,6 @@
 <script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript">
 
-	$("#form_iniciar_sesion").submit(function(e){
-		e.preventDefault();
-
-		validarForm(this,$("#respuesta"));
-
-	});
-
-
 	function mostrarsoluciones(){
 		$("#soluciones").toggle("slow");
 	}
@@ -91,5 +88,9 @@
 
 	#soluciones p a{
 		text-decoration: underline;
+	}
+
+	#respuesta p{
+		color: darkred;
 	}
 </style>

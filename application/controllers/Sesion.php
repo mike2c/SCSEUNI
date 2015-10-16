@@ -15,16 +15,8 @@
 		}
 
 		function Index(){
-		
-			$this->login();
-		
-		}
 
-		function Login($data = null){
-			$this->load->view("cabecera");
-			$this->load->view("nav");
-			$this->load->view("pages/login",$data);
-			$this->load->view("footer");
+			$this->IniciarSesion();
 		}
 
 		function IniciarSesion(){
@@ -63,13 +55,17 @@
 					$this->actualizarInformacionUsuario();
 					redirect("Perfil");
 				}else{
-					$data["sesion_errors"] = "<p class='text-danger'>El usuario o clave que ingresaste no son correctos</p>";
+					$data["login_errors"] = "<p>El correo o clave que ingresaste no son correctos</p>";
 				}
 
 			}else{
-				$data["sesion_errors"] = validation_errors();
+				$data["login_errors"] = validation_errors();
 			}
 
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("pages/login",$data);
+			$this->load->view("footer");
 		}
 
 		private function actualizarInformacionUsuario(){

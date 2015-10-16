@@ -41,11 +41,13 @@
 					<td></td>
 					<td>Nombre</td>
 					<td>Ubicación actual</td>
+					<td>Información de contacto</td>
 					<td>Curriculum</td>
 				</tr>
 			</thead>
 		<tbody>
 		<?php
+
 			foreach ($registro->result() as $row) {
 				echo "<tr>";
 				echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
@@ -58,7 +60,12 @@
 					echo "<h4><small>Hombre</small></h4></td>";
 				}
 				
+				if($privacidad[$row->usuario_id] !=null){
+					
+				}
+
 				echo "<td>$row->municipio, $row->departamento. <br>$row->direccion</td>";
+				echo "<td>$row->telefono, $row->celular <br>$row->correo</td>";
 				echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";
 				echo "</tr>";
 			}

@@ -96,6 +96,21 @@
 			$this->db->where("mensaje_id",$data["mensaje_id"]);
 			$this->db->update("mensaje",$data);
 		}
+		
+		function registrar_leido($usuario_id,$mensaje_id){
+
+			if($usuario_id == null || empty($usuario_id)){
+				throw new Exception("El parametro usuario_id no puede ser null o vacio");
+			}
+			if($mensaje_id == null || empty($mensaje_id)){
+				throw new Exception("El parametro mensaje_id no puede ser null o vacio");
+			}
+
+			$this->db->where("usuario_id",$usuario_id);
+			$this->db->where("mensaje_id",$mensaje_id);
+			
+			$this->db->update("destino_mensaje",array("usuario_id"=>$usuario_id,"mensaje_id"=>$mensaje_id,"visto"=>TRUE));
+		}
 	}
 
  ?>

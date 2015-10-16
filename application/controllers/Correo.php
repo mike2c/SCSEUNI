@@ -87,6 +87,8 @@ class Correo extends CI_Controller{
 		if($result->num_rows() > 0){
 			$data["mensaje"] = $result->row();
 			$this->load->view("mensaje/leer_mensaje",$data);
+
+			$this->mensaje->registrar_leido(getUsuarioId(),$this->input->post("mensaje_id"));
 		}
 	}
 
