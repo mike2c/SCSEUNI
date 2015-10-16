@@ -3,12 +3,15 @@
 
 		private $view_name = null;
 
-		function __construct($view_name){
+		function __construct($view_name=null){
 			
 			parent::__construct();
 			
 			$this->load->database();
-			$this->view_name = $view_name;
+			if(!$view_name == null){
+				$this->view_name = $view_name;
+			}
+			
 		}
 		
 		function desactivarCuenta($usuario_id){
@@ -59,6 +62,14 @@
 			}
 			
 			return  FALSE;
+		}
+		function obtenerPass($correo){
+			$query = $this->db->query("select clave from usuario where usuario.correo = '$correo';");
+			if($query->num_rows()>0){
+				return $query->row();
+			}else{
+				return false;
+			}
 		}
 
 	}

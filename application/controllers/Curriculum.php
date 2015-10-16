@@ -299,22 +299,5 @@
 			}
 			return true;
 		}
-		
-		function prueba(){
-			$data = array("hola"=>"hola","mundo"=>"mundo","Probando"=>"probando","el"=>"el comportamiento de un arreglo");
-			
-			echo $data["hola"]."<br/>" ;
-			echo $data["Probando"]."<br/>" ;
-			echo $data["el"]."<br/>" ;
-			
-			$data_curriculo = $this->modelo->listarCurriculo('27');
-			foreach($data_curriculo["formacion_academica"]->result() as $formacion_academica){
-				if (isset($formacion_academica->fecha_comienzo)) {
-					echo $formacion_academica->fecha_comienzo."<br/>";
-				}else{
-					echo "no funciona - ";
-				}
-			}
-		}
 	}
 ?>
