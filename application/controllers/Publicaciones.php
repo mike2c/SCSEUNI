@@ -15,7 +15,7 @@
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
 
-			$data["becas"]= $this->beca_model->listar(array("visible"=>TRUE));
+			$data["becas"]= $this->beca_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -27,7 +27,7 @@
 			$this->load->model("ficha_model");
 			$this->load->model("listas_model");
 
-			$data["fichas"]= $this->ficha_model->listar(array("visible"=>TRUE));
+			$data["fichas"]= $this->ficha_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -37,17 +37,16 @@
 		}
 
 		public function Cursos(){
+
 			$this->load->model("curso_model");
 			$this->load->model("listas_model");
 
-			if(isset($_POST["carrera"])){
-				$data["carrera"] = $this->input->post("carrera");
-				$where_in["nombre_carrera"] = $this->input->post("carrera");
-				$data["cursos"] = $this->curso_model->listar(array("visible"=>TRUE),null,null,$where_in);
-			}else{
-				$data["cursos"] = $this->curso_model->listar(array("visible"=>TRUE));
-			}
+			if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
 
+
+			}else{
+				$data["cursos"] = $this->curso_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
+			}
 			
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			$this->load->view("cabecera");

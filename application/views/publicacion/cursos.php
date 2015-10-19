@@ -49,7 +49,7 @@
 						echo "</div>";
 					}
 				}else{
-					echo "<p class='bg-primary'>No hay publicaciones de becas</p>";
+					echo "<p class='panel panel-danger panel-body text-danger'>No se han encontrado publicaciones</p>";
 				}
 			?>
 		</div>

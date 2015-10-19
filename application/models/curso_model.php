@@ -24,4 +24,8 @@
 			$this->db->delete("curso");
 		}
 
+		function filtrar_fichas(){
+			
+		}
+
 	}

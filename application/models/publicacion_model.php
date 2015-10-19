@@ -76,6 +76,21 @@
 			$this->db->update("publicacion",$data);
 		}
 
+		function filtrarPorCarreras($arr){
+
+			/*if(!is_array($arr)){
+				throw new Exception("El parametro no debe de ser una arreglo");
+			}else*/
+			if($arr == null || empty($arr)){
+				throw new Exception("El parametro no puede ser null o vacio");
+			}
+
+			$this->db->where_in("carrera_id",$arr);
+			$this->db->where("filtro",TRUE);
+
+			return $this->db->get("publicacion_carrera");
+		}
+
 		function actualizarFiltro($data_carrera,$publicacion_id){
 			$data = $this->db->query("select publicacion_id,carrera_id,filtro from publicacion_carrera where publicacion_carrera.publicacion_id = '$publicacion_id';");
 			$this->db->where("publicacion_id",$publicacion_id);
