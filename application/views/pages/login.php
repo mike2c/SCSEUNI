@@ -48,7 +48,7 @@
 						<h4 class="text-info">He olvidado mi contraseña</h4>
 					</div>
 					<div class="panel-body">
-						<p class="text-primary">Para recuperar tu contraseña solamente necesitas digitar tu correo en esta <a href="<?=base_url('recuperar_clave')?>">pagina</a> , se te enviara tu contraseña en un correo electronico a la cuenta proporcionada</p>
+						<p class="text-primary">Para recuperar tu contraseña solamente necesitas digitar tu correo en esta <a href="<?=base_url('Mensaje/recuperarPass')?>">pagina</a> , se te enviara tu contraseña en un correo electronico a la cuenta proporcionada</p>
 					</div>
 				</div>
 					

@@ -92,7 +92,11 @@
 						$this->EnviarPass($pass->clave,$correo);
 					}
 				}else{
-					echo "El correo proporcionado no se encuentra registrado en el sistema, asegurate de ingresar un correo valido.";
+					$data["error"] = "El correo proporcionado no se encuentra registrado en el sistema, asegurate de ingresar un correo valido.";
+					$this->load->view("cabecera");
+					$this->load->view("nav");
+					$this->load->view("pages/recuperacion_pass",$data);
+					$this->load->view("footer");
 				}
 			}
 		}
@@ -109,10 +113,14 @@
 			Te recomendamos que no borres este correo, en caso de que olvides tu contraseña.");	
 				
 			if (!$this->email->send()) {
-				echo "ERROR, no se pudo enviar el mensaje<br/>";
+				echo "<strong>ERROR, no se pudo enviar el mensaje</strong><br/>";
 				echo $this->email->print_debugger();
 			}else {
-				echo "Enviado";
+				$data["mensaje"] = "Mensaje Enviado Correctamente, Revisa tu correo electronico para obtener tu contraseña";
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("pages/success_envio_pass",$data);
+				$this->load->view("footer");
 			}
 		}
 	}
