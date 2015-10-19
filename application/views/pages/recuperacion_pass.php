@@ -14,7 +14,7 @@
 			</div>
 		</form>
 	</div>
-	<div>
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<strong >NOTA</strong>
 		</div>
@@ -24,8 +24,48 @@
 	</div>
 	<div>
 	<div class="panel panel-default">
-	<div class="panel-body" id="respuesta">
-		
-	</div>
 </div>
 </div>
+<?php 
+	if(isset($error)){
+		echo "
+			<div  class='panel panel-default'>
+				<div class='panel-heading'>
+					<strong>ERROR</strong>
+				</div>
+				<div class='panel-body' id='error'>
+					<strong>$error</strong>
+				</div>
+			</div>
+		";
+	}
+?>
+<style type="text/css">
+	body{
+		background-color: #eaeaea;
+	}
+
+	.jumbotron h2{
+		font-size: 50px;
+	}
+	
+	.panel-body{
+		font-family: Helvetica;
+		//font-weight: bold;
+		color: gray;
+	}
+	.jumbotron{
+		background-color: white;
+		margin: 15px 0px;
+	}
+
+
+	.bg-danger{
+		color: white;
+		background-color: pink;
+	}
+	
+	#error{
+		background-color: pink;
+	}
+</style>
