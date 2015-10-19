@@ -7,7 +7,7 @@
 				<h3>Formulario de contacto:</h3>
 				<h3><small>Si tienes alguna duda o consulta la puedes hacer por este medio.</small></h3>
 				<br>
-				<form class="form-horizontal" action="#" method="post">
+				<form class="form-horizontal" action="<?=base_url('Mensaje/mensajeContacto')?>" method="post">
 				  	<div class="form-group">
 					    <label class="col-sm-2 control-label">Nombre completo</label>
 					    <div class="col-sm-6">
@@ -15,17 +15,17 @@
 					      	if(sesionIniciada()){
 					      		echo 'value="'. getNombreCompleto() .'" disabled';
 					      	}
-					      ?> class="form-control" name="nombre" id="nombre" placeholder="nombre completo">
+					      ?> class="form-control" name="nombre" id="nombre" placeholder="nombre completo" required>
 					    </div>
 				  	</div>
 					<div class="form-group">
 					    <label class="col-sm-2 control-label">Correo</label>
 					    <div class="col-sm-6">
-					      <input type="text" <?php
+					      <input type="email" <?php
 					      	if(sesionIniciada()){
 					      		echo 'value="'. getCorreo() .'" disabled';
 					      	}
-					      ?> class="form-control" name="correo" id="correo" placeholder="correo">
+					      ?> class="form-control" name="correo" id="correo" placeholder="correo" required>
 					    </div>
 				  	</div>
 					<div class="form-group">

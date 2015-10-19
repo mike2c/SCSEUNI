@@ -71,6 +71,24 @@
 			}
 		}
 		
+		function mensajeContacto(){
+			$this->email->from($this->input->post("correo"),$this->input->post("nombre"));
+			$this->email->reply_to($this->input->post("correo"),$this->input->post("nombre"));
+			$this->email->to("scseuninorte@gmail.com");//El correo designado a las consultas de contacto.
+			$this->email->subject($this->input->post("asunto"));
+			$this->email->message($this->input->post("mensaje"));
+			if (!$this->email->send()) {
+				echo "ERROR, no se pudo enviar el mensaje";
+				echo $this->email->print_debugger();
+			}else {
+				$data["mensaje"] = "Su mensaje a sido enviado correctamente, su consulta sera tomada en cuenta gracias.";
+				$this->load->view("cabecera");
+				$this->load->view("nav");
+				$this->load->view("pages/mensaje_contacto_enviado",$data);
+				$this->load->view("footer");
+			}
+		}
+		
 		function recuperarPass(){
 			$this->load->model("usuario_model");
 			
