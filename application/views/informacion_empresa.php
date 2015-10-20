@@ -66,7 +66,7 @@
 
 				    <div role="tabpanel" class="tab-pane active" id="profile">
 				    	<table>
-				    	<tr><td><img src="<?=BASE_URL('public/res/perfil-usuario.jpg')?>"></td>
+				    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion Empresa/Perfil.jpg')?>"></td>
 						<td> <p>	
 						    	Una vez registrados y autenticados las empresas, tendrán un perfil el cual puede ser público o privado según las preferencias del usuario, en el podrán actualizar sus datos personales, sociales, intereses, también tendrán el acceso a su bandeja de mensajes, formulario de gestión de candidaturas y el formulario de gestión de ofertas de trabajo.
 							</p> </td></tr>
@@ -75,7 +75,7 @@
 
 				    <div role="tabpanel" class="tab-pane" id="cv">
 				    	<table>
-				    	<tr><td><img src="public/res/curriculum.jpg"></td>
+				    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion Empresa/Curriculum.jpg')?>"></td>
 						<td> <p>	
 						    	Al hacer click en el formulario de gestión de candidaturas desde el perfil de usuario las empresas podrán examinar a los candidatos que han aplicado a la oferta de trabajo publicada por la empresa.
 								<br/><br/>Una vez que la empresa ha seleccionado el mejor candidato tendrá la opción de enviarle un mensaje directo y comunicarse con el candidato seleccionado.
@@ -85,7 +85,7 @@
 
 				    <div role="tabpanel" class="tab-pane" id="bolsa">
 				    	  <table>
-					    	<tr><td><img src="../../public/res/bolsa_trabajo.png"></td>
+					    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion Empresa/Bolsa.png')?>"></td>
 							<td> <p>	
 						    	La gestión de ofertas de trabajos es una de las funciones de la bolsa de trabajo, está función es administrada principalmente por las empresas, desde aquí podrán crear, almacenar y modificar las ofertas de trabajos y publicarlas en la bolsa de trabajo.
 								<br/><br/>Sin embargo las empresas tienen la opción de enviar las ofertas de trabajo al administrador y él puede hacer la publicación.
