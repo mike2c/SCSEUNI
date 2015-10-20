@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 	
-	include_once "publicacion_model.php";
-	class Publicador_model extends Publicacion_model{
+	include_once "usuario_model.php";
+	class Publicador_model extends Usuario_model{
 
 		function __construct(){
 			parent::__construct("listar_publicadores");

@@ -38,7 +38,7 @@
 
 		function getPass(){
 			$this->load->library("Encrypter");
-			$value = 'oAVOMJUHkfEVFWasmDjk4zmp8lQqEZxBQxC6lXmG+S0=';
+			$value = 'J6n6AkTgp4m7Ijoq7cTUFGQtYZ8C2YNi++KN/8QWHtk=';
 			echo Encrypter::decrypt($value);
 		}
 
@@ -244,22 +244,23 @@
 				
 				if($last_name != $new_name["file_name"]){
 				
-					if(($last_name == "male.jpg") || ($last_name == "female.jpg")){
+					if(($last_name == "default/male.jpg") || ($last_name == "default/female.jpg") || ($last_name == "default/no_imagen.gif")){
 					
 					}else{
+
 						try{
-							if(file_exists("/uploads/$last_name")){
-								unlink("/uploads/$last_name");
+							if(imagen_disponible()){
+								unlink("uploads/$last_name");
 							}
 						}catch(Exception $e){
 							echo $e->getMessage();
 						}
-						
 					}
 				}
-			}
 
 			return $this->upload->data();
+			}
+
 		}
 
 		

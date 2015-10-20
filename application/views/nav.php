@@ -35,7 +35,7 @@
 					<li class="sub-menu"><a href="#">Empresa <span class="glyphicon glyphicon-chevron-down"></span></a>
 						<ul>
 							<li><a href="<?=base_url('informacion_empresa')?>">Información</a></li>
-							<li><a href="<?=base_url('empresa_registro')?>">Registro</a></li>
+							<li><a href="<?=base_url('registro_empresa')?>">Registro</a></li>
 						</ul>
 					</li>
 					<li style="border-top:1px dotted lightgray"><a href="<?=base_url('Informacion/misionVision')?>">Mision y Vision</a></li>
@@ -64,7 +64,19 @@
 			?>
 			<div style="float:right">
 				<a id="btn_perfil" href="#" title="<?=getNombre()?>">
-				<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=recortar_texto(getNombre(),15)?> 
+				<?php
+
+					if (!imagen_disponible()){
+						?>
+							<img id="img_perfil" src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?=recortar_texto(getNombre(),15)?> 
+						<?
+					}else{
+						?>
+							<img id="img_perfil" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?=recortar_texto(getNombre(),15)?> 
+						<?
+					}
+				?>
+				
 				<span class="caret"></span>
 				<ul class="btn-menu-perfil">
 					<li><a href="<?=base_url('Perfil')?>">Mi perfil</a></li>

@@ -42,32 +42,47 @@
 		function Listado(){
 			
 			$this->load->model("listas_model","lista");
-			try{
-				if(isset($_POST["carrera"]) && $this->input->post("carrera") !== '0'){
+			$this->load->model("privacidad_model");
 
-					$data["registro"] = $this->modelo->listar(array("carrera_id"=>$this->input->post("carrera")),array("nombre"=>$this->input->post("nombre")),"nombre");
-					$data["carrera"] = $this->input->post("carrera");
+			try{
+
+				/*Verificamos si no se han enviado datos por post*/
+				if(isset($_POST["nombre"]) && isset($_POST["carrera"])){
+
+					$like = array("nombre"=>$this->input->post("nombre"));
+					$where = null;
+					if($this->input->post("carrera") != 0){
+						$where = array("carrera_id"=>$this->input->post("carrera"));
+						$data["carrera"] = $this->input->post("carrera");
+					}
+
+					$data["registro"] = $this->modelo->listar($where,$like,"nombre");
+				
 				}else{
 					$data["registro"] = $this->modelo->listar(null,null,"nombre");
 				}
-
 			}catch(Exception $e){
 				exit($e->getMessage());
 			}
 			
-			$this->load->model("privacidad_model");
-			foreach ($data["registro"]->result() as $row) {
-				$data["privacidad"][$row->usuario_id] = $this->privacidad_model->consultar_privacidad($row->usuario_id);
+			
+			/*Cargamos la privacidad por cada usuario*/
+			if($data["registro"] != null){
+				foreach ($data["registro"]->result() as $row) {
+					$data["privacidad"][$row->usuario_id] = $this->privacidad_model->consultar_privacidad($row->usuario_id);
+				}
 			}
-
+			
+			/*Listar carreras*/
 			$data["carreras"] = $this->lista->listarCarreras();
+
 			if($data["registro"] != null){
 				$this->load->view("cabecera");
 				$this->load->view("nav");
 				$this->load->view("egresado/listado",$data);
 				$this->load->view("footer");
 			}else{
-				exit("No ha registros");
+				exit("No se han encontrado registros");
 			}
 		}
 
@@ -120,9 +135,9 @@
 				$data_egresado["fecha_egresado"] = $this->input->post("fecha_egresado");
 
 				if($data_persona["sexo"] == "M"){
-					$data_usuario["imagen"]="male.jpg";
+					$data_usuario["imagen"]="default/male.jpg";
 				}else{
-					$data_usuario["imagen"]="female.jpg";
+					$data_usuario["imagen"]="default/female.jpg";
 				}
 
 				$data_usuario["correo"] = $this->input->post("correo");
@@ -219,15 +234,27 @@
 				#Actualizar privacidad
 				$this->load->model("privacidad_model");
 				
-				$privacidad["usuario_id"] = getUsuarioId();
+				if($this->privacidad_model->consultar_privacidad(getUsuarioId()) == FALSE){
 
-				$privacidad["foto_perfil"] = $this->input->post("visibilidad_foto");
-				$privacidad["info_contacto"] = $this->input->post("visibilidad_contacto");
-				$privacidad["info_ubicacion"] = $this->input->post("visibilidad_ubicacion");
-				$privacidad["info_curriculum"] = $this->input->post("visibilidad_curriculum");
-				$privacidad["info_adicional"] = $this->input->post("visibilidad_info_adicional");
+					$privacidad["usuario_id"] = getUsuarioId();
+					$privacidad["foto_perfil"] = "empresas";
+					$privacidad["info_contacto"] = "empresas";
+					$privacidad["info_ubicacion"] = "empresas";
+					$privacidad["info_curriculum"] = "empresas";
+					$privacidad["info_adicional"] = "empresas";
 
-				$this->privacidad_model->actualizar_privacidad($privacidad);
+					$this->privacidad_model->configurar_privacidad($privacidad);
+				}else{
+
+					$privacidad["usuario_id"] = getUsuarioId();
+					$privacidad["foto_perfil"] = $this->input->post("visibilidad_foto");
+					$privacidad["info_contacto"] = $this->input->post("visibilidad_contacto");
+					$privacidad["info_ubicacion"] = $this->input->post("visibilidad_ubicacion");
+					$privacidad["info_curriculum"] = $this->input->post("visibilidad_curriculum");
+					$privacidad["info_adicional"] = $this->input->post("visibilidad_info_adicional");
+
+					$this->privacidad_model->actualizar_privacidad($privacidad);
+				}
 
 				return TRUE;
 			}

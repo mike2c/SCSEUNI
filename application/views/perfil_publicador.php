@@ -14,7 +14,7 @@
           if(file_exists("uploads/". getImagenPerfil())){
             ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
           }else{
-            ?> <img src="<?=base_url('public/res/no_image.gif')?>" alt=""> <?
+            ?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
           }
         ?>
         <span class="glyphicon glyphicon-camera"></span>
@@ -110,13 +110,25 @@
             <div class="form-group">
               <label class="control-label col-sm-3">Area:</label>
               <div class="col-sm-6">
-                <div id="area_area"></div>
+                <div class="input-group">
+                  <div id="area_area"></div>
+
+                  <div class="input-group-btn">
+                     <button id="btnAgregarArea" onclick='registrarArea()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                    </div>
+                </div>
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-3">Cargo:</label>
               <div class="col-sm-6">
-                <div id="cargo_area"></div>
+                <div class="input-group">
+                  <div id="cargo_area"></div>
+                  <div class="input-group-btn">
+                     <button id="btnAgregarCargo" onclick='registrarCargo()' type='button' class='btn btn-warning btn-sm'>Agregar</button>
+                  </div>
+                </div>
+               
               </div>
             </div>
           </div>

@@ -11,12 +11,11 @@
 		<div class="perfil">
 			<a href="#" id="cambiar_imagen" class="thumbnail">
 				<?php
-			
-					if(file_exists("uploads/". getImagenPerfil())){
+					if(imagen_disponible()){
 						?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
-					}else{
-						?> <img src="<?=base_url('public/res/no_image.gif')?>" alt=""> <?
-					}
+		         	}else{
+		           		?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
+			        }
 				?>
 				<span class="glyphicon glyphicon-camera"></span>
 			</a>

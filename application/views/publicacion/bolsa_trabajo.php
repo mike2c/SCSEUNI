@@ -1,6 +1,6 @@
 <div class="container no-padding">
 <div class="contenido">
-
+	<h2 class="page-header">Ofertas de trabajo disponibles</h2>
 		<div class="col-md-9 col-lg-9" style="border-right:1px solid lightgray">
 			<?php
 				if(isset($fichas) && !empty($fichas)){

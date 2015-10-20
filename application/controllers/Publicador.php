@@ -22,9 +22,11 @@
 			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
 				array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
 
-
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();
+			}elseif($this->publicador->existe_correo($this->input->post("correo"))){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
 			
 				$this->load->library("Encrypter");
@@ -36,9 +38,9 @@
 				$data_persona["fecha_nacimiento"] = format_date($this->input->post("fecha_nacimiento"));
 				
 				if($data_persona["sexo"] == "M"){
-					$data_usuario["imagen"]="male.jpg";
+					$data_usuario["imagen"]="default/male.jpg";
 				}else{
-					$data_usuario["imagen"]="female.jpg";
+					$data_usuario["imagen"]="default/female.jpg";
 				}
 
 				$data_usuario["correo"] = $this->input->post("correo");
@@ -78,6 +80,9 @@
 			
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();
+			}elseif($this->publicador->existe_correo($this->input->post("correo"),getUsuarioId())){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
 
 				$this->load->library("Encrypter");

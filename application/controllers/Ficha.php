@@ -7,7 +7,7 @@
 			parent::__construct();
 			
 			$this->load->model("ficha_model","ficha");
-			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["empresa"]) && !isset($_SESSION["admin"])){
+			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["empresa"]) && !isset($_SESSION["administrador"])){
 				show_404();
 			}
 		}

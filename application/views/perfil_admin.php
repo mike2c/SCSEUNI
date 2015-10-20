@@ -11,10 +11,10 @@
       <a href="#" id="cambiar_imagen" class="thumbnail">
         <?php
       
-          if(file_exists("uploads/". getImagenPerfil())){
+          if(imagen_disponible()){
             ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
           }else{
-            ?> <img src="<?=base_url('public/res/no_image.gif')?>" alt=""> <?
+            ?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
           }
         ?>
         <span class="glyphicon glyphicon-camera"></span>
@@ -32,7 +32,7 @@
 
       <ul id="perfil_menu" class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-        <li><a href="<?=base_url('Cpanel')?>">Panel de administración</a></li>
+        <li><a href="<?=base_url('CPanel')?>">Panel de administración</a></li>
         <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
         <li><a href="javascript:cargarCursos()">Cursos</a></li>
         <li><a href="javascript:cargarBecas()">Becas</a></li>
@@ -183,10 +183,7 @@
 <script type="text/javascript">
   
   $(document).ready(function(){
-
-
-    Cargos($("#area").val(),cargo_actual,"formActualizarPerfil","form-control");
-
+  
     $("#cambiar_imagen").click(function(){
       $("#imagen").trigger("click");
     });
@@ -201,7 +198,7 @@
 
   $("#formActualizarPerfil").submit(function(e){
     e.preventDefault();
-    validarForm(this.$("#area_response"));
+    validarForm(this,$("#area_response"));
   });
   
 </script>

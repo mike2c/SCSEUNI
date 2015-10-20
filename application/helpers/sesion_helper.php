@@ -87,6 +87,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	}
 
+	function imagen_disponible(){
+
+		if(isset($_SESSION) && !empty($_SESSION)){
+
+			if(file_exists("uploads/".getImagenPerfil()) && (getImagenPerfil() !== null) && (getImagenPerfil() !== "")){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	function is_session_started(){
 
 	    if ( php_sapi_name() !== 'cli' ) {

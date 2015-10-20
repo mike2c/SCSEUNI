@@ -25,24 +25,24 @@
 		function Actualizar(){
 
 			$this->form_validation->set_rules('nombre_empresa','Nombre de la Empresa','trim|required|min_length[5]|max_length[60]');
-			$this->form_validation->set_rules('ruc','RUC','trim|max_length[9]|min_length[9]');
+			$this->form_validation->set_rules('ruc','RUC','trim|max_length[15]|min_length[15]');
 			$this->form_validation->set_rules('sociedad','Sociedad','trim|required|max_length[2]|min_length[1]');
 			$this->form_validation->set_rules('telefono','Telefono','trim|max_length[9]|min_length[9]');
 			$this->form_validation->set_rules('celular','Celular','trim|max_length[9]|min_length[9]');
 			$this->form_validation->set_rules('direccion','Direccion','trim|max_length[100]');
 			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
-			$this->form_validation->set_rules('clave','Confirmar Contraseña','trim|min_length[5]|required|max_length[15]');
-			$this->form_validation->set_rules('clave_conf','Contraseña','trim|required|matches[clave]|min_length[5]|max_length[15]',
-				array("matches"=>"Las contraseñas no coinciden","required"=>"El campo de confirmacion de contraseña es obligatorio"));
 			$this->form_validation->set_rules("direccion","Direccion","trim|max_length[100]|min_length[6]");
 			$this->form_validation->set_rules("municipio","Municipio","trim|required|max_length[10]|min_length[1]");
 			$this->form_validation->set_rules("departamento","Departamento","trim|required|max_length[10]|min_length[1]");
 
-
 			if($this->form_validation->run() == FALSE){
-				validation_errors();				
+
+				echo validation_errors();				
+			}elseif($this->empresa->existe_correo($this->input->post("correo"),getUsuarioId())){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
-		
+				
 				#Tabla empresa
 				$data["empresa"]["empresa_id"] = $this->input->post("empresa_id");
 				$data["empresa"]["mision"] = $this->input->post("mision");
@@ -100,6 +100,9 @@
 
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();			
+			}elseif($this->empresa->existe_correo($this->input->post("correo"))){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
 
 				$this->load->library("Encrypter");
@@ -121,7 +124,7 @@
 				
 				echo "<script type='text/javascript'>
 					alert('Registrado');
-					window.location='". base_url('Sesion') ."';
+					window.location='". base_url('login') ."';
 				</script>";
 	
 			}/*END ELSE*/

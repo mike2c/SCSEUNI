@@ -1,14 +1,16 @@
 <div class="container">
 	<div class="contenido">
 		<h2 class="form-title">Lista de egresados</h2>
-		<p class="text-helper">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
-		<br>
+		<p class="text-info">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
+		
 		<div class="col-lg-12 col-md-12" style="overflow:auto">
-			<form class="form-inline pull-right" method="post" action="<?=base_url("Egresado/Listado")?>" id="formBuscarEgresado">
+			<form class="form-inline" method="post" action="<?=base_url("listado_egresados")?>" id="formBuscarEgresado">
 				<div class="form-group">
-				<label for=""> </label>
-					 <select class="form-control" name="carrera" id="carrera">
-					 	<option value="0">- Carreras -</option>
+					<input name="nombre" type="text" class="form-control" placeholder="Buscar por nombre">
+				</div>
+				<div class="form-group">
+					<select class="form-control" name="carrera" id="carrera">
+					 	<option value="0">- Todas las carreras -</option>
 					  	<?php
 					 		if(isset($carreras)){
 					 			foreach ($carreras->result() as $row) {
@@ -16,7 +18,7 @@
 					 					echo "<option selected value='$row->carrera_id'>$row->nombre_carrera</option>";
 					 				}else{
 					 					echo "<option value='$row->carrera_id'>$row->nombre_carrera</option>";
-					 				}				 				
+					 				}			 				
 					 			}
 					 		}else{
 					 			exit("<p class='bg-danger'>No se han podido cargar las carreras</p>");
@@ -25,8 +27,7 @@
 					 </select>
 				</div>
 				<div class="form-group">
-					<input name="nombre" type="text" class="form-control" placeholder="Buscar por nombre">
-					<button class="btn btn-primary btn-sm">Buscar </button>
+						<button class="btn btn-primary btn-sm">Buscar </button>
 				</div>
 			</form>
 		
@@ -50,7 +51,14 @@
 
 			foreach ($registro->result() as $row) {
 				echo "<tr>";
-				echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
+
+				/*Imagen de perfil*/
+				if(imagen_disponible()){
+					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
+				}else{
+					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+				}
+				
 				echo "<td><h4>$row->nombre $row->apellido</h4>
 				<h4><small>$row->carrera</small></h4>";
 				
@@ -60,13 +68,71 @@
 					echo "<h4><small>Hombre</small></h4></td>";
 				}
 				
-				if($privacidad[$row->usuario_id] !=null){
+				if($privacidad[$row->usuario_id] == null || empty($privacidad[$row->usuario_id])){
+				
+					echo "<td><p class='text-info'>Información no disponible</p></td>";
+					echo "<td><p class='text-info'>Información no disponible</p></td>";
+					echo "<td><p class='text-info'>Información no disponible</p></td>";
+				}else{
+
+					/*Informacion de ubicación*/
+					if($privacidad[$row->usuario_id]["info_ubicacion"] == "publica"){
+						echo "<td>$row->municipio, $row->departamento. <br>$row->direccion</td>";
+					}elseif($privacidad[$row->usuario_id]["info_ubicacion"] == "empresas"){
+						if(esEmpresa() || esPublicador() || esAdministrador()){
+							echo "<td>$row->municipio, $row->departamento. <br>$row->direccion</td>";
+						}else{
+							echo "<td><p class='text-info'>Información no disponible</p></td>";
+						}	
+					}			
 					
+					/*Información de contacto*/
+					if($privacidad[$row->usuario_id]["info_contacto"] == "publica"){
+						echo "<td>";
+						if($row->telefono != null && !empty($row->telefono)){
+							echo $row->telefono;
+							if($row->celular != null && !empty($row->celular)){
+								echo "," . $row->celular . "<br>";
+							}
+						}else{
+							if($row->celular != null && !empty($row->celular)){
+								echo $row->celular . "<br>";
+							}
+						}
+						echo $row->correo ;
+						echo "</td>";
+					}elseif($privacidad[$row->usuario_id]["info_contacto"] == "empresas"){
+						if(esEmpresa() || esPublicador() || esAdministrador()){
+							echo "<td>";
+							if($row->telefono != null && !empty($row->telefono)){
+								echo $row->telefono;
+								if($row->celular != null && !empty($row->celular)){
+									echo "," . $row->celular . "<br>";
+								}
+							}else{
+								if($row->celular != null && !empty($row->celular)){
+									echo $row->celular . "<br>";
+								}
+							}
+							echo $row->correo ;
+							echo "</td>";
+						}else{
+							echo "<td><p class='text-info'>Información no disponible</p></td>";
+						}	
+					}	
+
+					/*Información de curriculum*/					
+					if($privacidad[$row->usuario_id]["info_contacto"] == "publica"){
+						echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
+					}elseif($privacidad[$row->usuario_id]["info_contacto"] == "empresas"){
+						if(esEmpresa() || esPublicador() || esAdministrador()){
+							echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
+						}else{
+							echo "<td><p class='text-info'>Información no disponible</p></td>";
+						}
+					}					
 				}
 
-				echo "<td>$row->municipio, $row->departamento. <br>$row->direccion</td>";
-				echo "<td>$row->telefono, $row->celular <br>$row->correo</td>";
-				echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";
 				echo "</tr>";
 			}
 		?>
@@ -124,5 +190,8 @@
 	});
 	$("table tr td img").mouseleave(function(){
 			$(this).removeClass("zoom-in");
+	});
+	$("#carrera").change(function(){
+		$("#formBuscarEgresado").submit();
 	});
 </script>

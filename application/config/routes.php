@@ -63,6 +63,5 @@ $route['Importar'] = "Importar";
 $route['listado_egresados'] = "Egresado/Listado";
 
 
-
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
