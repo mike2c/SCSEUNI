@@ -6,8 +6,7 @@
 	</h1>
 	<div class="col-md-7 col-lg-7">
 	
-
-		<form style="padding:30px 30px;border-radius:10px;background-color:white;border:1px solid lightgray" action="<?=base_url().'index.php/Empresa/Registro'?>" method="post" id="formRegistroEmpresa" name="formRegistroEmpresa ">
+		<form style="padding:30px 30px;border-radius:10px;background-color:white;border:1px solid lightgray" action="<?=base_url('Empresa/Registro')?>" method="post" id="formRegistroEmpresa" name="formRegistroEmpresa">
 			<div class="form-group">
 				<div class="col-sm-push-3">
 					  <p class="help-block">Los campos marcados con un <i class="glyphicon glyphicon-asterisk"></i> son obligatorios.</p>
@@ -78,14 +77,23 @@
 
 		</form>
 	</div>
-
+	<div class="col-md-5">
+		<div id="respuesta" class="panel panel-default panel-body text-danger hidden-content">
+			
+		</div>
+	</div>
 </div>
 <script type="text/javascript" src="<?=base_url('public/js/listas.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/empresas.js')?>"></script>
 <script type="text/javascript">
 	
 	listarDepartamentos(null,null,"form-control");
 	listarMunicipios($("#departamento").val(),null,null,"form-control");
+	$("#formRegistroEmpresa").submit(function(e){
+		e.preventDefault();
+		validarForm(this,$("#respuesta"));
+	});
 </script>
 <style type="text/css">
 	body{

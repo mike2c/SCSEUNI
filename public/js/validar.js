@@ -18,6 +18,7 @@ function validarForm(form,responseArea){
 			}else{
 				$(responseArea).show("slow");
 				$(responseArea).html(data);
+				$(responseArea).trigger("scrollIntoView");
 			}
 		},
 		error: function(jqXHR,textStatus,errorThrown){

@@ -193,7 +193,7 @@ function listarCargos(area,cargo_actual,form,classes){
 		return;
 	}
 
-	if(cargo_actual == undefined){
+	if(cargo_actual == undefined || cargo_actual == null){
 		cargo_actual = "";	
 	}
 
@@ -234,7 +234,9 @@ function registrarArea(){
 		function(data){
 			if(data == ""){
 				alert("Area registrada");
-				listarAreas($("#area").val());
+				listarAreas($("#area").val(),$("#area").attr("form"),$("#area").attr("class"));
+
+
 			}else{
 				console.log(data);
 			}
@@ -253,7 +255,7 @@ function registrarCargo(){
 		function(data){
 			if(data == ""){
 				alert("Cargo registrado");
-				listarCargos($("#area").val(),$("#cargo").val());
+				listarCargos($("#area").val(),$("#cargo").val(),$("#area").attr("form"),$("#area").attr("class"));
 			}else{
 				console.log(data);
 			}

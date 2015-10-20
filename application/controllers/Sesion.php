@@ -64,7 +64,11 @@
 
 			$this->load->view("cabecera");
 			$this->load->view("nav");
-			$this->load->view("pages/login",$data);
+			if(sesionIniciada()){
+				$this->load->view("errors/html/error_session",$data);
+			}else{
+				$this->load->view("pages/login",$data);
+			}
 			$this->load->view("footer");
 		}
 

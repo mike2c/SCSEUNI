@@ -25,6 +25,9 @@
 		
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();			
+			}elseif($this->admin->existe_correo($this->input->post("correo"))){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
 
 				$this->load->library("Encrypter");//Cargamos la libreria para encriptar
@@ -39,6 +42,12 @@
 				$data_persona["apellido"] = $this->input->post('apellido');
 				$data_persona["sexo"] = $this->input->post('genero');
 				
+				if($data_persona["sexo"] == "M"){
+					$data_usuario["imagen"]="default/male.jpg";
+				}else{
+					$data_usuario["imagen"]="default/female.jpg";
+				}
+
 				$this->admin->insertarAdmin($data_usuario,$data_persona);
 
 				echo "<script type='text/javascript'>
@@ -57,6 +66,9 @@
 			
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();
+			}elseif($this->admin->existe_correo($this->input->post("correo"),getUsuarioId())){
+				echo "El correo que estas ingresando ya existe";
+				return FALSE;
 			}else{
 
 				$this->load->library("Encrypter");

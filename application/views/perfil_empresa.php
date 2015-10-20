@@ -11,10 +11,10 @@
       <a href="#" id="cambiar_imagen" class="thumbnail">
         <?php
       
-          if(file_exists("uploads/". getImagenPerfil())){
+          if(imagen_disponible()){
             ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
           }else{
-            ?> <img src="<?=base_url('public/res/no_image.gif')?>" alt=""> <?
+            ?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
           }
         ?>
         <span class="glyphicon glyphicon-camera"></span>
@@ -39,7 +39,9 @@
   </div>
   <div class="col-md-10 col-lg-10" style="padding-right:0px;">
     <div id="area_perfil">
-
+       <!--Div a donde se cargan los errores-->
+        <div id="area_response" class="panel panel-danger text-danger panel-body response-area"></div>
+          
       <!-- formulario-->
       <form action="<?=base_url('Empresa/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
           <input type="hidden" id="empresa_id" name="empresa_id" value="<?=$perfil->empresa_id?>">
@@ -72,7 +74,7 @@
                 <div class="form-group">
                   <label class="control-label col-sm-3">RUC:</label>
                   <div class="col-sm-7">
-                    <input form="formActualizarPerfil" name="ruc" class="form-control" type="text" value="<?=$perfil->ruc?>">
+                    <input form="formActualizarPerfil" id="ruc" name="ruc" class="form-control" type="text" value="<?=$perfil->ruc?>">
                   </div>
                 </div>
                 <div class="form-group">
@@ -179,13 +181,13 @@
             <div class="form-group">
               <label class="control-label col-sm-3">Telefono:</label>
               <div class="col-sm-6">
-                <input form="formActualizarPerfil" name="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
+                <input form="formActualizarPerfil" name="telefono" id="telefono" class="form-control" type="text" value="<?=$perfil->telefono?>">
               </div>
             </div>
             <div class="form-group">
               <label class="control-label col-sm-3">Celular:</label>
               <div class="col-sm-6">
-                <input form="formActualizarPerfil" name="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
+                <input form="formActualizarPerfil" name="celular" id="celular" class="form-control" type="text" value="<?=$perfil->celular?>">
               </div>
             </div>  
           </div>
@@ -226,6 +228,7 @@
 <script type="text/javascript" src="<?=base_url('public/js/publicacion.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/publicadores.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('public/js/perfil.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('public/js/validar.js')?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/publicacion.css')?>">
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/perfil.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/jquery.mask.js')?>"></script>
@@ -233,11 +236,14 @@
 <script type="text/javascript">
   
   $(document).ready(function(){
+
+
+    listarSociedades("<?=$perfil->sociedad_id?>","formActualizarPerfil","form-control");
+    listarDepartamentos("<?=$perfil->departamento_id?>","formActualizarPerfil","form-control");
+    listarMunicipios($("#departamento").val(),"<?=$perfil->municipio_id?>","formActualizarPerfil","form-control");
     
-    listarSociedades(<?=$perfil->sociedad_id?>,"formActualizarPerfil","form-control");
-    listarDepartamentos(<?=$perfil->departamento_id?>,"formActualizarPerfil","form-control");
-    listarMunicipios($("#departamento").val(),<?=$perfil->municipio_id?>,"formActualizarPerfil","form-control");
-    
+
+
     $("#cambiar_imagen").click(function(){
       $("#imagen").trigger("click");
     });
@@ -246,11 +252,15 @@
       $("#formSubirImg").submit();
     });
 
-    $("#telefono").mask("0000-0000",{placeholder: "0000-0000"});
-    $("#celular").mask("0000-0000",{placeholder: "0000-0000"});
-   
-    $("#ruc").mask("AAAAAAAAAA-AAAA",{placeholder: "AAAAAAAAAA-AAAA"});
+      $("#telefono").mask("0000-0000",{placeholder: "0000-0000"});
+      $("#celular").mask("0000-0000",{placeholder: "0000-0000"});
+     
+      $("#ruc").mask("AAAAAAAAAA-AAAA",{placeholder: "0000000000-0000"});
 
+    $("#formActualizarPerfil").submit(function(e){
+      e.preventDefault();
+      validarForm(this,$("#area_response"));
+    });
   });
   
   function cambiarClave(){
