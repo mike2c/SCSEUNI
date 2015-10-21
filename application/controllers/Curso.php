@@ -111,10 +111,10 @@
 				return false;
 			}
 			$correoInfo["asunto"] = "NUEVO CURSO PUBLICADO";
-			$correoInfo["mensaje"] = "Se ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: ". base_url('publicaciones/Curso') ;
+			$correoInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: ". base_url('publicaciones/Curso') ;
 			$this->correo->correoPublicaciones($correoInfo);
 			$msgInfo["asunto"] = "NUEVO CURSO PUBLICADO";
-				$msgInfo["mensaje"] = "Se ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: <a href='". base_url('publicaciones/Curso').">Cursos</a>" ;
+				$msgInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: <a href='". base_url('publicaciones/Curso').">Cursos</a>" ;
 				$msgInfo["fecha_envio"] = date("Y-m-d");
 				$msgInfo["usuario_id"] = getUsuarioId();
 				$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);

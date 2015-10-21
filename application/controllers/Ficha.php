@@ -169,10 +169,10 @@
 				return false;
 			}
 			$correoInfo["asunto"] = "NUEVO FICHA OCUPACIONAL PUBLICADA";
-			$correoInfo["mensaje"] = "Se ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/BolsaDeTrabajo') ;
+			$correoInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/BolsaDeTrabajo') ;
 			$this->correo->correoPublicaciones($correoInfo);
 			$msgInfo["asunto"] = "NUEVO FICHA OCUPACIONAL PUBLICADA";
-			$msgInfo["mensaje"] = "Se ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/BolsaDeTrabajo')."'>Fichas Ocupacionales</a>" ;
+			$msgInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/BolsaDeTrabajo')."'>Fichas Ocupacionales</a>" ;
 			$msgInfo["fecha_envio"] = date("Y-m-d");
 			$msgInfo["usuario_id"] = getUsuarioId();
 			$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);
