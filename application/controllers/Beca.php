@@ -86,11 +86,11 @@
 				return false;
 			}
 			$correoInfo["asunto"] = "NUEVA BECA PUBLICADA";
-			$correoInfo["mensaje"] = "Se ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/Becas') ;
+			$correoInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/Becas') ;
 			$this->correo->correoPublicaciones($correoInfo);
 			
 			$msgInfo["asunto"] = "NUEVA BECA PUBLICADA";
-			$msgInfo["mensaje"] = "Se ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/Becas')."'>Becas</a>" ;
+			$msgInfo["mensaje"] = "La Universidad Nacional de Ingeniería ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/Becas')."'>Becas</a>" ;
 			$msgInfo["fecha_envio"] = date("Y-m-d");
 			$msgInfo["usuario_id"] = getUsuarioId();
 			$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);	
