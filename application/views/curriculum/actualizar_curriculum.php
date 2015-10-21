@@ -32,6 +32,8 @@
 	<input name="curriculum_id" type="hidden" value="<?php echo $curriculum_id; ?>">
         <div class="group-title">
             <h4>1. Formacion academica</h4>
+            <p class="help-block">Indica los estudios que has realizado.</p>
+
         </div>
 		<div class='group-body'>
         <?php
@@ -94,7 +96,7 @@
 						<input style="width:auto;" class="form-control fecha" type="text" name="comienzo_laboral[]" >
 					</div>
 					<div class="form-group">
-						<label>Año Año de finalización</label><br>
+						<label>Año de finalización</label><br>
 						<input style="width:auto;" class="form-control fecha" type="text" name="finalizacion_laboral[]" >
 					</div>
 				</div>	
@@ -119,7 +121,7 @@
 						<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_laboral[]' value='$EP->fecha_comienzo'>
 					</div>
 					<div class='form-group'>
-						<label>Año Año de finalización</label><br>
+						<label>Año de finalización</label><br>
 						<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_laboral[]' value='$EP->fecha_finalizacion'>
 					</div>
 				</div>	
@@ -139,6 +141,7 @@
 		<div id="formacion_complementaria" class="field"><!--FORMACION COMPLEMENTARIA-->
 			<div class="group-title">
 				<h4>3. Formacion Complementaria</h4>
+				<p class="help-block">Cursos que has tomado o estudios extras.</p>
 			</div>
 		<?php 
 			if($formacion_complementaria==""){
@@ -187,10 +190,10 @@
 		?>
 		</div>
 		<div class="group-footer">
-				<a href='javascript:agregarFormacionComplementaria()' name='btn_agregar'>Agregar Fila</a>
-				<a href='javascript:removerFila(formacion_complementaria)' name='btn_eliminar'>Eliminar Fila</a>
-			</div>
+			<a href='javascript:agregarFormacionComplementaria()' name='btn_agregar'>Agregar Fila</a>
+			<a href='javascript:removerFila(formacion_complementaria)' name='btn_eliminar'>Eliminar Fila</a>
 		</div>
+		
 		<hr class="">
 		<div id="dominio_idiomas" class="field"><!--DOMINIO DE IDIOMAS-->
 			<div class="group-title">
@@ -304,9 +307,10 @@
 			<button class="btn btn-danger" type="button">Cancelar</button>
 		</div>
 	</form>
+	</div>
 </div>
-<div class="panel panel-default">
-	<div class="panel-body" id="respuesta">
+<div class="panel panel-danger ">
+	<div class="panel-body text-danger content-hidden" id="respuesta">
 		
 	</div>
 </div>

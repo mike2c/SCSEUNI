@@ -4,11 +4,15 @@
 		echo "ERROR:";
 		exit("No se ha podido leer la información");
 	}
-
+	if(empty($curriculum["formacion_academica"])){
+		echo "ERROR:";
+		exit("No se ha podido leer la información");
+	}
 ?>
 <div class="container">
 	<div class="contenido">
-		<h2 class="page-header">Curriculum vitae</h2>
+	<br>
+	
 		<div class="row">
 			<div class="col-md-12">
 				<h4 class="text-primary">Información Personal</h4>
@@ -17,9 +21,20 @@
 		</div>
 		<div class="row">
 			<div class="col-md-2 col-lg-2">
-				<img class="img-responsive thumbnail" src="<?=base_url("uploads/". $egresado->imagen)?>" alt="">
+				<?php
+					if(file_exists("uploads/".$egresado->imagen)){
+						?>
+						<img class="img-responsive thumbnail" src="<?=base_url("uploads/". $egresado->imagen)?>" alt="">
+						<?
+					}else{
+						?>
+						<img class="img-responsive thumbnail" src="<?=base_url("uploads/default/no_image.gif")?>" alt="">
+						<?
+					}
+				?>
+				
 			</div>
-			<div class="col-md-9 col-lg-9">
+			<div class="col-md-8 col-lg-9">
 				<h3 class="text-info"><?=$egresado->nombre. " ". $egresado->apellido?></h3>
 				<p><?=$egresado->direccion?></p>
 				<p><?=(empty($egresado->telefono))? "telefono no disponible" : $egresado->telefono?></p>
@@ -37,7 +52,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-lg-8">
+			<div class="col-md-8 col-lg-9">
 				<table class="table table-default table-condensed table-hover table-responsive">
 				<?php
 
@@ -67,7 +82,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-8 col-lg-8">
+			<div class="col-md-8 col-lg-9">
 				<table class="table table-default table-condensed table-hover table-responsive">
 					<?php
 
@@ -116,20 +131,21 @@
 				</table>
 			</div>
 		</div>
-
+	<hr>
 		<!--Otros datos-->
 		<div class="row">
-			<div class="col-md-5 col-lg-5">
-				<div class="panel panel-default">
+			<div class="col-md-4 col-lg-4">
+				<div class="panel panel-info">
 					<div class="panel-heading">
-						Idiomas
+						<label for="">Idiomas</label>
 					</div>
-					<div class="panel-body">
-						<table class="table table-condensed table-default">
+					<div class="list-group">
+						<table class="table table-hover table-default" style="margin-bottom:0px">
 							<?php
 								foreach ($curriculum["idioma"]->result() as $row) {
 									echo "<tr>
-									<td>$row->idioma</td><td>$row->nivel</td>
+									<td> <label>$row->idioma</label></td>
+									<td> <label class='text-info'>$row->nivel</label></td>
 									</tr>";
 								}
 							?>
@@ -138,17 +154,18 @@
 				</div>
 		
 			</div>
-			<div class="col-md-5 col-lg-5">
-				<div class="panel panel-default">
+			<div class="col-md-4 col-lg-4">
+				<div class="panel panel-info">
 					<div class="panel-heading">
-						Informatica
+						<label for="">Informatica</label>	
 					</div>
-					<div class="panel-body">
-						<table class="table table-condensed table-default">
+					<div class="list-group">
+						<table class="table table-hover table-default" style="margin-bottom:0px">
 							<?php
 								foreach ($curriculum["informatica"]->result() as $row) {
 									echo "<tr>
-									<td>$row->software</td><td>$row->nivel</td>
+									<td> <label>$row->software</label></td>
+									<td> <label class='text-info'>$row->nivel</label></td>
 									</tr>";
 								}
 							?>
@@ -173,7 +190,8 @@
 	}
 
 	.page-header{
-		border-bottom: none;
+		margin-top:20px;
+		//border-bottom: none;
 		margin-bottom: 20px;
 	}
 
