@@ -7,6 +7,8 @@
 			
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
+			$this->load->model("egresado_model");
+			$this->load->library("Correo");
 			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["administrador"])){
 				show_404();
 			}
@@ -60,13 +62,33 @@
 			$data_carrera = $this->input->post("carreras[]");
 			$this->beca_model->insertarFiltro($data_beca);
 			$this->beca_model->actualizarFiltro($data_carrera,$data_beca["publicacion_id"]);
-
+			
+			$this->enviarCorreo($this->input->post("carreras[]"));
+			
 			echo "<script>
 				alert('Publicacion guardada correctamente');
 				window.location= '". base_url('Perfil') ."';
 			</script>";
 		}
-
+		
+		function enviarCorreo($carreras){
+			$carreras_id["carrera_id"] = $carreras;			
+			$query=$this->egresado_model->listar("","","",$carreras_id,"");
+			$correoInfo = null;
+			$cont = 0 ;
+			if($query->num_rows() > 0){
+				foreach($query->result() as $datos){
+					$correoInfo["destinatario"][$cont] = $datos->correo;
+					$cont +=1;
+				}
+			}else{
+				return false;
+			}
+			$correoInfo["asunto"] = "NUEVA BECA PUBLICADA";
+			$correoInfo["mensaje"] = "Se ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/Becas') ;
+			$this->correo->correoPublicaciones($correoInfo);
+		}
+		
 		function Listar(){
 
 			$data["becas"] = $this->beca_model->listar(array("usuario_id"=>getUsuarioId()));

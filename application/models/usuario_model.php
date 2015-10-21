@@ -37,7 +37,7 @@
 				$this->db->order_by($order_by,"asc");
 			}
 			if($where_in != ""){
-				$this->db->where_in(key($where_in),$where[key($where_in)]);
+				$this->db->where_in(key($where_in),$where_in[key($where_in)]);
 			}
 			return $this->db->get($this->view_name);
 		}
