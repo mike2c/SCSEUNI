@@ -15,7 +15,7 @@
 			if ($data_curriculo["curriculum_id"]==NULL) {
 				$this->Crear();
 			}else{
-				$data_curriculo = $this->modelo->listarCurriculo($data_curriculo["curriculum_id"]->curriculum_id);
+				$data_curriculo = $this->modelo->listarCurriculo($data_curriculo["curriculum_id"]);
 				if(!$data_curriculo==null){
 					$this->Editar($data_curriculo);
 				}else{
@@ -25,6 +25,10 @@
 		}
 
 		function Crear(){
+			if(!esEgresado()){
+				show_404();
+			}
+
 			if(IS_AJAX){
 				$this->load->view("curriculum/registro_curriculum");
 			}else{
@@ -36,6 +40,9 @@
 		}
 		
 		function Editar($data_curriculo=""){
+			if(!esEgresado()){
+				show_404();
+			}
 			if(IS_AJAX){
 				$this->load->view("curriculum/actualizar_curriculum",$data_curriculo);
 			}else{
@@ -47,6 +54,9 @@
 		}
 
 		function Guardar(){
+			if(!esEgresado()){
+				show_404();
+			}
 			if($this->validarCampos()){
 				#formacion academica
 				$titulo = $this->input->post("titulo[]");
@@ -126,7 +136,12 @@
 			}
 		}
 		
-		 function Actualizar(){
+
+
+		function Actualizar(){
+		 	if(!esEgresado()){
+				show_404();
+			}
 			
 			if($this->validarCampos()){
 				#Se recive el ID del curriculo por medio de un campo hidden.
@@ -261,6 +276,38 @@
 			}
 		}
 		
+
+		/*Mostrar curriculum*/
+		function Ver($id){
+
+			$this->load->model("privacidad_model","privacidad");
+			$this->load->model("egresado_model","egresado");
+			$priv = $this->privacidad->consultar_privacidad($id);
+		
+			if($priv == FALSE){
+				exit("<p>Esta información no esta disponible en este momento.</p>");
+			}else{
+				if($priv["info_curriculum"] == "empresas"){
+					if(!esPublicador() && !esEmpresa() && !esAdministrador()){
+						exit("<p>Esta información no esta disponible para tí.</p>");
+					}
+				}elseif($priv["info_curriculum"] == "privada"){
+					exit("<p>Esta información no esta disponible para tí.</p>");
+				}
+			}
+
+			$curriculum_id = $this->modelo->getCurriculumID($id);
+			$data["egresado"] = $this->egresado->listar(array("usuario_id"=>$id))->row();
+			$data["curriculum"] = $this->modelo->listarCurriculo($curriculum_id);
+			$data["privacidad"] = $priv;
+
+			$this->load->view("cabecera");
+			$this->load->view("nav");
+			$this->load->view("curriculum/ver_curriculum",$data);
+			$this->load->view("footer");
+
+		}
+
 		function periodoTitulo(){
 			$comienzo = $this->input->post("comienzo_formacion[]");
 			$finalizacion = $this->input->post("finalizacion_formacion[]");

@@ -119,6 +119,7 @@ class Correo extends CI_Controller{
 		if($_POST["curr_adjuntado"] == 'true'){
 			$data_mensaje["curr_adjuntado"] = TRUE;
 		}
+		
 		$data_destino["mensaje_id"] = $this->mensaje->insertarMensaje($data_mensaje);//insertamos y caputarmos el ultimo id generado
 		$data_destino["usuario_id"] = $this->input->post("usuario_id");
 		

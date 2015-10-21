@@ -123,10 +123,10 @@
 
 					/*Información de curriculum*/					
 					if($privacidad[$row->usuario_id]["info_contacto"] == "publica"){
-						echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
+						echo "<td><a target='blank' href='" . base_url("Curriculum/Ver/". $row->usuario_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
 					}elseif($privacidad[$row->usuario_id]["info_contacto"] == "empresas"){
 						if(esEmpresa() || esPublicador() || esAdministrador()){
-							echo "<td><a target='blank' href='" . base_url("Curriculum/". $row->egresado_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
+							echo "<td><a target='blank' href='" . base_url("Curriculum/Ver/". $row->usuario_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
 						}else{
 							echo "<td><p class='text-info'>Información no disponible</p></td>";
 						}

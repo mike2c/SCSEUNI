@@ -20,8 +20,8 @@
 			$egresado_id = $this->getEgresadoID($usuario_id);
 			if (!$egresado_id->egresado_id==NULL){
 				$curriculum_id = $this->db->query("SELECT curriculum_id from curriculum where curriculum.egresado_id = '$egresado_id->egresado_id';");
-				if ($curriculum_id->num_rows()>0) {
-					return $curriculum_id->row();
+				if ($curriculum_id->num_rows() == 1) {
+					return $curriculum_id->row("curriculum_id");
 				}else {
 					return NULL;
 				}
@@ -51,7 +51,7 @@
 		}
 		
 		public function listarFormacionAcademica($curriculum_id){
-			$query = $this->db->query("SELECT formacion_academica_id,fecha_comienzo, fecha_finalizacion, titulo_id from formacion_academica where formacion_academica.curriculum_id = '$curriculum_id';");
+			$query = $this->db->query("SELECT formacion_academica_id,fecha_comienzo, fecha_finalizacion, titulo.titulo_id,titulo from formacion_academica,titulo where titulo.titulo_id=formacion_academica.titulo_id and formacion_academica.curriculum_id = '$curriculum_id';");
 			if ($query->num_rows()>0) {
 				return $query;
 			}else {

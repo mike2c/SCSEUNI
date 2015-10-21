@@ -8,7 +8,7 @@
 
 					foreach ($becas->result() as $row) {
 						echo "<div class='post'>";
-						echo "<img src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
+						echo "<img class='logo' src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
 						echo "<hr>";
 						echo "<h3 class='text-primary'>".ucfirst($row->programa_academico)."</h3>";
 						echo "<p class=''>".ucfirst($row->descripcion)."</p>";
@@ -49,6 +49,7 @@
 	</div>
 </div>
 <style type="text/css">
+		
 	.post{
 		
 		border:1px solid lightgray;
@@ -83,6 +84,7 @@
 	.hide-content{
 		display: none;
 	}
+
 </style>
 <script type="text/javascript">
 	$(".post button").click(function(){
