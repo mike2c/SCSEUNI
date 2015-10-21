@@ -155,6 +155,7 @@ class Correo extends CI_Controller{
 		foreach ($mensajes as $key => $value) {
 			$this->mensaje->destruirBorrador($value);
 		}
+		
 	}
 
 	function CargarBorrador(){
