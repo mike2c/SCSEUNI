@@ -1,19 +1,3 @@
-<style type="text/css">
-	p {
-		text-align: justify;
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-	li{
-		text-align: justify;
-	}
-	
-	img{
-    	border: 1px solid #03447F;
-    	width: 460px;
-	}
-
-</style>
 <div class="container">
 	<div class="row">
 		<div class="col-md-12 col-lg-12 contenido">
@@ -59,7 +43,7 @@
 
 				    <div role="tabpanel" class="tab-pane active" id="profile">
 				    	<table>
-				    	<tr><td><img src="../../public/res/perfil-usuario.jpg"></td>
+				    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion/Perfil.png')?>"></td>
 						<td> <p>	
 						    	Una vez registrados y autenticados los egresados y graduados, tendrán un perfil el cual puede ser público o privado según las preferencias del usuario, en el podrán actualizar sus datos personales, sociales, intereses, también tendrán el acceso a su bandeja de mensajes, formulario de currículo y la bolsa de trabajo.
 							</p> </td></tr>
@@ -68,7 +52,7 @@
 
 				    <div role="tabpanel" class="tab-pane" id="cv">
 				    	<table>
-				    	<tr><td><img src="../../public/res/curriculum.jpg"></td>
+				    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion/Curriculum.jpg')?>"></td>
 						<td> <p>	
 						    	Al hacer click en el formulario de currículo desde el perfil de usuario los egresados o graduados podrán crear su hoja de vida, sin la tediosa necesidad de subir archivos, simplemente deberán completar la información requerida por el formulario y guardarla.
 								<br/><br/>Una de las ventajas de esto es que podrán actualizar la información de sus currículos en cualquier momento sin necesidad de subir un archivo cada vez que deseen agregar campos en su currículo, volviendo este proceso más rápido y menos tedioso.
@@ -79,7 +63,7 @@
 
 				    <div role="tabpanel" class="tab-pane" id="bolsa">
 				    	  <table>
-					    	<tr><td><img src="../../public/res/bolsa_trabajo.png"></td>
+					    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion/Bolsa.png')?>"></td>
 							<td> <p>	
 						    	La bolsa de trabajo muestra las ofertas de empleo publicadas por las empresas, estas publicaciones estarán clasificadas según las carreras impartidas en el Recinto Universitario Augusto C. Sandino, esto con el fin de crear un filtro en las publicaciones y mostrar únicamente lo relevante a cada usuario.
 								<br/><br/>Los egresados y graduados tendrán la posibilidad de navegar en la bolsa de trabajo, y podrán enviar su currículo si creen que cumple con los requisitos del cargo ofertado.
@@ -89,11 +73,11 @@
 				    </div>
 				    <div role="tabpanel" class="tab-pane" id="byc">
 				    	  <table>
-					    	<tr><td><img src="../../public/res/cyb.gif"></td>
+					    	<tr><td><img class="img-rounded" src="<?=BASE_URL('public/res/Informacion/cyb.gif')?>"></td>
 							<td> <p>	
 						    	El apartado de Becas y cursos, muestra una breve descripción de los diferentes cursos libres o de posgrados impartidos en el Recinto Universitario Augusto C. Sandino así como las diferentes becas ofertadas.
-								<br/><br/>Para ver los cursos ofertados has click <a href="">aquí</a>.
-								<br/><br/>Para ver as becas disponibles has click <a href="">aquí</a>.
+								<br/><br/>Para ver los cursos ofertados has click <a href="<?=BASE_URL('Publicaciones/Cursos')?>">aquí</a>.
+								<br/><br/>Para ver as becas disponibles has click <a href="<?=BASE_URL('Publicaciones/Becas')?>">aquí</a>.
 							</p> </td></tr>
 						</table>
 				    </div>
@@ -110,3 +94,14 @@
 		</div>
 	</div>
 </div>
+<style type="text/css">
+	p {
+		text-align: justify;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	li{
+		text-align: justify;
+	}
+
+</style>

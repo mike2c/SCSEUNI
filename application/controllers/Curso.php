@@ -7,7 +7,9 @@
 			parent::__construct();
 			
 			$this->load->library("session");
+			$this->load->library("Correo");
 			$this->load->helper(array("imagen","fecha","sesion","texto"));
+			$this->load->model("egresado_model");
 			if (!sesionIniciada()) {
 				exit("ERROR DE ACCESO, no hay una sesion activa");
 			}
@@ -84,7 +86,8 @@
 					$this->curso_model->insertarFiltro($data_curso);
 					$this->curso_model->actualizarFiltro($data_carrera,$data_curso["publicacion_id"]);
 					$this->curso_model->insertar($data_curso);
-
+					
+					$this->enviarCorreo($this->input->post("carreras[]"));
 					echo "<script>
 						alert('Publicacion guardada correctamente');
 						window.location= '". base_url('Perfil') ."?page=cursos';
@@ -92,7 +95,25 @@
 				}
 			}
 		}
-
+		
+		function enviarCorreo($carreras){
+			$carreras_id["carrera_id"] = $carreras;			
+			$query=$this->egresado_model->listar("","","",$carreras_id,"");
+			$correoInfo = null;
+			$cont = 0 ;
+			if($query->num_rows() > 0){
+				foreach($query->result() as $datos){
+					$correoInfo["destinatario"][$cont] = $datos->correo;
+					$cont +=1;
+				}
+			}else{
+				return false;
+			}
+			$correoInfo["asunto"] = "NUEVO CURSO PUBLICADO";
+			$correoInfo["mensaje"] = "Se ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: ". base_url('publicaciones/Curso') ;
+			$this->correo->correoPublicaciones($correoInfo);
+		}
+		
 		function Listar(){
 			$this->load->model("curso_model");
 			$this->load->model("listas_model","lista");

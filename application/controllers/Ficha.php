@@ -7,6 +7,8 @@
 			parent::__construct();
 			
 			$this->load->model("ficha_model","ficha");
+			$this->load->model("egresado_model");
+			$this->load->library("Correo");
 			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["empresa"]) && !isset($_SESSION["administrador"])){
 				show_404();
 			}
@@ -143,11 +145,31 @@
 
 				$this->ficha->insertarFiltro($data_ficha);
 				$this->ficha->actualizarFiltro($data_carrera,$data_ficha["publicacion_id"]);
+				
+				$this->enviarCorreo($this->input->post("carreras[]"));
 			}catch(Exception $e){
 				return false;
 			}
 			
 			return true;	
+		}
+		
+		function enviarCorreo($carreras){
+			$carreras_id["carrera_id"] = $carreras;			
+			$query=$this->egresado_model->listar("","","",$carreras_id,"");
+			$correoInfo = null;
+			$cont = 0 ;
+			if($query->num_rows() > 0){
+				foreach($query->result() as $datos){
+					$correoInfo["destinatario"][$cont] = $datos->correo;
+					$cont +=1;
+				}
+			}else{
+				return false;
+			}
+			$correoInfo["asunto"] = "NUEVO FICHA OCUPACIONAL PUBLICADA";
+			$correoInfo["mensaje"] = "Se ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/BolsaDeTrabajo') ;
+			$this->correo->correoPublicaciones($correoInfo);
 		}
 
 		function Actualizar(){
