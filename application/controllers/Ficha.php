@@ -9,6 +9,7 @@
 			$this->load->model("ficha_model","ficha");
 			$this->load->model("egresado_model");
 			$this->load->library("Correo");
+			$this->load->model("mensaje_model");
 			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["empresa"]) && !isset($_SESSION["administrador"])){
 				show_404();
 			}
@@ -170,6 +171,15 @@
 			$correoInfo["asunto"] = "NUEVO FICHA OCUPACIONAL PUBLICADA";
 			$correoInfo["mensaje"] = "Se ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/BolsaDeTrabajo') ;
 			$this->correo->correoPublicaciones($correoInfo);
+			$msgInfo["asunto"] = "NUEVO FICHA OCUPACIONAL PUBLICADA";
+			$msgInfo["mensaje"] = "Se ha publicado una nueva Ficha Ocupacional, puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/BolsaDeTrabajo')."'>Fichas Ocupacionales</a>" ;
+			$msgInfo["fecha_envio"] = date("Y-m-d");
+			$msgInfo["usuario_id"] = getUsuarioId();
+			$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);
+			foreach($query->result() as $datos){
+				$this->mensaje_model->insertarDestinoMensaje(array("mensaje_id"=>$destinoInfo["mensaje_id"],"usuario_id"=>$datos->usuario_id));
+				$this->mensaje_model->registrarEnTablaEliminados($datos->usuario_id,$destinoInfo["mensaje_id"]);
+			}
 		}
 
 		function Actualizar(){

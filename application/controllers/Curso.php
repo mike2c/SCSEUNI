@@ -10,6 +10,7 @@
 			$this->load->library("Correo");
 			$this->load->helper(array("imagen","fecha","sesion","texto"));
 			$this->load->model("egresado_model");
+			$this->load->model("mensaje_model");
 			if (!sesionIniciada()) {
 				exit("ERROR DE ACCESO, no hay una sesion activa");
 			}
@@ -112,6 +113,15 @@
 			$correoInfo["asunto"] = "NUEVO CURSO PUBLICADO";
 			$correoInfo["mensaje"] = "Se ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: ". base_url('publicaciones/Curso') ;
 			$this->correo->correoPublicaciones($correoInfo);
+			$msgInfo["asunto"] = "NUEVO CURSO PUBLICADO";
+				$msgInfo["mensaje"] = "Se ha publicado un nuevo Curso, puedes obtener mas información sobre el en el siguiente enlace: <a href='". base_url('publicaciones/Curso').">Cursos</a>" ;
+				$msgInfo["fecha_envio"] = date("Y-m-d");
+				$msgInfo["usuario_id"] = getUsuarioId();
+				$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);
+			foreach($query->result() as $datos){
+				$this->mensaje_model->insertarDestinoMensaje(array("mensaje_id"=>$destinoInfo["mensaje_id"],"usuario_id"=>$datos->usuario_id));
+				$this->mensaje_model->registrarEnTablaEliminados($datos->usuario_id,$destinoInfo["mensaje_id"]);
+			}
 		}
 		
 		function Listar(){

@@ -8,6 +8,7 @@
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
 			$this->load->model("egresado_model");
+			$this->load->model("mensaje_model");
 			$this->load->library("Correo");
 			if(!isset($_SESSION["publicador"]) && !isset($_SESSION["administrador"])){
 				show_404();
@@ -87,6 +88,16 @@
 			$correoInfo["asunto"] = "NUEVA BECA PUBLICADA";
 			$correoInfo["mensaje"] = "Se ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: ". base_url('publicaciones/Becas') ;
 			$this->correo->correoPublicaciones($correoInfo);
+			
+			$msgInfo["asunto"] = "NUEVA BECA PUBLICADA";
+			$msgInfo["mensaje"] = "Se ha publicado una nueva Beca puedes obtener mas información sobre ella en el siguiente enlace: <a href='". base_url('publicaciones/Becas')."'>Becas</a>" ;
+			$msgInfo["fecha_envio"] = date("Y-m-d");
+			$msgInfo["usuario_id"] = getUsuarioId();
+			$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);	
+			foreach($query->result() as $datos){
+				$this->mensaje_model->insertarDestinoMensaje(array("mensaje_id"=>$destinoInfo["mensaje_id"],"usuario_id"=>$datos->usuario_id));
+				$this->mensaje_model->registrarEnTablaEliminados($datos->usuario_id,$destinoInfo["mensaje_id"]);
+			}
 		}
 		
 		function Listar(){
