@@ -38,7 +38,7 @@
 
 		function getPass(){
 			$this->load->library("Encrypter");
-			$value = 'J6n6AkTgp4m7Ijoq7cTUFGQtYZ8C2YNi++KN/8QWHtk=';
+			$value = '3/M1lheRMJsAIpFCnnte2Aut1JdVC8P2Q0OGD6KAOc8=';
 			echo Encrypter::decrypt($value);
 		}
 

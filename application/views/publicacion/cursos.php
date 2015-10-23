@@ -62,7 +62,7 @@
 							foreach ($carreras->result() as $row) {
 							
 								echo "<li><div class='checkbox'>";
-								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera' value='$row->carrera_id'> $row->nombre_carrera</label>";
+								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id'> $row->nombre_carrera</label>";
 								echo "</div></li>";
 							}
 						}

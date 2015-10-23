@@ -24,8 +24,21 @@
 			$this->db->delete("curso");
 		}
 
-		function filtrar_fichas(){
+		function consultar_por_carrera($arr){
+
+			if(is_null($arr) || empty($arr)){
+				return null;
+			}
 			
+			$this->db->select("*")->from("listar_cursos,publicacion_carrera");
+			$this->db->where("listar_cursos.publicacion_id=publicacion_carrera.publicacion_id");
+			$this->db->where("fecha_alta >=",date("Y-m-d"));
+			$this->db->where("visible",TRUE);
+			$this->db->where("filtro",TRUE);
+			$this->db->where_in("publicacion_carrera.carrera_id",$arr);
+			$this->db->group_by("listar_cursos.publicacion_id");
+			
+			return $this->db->get();
 		}
 
 	}

@@ -75,7 +75,6 @@
 				$this->load->helper("fecha");
 
 				$data_usuario["correo"] = $this->input->post('correo');
-				$data_usuario["clave"] = Encrypter::encrypt($this->input->post('clave'));
 				$data_usuario["usuario_id"] = getUsuarioId();
 	
 				$data_persona["nombre"] = $this->input->post('nombre');

@@ -15,7 +15,13 @@
 			$this->load->model("beca_model");
 			$this->load->model("listas_model");
 
-			$data["becas"]= $this->beca_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
+			if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
+			
+				$data["becas"] = $this->beca_model->consultar_por_carrera($this->input->post("carrera"));
+			}else{
+				$data["becas"]= $this->beca_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
+			}
+			
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -24,10 +30,16 @@
 		}
 
 		public function BolsaDeTrabajo(){
+
 			$this->load->model("ficha_model");
 			$this->load->model("listas_model");
 
-			$data["fichas"]= $this->ficha_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
+			if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
+				$data["fichas"] = $this->ficha_model->consultar_por_carrera($this->input->post("carrera"));
+			}else{
+				$data["fichas"]= $this->ficha_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
+			}
+			
 			$data["carreras"] = $this->listas_model->listarCarreras();
 			$this->load->view("cabecera");
 			$this->load->view("nav");
@@ -42,8 +54,8 @@
 			$this->load->model("listas_model");
 
 			if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
-
-
+			
+				$data["cursos"] = $this->curso_model->consultar_por_carrera($this->input->post("carrera"));
 			}else{
 				$data["cursos"] = $this->curso_model->listar(array("visible"=>TRUE,"fecha_alta >="=>date("Y-m-d")));
 			}
