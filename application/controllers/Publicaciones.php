@@ -47,6 +47,27 @@
 			$this->load->view("footer");
 			
 		}
+		
+		public function aplicarFicha(){
+			$this->load->model("mensaje_model");
+			$this->load->model("Publicador_model");
+			$this->load->library("Correo");
+			$query = $this->Publicador_model->listar(array("usuario_id"=>$this->input->post("usuario_id")));
+			$correoInfo["destinatario"] = $query->row()->correo;
+			$correoInfo["asunto"] = "Alguien ha aplicado al puesto Ofertado";
+			$correoInfo["mensaje"] = getNombreCompleto()." ha aplicado a tu Ficha Ocupacional, puedes ver su curriculo en el siguiente enlace: <a href='". base_url('curriculum/ver/'.getUsuarioId().'')."'>Curriculo</a>" ;
+			$this->correo->correoPublicaciones($correoInfo);
+			
+			$msgInfo["asunto"] = $correoInfo["asunto"];
+			$msgInfo["mensaje"] = $correoInfo["mensaje"];
+			$msgInfo["fecha_envio"] = date("Y-m-d");
+			$msgInfo["usuario_id"] = getUsuarioId();
+			$destinoInfo["mensaje_id"]= $this->mensaje_model->insertarMensaje($msgInfo);
+			$this->mensaje_model->insertarDestinoMensaje(array("mensaje_id"=>$destinoInfo["mensaje_id"],"usuario_id"=>$query->row()->usuario_id));
+			$this->mensaje_model->registrarEnTablaEliminados($query->row()->usuario_id,$destinoInfo["mensaje_id"]);
+			
+			$this->BolsaDeTrabajo();
+		}
 
 		public function Cursos(){
 

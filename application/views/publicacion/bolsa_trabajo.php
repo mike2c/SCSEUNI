@@ -4,11 +4,10 @@
 		<div class="col-md-9 col-lg-9" style="border-right:1px solid lightgray">
 			<?php
 				if(isset($fichas) && !empty($fichas)){
-
 					foreach ($fichas->result() as $row) {
+						echo "<button class='btn btn-primary btn-sm pull-right' id='aplicar' onclick='javascript:aplicar(".$row->usuario_id.")' > <span class='glyphicon glyphicon-share-alt'></span> Aplicar </button>";
 						echo "<div class='post'>";
 						echo "<img class='logo' src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
-						echo "<button class='btn btn-primary btn-sm pull-right' > <span class='glyphicon glyphicon-share-alt'></span> Aplicar </button>";
 						echo "<hr>";
 						echo "<h3 class='text-primary'>$row->cargo</h3>";
 						echo "<p class=''>$row->descripcion</p>";
@@ -74,6 +73,9 @@
 		padding: 15px 20px;
 		margin-bottom:20px;
 	}	
+	#aplicar{
+		margin: 17px 17px;
+	}
 	.post .logo{
 		width: 8%;
 	
@@ -103,7 +105,23 @@
 		display: none;
 	}
 </style>
-<script type="text/javascript">
+<script type="text/javascript">	
+	function aplicar(usuario){
+		form = document.createElement("form");
+		form.action = "<?php echo base_url('Publicaciones/aplicarFicha')?>" ;
+		form.method = "post";
+		form.setAttribute("id","aplicarForm");
+		
+		control = document.createElement("input");
+		control.setAttribute("type","hidden");
+		control.setAttribute("name","usuario_id");
+		control.setAttribute("value",usuario);
+		
+		form.appendChild(control);
+		document.body.appendChild(form);
+		
+		$("#aplicarForm").submit();
+	}
 	$(".post button").click(function(){
 		$(this).parent().children(".hide-content").toggle('slow');
 	});
