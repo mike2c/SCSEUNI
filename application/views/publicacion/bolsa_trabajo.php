@@ -8,6 +8,7 @@
 					foreach ($fichas->result() as $row) {
 						echo "<div class='post'>";
 						echo "<img class='logo' src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
+						echo "<button class='btn btn-primary btn-sm pull-right' > <span class='glyphicon glyphicon-share-alt'></span> Aplicar </button>";
 						echo "<hr>";
 						echo "<h3 class='text-primary'>$row->cargo</h3>";
 						echo "<p class=''>$row->descripcion</p>";
@@ -37,6 +38,7 @@
 						echo "</div>";//Contenido oculto
 
 						echo "<button class='btn btn-link btn-sm' >ver mas <span class='caret'></span></button>";
+
 						echo "</div>";
 					}
 				}else{
@@ -45,22 +47,21 @@
 			?>
 		</div>
 		<div class="col-md-3 col-lg-3" >
-			<div class="">
-				<h2><small>Filtrar por carreras</small></h2>
+			<form method="post" id="formBuscar" action="<?=base_url("Publicaciones/BolsaDeTrabajo")?>">
+				<label>Filtrar por carrera</label>
 				<ul class="filtro">
 					<?php
 						if(isset($carreras) && !empty($carreras)){
 							foreach ($carreras->result() as $row) {
 							
 								echo "<li><div class='checkbox'>";
-								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carreras' value='$row->carrera_id'> $row->nombre_carrera</label>";
+								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id'> $row->nombre_carrera</label>";
 								echo "</div></li>";
 							}
 						}
 					?>
 				</ul>
-				<button class="btn btn-sm btn-primary pull-right">Buscar</button>	
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
@@ -105,5 +106,9 @@
 <script type="text/javascript">
 	$(".post button").click(function(){
 		$(this).parent().children(".hide-content").toggle('slow');
+	});
+
+	$("[name='carrera[]']").change(function(){
+		$("#formBuscar").trigger("submit");
 	});
 </script>
