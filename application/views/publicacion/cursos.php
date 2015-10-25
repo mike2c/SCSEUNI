@@ -4,7 +4,7 @@
 		<div class="col-md-9 col-lg-9" >
 			<?php
 				
-				if(isset($cursos) && !empty($cursos)){
+				if(isset($cursos) && !empty($cursos) && $cursos->num_rows() > 0){
 
 					foreach ($cursos->result() as $row) {
 						echo "<div class='post'>";
@@ -55,20 +55,42 @@
 		</div>
 		<div class="col-md-3 col-lg-3" >
 		
-			<form method="post" action="<?=base_url("Publicaciones/Cursos")?>">
+			<form method="post" id="formBuscar" action="<?=base_url("Publicaciones/Cursos")?>">
+				<label for="">Buscar for carrera</label>
 				<ul class="filtro">
 					<?php
 						if(isset($carreras) && !empty($carreras)){
 							foreach ($carreras->result() as $row) {
 							
 								echo "<li><div class='checkbox'>";
-								echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id'> $row->nombre_carrera</label>";
+								if (isset($carreras_marcadas) && !empty($carreras_marcadas)) {
+									if(buscar_carrera($row->carrera_id,$carreras_marcadas)){
+										
+										echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id' checked> $row->nombre_carrera</label>";
+									}else{
+										echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id'> $row->nombre_carrera</label>";
+									}
+								}else{
+									echo "<label for='carr_" . $row->carrera_id . "'> <input type='checkbox' id='carr_" . $row->carrera_id . "' name='carrera[]' value='$row->carrera_id'> $row->nombre_carrera</label>";
+								}
 								echo "</div></li>";
 							}
 						}
+
+						function buscar_carrera($id_carrera,$carreras){
+
+							foreach ($carreras as $key => $value){
+								
+								if($value == $id_carrera){
+									return TRUE;
+								}
+							}
+
+							return FALSE;
+						}
 					?>
 				</ul>
-				<button class="btn btn-sm btn-primary">Buscar</button>	
+				
 			</form>
 		</div>
 	</div>
@@ -115,5 +137,8 @@
 <script type="text/javascript">
 	$(".post button").click(function(){
 		$(this).parent().children(".hide-content").toggle("slow");
+	});
+	$("[name='carrera[]']").change(function(){
+		$("#formBuscar").trigger("submit");
 	});
 </script>

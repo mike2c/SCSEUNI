@@ -77,6 +77,10 @@
 
 		function consultar_usuario($usuario_id){
 
+			if(is_null($usuario_id) || empty($usuario_id)){
+				throw new Exception("El id de usuario no puede ser null o vacio");
+			}
+			
 			$this->db->where("usuario_id",$usuario_id);
 			return $this->db->get("usuario")->row();
 		}
