@@ -50,18 +50,18 @@ $(document).ready(function(){
 		validarNombreUsuario($(this).val());
 	});
 
-	$("#busqueda").keydown(function(e){
-		buscar();
-	});
+	//$("#busqueda").keydown(function(e){
+	//	buscar();
+	//});
 
 	$("#formBusqueda").submit(function(e){
 		e.preventDefault();
 	});
 
-	$(".left-menu li a").click(function(){
+	/*$(".left-menu li a").click(function(){
 		$(".left-menu li a").removeClass("activo");
 		$(this).addClass("activo");
-	});
+	});*/
 
 	$('#redactarMensaje').on('hidden.bs.modal', function (e) {
 		limpiarCampos();
@@ -165,7 +165,7 @@ function enviarMensaje(){
 				if(data == ""){
 					alert("Mensaje enviado");
 					$("#redactarMensaje").modal("hide");
-					actualizar();
+					//actualizar();
 				}else{
 					console.log(data);
 				}
@@ -198,7 +198,7 @@ function guardarComoBorrador(){
 				if(data == ""){
 					alert("Mensaje guardado");
 					$("#redactarMensaje").modal("hide");
-					actualizar();
+					//actualizar();
 				}else{
 					console.log(data);
 				}
@@ -223,7 +223,7 @@ function eliminarMensajes(data_msg){
 		function(data,textStatus,jqXHR){
 			if(data == ""){
 				alert("Mensajes eliminados");
-				actualizar();
+				//actualizar();
 			}else{
 				alert("Ha ocurrido un error y no se ha podido procesar la petición. \n"+ textStatus);
 				console.log(jqXHR.responseText);
@@ -240,7 +240,7 @@ function destruirBorradores(data_msg){
 		function(data,textStatus,jqXHR){
 			if(data == ""){
 				alert("Mensajes eliminados");
-				actualizar();
+				//actualizar();
 			}else{
 				alert("Ha ocurrido un error y no se ha podido procesar la petición. \n"+ textStatus);
 				console.log(jqXHR.responseText);
@@ -256,7 +256,7 @@ function leerInbox(mensaje){
 		type: "post",
 		datatype: "html",
 		success: function(data){
-			$("#area_mensajes").html(data);
+			$("#bandeja").html(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log(jqXHR.responseText);
@@ -311,7 +311,7 @@ function buscarEnInbox(){
 		success: function(data){
 			if(data != ""){
 
-				$("#area_mensajes").html(data);
+				$("#bandeja").html(data);
 			}
 		},
 		error: function(jqXHR){

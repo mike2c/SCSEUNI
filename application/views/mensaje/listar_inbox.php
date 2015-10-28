@@ -7,8 +7,10 @@
 		exit("<center><h2 class='page-header'>No hay mensajes</h2></center>");
 	}
 ?>
-<table class="table table-hover">
-	<caption>Bandeja de entrada</caption>
+<h4 class="box-title">Bandeja de entrada</h4>
+<div id="lista">
+	<table class="table table-hover table-condensed table-responsive">
+	<caption></caption>
 	<thead>
 		<tr><td>#</td><td>Remitente</td><td>Asunto</td><td>Fecha de envio</td><td>Estado</td></tr>
 	</thead>
@@ -18,7 +20,8 @@
 			foreach ($mensajes->result() as $row) {
 		
 					echo "<tr>
-						<td><label for=''>$cont <input id='$cont' type='checkbox' value='$row->mensaje_id' name='mensajes_a_eliminar'> </label></td>
+						<td><label for=''>$cont <input id='$cont' type='checkbox' value='$row->mensaje_id' name='mensajes_a_eliminar'> </label>
+						</td>
 						<td>$row->remitente</td>
 						<td><a href='javascript:leerInbox(" . $row->mensaje_id . ");'> $row->asunto </a> </td>
 						<td>$row->fecha_envio</td>
@@ -30,7 +33,6 @@
 
 	?>
 	</tbody>
-	<tfoot>
-		
-	</tfoot>
+	<tfoot></tfoot>
 </table>
+</div>

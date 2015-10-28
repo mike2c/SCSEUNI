@@ -53,10 +53,10 @@ $route['default_controller'] = 'pages/view';
 $route['(:any)'] = 'Pages/view/$1';
 
 $route['Perfil'] = "Perfil";
-$route['Mensajes'] = "Correo";
+$route['Correo'] = "Correo";
 $route['Perfil'] = "Perfil";
 $route['CPanel'] = "CPanel";
-$route['Mensajes'] = "Correo";
+#$route['Mensajes'] = "Correo";
 $route['login'] = "Sesion";
 $route['Curriculum'] = "Curriculum";
 $route['Importar'] = "Importar";

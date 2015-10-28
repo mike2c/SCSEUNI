@@ -5,13 +5,28 @@
 	border-bottom: 1px solid lightgray;
 }
 
-#area_mensajes{
+#bandeja{
+
 	overflow: auto;
 	border:1px solid lightgray;
 	height: 430px;
 	background-color: white;
-	padding: 10px 20px;
+	
+	padding-top: 20px;
 	margin-top:5px;
+}
+
+.box-title{
+	
+	border-bottom: 1px double lightgray;
+	margin-bottom: 0px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+#lista{
+	padding: 0px 20px;
+	
 }
 
 .left-menu{
@@ -19,7 +34,7 @@
 	display: block;
 	margin-top:5px;
 	list-style: none;
-	padding-left: 0px;
+	padding-left: 0px; 
 	background-color:white;
 	
 	
@@ -55,38 +70,19 @@
 
 }
 
-.mensaje .cuerpo{
-	padding: 0px 5px;
-	padding-top: 20px;
-	font-family: arial,sans-serif;
-	font-size: 16px;
-	min-height: 160px;
+.cuerpo-mensaje{
+	
+	padding:0px 20px;
+
+}
+	
+.cuerpo-mensaje p{
+	margin: 5px 0px;
 }
 
-.mensaje .cabecera{
-	padding-top: 0px;
-	font-size: 15px;
-	white-space: pre-line;
-	border-bottom: 1px solid lightgray;
-	color: gray;
-	padding-bottom: 5px;
-}
-.mensaje .cabecera p{
-	margin: 0px;
-	text-align: right;
-	padding: 0px;
-}
-
-.mensaje .pie-pagina{
-	border-top: 1px solid lightgray;
-	padding: 5px;
-	overflow: auto;
-}
-.mensaje .pie-pagina a{
+.mensaje{
+	
 	font-size: 16px;
-}
-.mensaje .pie-pagina button{
-	float: right;
 }
 
 .left-menu li a{

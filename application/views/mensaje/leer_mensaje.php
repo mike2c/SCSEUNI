@@ -1,45 +1,28 @@
 <?php
-  if(!isset($mensaje)){
-  
-    echo "El mensaje no se pudo cargar";
+  if(!isset($mensaje) || empty($mensaje)){
+    ?>
+      <div class="panel panel-danger panel-body text-danger">
+      <p>El mensaje no se pudo cargar</p>
+      </div>
+    <?
   }
 ?>
-
-<div class="mensaje">
-  <div class="titulo">
-   <h2><?=$mensaje->asunto?></h2>
-  </div>
-  <?php
-    if(isset($mensaje->destinatario)){
-      ?>
-        <div class="cabecera"><span>De: Mi</small></span> 
-          <span>Para: <small><?=$mensaje->destinatario?></small></span>
-        </div>
-      <?
-    }else{
-      ?>
-        <div class="cabecera"><span>De: <small><?=$mensaje->remitente?></small></span> 
-          <span>Para: <small>Mi</small></span>
-        </div>
-      <?
-    }
-  ?>
-  <div class="cuerpo">
-    <p>
-        <?=$mensaje->mensaje?>
-    </p>
-  </div>
-  <div class="pie-pagina">
-    <?php
+<h4 class="box-title"><?=$mensaje->asunto?></h4>
+<div class="cuerpo-mensaje">
+  <p class="text-primary">Remitente: <span class=""><?=$mensaje->remitente?></span> <span class="pull-right help-block">Fecha de envio: <?=$mensaje->fecha_envio?></span></p>  
+  <hr>
+  <p class="mensaje">
+    <?=$mensaje->asunto?>
+  </p>
+  <hr>
+   <?php
       if($mensaje->curr_adjuntado == true){
         if(isset($mensaje->remitente)){
-          echo "<a target='_new' href='" . base_url('Curriculum/' . $mensaje->remitente_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
+          echo "<a class='btn btn-link ' target='_new' href='" . base_url('Curriculum/' . $mensaje->remitente_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
         }else{
-          echo "<a target='_new' href='" . base_url('Curriculum/' . $mensaje->destinatario_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
+          echo "<a class='btn btn-link ' target='_new' href='" . base_url('Curriculum/' . $mensaje->destinatario_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
         }
       }
     ?>
-    <button onclick="actualizar()" class="btn btn-primary">Cerrar</button>
-  </div>
-    <p>Enviado el: <small><?=$mensaje->fecha_envio?></small></p>
+    <a href="<?=base_url('Correo/Inbox')?>" class="btn btn-primary btn-sm pull-right"> Cerrar </a>
 </div>

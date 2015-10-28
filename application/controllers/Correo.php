@@ -17,7 +17,8 @@ class Correo extends CI_Controller{
 
 	function index(){
 
-		$this->load->model("perfil_model");
+		$this->Inbox();
+		/*	$this->load->model("perfil_model");
 		$this->load->model("mensaje_model");
 
 		$data["lista_egresados"] = $this->perfil_model->getUsuarioEgresados();
@@ -32,8 +33,7 @@ class Correo extends CI_Controller{
 		$this->load->view("nav");
 		$this->load->view("mensaje/correo",$data);
 		$this->load->view("mensaje/nuevo_mensaje");
-		$this->load->view("footer");
-
+		$this->load->view("footer");*/
 	}
 
 	function Inbox(){
@@ -43,7 +43,12 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarInbox($filtro);
 		
 		$data["mensajes"] = $result;
-		$this->load->view("mensaje/listar_inbox",$data);
+		$this->load->view("cabecera");
+		$this->load->view("nav");
+		$this->load->view("mensaje/inbox",$data);
+		$this->load->view("mensaje/nuevo_mensaje",$data);
+		$this->load->view("footer");
+		
 	}
 
 	function Sent(){
