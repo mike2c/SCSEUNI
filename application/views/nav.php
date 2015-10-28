@@ -2,7 +2,7 @@
 	<div class="container">
 			<div class="row">
 			<div class="col-md-2 col-lg-2">
-				<a href="<?=base_url('Bienvenido')?>"><img style="border: 1px solid white;height:40%;width:60%;margin-top:10px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
+				<a href="<?=base_url()?>"><img style="border: 1px solid white;height:40%;width:60%;margin-top:10px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
 			</div>
 			<div class="col-md-8 col-lg-8 auto-size">
 				<center>

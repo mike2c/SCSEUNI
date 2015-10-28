@@ -15,16 +15,18 @@
 		            	<option value="0">Egresado</option>
 		            	<option value="1">Empresa</option>
 		            	<option value="2">Publicador</option>
+                  <option value="3">Administrador</option>
 	            	</select>
 	          </div>
 	              <div class="form-group">
 		            <label for="" class="control-label">Destinatario:</label><br>
-		            <input style="min-width:400px" required type="text" list="lista_egresados" class="form-control" id="destinatario" name="destinatario">
+		              <div id="lista_usuarios">
+                  <!--<input style="min-width:400px" required type="text" list="lista_egresados" class="form-control" id="destinatario" name="destinatario">  -->
+                </div>
 		          </div>
         	</div>
          <br>
-      
-           <div class="form-group">
+          <div class="form-group">
             <label for="" class="control-label">Asunto:</label>
             <input style="" required type="text" class="form-control" id="asunto" name="asunto">
           </div>

@@ -73,20 +73,27 @@
 <style type="text/css">
 	@import url("<?=base_url('public/css/correo.css')?>");
 </style>
+
+<!--Plugin chosen para las listas-->
+<script type="text/javascript" src="<?=base_url('public/js/chosen.jquery.js')?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=base_url('public/js/chosen.min.css')?>">
 <script type="text/javascript" src="<?=base_url('public/js/correo.js')?>"></script>
 <script type="text/javascript">
 
-	$("#filtro").change(function(){
+$(document).ready(function(){
 
-		if(this.selectedIndex == 1){
-			if(bandeja == "sent"){
-				$("#busqueda").attr("name","destinatario");
-			}else{
-				$("#busqueda").attr("name","remitente");
-			}
+});
+
+$("#filtro").change(function(){
+
+	if(this.selectedIndex == 1){
+		if(bandeja == "sent"){
+			$("#busqueda").attr("name","destinatario");
 		}else{
-			$("#busqueda").attr("name",$("#filtro").val());
+			$("#busqueda").attr("name","remitente");
 		}
-	});
-
+	}else{
+		$("#busqueda").attr("name",$("#filtro").val());
+	}
+});
 </script>

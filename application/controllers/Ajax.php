@@ -178,5 +178,47 @@
 		function ReporteEgresadosTitulaos(){
 
 		}
+
+		function lista_egresados(){
+
+			$this->load->model("egresado_model");
+			$query =  $this->egresado_model->listar(array("activo"=>TRUE),null,null,null,array("usuario_id","correo","concat(nombre,' ',apellido) as nombre"));
+			
+			$this->crear_lista($query,"nombre","usuario_id","destinatario","destinatario");
+		}
+
+		function lista_publicadores(){
+
+			$this->load->model("publicador_model");
+			$query =  $this->publicador_model->listar(array("activo"=>TRUE),null,null,null,array("usuario_id","correo","concat(nombre,' ',apellido) as nombre"));
+			
+			$this->crear_lista($query,"nombre","usuario_id","destinatario","destinatario");
+		}
+
+		function lista_administradores(){
+
+			$this->load->model("admin_model");
+			$query =  $this->admin_model->listar(array("activo"=>TRUE),null,null,null,array("usuario_id","concat(nombre,' ',apellido) as nombre"));
+			
+			$this->crear_lista($query,"nombre","usuario_id","destinatario","destinatario");
+		}
+
+		function lista_empresas(){
+
+			$this->load->model("empresa_model");
+			$query =  $this->empresa_model->listar(array("activo"=>TRUE),null,null,null,array("usuario_id","nombre_empresa as nombre"));
+			
+			$this->crear_lista($query,"nombre","usuario_id","destinatario","destinatario");
+		}
+
+		private function crear_lista($result_set,$display_member,$value_member,$name,$id){
+
+			echo "<select name='$name' id='$id' multiple style='width:300px'>";
+			foreach ($result_set->result_array() as $row) {
+				echo "<option value='$row[$value_member]'>$row[$display_member]</option>";
+			}
+			echo "</select>";
+		}
+
 	}	
 ?>

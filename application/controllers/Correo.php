@@ -121,14 +121,18 @@ class Correo extends CI_Controller{
 		}
 		
 		$data_destino["mensaje_id"] = $this->mensaje->insertarMensaje($data_mensaje);//insertamos y caputarmos el ultimo id generado
-		$data_destino["usuario_id"] = $this->input->post("usuario_id");
+		$arr_usuarios = $this->input->post("usuario_id");
 		
-		#Insertamos el id del destinatario y el id del mensaje
-		$this->mensaje->insertarDestinoMensaje($data_destino);
+		foreach ($arr_usuarios as $key => $value) {
+			$data_destino["usuario_id"] = $value;
 
-		#Actualizamos la tabla de mensajes eliminados
-		$this->mensaje->registrarEnTablaEliminados(getUsuarioId(),$data_destino["mensaje_id"]);
-		$this->mensaje->registrarEnTablaEliminados($data_destino["usuario_id"],$data_destino["mensaje_id"]);
+			#Insertamos el id del destinatario y el id del mensaje
+			$this->mensaje->insertarDestinoMensaje($data_destino);
+
+			#Actualizamos la tabla de mensajes eliminados
+			$this->mensaje->registrarEnTablaEliminados(getUsuarioId(),$data_destino["mensaje_id"]);
+			$this->mensaje->registrarEnTablaEliminados($data_destino["usuario_id"],$data_destino["mensaje_id"]);
+		}
 	}	
 
 	function GuardarBorrador(){

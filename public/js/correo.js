@@ -66,18 +66,58 @@ $(document).ready(function(){
 	$('#redactarMensaje').on('hidden.bs.modal', function (e) {
 		limpiarCampos();
 	})
-
+	
+	/*Cambiar entre listas*/
 	$("#tipo_usuario").change(function(){
 	
-		var indice = $("#tipo_usuario").val();
-		lista = $("datalist").get(indice);
-		$("#destinatario").attr("list",lista.id);
-		$("#destinatario").val("");
-	
+		//var indice = $("#tipo_usuario").val();
+		//lista = $("datalist").get(indice);
+		//$("#destinatario").attr("list",lista.id);
+		//$("#destinatario").val("");
+		
+		var dir = "";
+
+		if(this.selectedIndex == 0){
+			dir = baseURL("Ajax/lista_egresados");
+		}else if(this.selectedIndex == 1){
+			dir = baseURL("Ajax/lista_empresas");
+		}if(this.selectedIndex == 2){
+			dir = baseURL("Ajax/lista_publicadores");
+		}if(this.selectedIndex == 3){
+			dir = baseURL("Ajax/lista_administradores");
+		}
+
+		listar_usuarios(dir);
+	});
+
+	listar_usuarios("Ajax/lista_egresados");
+	$('.my_select_box').on('change', function(evt, params) {
+		alert("") ;
 	});
 
 	getInbox();
 });
+	
+function listar_usuarios(dir){
+
+	$.ajax({
+    url: dir,
+    type:"post",
+    datatype: "html",
+    success: function(data){
+    	
+    	$("#lista_usuarios").html(data);
+     	$("#destinatario").chosen({
+     		max_selected_options: 1,
+     		no_results_text : "No se han encontrado resultados",
+     		placeholder_text_multiple: "Digita el nombre de un usuario",
+     		placeholder_text_single: "Digita el nombre de un usuario"
+     	});
+		$("#destinatario_chosen").css("width","400px");
+    },
+    async: false
+  });
+}
 
 function validarNombreUsuario(strValue){
 	if(lista != null){
@@ -97,9 +137,7 @@ function validarNombreUsuario(strValue){
 
 function enviarMensaje(){
 
-	if(usuario == null){
-		alert("Seleccione un usuario valido de la lista");
-	}else if($("#asunto").val() == ""){
+	if($("#asunto").val() == ""){
 		alert("El campo asunto* es obligatorio");
 	}else if($("#mensaje").val() == ""){
 		alert("El campo mensaje* es obligatorio");
@@ -112,7 +150,7 @@ function enviarMensaje(){
 		
 		var json_data = {
 			mensaje_id: mensaje_actual,
-			usuario_id: usuario,
+			usuario_id: $("#destinatario").val(),
 			asunto: $("#asunto").val(),
 			mensaje: $("#mensaje").val(),
 			curr_adjuntado: curr
