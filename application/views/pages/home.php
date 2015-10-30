@@ -1,10 +1,10 @@
 <header>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3 col-lg-3">
-				<a href="<?=base_url()?>"><img style="border: 1px solid white;height:40%;width:60%;margin-top:10px;" class="img" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
+			<div class="col-md-2 col-lg-2">
+				<a href="<?=base_url()?>"><img style="max-height:80px;margin-top:5%;" class="img-responsive" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
 			</div>
-			<div class="col-md-6 col-lg-6 auto-size">
+			<div class="col-md-8 col-lg-8 auto-size">
 				<center>
 					<h2 style=""><strong>Universidad Nacional de Ingeniería</strong></h2>
 					
@@ -13,8 +13,8 @@
 					<h5>Estelí, Nicaragua</h5>
 				</center>
 			</div>
-				<div class="col-md-3 col-lg-3">
-				<img class="" style="margin-left:auto;margin-top:5px;display:block;width:45%;" src="<?=base_url('public/res/jicara_sandino.png');?>" alt="">
+				<div class="col-md-2 col-lg-2">
+				<img style="max-height:100px;" class="img-responsive pull-right" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
 			</div>
 		</div>
 	</div>
@@ -23,8 +23,8 @@
 	<ul class="pgwSlider">
 		<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_egresado.jpg')?>" alt="" data-description=""></a></li>
 		<li><a href="<?=base_url('login')?>"><img src="<?=base_url('public/res/banner_curriculum.jpg')?>" alt="" data-description=""></a></li>
-				<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_ofertas.jpg')?>" alt="" data-description=""></a></li>
-		<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_empleo.jpg')?>" alt="" data-description=""></a></li>
+		<!--<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_ofertas.jpg')?>" alt="" data-description=""></a></li>-->
+		<!--<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_empleo.jpg')?>" alt="" data-description=""></a></li>-->
 		<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_empresa.jpg')?>" alt="" data-description=""></a></li>
 	</ul>
 </div>
@@ -59,6 +59,6 @@
 	 	//border: 1px solid black;
 	}
 	.ps-list li{
-		border: 1px solid gray;
+		//border: 1px solid lightgray;
 	}
 </style>

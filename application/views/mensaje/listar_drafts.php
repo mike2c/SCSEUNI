@@ -34,9 +34,3 @@
     
   </tfoot>
 </table>
-<style type="text/css">
-
-</style>
-<script type="text/javascript">
-
-</script>

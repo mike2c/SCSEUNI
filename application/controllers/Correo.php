@@ -72,8 +72,10 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarDrafts($filtro);
 		
 		$data["mensajes"] = $result;
-		$this->load->view("mensaje/listar_drafts",$data);
-	
+		$this->load->view("cabecera");
+		$this->load->view("nav");
+		$this->load->view("mensaje/drafts",$data);
+		$this->load->view("footer");
 	}
 
 	function EliminarMensajes(){

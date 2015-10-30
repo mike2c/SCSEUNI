@@ -13,6 +13,26 @@
   display: none;
 }
 
+.contenido{
+  background-color:white;
+  margin-top:10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid lightgray;
+}
+
+.img-profile{
+  display: block;
+  background-color: lightgray;
+  
+  padding-top: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+}
+.img-profile img{
+  max-width: 150px;
+}
+
 body{
   background-color: white;
 }
@@ -1108,7 +1128,7 @@ body {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333;
-  background-color:#fff;
+  background-color: rgb(240,240,240); /*#fff;*/
 }
 input,
 button,
@@ -1597,11 +1617,11 @@ pre code {
 }
 .container {
   /*
-    padding-right: 15px;
-    padding-left: 15px;
-  */
-    padding-right: 0px;
+   padding-right: 0px;
     padding-left: 0px;
+  */
+  padding-right: 0px;//15px;
+  padding-left: 0px;//15px;
   margin-right: auto;
   margin-left: auto;
 }
