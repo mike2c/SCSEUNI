@@ -58,7 +58,11 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarSent($filtro);
 
 		$data["mensajes"] = $result;
-		$this->load->view("mensaje/listar_sent",$data);
+		$this->load->view("cabecera");
+		$this->load->view("nav");
+		$this->load->view("mensaje/sent",$data);
+		$this->load->view("mensaje/nuevo_mensaje",$data);
+		$this->load->view("footer");
 	}
 
 	function Drafts(){
@@ -105,7 +109,7 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarSent($data_mensaje);
 		if($result->num_rows() > 0){
 			$data["mensaje"] = $result->row();
-			$this->load->view("mensaje/leer_mensaje",$data);
+			$this->load->view("mensaje/leer_mensaje_enviado",$data);
 		}
 	}
 
@@ -191,7 +195,7 @@ class Correo extends CI_Controller{
 
 	function BuscarInbox(){
 
-		if(isset($_POST["campo"]) && $_POST["campo"] == "correo"){
+		if($_POST["campo"] == "correo"){
 			$campo = "remitente";
 		}else{
 			$campo = $this->input->post("campo");	

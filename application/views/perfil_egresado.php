@@ -2,34 +2,28 @@
 	if($perfil == null){
 		exit("<h3>No se ha podido cargar el perfil</h3>");
 	}
-
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
-<div class="container no-padding">
-	<div class="col-md-2 col-lg-2 no-padding">
+<div class="container">
+	<div class="col-md-3 col-lg-3">
 		<div class="perfil">
-			<a href="#" id="cambiar_imagen" class="thumbnail">
-				<?php
-					if(imagen_disponible()){
-						?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
-		         	}else{
-		           		?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
-			        }
-				?>
-				<span class="glyphicon glyphicon-camera"></span>
+			<?php
+				if(imagen_disponible()){
+					?> <img class="img-responsive img-circle" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
+	         	}else{
+	           		?> <img class="img-responsive img-circle" src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
+		        }
+			?>
+			<a id="cambiar_imagen" class="btn btn-link" style="display:block">
+				<span class="glyphicon glyphicon-camera"></span> Cambiar imagen
 			</a>
-			<div class="perfil-nombre">
-				<label>
-					<?=$perfil->nombre?>
-				</label>
-			</div>
-			<div class="perfil-correo">
-				<strong>
-					<small><?=getCorreo()?></small>
-				</strong>
-			</div>
-
+			<hr>
+			<h4 class="text-primary">
+				<?=$perfil->nombre. " ". $perfil->apellido?>
+				<small><?=$perfil->correo?></small>
+			</h4>
+		<hr>
 			<ul id="perfil_menu" class="perfil-menu">
 				<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
 				  <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
@@ -40,11 +34,11 @@
 			</ul>
 		</div>
 	</div>
-	<div class="col-md-10 col-lg-10" style="padding-right:0px;">
+	<div class="col-md-9 col-lg-9" style="padding-right:0px;">
 		<div id="area_perfil">
 					  
 		    <!--Div a donde se cargan los errores-->
-		    <div id="area_response" class="panel panel-danger text-danger panel-body response-area"></div>
+		    <div id="area_response" class="panel panel-danger text-danger panel-body hidden-content"></div>
 		      
 			<!-- formulario-->
 			<form action="<?=base_url('Egresado/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">

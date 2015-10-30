@@ -84,7 +84,7 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-sm-3">Sociedad:</label>
+                  <label class="control-label col-sm-3">Tipo de organización:</label>
                   <div class="col-sm-7">
                      <div class="input-group">
                     <div id="sociedad_area"></div>

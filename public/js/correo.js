@@ -68,15 +68,9 @@ $(document).ready(function(){
 	})
 	
 	/*Cambiar entre listas*/
+	var dir = baseURL("Ajax/lista_egresados");
 	$("#tipo_usuario").change(function(){
-	
-		//var indice = $("#tipo_usuario").val();
-		//lista = $("datalist").get(indice);
-		//$("#destinatario").attr("list",lista.id);
-		//$("#destinatario").val("");
 		
-		var dir = "";
-
 		if(this.selectedIndex == 0){
 			dir = baseURL("Ajax/lista_egresados");
 		}else if(this.selectedIndex == 1){
@@ -90,12 +84,12 @@ $(document).ready(function(){
 		listar_usuarios(dir);
 	});
 
-	listar_usuarios("Ajax/lista_egresados");
 	$('.my_select_box').on('change', function(evt, params) {
 		alert("") ;
 	});
 
 	getInbox();
+	listar_usuarios(dir);
 });
 	
 function listar_usuarios(dir){
@@ -274,7 +268,7 @@ function leerSent(mensaje){
 		type: "post",
 		datatype: "html",
 		success: function(data){
-			$("#area_mensajes").html(data);
+			$("#bandeja").html(data);
 		},
 		error: function(jqXHR, textStatus, errorThrown){
 			console.log(jqXHR.responseText);
@@ -335,7 +329,7 @@ function buscarEnSent(){
 		success: function(data){
 			if(data != ""){
 
-				$("#area_mensajes").html(data);
+				$("#bandeja").html(data);
 			}
 		},
 		error: function(jqXHR){

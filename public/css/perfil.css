@@ -7,7 +7,13 @@
 	margin-top: 10px;
 	border: 1px solid lightgray;
 	background-color: white;
-	padding: 8px;
+	padding: 10px;
+}
+
+.perfil img{
+	border: 2px solid lightgray;
+	margin: 10px auto;
+	max-height: 150px;
 }
 
 .thumbnail{

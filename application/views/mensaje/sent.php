@@ -29,7 +29,7 @@
 			<button data-toggle="modal" data-target="#redactarMensaje" class="btn btn-sm btn-primary" style="width:100%;">Redactar mensaje</button>
 		</div>
 		<div class="col-md-3 col-lg-3">
-			<a id="btnActualizar" href="<?=base_url('Correo/Inbox')?>" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
+			<a id="btnActualizar" href="<?=base_url('Correo/Sent')?>" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-refresh"></span> Actualizar</a>
 			<button id="btnEliminar" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-trash"></span> Eliminar mensaje(s)</button>
 		</div>
 		<div class="col-md-5 col-lg-5 col-md-offset-2 col-lg-offset-2">
@@ -91,10 +91,10 @@
 								echo "<tr>
 									<td><label for=''>$cont <input id='$cont' type='checkbox' value='$row->mensaje_id' name='mensajes_a_eliminar'> </label>
 									</td>
-									<td>$row->remitente</td>
-									<td><a href='javascript:leerInbox(" . $row->mensaje_id . ");'> $row->asunto </a> </td>
+									<td>$row->destinatario</td>
+									<td><a href='javascript:leerSent(" . $row->mensaje_id . ");'> $row->asunto </a> </td>
 									<td>$row->fecha_envio</td>
-									<td>". (($row->visto == true) ? "Visto" : "Sin leer") ."</td>
+									<td>Enviado</td>
 								</tr>";
 										
 							$cont += 1;		
@@ -122,15 +122,14 @@
 $(document).ready(function(){
 
 	$("#busqueda").change(function(){
-		buscarEnInbox();
+		buscarEnSent();
 	});
 });
 
 $("#filtro").change(function(){
 
 	if(this.selectedIndex == 1){
-
-		$("#busqueda").attr("name","remitente");
+		$("#busqueda").attr("name","destinatario");
 	}else{
 		$("#busqueda").attr("name",$("#filtro").val());
 	}

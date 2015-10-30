@@ -1,6 +1,6 @@
 <div class="container no-padding">
 <div class="contenido">
-	<h2 class="page-header">Cursos ofertados</h2>
+	<h3 class="box-title">Cursos ofertados</h3>
 		<div class="col-md-9 col-lg-9" >
 			<?php
 				

@@ -136,7 +136,7 @@ function listarSociedades(soc_actual,form,classes){
 
 function registrarSociedad(){
 
-	var soc = prompt("Escribe el nombre de la sociedad");
+	var soc = prompt("Digita el tipo de organización");
 	if(soc == null || soc == ""){
 		return;
 	}

@@ -17,11 +17,7 @@
   <hr>
    <?php
       if($mensaje->curr_adjuntado == true){
-        if(isset($mensaje->remitente)){
-          echo "<a class='btn btn-link ' target='_new' href='" . base_url('Curriculum/' . $mensaje->remitente_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
-        }else{
-          echo "<a class='btn btn-link ' target='_new' href='" . base_url('Curriculum/' . $mensaje->destinatario_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
-        }
+        echo "<a class='btn btn-link ' target='_new' href='" . base_url('Curriculum/' . $mensaje->remitente_id) . "'><span class='glyphicon glyphicon-paperclip'></span> Curriculum vitae</a>";
       }
     ?>
     <a href="<?=base_url('Correo/Inbox')?>" class="btn btn-primary btn-sm pull-right"> Cerrar </a>
