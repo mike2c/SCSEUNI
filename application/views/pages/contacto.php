@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="contenido">
-		<div class="row divider">
+		<div class="row ">
 			<div class="col-md-6 col-lg-6">
 				<h2 class="">Formulario de contacto</h2>
 				<p class="help-block ">Si tienes alguna duda o consulta la puedes hacer por este medio.</p>

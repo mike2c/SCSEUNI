@@ -25,7 +25,7 @@
 			</li>
 			
 			<?php
-
+				
 				if(!sesionIniciada()){
 					?>
 					<!--Menu de registro-->
@@ -53,6 +53,12 @@
 				}
 			?>
 			<?php
+				if(sesionIniciada() && esEgresado()){
+					?>
+						<li><a href="<?=base_url('publicaciones/BolsaDeTrabajo')?>">Bolsa de empleo</a></li>
+					<?
+				}
+
 				if(sesionIniciada()){
 					?>
 						<li role="presentation" id="menu_cuenta">
@@ -61,11 +67,11 @@
 						    </a>
 						    <ul class="dropdown-menu">
 						    	<div class="img-profile">
-						    		<img class="img-circle" src="<?=base_url('uploads/'.getImagenPerfil())?>" alt=""><a href="<?=base_url('Perfil')?>">
+						    		<img class="img-circle" src="<?=base_url('uploads/'.getImagenPerfil())?>" alt="">
 						    	</div>
-						    	<li>Mi Perfil</a></li>
-						  		<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
-						    	<li><a href="<?=base_url('Sesion/CerrarSesion')?>">Cerrar sesion</a></li>
+						    	<li><a href="<?=base_url('Perfil')?>"><span class="glyphicon glyphicon-user"></span> Mi Perfil</a></li>
+						  		<li><a href="<?=base_url('Correo')?>"><span class="glyphicon glyphicon-envelope"></span> Mensajes</a></li>
+						    	<li><a href="<?=base_url('Sesion/CerrarSesion')?>"><span class="glyphicon glyphicon-off"></span> Cerrar sesion</a></li>
 						    </ul>
 						</li>
 					<?
@@ -77,13 +83,13 @@
 
 <!--Estilo modificado de navbar-->
 <style type="text/css">
+	
 	.navbar-brand{
 		padding: 6px;
 		
 	}
-	.navbar-default{
-		background-color: white;
-	}
+
+
 	.nav.nav-pills{
 		margin-top: 6px;
 	}

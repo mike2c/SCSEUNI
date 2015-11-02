@@ -122,3 +122,8 @@
 .modal .form-group .form-control{
 	border-radius: 0px;
 }
+
+table tr td a{
+	
+	display: block;
+}

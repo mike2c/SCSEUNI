@@ -1,12 +1,13 @@
 <div class="container">
-	<div class="row">
-		<div class="col-md-12 col-lg-12 contenido">
-			<h3 class="page-header">Información para empresas</h3>
+	<div class="contenido">
+		<div class="row">
+		<div class="col-md-12 col-lg-12">
+			<h2 class="page-header">Información para empresas</h2  class="page-header">
 			<p>
 				El Recinto Universitario Augusto C. Sandino, sede regional del norte, Estelí – Nicaragua, ofrece el servicio de bolsa de trabajo a las empresas que buscan profesionales con una formación académica de primer nivel y de alta ética profesional, para integrarles a sus respectivas organizaciones.
 			</p>
 
-			<h3 class="page-header">Ventajas para las empresas</h3>
+			<h3>Ventajas para las empresas</h3>
 			<ul>
 				<li>
 					Podrán hacer uso de la bolsa de trabajo, la cual facilita el proceso de reclutamiento con el servicio de publicación de ofertas de empleos, a las que los egresados y graduados del Recinto pueden enviar su candidatura, por medio de un currículo normalizado.  
@@ -22,12 +23,12 @@
 				</li>
 			</ul>
 
-			<h3 class="page-header">¿Cómo acceder?</h3>
+			<h3>Registro</h3>
 			<p>
 				Para registrar una cuenta de empresa, completa la información del siguiente <a href="<?php echo base_url('index.php/Empresa/Registro') ?>"> formulario </a>
 			</p>
 
-			<h3 class="page-header">Funciones de las empresas</h3>
+			<h3>Funciones de las empresas</h3>
 			<div>
 
 				  <!-- Nav tabs -->
@@ -78,6 +79,7 @@
 				</div>
 		</div>
 	</div>
+	</div>	
 </div>
 <style type="text/css">
 	p {

@@ -1,41 +1,43 @@
 <div class="container">
 	<div class="contenido">
-		<h2 class="form-title">Lista de egresados</h2>
-		<p class="text-info">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
-		
-		<div class="col-lg-12 col-md-12" style="overflow:auto">
-			<form class="form-inline" method="post" action="<?=base_url("listado_egresados")?>" id="formBuscarEgresado">
-				<div class="form-group">
-					<input name="nombre" type="text" class="form-control" placeholder="Buscar por nombre">
-				</div>
-				<div class="form-group">
-					<select class="form-control" name="carrera" id="carrera">
-					 	<option value="0">- Todas las carreras -</option>
-					  	<?php
-					 		if(isset($carreras)){
-					 			foreach ($carreras->result() as $row) {
-					 				if($row->carrera_id == $carrera){
-					 					echo "<option selected value='$row->carrera_id'>$row->nombre_carrera</option>";
-					 				}else{
-					 					echo "<option value='$row->carrera_id'>$row->nombre_carrera</option>";
-					 				}			 				
-					 			}
-					 		}else{
-					 			exit("<p class='bg-danger'>No se han podido cargar las carreras</p>");
-					 		}
-					 	?>
-					 </select>
-				</div>
-				<div class="form-group">
-						<button class="btn btn-primary btn-sm">Buscar </button>
-				</div>
-			</form>
-		
+		<div class="row">
+			<div class="col-md-12 col-lg-12">
+				<h2>Lista de egresados</h2>
+				<p class="text-info">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
+			</div>
 		</div>
-	<br>
-		<hr>
-	
-	<div class="col-lg-12 col-md-12">
+		<div class="row">
+			<div class="col-lg-12 col-md-12">
+				<form class="form-inline" method="post" action="<?=base_url("listado_egresados")?>" id="formBuscarEgresado">
+					<div class="form-group">
+						<input name="nombre" type="text" class="form-control" placeholder="Buscar por nombre">
+					</div>
+					<div class="form-group">
+						<select class="form-control" name="carrera" id="carrera">
+						 	<option value="0">- Todas las carreras -</option>
+						  	<?php
+						 		if(isset($carreras)){
+						 			foreach ($carreras->result() as $row) {
+						 				if($row->carrera_id == $carrera){
+						 					echo "<option selected value='$row->carrera_id'>$row->nombre_carrera</option>";
+						 				}else{
+						 					echo "<option value='$row->carrera_id'>$row->nombre_carrera</option>";
+						 				}			 				
+						 			}
+						 		}else{
+						 			exit("<p class='bg-danger'>No se han podido cargar las carreras</p>");
+						 		}
+						 	?>
+						 </select>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary btn-sm">Buscar </button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12 col-md-12">
 		<table id="tabla_egresados" class="table table-hover table-responsive">
 			<thead>
 				<tr>
@@ -59,13 +61,13 @@
 					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
 				}
 				
-				echo "<td><h4>$row->nombre $row->apellido</h4>
-				<h4><small>$row->carrera</small></h4>";
+				echo "<td><label>$row->nombre $row->apellido</label>
+				<p class='help-block'>$row->carrera</p>";
 				
 				if($row->sexo == "F"){
-					echo "<h4><small>Mujer</small></h4></td>";
+					echo "<p class='help-block'>Mujer</p></td>";
 				}else{
-					echo "<h4><small>Hombre</small></h4></td>";
+					echo "<p class='help-block'>Hombre</p></td>";
 				}
 				
 				if($privacidad[$row->usuario_id] == null || empty($privacidad[$row->usuario_id])){
@@ -117,7 +119,7 @@
 							echo $row->correo ;
 							echo "</td>";
 						}else{
-							echo "<td><p class='text-info'>Información no disponible</p></td>";
+							echo "<td>< p class='text-info'>Información no disponible</p></td>";
 						}	
 					}	
 
@@ -141,11 +143,14 @@
 		
 	</tfoot>
 </table>
-	</div>
-			
+	</div>		
+		</div>
 	</div>
 </div>
 <style type="text/css">
+	table tr td label{
+		margin: 0px 0px;
+	}
 	table td{
 		padding: 0px 0px;
 	}
@@ -162,7 +167,7 @@
 	}
 
 	table h2{
-		color: #337ab7;
+		//color: #337ab7;
 	}
 	.zoom{
         /* Aumentamos la anchura y altura durante 2 segundos */

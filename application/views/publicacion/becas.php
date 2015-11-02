@@ -1,28 +1,50 @@
-<div class="container no-padding">
-
-<div class="contenido">
-<h2 class="page-header">Programa de becas</h2>
-		<div class="col-md-9 col-lg-9">
+<div class="container">
+	<div class="contenido">
+		<h3 class="page-header">Programa de becas</h3>
+		
+		<div class="row">
+			<div class="col-md-9 col-lg-9">
 			<?php
 				if(isset($becas) && !empty($becas) && $becas->num_rows() > 0){
 
 					foreach ($becas->result() as $row) {
-						echo "<div class='post'>";
-						echo "<img class='logo' src='". base_url("public/res/logo_uni_610x377.png") . "' alt=''>";
-						echo "<hr>";
-						echo "<h3 class='text-primary'>".ucfirst($row->programa_academico)."</h3>";
-						echo "<p class=''>".ucfirst($row->descripcion)."</p>";
-						echo "<div class='hide-content'>";
-						if(!empty($row->url)){
-							echo "<p>Para mas información puedes consultar el siguiente enlace: <a target='_blank' href='$row->url'>$row->url</a></p>";
-						}
-						if(!empty($row->imagen)){
-							echo "<img src='" . base_url("Imagen/Cargar/".$row->imagen_publicacion_id) ."'><br>";
-						}
-						echo "<label><small>Publicación disponible hasta el dia " . date_toDMY($row->fecha_alta) . "</small></label>";
-						echo "</div>";
-						echo "<button class='btn btn-link btn-sm' >ver mas <span class='caret'></span></button>";
-						echo "</div>";
+						?>
+						<div class="publicacion">
+							
+							<h3 class="box-title"><img src="<?=base_url('public/res/logo_uni_610x377.png')?>" alt="" class="logo-uni pull-left">
+							<?=ucfirst($row->programa_academico)?></h3>
+							<p class=""><?=ucfirst($row->descripcion)?></p>
+							
+							<div class='hidden-content'>
+								<?php
+									if(!empty($row->imagen)){
+										if(!empty($row->url)){
+											?>
+											<div class="imagen-publicitaria">
+												<a href="<?=$row->url?>"><img class="img-responsive" src="<?=base_url("Imagen/Cargar/".$row->imagen_publicacion_id)?>" alt=""></a>
+											</div>
+											<?
+										}else{
+											?>
+											<div class="imagen-publicitaria">
+												<img class="img-responsive" src="<?=base_url("Imagen/Cargar/".$row->imagen_publicacion_id)?>" alt="">
+											</div>
+											<?	
+										}									
+									}
+									if(!empty($row->url)){
+										?>
+										<a target="_new" class="btn btn-info" href="<?=$row->url?>">Mas información</a>
+										<?
+									}
+								?>
+							</div><!--End hidden-content-->
+							<div class="publicacion-footer">
+								<p class="help-block pull-left">Esta publicación expirará el dia: <?=date_toDMY($row->fecha_alta)?></p> 
+								<a href="#<?=$row->publicacion_id?>" name="<?=$row->publicacion_id?>" class='pull-right expandir'>Expandir <span class='caret'></span></a>
+							</div>
+						</div>
+					<?
 					}
 				}else{
 					echo "<p class='panel panel-danger panel-body text-danger'>No hay publicaciones de becas</p>";
@@ -31,7 +53,7 @@
 		</div>
 		<div class="col-md-3 col-lg-3" >
 			<form method="post" id="formBuscar" action="<?=base_url("Publicaciones/Becas")?>">
-				<label for="">Buscar for carrera</label>
+				<h4>Busqueda for carrera</h4>
 				<ul class="filtro">
 					<?php
 						if(isset($carreras) && !empty($carreras)){
@@ -68,52 +90,71 @@
 				
 			</form>
 		</div>
+		</div>
 	</div>
 </div>
 <style type="text/css">
-		
-	.post{
-		
-		border:1px solid lightgray;
-		padding: 15px 20px;
-		margin-bottom:20px;
-	}	
-	.post .logo{
-		width: 8%;
-	
-	}
-	.post hr{
-		margin: 10px 0px;
-	}
-	.post h3{
-		margin-bottom:15px;
-		font-family: "Calibri";
-		font-weight: bold;
-	}
-
-	.post p{
-		font-size: 16px;
-		line-height:20px;
-		font-family: "Arial";
-		padding: 0px 0px;
-	}
-
-	ul{
-		list-style:none;
+	.filtro{
+		list-style: none;
 		padding-left: 0px;
 	}
-
-	.hide-content{
-		display: none;
+	.filtro li{
+		font-size: 16px;
+	}
+	.publicacion{
+		overflow: auto;
+		padding: 10px;
+		
+		margin-bottom: 30px;
+		border: 1px solid lightgray;
+	}
+	.publicacion h3{
+		text-align: center;
+		margin-top: 5px;
+		padding-left: 10px;
+		line-height: 35px;
 	}
 
+	.logo-uni{
+		max-height: 35px;
+		margin-right: 10px;
+	}
+	.publicacion hr{
+		margin: 0px;
+		margin-top: 8px;
+	}
+	
+	.publicacion-footer{
+	
+		padding-top: 10px;
+		overflow: auto;
+		
+		padding-bottom: 0px;
+	}
+	.publicacion-footer p,a{
+		
+		margin: 0px;		
+	}
+	.hidden-content{
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.imagen-publicitaria{
+
+		
+		background-color: lightgray;
+	}
+	.imagen-publicitaria img{
+		display: block;
+		margin: 10px auto;
+		border-left: gray;
+		border-right: gray;
+	}
 </style>
 <script type="text/javascript">
-
-	$(".post button").click(function(){
-		$(this).parent().children(".hide-content").toggle("slow");
+	$(".publicacion .expandir").click(function(){
+		$(this).parent().parent().find(".hidden-content").toggle("slow");
 	});
-
 	$("[name='carrera[]']").change(function(){
 		$("#formBuscar").trigger("submit");
 	});
