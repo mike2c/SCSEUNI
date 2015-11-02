@@ -2,24 +2,22 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2 col-lg-2">
-				<a href="<?=base_url()?>"><img style="max-height:80px;margin-top:5%;" class="img-responsive" src="<?=base_url('public/res/logo_transparent.png');?>" alt=""></a>
+				<center>
+					<img style="max-height:120px;" class="img-responsive pull-left" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
+				</center>
 			</div>
 			<div class="col-md-8 col-lg-8 auto-size">
 				<center>
 					<h2 style=""><strong>Universidad Nacional de Ingeniería</strong></h2>
-					
 					<h4>Recinto Universitario Augusto Cesar Sandino</h4>
 					<h5>Sistema para el control y seguimiento de egresados</h5>
 					<h5>Estelí, Nicaragua</h5>
 				</center>
 			</div>
-				<div class="col-md-2 col-lg-2">
-				<img style="max-height:100px;" class="img-responsive pull-right" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
-			</div>
 		</div>
 	</div>
 </header>
-<div class="container">
+<div class="container" id="banner">
 	<ul class="pgwSlider">
 		<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_egresado.jpg')?>" alt="" data-description=""></a></li>
 		<li><a href="<?=base_url('login')?>"><img src="<?=base_url('public/res/banner_curriculum.jpg')?>" alt="" data-description=""></a></li>
@@ -29,6 +27,7 @@
 	</ul>
 </div>
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/pgwslider.min.css')?>">
+
 <script type="text/javascript" src="<?=base_url('public/js/pgwslider.min.js')?>"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -37,13 +36,29 @@
     	intervalDuration: 5000,
    		transitionDuration: 700,
     	displayList: true,
-    	displayControls: true
+    	displayControls: true,
 
     });
 });
 </script>
 <style type="text/css">
-	
+
+	.jumbotron{
+		background-color: #03447F;
+	}
+	.pgwSlider{
+		height : 150px
+	}
+	center{
+		padding-top:20px;
+	}
+	.col-md-2 col-lg-2{
+		padding-top:20px;
+	}
+	.row{
+		background-color: #03447F;
+		height : 150px;
+	}
 	header{
 		padding-top:20px;
 		padding-bottom: 10px;
