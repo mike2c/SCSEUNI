@@ -16,7 +16,7 @@
 					</strong></small></h4>
 				</div>
 				
-				<h3 class="page-header text-primary">Características para los egresados y graduados</h3>
+				<h3 class="page-header text-primary">Características</h3>
 				<dl class="list-group">
 					<dt class="list-group-item">
 						<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>

@@ -12,7 +12,7 @@
 					Para registrar una cuenta de empresa, completa la información del siguiente <a href="<?php echo base_url('pages/view/registro_empresa') ?>"> formulario </a>
 				</strong></small></h3>
 	
-				<h4 class="page-header text-primary">Características para las empresas</h4>
+				<h4 class="page-header text-primary">Características</h4>
 				<dl class="list-group">
 					<dt class="list-group-item">
 						<span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
