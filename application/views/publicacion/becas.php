@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="contenido">
-		<h3 class="page-header">Programa de becas</h3>
+		<h2 class="page-header text-primary">Programa de becas</h2>
 		
 		<div class="row">
 			<div class="col-md-9 col-lg-9">
@@ -11,7 +11,7 @@
 						?>
 						<div class="publicacion">
 							
-							<h3 class="box-title"><img src="<?=base_url('public/res/logo_uni_610x377.png')?>" alt="" class="logo-uni pull-left">
+							<h3 class="box-title text-primary"><img src="<?=base_url('public/res/logo_uni_610x377.png')?>" alt="" class="logo-uni pull-left">
 							<?=ucfirst($row->programa_academico)?></h3>
 							<p class=""><?=ucfirst($row->descripcion)?></p>
 							
@@ -53,8 +53,8 @@
 		</div>
 		<div class="col-md-3 col-lg-3" >
 			<form method="post" id="formBuscar" action="<?=base_url("Publicaciones/Becas")?>">
-				<h4>Busqueda for carrera</h4>
-				<ul class="filtro">
+				<h4 class="text-primary">Busqueda for carrera</h4>
+				<ul class="filtro text-primary">
 					<?php
 						if(isset($carreras) && !empty($carreras)){
 							foreach ($carreras->result() as $row) {
@@ -99,7 +99,22 @@
 		padding-left: 0px;
 	}
 	.filtro li{
+
 		font-size: 16px;
+	
+		border-bottom: 1px solid lightgray;
+		padding: 1px 12px;
+	}
+	.filtro li:hover{
+		border-radius: 3px;
+		background-color: #337ab7;
+		color: white;
+	}
+	.checkbox{
+		margin:3px 0;
+	}
+	.checkbox label{
+		line-height: 16px;
 	}
 	.publicacion{
 		overflow: auto;

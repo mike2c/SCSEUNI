@@ -2,11 +2,9 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-2 col-lg-2">
-				<center>
-					<img style="max-height:120px;" class="img-responsive pull-left" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
-				</center>
+				<img style="max-height:120px;" class="img-responsive pull-left" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
 			</div>
-			<div class="col-md-8 col-lg-8 auto-size">
+			<div class="col-md-8 col-lg-8 auto-size"  style="font-family:'Cambria',serif;">
 				<center>
 					<h2 style=""><strong>Universidad Nacional de Ingeniería</strong></h2>
 					<h4>Recinto Universitario Augusto Cesar Sandino</h4>
@@ -49,18 +47,16 @@
 	.pgwSlider{
 		height : 150px
 	}
-	center{
-		padding-top:20px;
-	}
+
 	.col-md-2 col-lg-2{
 		padding-top:20px;
 	}
 	.row{
 		background-color: #03447F;
-		height : 150px;
+		//height : 150px;
 	}
 	header{
-		padding-top:20px;
+		padding-top:10px;
 		padding-bottom: 10px;
 		color: white;
 		background-color: #03447F;

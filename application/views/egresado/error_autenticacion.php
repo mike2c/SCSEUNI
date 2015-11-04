@@ -4,7 +4,7 @@
 		<h3><small><?php 
 			if (isset($existe)){
 				echo $existe;
-				?><br/>Inicia sesión con tu correo y contraseña <a href="<?php echo base_url('sesion') ?>">aqui</a><?php
+				?><br/>Inicia sesión con tu correo y contraseña <a href="<?php echo base_url('login') ?>">aqui</a><?php
 			}else{
 				echo $no_existe;
 				?><br/>Intentalo nuevamente haciendo click <a href="<?php echo base_url('egresado/Autenticar') ?>">aqui</a><?php

@@ -2,7 +2,7 @@
 	<div class="contenido">
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
-				<h2>Lista de egresados</h2>
+				<h2 class="page-header text-primary">Lista de egresados</h2>
 				<p class="text-info">La información de algunos egresados puede permanecer privada o parcialmente visible para determinados usuarios.</p>
 			</div>
 		</div>
@@ -36,11 +36,12 @@
 				</form>
 			</div>
 		</div>
+		<br>
 		<div class="row">
 			<div class="col-lg-12 col-md-12">
 		<table id="tabla_egresados" class="table table-hover table-responsive">
 			<thead>
-				<tr>
+				<tr style="font-weight:bold;">
 					<td></td>
 					<td>Nombre</td>
 					<td>Ubicación actual</td>
@@ -148,6 +149,10 @@
 	</div>
 </div>
 <style type="text/css">
+	.help-block{
+		margin-bottom: 0px;
+		margin-top: 0px;
+	}
 	table tr td label{
 		margin: 0px 0px;
 	}
