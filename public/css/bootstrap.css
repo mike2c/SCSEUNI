@@ -1,5 +1,5 @@
 /*
- *Clases personalizadas
+ *Clases personalizadas'Source Sans Pro',sans-serif
  */
 
 .box-title{
@@ -24,17 +24,24 @@
 .img-profile{
   overflow: auto;
   display: block;
-  background-color: lightgray;
-  
+  //background-color: lightgray;
+  margin-top: 10px; 
   padding-top: 10px;
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
 }
+.img-profile a{
+  color: white;
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
 .img-profile img{
+  border: 2px solid gray;
   display: block;
   margin: 0 auto;
-  max-height: 150px;
+  max-height: 130px;
+  max-width: 130px;
 }
 
 body{
