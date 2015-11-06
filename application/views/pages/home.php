@@ -52,8 +52,9 @@
 		</div>
 	</div>	
 </div>
-<div class="container" style="margin-top:2%;">
-	<div class="row" style="background-color:white;">
+<div style="background-color: lightgray;">
+	<div class="container" style="margin-top:10px;padding-top:10px;">
+	<div class="row" style="">
 		<div class="col-md-4">
 			<h4 class="box-title text-primary">Contacto</h4>
 			<h5 class="text-info">Dirección</h5>
@@ -82,6 +83,8 @@
 		</div>
 	</div>
 </div>
+</div>
+
 
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/pgwslider.min.css')?>">
 
