@@ -57,3 +57,7 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(".active").removeClass("active");
+	$("#menu_contacto").addClass("active");
+</script>

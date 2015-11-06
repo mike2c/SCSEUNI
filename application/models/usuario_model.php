@@ -43,7 +43,22 @@
 			return	$this->db->get($this->view_name);
 
 		}
+		
+		function contar($where,$carreras = null){
 
+			$this->db->select("count(*) as cantidad");
+			if(!is_null($where) && !empty($where)){
+				$this->db->where($where);
+			}
+			if(!is_null($carreras) && !empty($carreras)){
+				$this->db->where_in("carrera_id",$carreras);
+			}
+
+			$query = $this->db->get($this->view_name);	
+			echo $this->db->last_query(). "<br>";
+			return $query;
+		}
+		
 		function existe_correo($correo,$usuario = null){
 			
 			#Verificamos si el usuario no es null y no esta vacio

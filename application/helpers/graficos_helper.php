@@ -11,7 +11,7 @@
 		<style type="text/css">
 			${demo.css}
 			</style>
-			<div id="container" style="min-width: 310px; height: 500px; max-width: 600px; margin: 0 auto"></div>
+			<div id="container" style="min-width: 310px; height: 500px; max-width: 600px;margin-bottom:10px;"></div>
 			<script type="text/javascript">
 				
 				var data = <?=json_encode($arr)?>;

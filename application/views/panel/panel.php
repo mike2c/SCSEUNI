@@ -4,7 +4,6 @@
 <link href="<?=base_url('public/css/custom-styles.css')?>" rel="stylesheet" />
 <!-- Google Fonts-->
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
-
 <body>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">

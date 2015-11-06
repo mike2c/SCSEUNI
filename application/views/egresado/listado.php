@@ -204,4 +204,6 @@
 	$("#carrera").change(function(){
 		$("#formBuscarEgresado").submit();
 	});
+	$(".active").removeClass("active");
+	$("#menu_informacion").addClass("active");
 </script>
