@@ -1,6 +1,14 @@
 /*
  *Clases personalizadas'Source Sans Pro',sans-serif
  */
+ .no-padding{
+  padding: 0px 0px;
+ }
+
+.panel-body{
+  border: 1px solid lightgray;
+  border-radius: 4px;
+}
 
 .box-title{
   border-bottom: 1px double lightgray;

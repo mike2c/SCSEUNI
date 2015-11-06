@@ -24,46 +24,33 @@
 		<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_empresa.jpg')?>" alt="" data-description=""></a></li>
 	</ul>
 </div>
-
-<div class="container" id="panels">
-	<div class="container-panels">
-		<dl class="group-list">
-			<div class="panel-body col-md-4">
-				<dt class="group-list-item text-primary">
-					<h4><strong>Objetivos</strong></h4>
-				</dt>
-				<dd class="text-justify text-muted">
-					Impulsar vínculos permanentes de apoyo y beneficio mutuo entre el Recinto Universitario Augusto C. Sandino, sede regional del norte con sus egresados y graduados, así como crear y mantener relaciones entre la universidad y los empleadores de la Región Norte del país facilitando la inserción laboral de los egresados y graduados del Recinto.
-				</dd>
-			</div>
-		</dl>
-	</div>
-	
-	<div class="container-panels ">	
-		<dl class="group-list">
-			<div class="panel-body col-md-4">
-				<dt class="group-list-item text-primary">
-					<h4><strong>Misión</strong></h4>
-				</dt>
-				<dd class="text-justify text-muted">
-					El programa de seguimiento a graduados del Recinto Universitario Augusto C. Sandino, sede regional del norte es la instancia institucional responsable de la vinculación dinámica y permanente entre los egresados, graduados, la universidad y empleadores, para facilitar la mejor y actualización del currículo de las carreras, el vínculo con el campo laboral y la formación permanente.
-				</dd>
-			</div>
-		</dl>
-	</div>
-	
-	<div class="container-panels">
-		<dl class="group-list">
-			<div class="panel-body col-md-4">
-				<dt class="group-list-item-active text-primary">
-					<h4><strong>Visión</strong></h4>
-				</dt>
-				<dd class="text-justify text-muted">
-					Ser un programa competente para fortalecer la pertinencia de la formación profesional, a través de la interacción institucional del Recinto Universitario Augusto C. Sandino, sede regional del norte con los graduados y los empleadores que posibilitan su inserción laboral en cada una de las actividades dirigidas  a la trasformación de la sociedad y su entorno.
-				</dd>
-			</div>
-		</dl>
-	</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 no-padding">
+			<article>
+				<h4 class="text-primary"><strong>Objetivos</strong></h4>
+				<p>
+					<small>Impulsar vínculos permanentes de apoyo y beneficio mutuo entre el Recinto Universitario Augusto C. Sandino, sede regional del norte con sus egresados y graduados, así como crear y mantener relaciones entre la universidad y los empleadores de la Región Norte del país facilitando la inserción laboral de los egresados y graduados del Recinto.</small>					
+				</p>
+			</article>
+		</div>
+		
+		<div class="col-md-4">	
+			<article>
+				<h4 class="text-primary"><strong>Misión</strong></h4>	
+				<small><p>El programa de seguimiento a graduados del Recinto Universitario Augusto C. Sandino, sede regional del norte es la instancia institucional responsable de la vinculación dinámica y permanente entre los egresados, graduados, la universidad y empleadores, para facilitar la mejor y actualización del currículo de las carreras, el vínculo con el campo laboral y la formación permanente.</p></small>
+			</article>
+		</div>
+		
+		<div class="col-md-4">
+			<article>
+				<h4 class="text-primary"><strong>Visión</strong></h4>
+				<p>
+					<small>Ser un programa competente para fortalecer la pertinencia de la formación profesional, a través de la interacción institucional del Recinto Universitario Augusto C. Sandino, sede regional del norte con los graduados y los empleadores que posibilitan su inserción laboral en cada una de las actividades dirigidas  a la trasformación de la sociedad y su entorno.</small>					
+				</p>
+			</article>
+		</div>
+	</div>	
 </div>
 
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/pgwslider.min.css')?>">
@@ -82,16 +69,7 @@
 });
 </script>
 <style type="text/css">
-	#panels{
-		padding-top: 5px;
-		pull-right;
-		background:white;
-		width : 100%;
-	}
-	.container-panels{
-		padding-left:6%;
-		padding-right:6%;
-	}
+
 	.jumbotron{
 		background-color: #03447F;
 	}
@@ -99,13 +77,6 @@
 		height : 150px
 	}
 
-	.col-md-2 col-lg-2{
-		padding-top:20px;
-	}
-	.row{
-		background-color: #03447F;
-		//height : 150px;
-	}
 	header{
 		padding-top:10px;
 		padding-bottom: 10px;
@@ -117,10 +88,21 @@
 		margin-top: 0px;
 		margin-bottom: 5px;
 	}
-	.pgwSlider li{
-	 	//border: 1px solid black;
+	
+	article{
+
+		border: 1px solid #aeaeae;
+		border-left: 5px solid #337ab7;
+		padding: 10px 20px;
+		background-color: white;
+		min-height: 220px;
+	}	
+	article h4{
+
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
-	.ps-list li{
-		//border: 1px solid lightgray;
-	}
+	#banner{
+		margin-bottom: 10px;
+	}																	
 </style>
