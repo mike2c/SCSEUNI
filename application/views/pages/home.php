@@ -52,37 +52,37 @@
 		</div>
 	</div>	
 </div>
-<div style="background-color: lightgray;">
+<div style="background-color: white;">
 	<div class="container" style="margin-top:10px;padding-top:10px;">
-	<div class="row" style="">
-		<div class="col-md-4">
-			<h4 class="box-title text-primary">Contacto</h4>
-			<h5 class="text-info">Dirección</h5>
-				<p class="help-block">
-					Entrada a La Tunoza, Antigua Hacienda el Higo, Estelí, Nicaragua
-				</p>
-				<h5 class="text-info">Teléfonos</h5>
-				<p class="help-block">
-					Dirección: 2719-7843 <br>
-						Subdirección: 2719-7843 <br>
-						Administración: 2719-7841 <br>
-						Adquisiciones: 2719-7865 <br>
-						Registro académico: 2719-7818 <br>
-				</p>
-		</div>
-		<div class="col-md-4">
-			<h4 class="box-title text-primary">Sitios de interés</h4>
-			<ul>
-				<li><a href="http://www.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería</a></li>
-				<li><a href="http://norte.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería, Recinto Universitario Augusto C. Sandino</a></li>
-			</ul>
-			<h5 class="text-info">Síguenos en</h5>
-			<ul>
-				<li><a href="https://www.facebook.com/norte.uni.edu.ni?fref=ts" target="_new">Facebook - Uni Ruacs sede Estelí</a></li>
-			</ul>
+		<div class="row" style="">
+			<div class="col-md-4">
+				<h4 class="box-title text-primary">Contacto</h4>
+				<h5 class="text-info">Dirección</h5>
+					<p class="help-block">
+						Entrada a La Tunoza, Antigua Hacienda el Higo, Estelí, Nicaragua
+					</p>
+					<h5 class="text-info">Teléfonos</h5>
+					<p class="help-block">
+						Dirección: 2719-7843 <br>
+							Subdirección: 2719-7843 <br>
+							Administración: 2719-7841 <br>
+							Adquisiciones: 2719-7865 <br>
+							Registro académico: 2719-7818 <br>
+					</p>
+			</div>
+			<div class="col-md-4">
+				<h4 class="box-title text-primary">Sitios de interés</h4>
+				<ul>
+					<li><a href="http://www.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería</a></li>
+					<li><a href="http://norte.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería, Recinto Universitario Augusto C. Sandino</a></li>
+				</ul>
+				<h5 class="text-info">Síguenos en</h5>
+				<ul>
+					<li><a href="https://www.facebook.com/norte.uni.edu.ni?fref=ts" target="_new">Facebook - Uni Ruacs sede Estelí</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
 
@@ -102,7 +102,9 @@
 });
 </script>
 <style type="text/css">
-
+	ul{
+		list-style: square;
+	}
 	.jumbotron{
 		background-color: #03447F;
 	}
