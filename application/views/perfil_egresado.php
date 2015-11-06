@@ -70,7 +70,7 @@
 			<!--Informacion personal-->
 			<div role="tabpanel" class="tab-pane active" id="info_personal">
 				<div class="col-md-12 col-lg-12">
-					<p class="help-block">Información personal</p>
+					<p class="text-primary"><strong>Información personal</strong></p>
 					<hr>
 					<div class="form-horizontal">
 						<div class="form-group">
@@ -114,7 +114,7 @@
 							</div>
 						</div>
 					</div>
-					<p class="help-block">Información de estudio</p><hr>
+					<p class="text-primary"><strong>Información de estudio</strong></p><hr>
 					<div class="form-horizontal">
 						<div class="form-group">
 							<label class="control-label col-sm-3">Carnet:</label>
@@ -136,7 +136,7 @@
 						</div>
 					</div>
 
-					<p class="help-block">Información adicional</p><hr>
+					<p class="text-primary"><strong>Información adicional</strong></p><hr>
 					<!--Trabajando-->
 					<label for="">¿Actualmente te encuentras trabajando?</label>
 					<div class="radio">
@@ -203,7 +203,7 @@
 			<!--Informacion de la cuenta-->
 			<div role="tabpanel" class="tab-pane" id="info_cuenta">
 				<div class="col-md-12 col-lg-12">
-					<p class="help-block">Cambiar correo</p>
+					<p class="text-primary">Cambiar correo</p>
 					<hr>
 						<div class="form-horizontal">
 							<div class="form-group">
@@ -213,7 +213,7 @@
 							    </div>
 						  	</div>
 						</div>
-					<p class="help-block">Cambiar contraseña</p>							
+					<p class="text-primary">Cambiar contraseña</p>							
 					<hr>
 					<form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
 						<div class="form-group">
@@ -243,7 +243,7 @@
 					  		<p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
 					  	</div>
 					</form>
-					<p class="help-block">Desactivar cuenta</p>
+					<p class="text-primary">Desactivar cuenta</p>
 					<hr>
 					<form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
 						<div class="form-group">
@@ -260,7 +260,7 @@
 			<!--Informacion de contacto-->
 		    <div role="tabpanel" class="tab-pane" id="info_contacto">
 				<div class="col-md-12 col-lg-12">
-				<p class="help-block">Información de contacto</p>
+				<p class="text-primary">Información de contacto</p>
 				<hr>
 					<div class="form-horizontal">
 						<div class="form-group">
@@ -276,7 +276,7 @@
 							</div>
 						</div>	
 					</div>
-					<p class="help-block">Ubicación actual</p>
+					<p class="text-primary">Ubicación actual</p>
 					<hr>
 						<div class="form-horizontal">
 							<div class="form-group">

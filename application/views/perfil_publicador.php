@@ -32,7 +32,7 @@
 
       <ul id="perfil_menu" class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-        <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
+        <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
         <li><a href="javascript:cargarCursos()">Cursos</a></li>
         <li><a href="javascript:cargarBecas()">Becas</a></li>
         <li><a href="javascript:cargarFichas()">Fichas ocupacionales</a></li>
@@ -67,7 +67,7 @@
       <!--Informacion personal-->
       <div role="tabpanel" class="tab-pane active" id="info_personal">
         <div class="col-md-12 col-lg-12">
-          <p class="help-block">Información personal</p>
+          <p class="text-primary">Información personal</p>
           <hr>
           <div class="form-horizontal">
             <div class="form-group">
@@ -105,7 +105,7 @@
               </div>
             </div>
           </div>
-          <p class="help-block">Area y Cargo</p><hr>
+          <p class="text-primary">Area y Cargo</p><hr>
           <div class="form-horizontal">
             <div class="form-group">
               <label class="control-label col-sm-3">Area:</label>
@@ -139,7 +139,7 @@
       <!--Informacion de la cuenta-->
       <div role="tabpanel" class="tab-pane" id="info_cuenta">
         <div class="col-md-12 col-lg-12">
-          <p class="help-block">Cambiar correo</p>
+          <p class="text-primary">Cambiar correo</p>
           <hr>
             <div class="form-horizontal">
               <div class="form-group">
@@ -149,7 +149,7 @@
                   </div>
                 </div>
             </div>
-          <p class="help-block">Cambiar contraseña</p>              
+          <p class="text-primary">Cambiar contraseña</p>              
           <hr>
           <form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
             <div class="form-group">
@@ -179,7 +179,7 @@
                 <p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
               </div>
           </form>
-          <p class="help-block">Desactivar cuenta</p>
+          <p class="text-primary">Desactivar cuenta</p>
           <hr>
           <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
             <div class="form-group">

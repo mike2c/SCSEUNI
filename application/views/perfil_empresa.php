@@ -32,7 +32,7 @@
 
       <ul class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-        <li><a href="<?=base_url('Mensajes')?>">Mensajes</a></li>
+        <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
         <li><a href="javascript:cargarFichas()">Fichas</a></li>
         </ul>
     </div>
@@ -118,7 +118,7 @@
          <!--Informacion de la cuenta-->
         <div role="tabpanel" class="tab-pane" id="info_cuenta">
           <div class="col-md-12 col-lg-12">
-          <p class="help-block">Cambiar correo</p>
+          <p class="text-primary">Cambiar correo</p>
           <hr>
             <div class="form-horizontal">
               <div class="form-group">
@@ -128,7 +128,7 @@
                   </div>
                 </div>
             </div>
-          <p class="help-block">Cambiar contraseña</p>              
+          <p class="text-primary">Cambiar contraseña</p>              
           <hr>
           <form class="form-horizontal" action="<?=base_url('Perfil/CambiarClave')?>" name="formCambiarClave" id="formCambiarClave">
             <div class="form-group">
@@ -158,7 +158,7 @@
                 <p id="cambiarClaveRespuesta" style="padding:10px;display:none" class="text-center bg-danger text-danger"></p>
               </div>
           </form>
-          <p class="help-block">Desactivar cuenta</p>
+          <p class="text-primary">Desactivar cuenta</p>
           <hr>
           <form method="post" action="<?=base_url('Perfil/DesactivarCuenta')?>" id="formDesactivarCuenta">
             <div class="form-group">
@@ -175,7 +175,7 @@
         <!--Informacion de contacto-->
         <div role="tabpanel" class="tab-pane" id="info_contacto">
           <div class="col-md-12 col-lg-12">
-        <p class="help-block">Información de contacto</p>
+        <p class="text-primary">Información de contacto</p>
         <hr>
           <div class="form-horizontal">
             <div class="form-group">
@@ -191,7 +191,7 @@
               </div>
             </div>  
           </div>
-          <p class="help-block">Ubicación actual</p>
+          <p class="text-primary">Ubicación actual</p>
           <hr>
             <div class="form-horizontal">
               <div class="form-group">
