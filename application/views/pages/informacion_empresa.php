@@ -57,3 +57,7 @@
 	}
 	*/
 </style>
+<script type="text/javascript">
+	$(".active").removeClass("active");
+		$("#menu_informacion").addClass("active");
+</script>

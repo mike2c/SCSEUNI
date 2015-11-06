@@ -74,5 +74,6 @@
 		$(".hidden-content").toggle("slow");
 	}
 
-
+	$(".active").removeClass("active");
+	$("#menu_ingresar").addClass("active");
 </script>

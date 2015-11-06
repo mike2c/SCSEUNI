@@ -94,4 +94,6 @@
 		e.preventDefault();
 		validarForm(this,$("#respuesta"));
 	});
+	$(".active").removeClass("active");
+	$("#menu_registro").addClass("active");
 </script>

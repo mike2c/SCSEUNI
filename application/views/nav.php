@@ -55,7 +55,7 @@
 			<?php
 				if(sesionIniciada() && esEgresado()){
 					?>
-						<li><a href="<?=base_url('publicaciones/BolsaDeTrabajo')?>">Bolsa de empleo</a></li>
+						<li id="menu_bolsa"><a href="<?=base_url('publicaciones/BolsaDeTrabajo')?>">Bolsa de empleo</a></li>
 					<?
 				}
 
@@ -102,8 +102,15 @@
 </style>
 
 <script type="text/javascript">
+	var temp = null;
 	$(".dropdown-toggle").click(function(){
+		temp = $(".active").parent();
 		$(".nav.nav-pills li").removeClass("active");
 		$(this).parent().addClass('active');
+	});
+
+	$("#menu_informacion").on("hidden.bs.dropdown",function(){
+		$(".nav.nav-pills li").removeClass("active");
+		$(temp).addClass('active');
 	});
 </script>

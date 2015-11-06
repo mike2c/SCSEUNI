@@ -167,6 +167,8 @@
 	}
 </style>
 <script type="text/javascript">
+	$(".active").removeClass("active");
+	$("#menu_informacion").addClass("active");
 	$(".publicacion .expandir").click(function(){
 		$(this).parent().parent().find(".hidden-content").toggle("slow");
 	});

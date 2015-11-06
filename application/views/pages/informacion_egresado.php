@@ -59,6 +59,9 @@
 </div>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$(".active").removeClass("active");
+		$("#menu_informacion").addClass("active");
+		
 		$("dd").hide();
 		$("dt").click(function(event){
 			

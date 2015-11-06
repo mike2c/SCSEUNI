@@ -67,20 +67,15 @@
 	<div class="col-lg-10 col-md-10" style="padding-right:0px;">
 		<!--DIV PARA LOS MENSAJES DE ENTRADA -->
 		<div id="bandeja">
-			<?php
-				if(!isset($mensajes) || $mensajes == null){
-					exit("<h4>No se pudo cargar la información</h4>");
-				}
-
-				if($mensajes->num_rows() == 0){
-					exit("<center><h2 class='page-header'>No hay mensajes</h2></center>");
-				}
-			?>
 			<h4 class="box-title">Borrador</h4>
 			<div id="lista">
+				<?php
+					if(!isset($mensajes) || $mensajes == null || $mensajes->num_rows() == 0){
+						echo("<h4 class='panel panel-danger panel-body text-danger text-center'>No se han encontrado mensajes</h4>");
+					}else{
+				?>
 				<table class="table table-hover">
-				  <caption>Borrador</caption>
-				  <thead>
+				 <thead>
 				  	<tr><td>#</td><td>Asunto</td><td>Fecha de creación</td><td>Estado</td></tr>
 				  </thead>
 				  <tbody>
@@ -99,6 +94,7 @@
 				   
 				        $cont += 1;   
 				      }
+				    }  
 				    ?>
 				  </tbody>
 				  <tfoot>

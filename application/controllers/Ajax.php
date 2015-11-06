@@ -213,7 +213,7 @@
 
 		private function crear_lista($result_set,$display_member,$value_member,$name,$id){
 
-			echo "<select name='$name' id='$id' multiple style='width:300px'>";
+			echo "<select required name='$name' id='$id' multiple style='width:300px'>";
 			foreach ($result_set->result_array() as $row) {
 				echo "<option value='$row[$value_member]'>$row[$display_member]</option>";
 			}

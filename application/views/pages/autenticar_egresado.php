@@ -55,3 +55,7 @@
 		background-color: pink;
 	}
 </style>
+<script type="text/javascript">
+	$(".active").removeClass("active");
+	$("#menu_registro").addClass("active");
+</script>

@@ -143,52 +143,49 @@
 			}
 		}
 
+		/**Convierte una consulta en un array compatible para la funcion crear grafico*/
+		private function query_to_array($query,$label_field,$value_field){
+
+			if(is_null($query) || empty($query)){
+				return null;
+			}
+
+			$data = array();
+			foreach ($query->result_array() as $row) {
+				array_push($data, array("name"=>$row[$label_field],"y"=>$row[$value_field]));
+			}
+
+			return $data;
+		}
+
 		/*Creacion de reportes*/
 		function ReporteEgresadosTrabajando(){
 			if(IS_AJAX){
 
 				$this->load->helper("graficos");
 				$this->load->model("egresado_model","egresados");
+				$this->load->model("listas_model","listas");
 
-				$data[0]["name"] = "Trabajando";
-				$data[0]["y"] = $this->egresados->listar(array("trabaja"=>TRUE))->num_rows();
-				$data[1]["name"] = "Desempleados";
-				$data[1]["y"] = $this->egresados->listar(array("trabaja"=>FALSE))->num_rows();
+				$where_in = null;
+				if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
+					$where_in = $this->input->post("carrera");
+				}
+
+				$where["trabaja"] = true;
+				//$where["titulado"] = true;
+				if(isset($_POST["titulado"]) && !empty($_POST["titulado"])){
+					$where["titulado"] = true;
+				}
+
+				$result[0]["name"] = "Trabajando";
+				$result[0]["y"] = $this->egresados->contar($where,$where_in)->row('cantidad');
+				$where["trabaja"] = false;
+				$result[1]["name"] = "Desempleados";
+				$result[1]["y"] = $this->egresados->contar($where,$where_in)->row('cantidad');
 				
-				echo '<div class="panel panel-default">';
-				echo '<div class="panel-body">';
-
-				crear_grafico_pastel($data,"Porcentaje de egresados trabajando","Porcentaje");
-			$porcentaje_trabajando = (($data[0]["y"]/($data[0]["y"]+$data[1]["y"]))*100);	
-				$porcentaje_notrabajando = (($data[1]["y"]/($data[0]["y"]+$data[1]["y"]))*100);	
-				echo "<table class='table table-striped table-hover'>";
-				echo "<thead>
-				<tr>
-					<td></td>
-					<td>Cantidad</td>
-					<td>Porcentaje</td>
-					
-				</tr>
-				</thead>";
-				echo "<tbody>";
-				echo "<tr>
-				<td>Egresados trabajando</td><td>".$data[0]["y"]."</td><td>".(round($porcentaje_trabajando*100)/100)."% </td>
-
-				</tr>";
-					echo "<tr>
-				<td>Egresados desempleados</td><td>".$data[1]["y"]."</td><td>".(round($porcentaje_notrabajando*100)/100)."% </td>
-
-				</tr>";
-					echo "<tr>
-				<td>Totales</td><td>".($data[1]["y"] + $data[0]["y"])."</td><td>".($porcentaje_notrabajando + $porcentaje_trabajando)."% </td>
-
-				</tr>";
-				echo "</tbody>";
-				echo "</table>";
-				echo '</div>';
-				echo '</div>';
-
-				
+				$data["data"] = $result;
+				$data["carreras"] = $this->listas->listarCarreras();
+				$this->load->view("panel/reportes/egresados_trabajando",$data);			
 			}
 		}
 
@@ -199,9 +196,9 @@
 				$this->load->model("egresado_model","egresados");
 
 				$data[0]["name"] = "Titulados";
-				$data[0]["y"] = $this->egresados->listar(array("titulado"=>TRUE))->num_rows();
+				$data[0]["y"] = $this->egresados->contar(array("titulado"=>TRUE))->row('cantidad');
 				$data[1]["name"] = "Sin titulo";
-				$data[1]["y"] = $this->egresados->listar(array("titulado"=>FALSE))->num_rows();
+				$data[1]["y"] = $this->egresados->contar(array("titulado"=>FALSE))->row('cantidad');
 				
 				echo '<div class="panel panel-default">';
 				echo '<div class="panel-body">';
