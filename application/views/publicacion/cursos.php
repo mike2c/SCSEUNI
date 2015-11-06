@@ -64,7 +64,7 @@
 		</div>
 		<div class="col-md-3 col-lg-3" >
 			<form method="post" id="formBuscar" action="<?=base_url("Publicaciones/Becas")?>">
-				<h4 class="text-primary">Busqueda for carrera</h4>
+				<h4 class="text-primary">Busqueda por carrera</h4>
 				<ul class="filtro text-primary">
 					<?php
 						if(isset($carreras) && !empty($carreras)){
