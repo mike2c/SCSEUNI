@@ -29,7 +29,7 @@
 		<div class="col-md-4 no-padding">
 			<article>
 				<h4 class="text-primary"><strong>Objetivos</strong></h4>
-				<p>
+				<p class="text-justify">
 					<small>Impulsar vínculos permanentes de apoyo y beneficio mutuo entre el Recinto Universitario Augusto C. Sandino, sede regional del norte con sus egresados y graduados, así como crear y mantener relaciones entre la universidad y los empleadores de la Región Norte del país facilitando la inserción laboral de los egresados y graduados del Recinto.</small>					
 				</p>
 			</article>
@@ -38,19 +38,49 @@
 		<div class="col-md-4">	
 			<article>
 				<h4 class="text-primary"><strong>Misión</strong></h4>	
-				<small><p>El programa de seguimiento a graduados del Recinto Universitario Augusto C. Sandino, sede regional del norte es la instancia institucional responsable de la vinculación dinámica y permanente entre los egresados, graduados, la universidad y empleadores, para facilitar la mejor y actualización del currículo de las carreras, el vínculo con el campo laboral y la formación permanente.</p></small>
+				<small><p class="text-justify">El programa de seguimiento a graduados del Recinto Universitario Augusto C. Sandino, sede regional del norte es la instancia institucional responsable de la vinculación dinámica y permanente entre los egresados, graduados, la universidad y empleadores, para facilitar la mejor y actualización del currículo de las carreras, el vínculo con el campo laboral y la formación permanente.</p></small>
 			</article>
 		</div>
 		
 		<div class="col-md-4">
 			<article>
 				<h4 class="text-primary"><strong>Visión</strong></h4>
-				<p>
+				<p class="text-justify">
 					<small>Ser un programa competente para fortalecer la pertinencia de la formación profesional, a través de la interacción institucional del Recinto Universitario Augusto C. Sandino, sede regional del norte con los graduados y los empleadores que posibilitan su inserción laboral en cada una de las actividades dirigidas  a la trasformación de la sociedad y su entorno.</small>					
 				</p>
 			</article>
 		</div>
 	</div>	
+</div>
+<div class="container" style="margin-top:2%;">
+	<div class="row" style="background-color:white;">
+		<div class="col-md-4">
+			<h4 class="box-title text-primary">Contacto</h4>
+			<h5 class="text-info">Dirección</h5>
+				<p class="help-block">
+					Entrada a La Tunoza, Antigua Hacienda el Higo, Estelí, Nicaragua
+				</p>
+				<h5 class="text-info">Teléfonos</h5>
+				<p class="help-block">
+					Dirección: 2719-7843 <br>
+						Subdirección: 2719-7843 <br>
+						Administración: 2719-7841 <br>
+						Adquisiciones: 2719-7865 <br>
+						Registro académico: 2719-7818 <br>
+				</p>
+		</div>
+		<div class="col-md-4">
+			<h4 class="box-title text-primary">Sitios de interés</h4>
+			<ul>
+				<li><a href="http://www.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería</a></li>
+				<li><a href="http://norte.uni.edu.ni/" target="_new">Universidad Nacional de Ingeniería, Recinto Universitario Augusto C. Sandino</a></li>
+			</ul>
+			<h5 class="text-info">Síguenos en</h5>
+			<ul>
+				<li><a href="https://www.facebook.com/norte.uni.edu.ni?fref=ts" target="_new">Facebook - Uni Ruacs sede Estelí</a></li>
+			</ul>
+		</div>
+	</div>
 </div>
 
 <link rel="stylesheet" type="text/css" href="<?=base_url('public/css/pgwslider.min.css')?>">
