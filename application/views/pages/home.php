@@ -1,27 +1,9 @@
-<header>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2 col-lg-2">
-				<img style="max-height:120px;" class="img-responsive pull-left" src="<?=base_url('public/res/logo-ruacs2.png');?>" alt="">
-			</div>
-			<div class="col-md-8 col-lg-8 auto-size"  style="font-family:'Cambria',serif;">
-				<center>
-					<h2 style=""><strong>Universidad Nacional de Ingeniería</strong></h2>
-					<h4>Recinto Universitario Augusto Cesar Sandino</h4>
-					<h5>Sistema para el control y seguimiento de egresados</h5>
-					<h5>Estelí, Nicaragua</h5>
-				</center>
-			</div>
-		</div>
-	</div>
-</header>
 <div class="container" id="banner">
 	<ul class="pgwSlider">
-		<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_egresado.jpg')?>" alt="" data-description=""></a></li>
-		<li><a href="<?=base_url('login')?>"><img src="<?=base_url('public/res/banner_curriculum.jpg')?>" alt="" data-description=""></a></li>
-		<!--<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_ofertas.jpg')?>" alt="" data-description=""></a></li>-->
-		<!--<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_empleo.jpg')?>" alt="" data-description=""></a></li>-->
-		<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_empresa.jpg')?>" alt="" data-description=""></a></li>
+		<li><img src="<?= base_url('public/res/banner_uni.jpg') ?>" alt="SCSE" data-description="Sistema de control y seguimiento de Egresados."></li>
+		<li><a href="<?=base_url('informacion_egresado')?>"><img src="<?=base_url('public/res/banner_egresado2.jpg')?>" alt="Egresados" data-description="Formen parte del programa de control y seguimiento de egresados de la universidad nacional de ingeniería, Recinto Universitario Augusto C. Sandino."></a></li>
+		<li><a href="<?=base_url('login')?>"><img src="<?=base_url('public/res/banner_curriculum2.jpg')?>" alt="Curriculum" data-description="Crea y actualiza tu Curriculum vitae con tu información personal, experiencia laboral y estudios realizados."></a></li>
+		<li><a href="<?=base_url('informacion_egresado#cursosybecas')?>"><img src="<?=base_url('public/res/banner_empresa2.jpg')?>" alt="Empresa" data-description="Agiliza el proceso de reclutamiento y selección de personal consultando en nuestra base de datos de egresados."></a></li>
 	</ul>
 </div>
 <div class="container">
@@ -92,10 +74,10 @@
 <script type="text/javascript">
 	$(document).ready(function() {
     $('.pgwSlider').pgwSlider({
-    	transitionEffect: "sliding",
-    	intervalDuration: 5000,
+    	transitionEffect: "fading",
+    	intervalDuration: 6000,
    		transitionDuration: 700,
-    	displayList: true,
+    	displayList: false,
     	displayControls: true,
 
     });
