@@ -120,10 +120,11 @@
 		margin-top:10px;
 	}
 	article p,h4{
-		padding-left: 20px;
+		
 		text-align: center;
 	}
 	.border-left{
+		padding-left: 20px;
 		border-left: 1px solid lightgray;
 	}
 	#banner{
