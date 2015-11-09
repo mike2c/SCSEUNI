@@ -5,30 +5,32 @@
 ?>
 <input type="hidden" value="formActualizarPerfil" id="defaultForm">
 <input type="hidden" value="<?=base_url()?>" id="base_url"><!--CARGANDO LA URL BASE-->
-<div class="container no-padding">
-  <div class="col-md-2 col-lg-2 no-padding">
+<div class="container">
+  <div class="col-md-3 col-lg-3">
     <div class="perfil">
-      <a href="#" id="cambiar_imagen" class="thumbnail">
+    <div class="img-profile">
         <?php
-      
-          if(file_exists("uploads/". getImagenPerfil())){
-            ?> <img src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
-          }else{
-            ?> <img src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
-          }
-        ?>
-        <span class="glyphicon glyphicon-camera"></span>
+        if(imagen_disponible()){
+          ?> <img class="img-responsive img-circle" src="<?=base_url('uploads/'. getImagenPerfil())?>" alt=""> <?
+            }else{
+                ?> <img class="img-responsive img-circle" src="<?=base_url('uploads/default/no_image.gif')?>" alt=""> <?
+            }
+      ?>  
+      </div>
+    
+      <a id="cambiar_imagen" class="btn btn-link" style="display:block">
+        <span class="glyphicon glyphicon-camera"></span> Cambiar imagen
       </a>
-      <div class="perfil-nombre">
-        <label>
-          <?=$perfil->nombre?>
-        </label>
+      <hr>
+      <div class="name-profile">
+        <h4 class="text-primary name-profile">
+          <?=$perfil->nombre. " ". $perfil->apellido?>
+        </h4>
       </div>
-      <div class="perfil-correo">
-        <strong>
-          <small><?=getCorreo()?></small>
-        </strong>
+      <div class="email-profile">
+        <span><?=$perfil->correo?></span>
       </div>
+    <hr>
 
       <ul id="perfil_menu" class="perfil-menu">
         <li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
@@ -39,12 +41,12 @@
       </ul>
     </div>
   </div>
-  <div class="col-md-10 col-lg-10" style="padding-right:0px;">
+  <div class="col-md-9 col-lg-9">
     
     <div id="area_perfil">
     
       <!--Div a donde se cargan los errores-->
-      <div id="area_response" class="panel panel-danger text-danger panel-body response-area"></div>
+      <div id="area_response" class="panel panel-danger text-danger panel-body hidden-content"></div>
       
       <!-- formulario-->
       <form action="<?=base_url('Publicador/ActualizarPerfil')?>" method="post" id="formActualizarPerfil">
@@ -56,8 +58,8 @@
       
       <!--menu de pestañas-->
       <ul class="nav nav-tabs" role="tablist">
-          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Datos personales</a></li>
-          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Mi cuenta</a></li>
+          <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Mi Perfil</a></li>
+          <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Seguridad</a></li>
         <li><button form="formActualizarPerfil" id="update" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
       </ul>
 

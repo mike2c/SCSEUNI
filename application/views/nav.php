@@ -88,8 +88,10 @@
 		padding: 6px;
 		
 	}
-
-
+		.img-profile img{
+		width: 95px;
+		height: 95px;
+	}
 	.nav.nav-pills{
 		margin-top: 6px;
 	}

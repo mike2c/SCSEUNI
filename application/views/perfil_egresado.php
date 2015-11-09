@@ -22,14 +22,18 @@
 				<span class="glyphicon glyphicon-camera"></span> Cambiar imagen
 			</a>
 			<hr>
-			<h4 class="text-primary">
-				<?=$perfil->nombre. " ". $perfil->apellido?>
-				<small><?=$perfil->correo?></small>
-			</h4>
+			<div class="name-profile">
+				<h4 class="text-primary name-profile">
+					<?=$perfil->nombre. " ". $perfil->apellido?>
+				</h4>
+			</div>
+			<div class="email-profile">
+				<span><?=$perfil->correo?></span>
+			</div>
 		<hr>
 			<ul id="perfil_menu" class="perfil-menu">
 				<li><a href="<?=base_url('Perfil')?>">Perfil</a></li>
-				  <li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
+				<li><a href="<?=base_url('Correo')?>">Mensajes</a></li>
 			
 				<li><a href="<?=base_url('Publicaciones/Cursos')?>">Cursos</a></li>
 				<li><a href="<?=base_url('Publicaciones/Becas')?>">Becas</a></li>
@@ -37,7 +41,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="col-md-9 col-lg-9" style="padding-right:0px;">
+	<div class="col-md-9 col-lg-9">
 		<div id="area_perfil">
 					  
 		    <!--Div a donde se cargan los errores-->
