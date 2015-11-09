@@ -65,7 +65,7 @@
 			    <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Contacto</a></li>
 			    <li role="presentation"><a href="#privacidad" aria-="settings" role="tab" data-toggle="tab">Privacidad</a></li>
 			
-				<li><button form="formActualizarPerfil" id="update" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
+				<li class="pull-right"><button form="formActualizarPerfil" id="update" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
 			</ul>
 
 			<!--Paneles-->

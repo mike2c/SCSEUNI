@@ -60,7 +60,7 @@
           <li role="presentation" class="active"><a href="#info_personal" role="tab" data-toggle="tab">Mi Perfil</a></li>
           <li role="presentation"><a href="#info_cuenta" aria-controls="profile" role="tab" data-toggle="tab">Seguridad</a></li>
           <li role="presentation"><a href="#info_contacto" aria-controls="messages" role="tab" data-toggle="tab">Contacto</a></li>
-          <li><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
+          <li class="pull-right"><button form="formActualizarPerfil" class="btn btn-primary btn-sm">Actualizar perfil</button></li>
       </ul>
 
       <!--Paneles-->

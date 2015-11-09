@@ -4,7 +4,7 @@
 			<div class="col-md-6 col-lg-6">
 				<h2 class="">Formulario de contacto</h2>
 				<p class="help-block ">Si tienes alguna duda o consulta la puedes hacer por este medio.</p>
-				<form class="" action="<?=base_url('Mensaje/mensajeContacto')?>" method="post">
+				<form action="<?=base_url('Mensaje/mensajeContacto')?>" method="post">
 				  	<div class="form-group">
 					    <label class="control-label">Nombre completo</label>
 					     <input type="text" <?php
