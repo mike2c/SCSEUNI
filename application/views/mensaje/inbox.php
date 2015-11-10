@@ -58,9 +58,9 @@
 	<div class="col-md-2 col-lg-2 no-padding">
 		<ul class="left-menu">
 			<li><a href="<?=base_url('Perfil')?>" class="">Perfil</a></li>
-			<li data-bandeja="inbox"><a href="<?=base_url('Correo/Inbox')?>" class="activo">Recibidos <span class="badge">123</span></a></li>
-			<li data-bandeja="sent"><a href="<?=base_url('Correo/Sent')?>" class="">Enviados <span class="badge">123</span></a></li>
-			<li data-bandeja="drafts"><a href="<?=base_url('Correo/Drafts')?>" class="">Borrador <span class="badge">123</span></a></li>
+			<li data-bandeja="inbox"><a href="<?=base_url('Correo/Inbox')?>" class="activo">Recibidos <span class="badge"><?=$cantidad_inbox?></span></a></li>
+			<li data-bandeja="sent"><a href="<?=base_url('Correo/Sent')?>" class="">Enviados <span class="badge"><?=$cantidad_sent?></span></a></li>
+			<li data-bandeja="drafts"><a href="<?=base_url('Correo/Drafts')?>" class="">Borrador <span class="badge"><?=$cantidad_drafts?></span></a></li>
 		</ul>
 	</div>
 

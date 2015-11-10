@@ -24,8 +24,8 @@
 
 <!--Barra de menu superior-->
 <div id="barra_menu">
-	<div class="container no-padding">
-		<div class="col-md-2 col-lg-2 no-padding"><!--REDACTAR MENSAJE-->
+	<div class="container">
+		<div class="col-md-2 col-lg-2"><!--REDACTAR MENSAJE-->
 			<button data-toggle="modal" data-target="#redactarMensaje" class="btn btn-sm btn-primary" style="width:100%;">Redactar mensaje</button>
 		</div>
 		<div class="col-md-3 col-lg-3">
@@ -54,13 +54,13 @@
 	</div>
 </div>
 
-<div class="container no-padding">
-	<div class="col-md-2 col-lg-2 no-padding">
+<div class="container">
+	<div class="col-md-2 col-lg-2">
 		<ul class="left-menu">
 			<li><a href="<?=base_url('Perfil')?>" class="">Perfil</a></li>
-			<li data-bandeja="inbox"><a href="<?=base_url('Correo/Inbox')?>" class="activo">Recibidos <span class="badge">123</span></a></li>
-			<li data-bandeja="sent"><a href="<?=base_url('Correo/Sent')?>" class="">Enviados <span class="badge">123</span></a></li>
-			<li data-bandeja="drafts"><a href="<?=base_url('Correo/Drafts')?>" class="">Borrador <span class="badge">123</span></a></li>
+			<li data-bandeja="inbox"><a href="<?=base_url('Correo/Inbox')?>">Recibidos <span class="badge"><?=$cantidad_inbox?></span></a></li>
+			<li data-bandeja="sent"><a href="<?=base_url('Correo/Sent')?>" class="">Enviados <span class="badge"><?=$cantidad_sent?></span></a></li>
+			<li data-bandeja="drafts"><a href="<?=base_url('Correo/Drafts')?>" class="activo">Borrador <span class="badge"><?=$cantidad_drafts?></span></a></li>
 		</ul>
 	</div>
 

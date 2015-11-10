@@ -42,6 +42,10 @@ class Correo extends CI_Controller{
 			"usuario_id"=>getUsuarioId());
 		$result = $this->mensaje->listarInbox($filtro);
 		
+		$data["cantidad_inbox"] = $this->mensaje->contar_inbox(getUsuarioId());
+		$data["cantidad_sent"] = $this->mensaje->contar_sent(getUsuarioId());
+		$data["cantidad_drafts"] = $this->mensaje->contar_drafts(getUsuarioId());
+
 		$data["mensajes"] = $result;
 		$this->load->view("cabecera");
 		$this->load->view("nav");
@@ -58,6 +62,10 @@ class Correo extends CI_Controller{
 		$result = $this->mensaje->listarSent($filtro);
 
 		$data["mensajes"] = $result;
+		$data["cantidad_inbox"] = $this->mensaje->contar_inbox(getUsuarioId());
+		$data["cantidad_sent"] = $this->mensaje->contar_sent(getUsuarioId());
+		$data["cantidad_drafts"] = $this->mensaje->contar_drafts(getUsuarioId());
+
 		$this->load->view("cabecera");
 		$this->load->view("nav");
 		$this->load->view("mensaje/sent",$data);
@@ -70,11 +78,16 @@ class Correo extends CI_Controller{
 		$filtro = array(
 			"usuario_id"=>getUsuarioId());
 		$result = $this->mensaje->listarDrafts($filtro);
+			
+		$data["cantidad_inbox"] = $this->mensaje->contar_inbox(getUsuarioId());
+		$data["cantidad_sent"] = $this->mensaje->contar_sent(getUsuarioId());
+		$data["cantidad_drafts"] = $this->mensaje->contar_drafts(getUsuarioId());
 		
 		$data["mensajes"] = $result;
 		$this->load->view("cabecera");
 		$this->load->view("nav");
 		$this->load->view("mensaje/drafts",$data);
+		$this->load->view("mensaje/nuevo_mensaje",$data);
 		$this->load->view("footer");
 	}
 

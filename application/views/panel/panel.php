@@ -149,7 +149,10 @@
     $('#main-menu').metisMenu();
 </script>
 <style type="text/css">
+    .nav-second-level li a{
+        border-left: 4px solid #23527c;
+    }
     .nav-second-level li a:hover{
-        border-left: 3px solid lightgray;
+        border-left: 4px solid lightgray;
     }
 </style>

@@ -103,7 +103,7 @@
             <div class="form-group">
               <label class="control-label col-sm-3">Fecha de nacimiento:</label>
               <div class="col-sm-6">
-                <input form="formActualizarPerfil" value="<?=date_toDMY($perfil->fecha_nacimiento)?>" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
+                <input form="formActualizarPerfil" value="<?=$perfil->fecha_nacimiento?>" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control fecha" type="text" value="<?=""?>">
               </div>
             </div>
           </div>
@@ -242,3 +242,8 @@
   });
   
 </script>
+<style type="text/css">
+  #area,#cargo{
+    z-index: 0;
+  }
+</style>

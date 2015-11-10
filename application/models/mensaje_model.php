@@ -111,6 +111,27 @@
 			
 			$this->db->update("destino_mensaje",array("usuario_id"=>$usuario_id,"mensaje_id"=>$mensaje_id,"visto"=>TRUE));
 		}
+
+		function contar_inbox($usuario_id){
+			
+			$this->db->select("count(mensaje_id) as cantidad_inbox");
+			$this->db->where("usuario_id",$usuario_id);
+			return $this->db->get("listar_inbox")->row('cantidad_inbox');
+		}
+
+		function contar_sent($usuario_id){
+			
+			$this->db->select("count(mensaje_id) as cantidad_sent");
+			$this->db->where("usuario_id",$usuario_id);
+			return $this->db->get("listar_sent")->row('cantidad_sent');
+		}
+
+		function contar_drafts($usuario_id){
+			
+			$this->db->select("count(mensaje_id) as cantidad_drafts");
+			$this->db->where("usuario_id",$usuario_id);
+			return $this->db->get("listar_drafts")->row('cantidad_drafts');
+		}
 	}
 
  ?>

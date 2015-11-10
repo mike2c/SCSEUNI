@@ -4,6 +4,7 @@ var usuario = null;
 var bandeja = "inbox";
 var buscar = null;
 var lista = $("datalist").get(0);
+var dir = baseURL("Ajax/lista_egresados");
 
 $(document).ready(function(){
 
@@ -65,10 +66,11 @@ $(document).ready(function(){
 
 	$('#redactarMensaje').on('hidden.bs.modal', function (e) {
 		limpiarCampos();
+
 	})
 	
 	/*Cambiar entre listas*/
-	var dir = baseURL("Ajax/lista_egresados");
+	
 	$("#tipo_usuario").change(function(){
 		
 		if(this.selectedIndex == 0){
@@ -159,7 +161,9 @@ function enviarMensaje(){
 				if(data == ""){
 					alert("Mensaje enviado");
 					$("#redactarMensaje").modal("hide");
-					//actualizar();
+					actualizar();
+					dir = baseURL("Ajax/lista_egresados");
+					listar_usuarios(dir);
 				}else{
 					console.log(data);
 				}
@@ -192,7 +196,9 @@ function guardarComoBorrador(){
 				if(data == ""){
 					alert("Mensaje guardado");
 					$("#redactarMensaje").modal("hide");
-					//actualizar();
+					actualizar();
+					dir = baseURL("Ajax/lista_egresados");
+					listar_usuarios(dir);
 				}else{
 					console.log(data);
 				}

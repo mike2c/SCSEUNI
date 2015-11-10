@@ -55,7 +55,7 @@
 			}
 
 			$query = $this->db->get($this->view_name);	
-			echo $this->db->last_query(). "<br>";
+			//echo $this->db->last_query(). "<br>";
 			return $query;
 		}
 		
