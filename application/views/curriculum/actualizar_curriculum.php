@@ -89,7 +89,7 @@
 					</div>
 					<div class="form-group">
 						<label>Nombre de la empresa</label><br>
-						<input style="width:300px;" class="form-control" type="text" name="empresa[]" >
+						<input style="width:auto;" class="form-control" type="text" name="empresa[]" >
 					</div>
 					<div class="form-group">
 						<label>Año de comienzo</label><br>
@@ -114,7 +114,7 @@
 					</div>
 					<div class='form-group'>
 						<label>Nombre de la empresa</label><br>
-						<input style='width:300px;' class='form-control type='text' name='empresa[]' value='$EP->empresa'>
+						<input style='width:auto;' class='form-control type='text' name='empresa[]' value='$EP->empresa'>
 					</div>
 					<div class='form-group'>
 						<label>Año de comienzo</label><br>
@@ -148,20 +148,20 @@
 				echo "
 					<div class='group-body'>
 						<div class='form-inline'>
-						<div class='form-group'>
-							<label>Nombre del curso</label><br>
-							<input style='width:300px;' class='form-control' type='text' name='curso[]' >
-						</div>
-						<div class='form-group'>
-							<label>Año de comienzo</label><br>
-							<input style='width:auto;' class='form-control fecha' type='text name='comienzo_curso[]' >
-						</div>
-						<div class='form-group'>
-							<label>Año de finalización</label><br>
-							<input style='width:auto;' class='form-control fecha'' type='text' name='finalizacion_curso[]' >
-						</div>
-					</div>	
-				</div>
+							<div class='form-group'>
+								<label>Nombre del curso</label><br>
+								<input style='width:300px;' class='form-control' type='text' name='curso[]' >
+							</div>
+							<div class='form-group'>
+								<label>Año de comienzo</label><br>
+								<input style='width:auto;' class='form-control fecha' type='text name='comienzo_curso[]' >
+							</div>
+							<div class='form-group'>
+								<label>Año de finalización</label><br>
+								<input style='width:auto;' class='form-control fecha'' type='text' name='finalizacion_curso[]' >
+							</div>
+						</div>	
+					</div>
 				";
 			}else{
 				echo "<div class='group-body'>";
@@ -169,23 +169,24 @@
 					echo "
 						
 						<div class='form-inline'>
-						<div class='form-group'>
-						<input name='formacion_complementaria_id[]' type='hidden' value= '$FC->formacion_complementaria_id'>
-							<label>Nombre del curso</label><br>
-							<input style='width:300px;' class='form-control' type='text' name='curso[]' value= '$FC->curso' >
-						</div>
-						<div class='form-group'>
-							<label>Año de comienzo</label><br>
-							<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_curso[]' value= '$FC->fecha_comienzo' >
-						</div>
-						<div class='form-group'>
-							<label>Año de finalización</label><br>
-							<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_curso[]' value= '$FC->fecha_finalizacion' >
-						</div>
-					</div>	
+							<div class='form-group'>
+							<input name='formacion_complementaria_id[]' type='hidden' value= '$FC->formacion_complementaria_id'>
+								<label>Nombre del curso</label><br>
+								<input style='width:300px;' class='form-control' type='text' name='curso[]' value= '$FC->curso' >
+							</div>
+							<div class='form-group'>
+								<label>Año de comienzo</label><br>
+								<input style='width:auto;' class='form-control fecha' type='text' name='comienzo_curso[]' value= '$FC->fecha_comienzo' >
+							</div>
+							<div class='form-group'>
+								<label>Año de finalización</label><br>
+								<input style='width:auto;' class='form-control fecha' type='text' name='finalizacion_curso[]' value= '$FC->fecha_finalizacion' >
+							</div>
+						</div>	
 				
 					";
 				}
+				echo "</div>";
 			}
 		?>
 		</div>
@@ -279,7 +280,7 @@
 						
 						<div class='form-inline'>
 							<div class='form-group'>
-							<input name='informatica_id[]' type='hidden' value='$infor->informatica_id'>
+							<input name='informatica_id[]' type='hidden' id='$infor->informatica_id' value='$infor->informatica_id'>
 								<label>Softwares</label><br>
 								<input style='width:300px;' placeholder='ejemplo: Microsoft Word' class='form-control' type='text' name='software[]' value='$infor->software'>
 							</div>
@@ -304,7 +305,7 @@
 		</div>
 		<div class="form-group">
 			<button class="btn btn-primary" type="submit">Actualizar curriculum</button>
-			<button class="btn btn-danger" type="button">Cancelar</button>
+			<a class="btn btn-danger" href="<?= base_url('Perfil')?>" >Cancelar</a>
 		</div>
 	</form>
 	</div>
@@ -446,7 +447,7 @@
 					</div> \
 					<div class='form-group'> \
 						<label>Empresa</label><br> \
-						<input style='width:300px;' class='form-control' type='text' name='empresa[]' > \
+						<input style='width:auto;' class='form-control' type='text' name='empresa[]' > \
 					</div> \
 					<div class='form-group'> \
 						<label>Año de comienzo</label><br> \
@@ -516,10 +517,29 @@
 	}
 	
 	function removerFila(parent){
-
-		if($(parent).find(".group-body").find(".form-inline").size() > 1){
-			$(parent).find(".group-body").find(".form-inline").last().remove();
-		}
+		
+		var datos = [$(parent).find(".group-body").find(".form-inline:last").find(".form-group").find("[type='hidden']").last().attr('value'), $(parent).attr('id')];
+		var valor = $(parent).find(".group-body").find(".form-inline").find(".form-group").find("[type='text']").last().attr('value');
+		if(!datos[0] == ''){
+			var eliminar = confirm("De verdad Desea eliminar esta fila");
+			if(eliminar){
+				$.ajax({
+					type:"POST",
+					url:" <?= base_url('Curriculum/Borrar') ?> ",
+					data: {'id':datos[0],'campo':datos[1]},
+					success : function(){
+						if($(parent).find(".group-body").find(".form-inline").size() > 1){
+							$(parent).find(".group-body").find(".form-inline").last().remove();
+						}
+					}
+				});
+			}
+		}else{
+			if($(parent).find(".group-body").find(".form-inline").size() > 1){
+				$(parent).find(".group-body").find(".form-inline").last().remove();
+			}
+		}	
+		
 	}
 
 	formatear();
@@ -546,4 +566,5 @@
 		e.preventDefault();
 		validarForm(this,$("#respuesta"));
 	});
+	
 </script>

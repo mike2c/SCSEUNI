@@ -136,7 +136,26 @@
 			}
 		}
 		
-
+		function Borrar(){
+			$campo= $this->input->post("campo");
+			$id= $this->input->post("id");
+			
+			if($campo=="formacion_academica"){
+				$this->modelo->borrarFormacionAcademica($id);
+			}
+			if($campo=="experiencia_laboral"){
+				$this->modelo->borrarExperienciaLaboral($id);
+			}
+			if($campo=="formacion_complementaria"){
+				$this->modelo->borrarFormacionComplementaria($id);
+			}
+			if($campo=="dominio_idiomas"){
+				$this->modelo->borrarIdioma($id);
+			}
+			if($campo=="informatica"){
+				$this->modelo->borrarInformatica($id);
+			}
+		}
 
 		function Actualizar(){
 		 	if(!esEgresado()){

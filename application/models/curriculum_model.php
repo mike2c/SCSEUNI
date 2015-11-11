@@ -136,43 +136,33 @@
 			$this->db->update("informatica",$data);
 		}
 				
-		function borrarExperienciaLaboral($tipo,$data){
-			if($tipo==TRUE){
-				$this->db->where("experiencia_laboral_id",$data["experiencia_laboral_id"]);
-				$this->db->delete("experiencia_laboral");
-			}else{
-				$data_bd =$this->listarCurriculo($data["curriculum_id"]);
-				foreach($data_bd["experiencia_laboral"]->result() as $db_data){
-					if ($db_data->experiencia_laboral_id != $data["experiencia_laboral_id"]) {
-						$this->db->where("experiencia_laboral_id",$data["experiencia_laboral_id"]);
-						$this->db->delete("experiencia_laboral");
-					}
-				}
-			}
+		function borrarExperienciaLaboral($id){
+			$this->db->where("experiencia_laboral_id",$id);
+			$this->db->delete("experiencia_laboral");
 		}
 		
-		function borrarFormacionAcademica($data){
-			$this->db->where("formacion_academica_id",$data["formacion_academica_id"]);
+		function borrarFormacionAcademica($id){
+			$this->db->where("formacion_academica_id",$id);
 			$this->db->delete("formacion_academica");
 		}
 		
-		function borrarFormacionComplementaria($tipo,$data){
-			$this->db->where("formacion_complementaria_id",$data["formacion_complementaria_id"]);
+		function borrarFormacionComplementaria($id){
+			$this->db->where("formacion_complementaria_id",$id);
 			$this->db->delete("formacion_complementaria");
 		}
 		
-		function borrarIdioma($tipo,$data){
-			$this->db->where("idioma_id",$data["idioma_id"]);
+		function borrarIdioma($id){
+			$this->db->where("idioma_id",$id);
 			$this->db->delete("idioma");
 		}
-		function borrarInformatica($tipo,$data){
-			$this->db->where("informatica_id",$data["informatica_id"]);
+		function borrarInformatica($id){
+			$this->db->where("informatica_id",$id);
 			$this->db->delete("informatica");
 		}
 		
-		function borrarCurriculo($data){
-			$this->db->where("curriculum_id",$data["curriculum_id"]);
-			$this->db->delete("curriculum",$data);
+		function borrarCurriculo($id){
+			$this->db->where("curriculum_id",$id);
+			$this->db->delete("curriculum");
 		}
 	}
 ?>
