@@ -36,25 +36,6 @@
 
 			</div>
 		</div>
-	
-		<div class="row">
-			<div class="col-md-12">
-				<h2>Dirección</h2>
-				<p class="help-block">
-					Entrada a La Tunoza, Antigua Hacienda el Higo, Estelí, Nicaragua
-				</p>
-			</div>
-			<div class="col-md-12">
-				<h2>Teléfonos</h2>
-				<p>
-					Dirección: 2719-7843 <br>
-						Subdirección: 2719-7843 <br>
-						Administración: 2719-7841 <br>
-						Adquisiciones: 2719-7865 <br>
-						Registro académico: 2719-7818 <br>
-				</p>
-			</div>
-		</div>
 	</div>
 </div>
 <script type="text/javascript">
