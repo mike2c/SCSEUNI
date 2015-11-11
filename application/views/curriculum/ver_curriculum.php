@@ -1,240 +1,182 @@
-<?php
-	
-	if(!isset($curriculum) || $curriculum == null || empty($curriculum)){
-		echo "ERROR:";
-		exit("No se ha podido leer la información");
-	}
-	if(empty($curriculum["formacion_academica"])){
-		echo "ERROR:";
-		exit("No se ha podido leer la información");
-	}
-?>
-<div class="container">
-	<div class="contenido">
-	<br>
-	<br><br>
-		<div class="row">
-			<div class="col-md-2 col-lg-2 ">
+
+ <div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<?php
+				if(file_exists("uploads/".$egresado->imagen)){
+					?>
+					<img class="img-responsive img-perfil" src="<?=base_url("uploads/". $egresado->imagen)?>" alt="">
+					<?
+				}else{
+					?>
+					<img class="img-responsive img-perfil" src="<?=base_url("uploads/default/no_image.gif")?>" alt="">
+					<?
+				}
+			?>
+			<h4 class="text-center"><strong><?=$egresado->nombre. " ". $egresado->apellido?></strong></h4>
+			<label style="display:block;text-align:center"><?=$egresado->carrera?></label>
+
+			<h4 class="text-center bg-primary">
+				Informacion de contacto
+			</h4>
+			<address>
+				<strong>Teléfonos</strong><br>
+					<span class=""><?=$egresado->telefono?></span><br>
+					<span class=""><?=$egresado->telefono?></span><br>
+				<strong>Correo</strong><br>
+					<span><?=$egresado->correo?></span><br>
+				<strong>Dirección actual</strong><br>
+					<span><?=$egresado->direccion?></span>
+			</address>
+			<h4 class="text-center bg-primary">
+				Idiomas
+			</h4>
+			<address>
 				<?php
-					if(file_exists("uploads/".$egresado->imagen)){
+					if($curriculum["idioma"] != null && !empty($curriculum["idioma"])){
 						?>
-						<img class="img-responsive thumbnail" src="<?=base_url("uploads/". $egresado->imagen)?>" alt="">
-						<?
-					}else{
-						?>
-						<img class="img-responsive thumbnail" src="<?=base_url("uploads/default/no_image.gif")?>" alt="">
+						<table class="table table-hover table-default" style="margin-bottom:0px">
+							<?php
+								foreach ($curriculum["idioma"]->result() as $row) {
+									echo "<strong>$row->idioma</strong><br>";
+									echo "<span>$row->nivel</span><br>";
+								}
+							?>
+						</table>
 						<?
 					}
 				?>
-				
-			</div>
-			<div class="col-md-6 col-lg-6">
-				<h3 class="text-info"><?=$egresado->nombre. " ". $egresado->apellido?></h3>
-				<p><?=$egresado->direccion?></p>
-				<p><?=(empty($egresado->telefono))? "telefono no disponible" : $egresado->telefono?></p>
-				<p><?=(empty($egresado->celular))? "celular no disponible" : $egresado->celular?></p>
-				<p><?=$egresado->correo?></p>
-
-			</div>
-		</div>
-	<br>
-
-		<!--Informacion laboral-->
-		<?php
-			if($curriculum["experiencia_laboral"] !== null && !empty($curriculum["experiencia_laboral"])){
-				?>
-					<div class="row">
-						<div class="col-md-8 ">
-							<h4 class="text-primary">Experiencia Laboral</h4>
-							
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-8 col-lg-8 ">
-							<table class="table table-default table-condensed table-hover table-responsive">
+			</address>
+			<h4 class="text-center bg-primary">
+				Informatica
+			</h4>
+			<address>
+				<?php
+					if($curriculum["informatica"] != null && !empty($curriculum["informatica"])){
+						?>
+						<table class="table table-hover table-default" style="margin-bottom:0px">
 							<?php
-
-								foreach ($curriculum["experiencia_laboral"]->result() as $row) {
-									echo "<tr>
-									<td>
-										<label>$row->fecha_comienzo - $row->fecha_finalizacion</label>
-										<p>Cargo</p>
-									</td>
-									<td>
-										<label>$row->empresa</label>
-										<p>". ucfirst($row->cargo). "</p>
-									</td>
-									</tr>";
-								
-								}	
+								foreach ($curriculum["informatica"]->result() as $row) {
+									echo "<strong>$row->software</strong><br>";
+									echo "<span>$row->nivel</span><br>";
+								}
 							?>
 						</table>
-						</div>
-					</div>
-				<?
-			}
-		?>
-		<br>
-		<!--Formación academica-->
-		<?php
-
-			if($curriculum["formacion_academica"] !== null && !empty($curriculum["formacion_academica"])){
+						<?
+					}
 				?>
-					<div class="row">
-						<div class="col-md-8 ">
-							<h4 class="text-primary">Formación Academica</h4>
+			</address>
+		</div>
+		<div class="col-md-9">
+			<h2 class="text-center"><span class="glyphicon glyphicon-education"></span></h2>
+			<h3 class="text-center"><strong>Educación</strong></h3>
+			<h2 class="text-center"><strong>Universidad Nacional de Ingeniería</strong></h2>
+			<h4 class="text-center">Recinto Universitario Augusto César Sandino</h4>
+			<hr>
+			<br>
+			<h3><strong>EXPERIENCIA LABORAL</strong></h3>
+			
+			<?php
+				if($curriculum["experiencia_laboral"] !== null && !empty($curriculum["experiencia_laboral"])){
+					foreach ($curriculum["experiencia_laboral"]->result() as $row){
 						
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-8 col-lg-8 ">
-							<table class="table table-default table-condensed table-hover table-responsive">
-								<?php
-
-									foreach ($curriculum["formacion_academica"]->result() as $row) {
-										echo "<tr>
-										<td>
-											<label>$row->fecha_comienzo - $row->fecha_finalizacion</label>
-											
-										</td>
-										<td>
-											<label>$row->titulo</label>
-										</td>
-										</tr>";
-									
-									}	
-								?>
-							</table>
-						</div>
-					</div>
-				<?
-			}
-		?>
-		<br>
-		<!--Formación complementaria-->
-
-		<?php
-
-			if($curriculum["formacion_complementaria"] !== null && !empty($curriculum["formacion_complementaria"])){
+						echo "<h4 class='text-primary'><span class='glyphicon glyphicon-map-marker'></span> $row->empresa, </h4>";
+						echo "<h5 class=''><strong>$row->cargo</strong></h5>";
+						echo "<h5 class='text-muted'><span class=''>Periodo// </span>$row->fecha_comienzo - $row->fecha_finalizacion</h5>";
+					}
+				}	
 			?>
-			<div class="row">
-					<div class="col-md-8 ">
-						<h4 class="text-primary">Formación Complementaria</h4>
-						
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8 col-lg-8 ">
-						<table class="table table-default table-condensed table-hover table-responsive">
-							<?php
-
-								foreach ($curriculum["formacion_complementaria"]->result() as $row) {
-									echo "<tr>
-									<td>
-										<label>$row->fecha_comienzo - $row->fecha_finalizacion</label>
-										
-									</td>
-									<td>
-										<label>$row->curso</label>
-									</td>
-									</tr>";
-								
-								}	
-							?>
-						</table>
-					</div>
-				</div>
-			<?
-			}
-		?>
-		<br>
-		<!--Otros datos-->
-		<div class="row">
-			<div class="col-md-4 col-lg-4 ">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<label for="">Informatica</label>	
-					</div>
-					<div class="list-group">
-						<?php
-							if($curriculum["informatica"] != null && !empty($curriculum["informatica"])){
-								?>
-								<table class="table table-hover table-default" style="margin-bottom:0px">
-									<?php
-										foreach ($curriculum["informatica"]->result() as $row) {
-											echo "<tr>
-											<td> <label>$row->software</label></td>
-											<td> <label class='text-info'>$row->nivel</label></td>
-											</tr>";
-										}
-									?>
-								</table>
-								<?
-							}
-						?>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4 col-lg-4">
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<label for="">Idiomas</label>
-					</div>
-					<div class="list-group">
-						<?php
-							if($curriculum["idioma"] != null && !empty($curriculum["idioma"])){
-								?>
-								<table class="table table-hover table-default" style="margin-bottom:0px">
-									<?php
-										foreach ($curriculum["idioma"]->result() as $row) {
-											echo "<tr>
-											<td> <label>$row->idioma</label></td>
-											<td> <label class='text-info'>$row->nivel</label></td>
-											</tr>";
-										}
-									?>
-								</table>
-								<?
-							}
-						?>
-					</div>
-				</div>
+			<br>
+			<h3><strong>FORMACIÓN ACADEMICA </strong></h3>
+			<?php
+				foreach ($curriculum["formacion_academica"]->result() as $row) {
+					echo "<h4 class='text-primary'><span class='glyphicon glyphicon-bookmark'></span> $row->titulo, <small>$row->fecha_comienzo - $row->fecha_finalizacion</small></h4>";
+				}	
+			?>
+			<br>
+			<h3><strong>FORMACIÓN COMPLEMENTARIA </strong></h3>			
+			<?php
+				if($curriculum["formacion_complementaria"] !== null && !empty($curriculum["formacion_complementaria"])){
+					foreach ($curriculum["formacion_complementaria"]->result() as $row) {
+						echo "<h4 class='text-primary'><span class='glyphicon glyphicon-bookmark'></span> $row->curso, <small>$row->fecha_comienzo - $row->fecha_finalizacion</small></h4>";
+					}	
+				}else{
+					echo "<h3 class='text-center'>Información no actualizada</h3>";
+				}
 		
-			</div>
+			?>
+			<br>
+			<br>
+			<br>
 		</div>
-	</div>	
+	</div>
 </div>
-<style>
-	.contenido{
-		border-left: 60px solid lightgray;
-		border-right: 60px solid lightgray;
-		padding-left: 100px;
-	}
 
-	table.table tr{
-		border:none;
+<style>
+	h1,h2,h3,h4,h5{
+		margin-top:5px;
+		margin-bottom:0px;
 	}
-	
-	hr{
+	.img-perfil{
+		margin:0px auto;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		max-height: 160px;
+		max-width: 160px;
+		border: 1px solid lightgray;
+		background-color:white;
+		padding: 6px;
+	}
+	.bg-primary{
+		
+		padding: 5px 0;
+		
+	}
+	.col-md-9{
+		padding-top:10px;
+		box-shadow: -1px 0px 1px gray;
+		background-color: white;
+	}
+	.col-md-9 h1,h2,h3,h4,h5{
+		font-family: "Helvetica";
+	}
+	.col-md-9 h3{
+		font-family: "Arial";
+
+		margin-bottom:20px;
 		margin-top: 0px;
 	}
-	.row h3,h4{
-		margin-bottom: 15px;
+	.col-md-9 h4{
+		margin-left:20px;
+		font-weight: bold;
+		font-family: "Calibri";
 	}
 
-	.page-header{
-		margin-top:20px;
-		//border-bottom: none;
-		margin-bottom: 20px;
+	.col-md-9 h5{
+		margin-left: 100px;
+		margin-bottom: 0px;
 	}
-
-	.contenido{
-		
+	.col-md-9 h4 span{
+		font-size:14px;
 	}
-	.thumbnail{
-		border-radius: 0px;
+	.col-md-3{
+		padding-left: 0px;	
+		padding-right: 0px;
+		//border-right:2px solid lightgray;
 	}
-	p{
-		line-height: 15px;
+	.col-md-3 address{
+		margin-left: 10px;
+	}
+	.row{
+		box-shadow: -1px 0px 2px gray;
+	}
+	address{
+		margin-top:10px;
+	}
+	address span{
+		margin-left: 20px;
+	}
+	.container{
+		margin-top: 10px;
 	}
 </style>
