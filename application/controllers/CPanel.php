@@ -169,6 +169,7 @@
 				$where_in = null;
 				if(isset($_POST["carrera"]) && !empty($_POST["carrera"])){
 					$where_in = $this->input->post("carrera");
+					
 				}
 
 				$where["trabaja"] = true;
@@ -184,6 +185,8 @@
 				$result[1]["y"] = $this->egresados->contar($where,$where_in)->row('cantidad');
 				
 				$data["data"] = $result;
+				$data["sel_carreras"] = $this->input->post("carrera");
+				
 				$data["carreras"] = $this->listas->listarCarreras();
 				$this->load->view("panel/reportes/egresados_trabajando",$data);			
 			}

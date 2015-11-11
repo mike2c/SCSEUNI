@@ -1,4 +1,3 @@
-
 <div class="panel panel-default">
 <div class="panel-body">
 
@@ -13,17 +12,43 @@
 	<form type="post" id="form_filtrar_reporte" action="<?=base_url('CPanel/ReporteEgresadosTrabajando')?>">
 		<ul class='list-unstyled'>
 			<?
+				if(isset($sel_carreras) && !empty($sel_carreras)){
+					echo "not set";print_r($sel_carreras);
+				}
 				foreach ($carreras->result() as $row) {
-					echo "<li><div class='checkbox'>
 				
-					<label>	<input type='checkbox' name='carrera[]' value='$row->carrera_id'>$row->nombre_carrera</label>
-					</div></li>";
+					if(marcar_carrera($row->carrera_id, $sel_carreras)){
+						echo "<li><div class='checkbox'>
+						<label>	<input type='checkbox' name='carrera[]' checked value='$row->carrera_id'>$row->nombre_carrera</label>
+						</div></li>";
+					}else{
+						echo "<li><div class='checkbox'>
+						<label>	<input type='checkbox' name='carrera[]' value='$row->carrera_id'>$row->nombre_carrera</label>
+						</div></li>";
+					}
+				
 				}
 
+				function marcar_carrera($id_carrera,$arr){
+					
+					if(isset($arr) && !empty($arr)){
+						foreach ($arr as $key => $value) {
+							if($value == $id_carrera){
+								return true;
+							}
+						}
+					}
+
+					return false;
+				}
 			?>
 			<li class="divider"></li>
 			<li>
-				<div class="checkbox"><label><input type="checkbox" name='titulado' value="true"> Titulado</label></div>
+				<div class="checkbox"><label><input type="checkbox" name='titulado' value="true" 
+				<?php
+					if()
+
+				?>> Titulado</label></div>
 			</li>
 			<li><button style="width:100%;" type="submit" class="btn btn-default btn-sm">aplicar</button></li>
 		</ul>

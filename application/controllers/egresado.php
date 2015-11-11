@@ -65,7 +65,6 @@
 				exit($e->getMessage());
 			}
 			
-			
 			/*Cargamos la privacidad por cada usuario*/
 			if($data["registro"] != null){
 				foreach ($data["registro"]->result() as $row) {

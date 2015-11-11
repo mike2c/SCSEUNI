@@ -37,7 +37,7 @@
 						<table class="table table-hover table-default" style="margin-bottom:0px">
 							<?php
 								foreach ($curriculum["idioma"]->result() as $row) {
-									echo "<strong>$row->idioma</strong><br>";
+									echo "<stream_context_get_default()>$row->idioma</strong><br>";
 									echo "<span>$row->nivel</span><br>";
 								}
 							?>
@@ -53,7 +53,7 @@
 				<?php
 					if($curriculum["informatica"] != null && !empty($curriculum["informatica"])){
 						?>
-						<table class="table table-hover table-default" style="margin-bottom:0px">
+						<table>
 							<?php
 								foreach ($curriculum["informatica"]->result() as $row) {
 									echo "<strong>$row->software</strong><br>";
@@ -102,7 +102,6 @@
 				}else{
 					echo "<h3 class='text-center'>Información no actualizada</h3>";
 				}
-		
 			?>
 			<br>
 			<br>
@@ -175,8 +174,7 @@
 	}
 	address span{
 		margin-left: 20px;
+	
 	}
-	.container{
-		margin-top: 10px;
-	}
+
 </style>
