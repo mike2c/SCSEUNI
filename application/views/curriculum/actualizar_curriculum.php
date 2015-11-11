@@ -305,7 +305,7 @@
 		</div>
 		<div class="form-group">
 			<button class="btn btn-primary" type="submit">Actualizar curriculum</button>
-			<button class="btn btn-danger" type="button">Cancelar</button>
+			<a class="btn btn-danger" href="<?= base_url('Perfil')?>" >Cancelar</a>
 		</div>
 	</form>
 	</div>
@@ -566,6 +566,5 @@
 		e.preventDefault();
 		validarForm(this,$("#respuesta"));
 	});
-	
 	
 </script>
