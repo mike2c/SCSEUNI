@@ -44,7 +44,7 @@
 				}
 			?>
 		
-			<li role="presentation" id="menu_contacto"><a href="<?=base_url('contacto')?>">Contacto</a></li>
+			<li role="presentation" id="menu_contacto"><a href="<?=base_url('contacto')?>">Contactanos</a></li>
 			<?php
 				if(!sesionIniciada()){
 					?>
