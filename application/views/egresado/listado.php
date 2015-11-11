@@ -56,27 +56,45 @@
 				echo "<tr>";
 
 				/*Imagen de perfil*/
-				if(imagen_disponible()){
-					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
-				}else{
-					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
-				}
-				
-				echo "<td><label>$row->nombre $row->apellido</label>
-				<p class='help-block'>$row->carrera</p>";
-				
-				if($row->sexo == "F"){
-					echo "<p class='help-block'>Mujer</p></td>";
-				}else{
-					echo "<p class='help-block'>Hombre</p></td>";
-				}
-				
+							
 				if($privacidad[$row->usuario_id] == null || empty($privacidad[$row->usuario_id])){
-				
+					echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+					echo "<td><p class='text-info'>Información no disponible</p></td>";
 					echo "<td><p class='text-info'>Información no disponible</p></td>";
 					echo "<td><p class='text-info'>Información no disponible</p></td>";
 					echo "<td><p class='text-info'>Información no disponible</p></td>";
 				}else{
+					
+					/*Foto de perfil*/
+					if($privacidad[$row->usuario_id]["foto_perfil"] == "publica"){
+						if(imagen_disponible()){
+							echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
+						}else{
+							echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+						}
+					}elseif($privacidad[$row->usuario_id]["foto_perfil"] == "empresas"){
+						if(esEmpresa() || esPublicador() || esAdministrador()){
+							if(imagen_disponible()){
+								echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/". $row->imagen) . "' alt=''></td>";
+							}else{
+								echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+							}
+						}else{
+							echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+						}
+					}else{
+						echo "<td class='no-padding'><img title='ampliar' class='thumbnail zoom' src='" . base_url("uploads/default/no_image.gif") . "' alt=''></td>";
+					}
+				
+					/*Datos personales*/
+					echo "<td><label>$row->nombre $row->apellido</label>
+					<p class='help-block'>$row->carrera</p>";
+					
+					if($row->sexo == "F"){
+						echo "<p class='help-block'>Mujer</p></td>";
+					}else{
+						echo "<p class='help-block'>Hombre</p></td>";
+					}
 
 					/*Informacion de ubicación*/
 					if($privacidad[$row->usuario_id]["info_ubicacion"] == "publica"){
@@ -120,14 +138,14 @@
 							echo $row->correo ;
 							echo "</td>";
 						}else{
-							echo "<td>< p class='text-info'>Información no disponible</p></td>";
+							echo "<td><p class='text-info'>Información no disponible</p></td>";
 						}	
 					}	
 
 					/*Información de curriculum*/					
-					if($privacidad[$row->usuario_id]["info_contacto"] == "publica"){
+					if($privacidad[$row->usuario_id]["info_curriculum"] == "publica"){
 						echo "<td><a target='blank' href='" . base_url("Curriculum/Ver/". $row->usuario_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
-					}elseif($privacidad[$row->usuario_id]["info_contacto"] == "empresas"){
+					}elseif($privacidad[$row->usuario_id]["info_curriculum"] == "empresas"){
 						if(esEmpresa() || esPublicador() || esAdministrador()){
 							echo "<td><a target='blank' href='" . base_url("Curriculum/Ver/". $row->usuario_id) . "' class='btn btn-primary btn-sm'>Ver curriculum</a></td>";	
 						}else{

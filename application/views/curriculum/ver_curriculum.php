@@ -1,4 +1,3 @@
-
  <div class="container">
 	<div class="row">
 		<div class="col-md-3">
@@ -98,7 +97,7 @@
 			<?php
 				if($curriculum["formacion_complementaria"] !== null && !empty($curriculum["formacion_complementaria"])){
 					foreach ($curriculum["formacion_complementaria"]->result() as $row) {
-						echo "<h4 class='text-primary'><span class='glyphicon glyphicon-bookmark'></span> $row->curso, <small>$row->fecha_comienzo - $row->fecha_finalizacion</small></h4>";
+						echo "<h4 class='text-primary'><span class='glyphicon glyphicon-book'></span> $row->curso, <small>$row->fecha_comienzo - $row->fecha_finalizacion</small></h4>";
 					}	
 				}else{
 					echo "<h3 class='text-center'>Información no actualizada</h3>";
@@ -139,6 +138,7 @@
 	}
 	.col-md-9 h1,h2,h3,h4,h5{
 		font-family: "Helvetica";
+		padding-left: 30px;
 	}
 	.col-md-9 h3{
 		font-family: "Arial";
