@@ -3,14 +3,14 @@
 		<div class="row">
 			<div class="col-md-12 col-lg-12">
 				<h2 class="page-header text-primary">Información para egresados</h3>
-				<div class="panel-body text-justify">
+				<div class="text-justify">
 					<h4><small><strong>
 						El Recinto Universitario Augusto C. Sandino, sede regional del norte, Estelí – Nicaragua, está implementando un sistema para el control y seguimiento de sus estudiantes egresados y graduados con el objetivo de obtener información actualizada de estos. El sistema está diseñado para mantener informados a los egresados y graduados interesados en cursos libre y de posgrado que ofrece la universidad, así como las posibles oportunidades de empleo publicadas directamente por las empresas.
 					</strong></small></h4>
 				</div>
 	
 				<h3 class="page-header text-primary">Registro</h3>
-				<div class="panel-body">
+				<div class="">
 					<h4><small><strong>
 						Para autenticar la cuenta de los egresados o graduados, sigue las instrucciones dadas en el siguiente <a href="<?php echo base_url('index.php/Egresado/Autenticar') ?>"> enlace </a>
 					</strong></small></h4>
