@@ -22,6 +22,17 @@
 		$timestamp = strtotime('Y');
 		return idate('Y',$timestamp);
 	}
+	/*retorna false en caso de que la fecha ingresada no sea 16 años menor que el año actual*/
+	function validarFechaNacimiento($fecha){
+		$anio_actual = obtener_anio_actual();
+		$anio_correcto = $anio_actual - 16;
+		$anio_ingresado = date("Y", strtotime($fecha));
+		
+		if($anio_ingresado>$anio_correcto){
+			return false;
+		}
+		return true;
+	}
 
 	/*Convierte una fecha Y-m-d a d-m-Y.
      *Toma como paramentro un string con la fecha en formato Y-m-d*/

@@ -68,6 +68,19 @@
 				</script>";
 			}
 		}
+		
+		function fechaNacimiento(){
+			$this->load->helper('fecha');
+			
+			$fecha=$this->input->post("fecha_nacimiento");
+			$patron = '/^\d{1,2}\/\d{1,2}\/\d{4}$/';
+			
+			if (!preg_match($patron, $fecha) or !validarFechaNacimiento($fecha)){
+				$this->form_validation->set_message("fechaNacimiento","Ingrese Una Fecha de Nacimiento valida");
+				return false;
+			}
+			return true;
+		}
 
 		function Actualizar(){
 
@@ -77,6 +90,7 @@
 			$this->form_validation->set_rules("area","Area","trim|required|min_length[1]|max_length[4]");
 			$this->form_validation->set_rules("cargo","Cargo","trim|required|min_length[1]|max_length[4]");
 			$this->form_validation->set_rules('correo','Correo','trim|required|min_length[10]|max_length[45]|valid_email');
+			$this->form_validation->set_rules('fecha_nacimiento','Fecha de Nacimiento','callback_fechaNacimiento');
 			
 			if($this->form_validation->run() == FALSE){
 				echo validation_errors();
